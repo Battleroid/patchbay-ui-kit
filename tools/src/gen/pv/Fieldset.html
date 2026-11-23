@@ -1,0 +1,25 @@
+<form class="pb-form" data-section onsubmit="return false">
+  <fieldset class="pb-fieldset"><legend>Access</legend>
+    <div class="pb-inline">
+      <label class="pb-field"><span class="pb-field__label">Role</span><span class="pb-select" style="min-width:0"><select><option>admin</option><option>member</option><option>viewer</option></select></span></label>
+      <button class="pb-btn pb-btn--primary" disabled>Save role</button>
+    </div>
+    <span class="pb-field__help">Admins can manage users and shares.</span>
+  </fieldset>
+</form>
+<form class="pb-form" data-section onsubmit="return false" style="margin-top:20px">
+  <fieldset class="pb-fieldset"><legend>Limits</legend>
+    <p class="pb-fieldset__desc">Per-user limits. Leave empty to use the site default.</p>
+    <div class="pb-form__row">
+      <label class="pb-field"><span class="pb-field__label">Quota</span><span class="pb-input"><input placeholder="site default · no limit"></span><span class="pb-field__help">0 means no limit.</span></label>
+      <label class="pb-field"><span class="pb-field__label">Max file size</span><span class="pb-input"><input placeholder="site default · 1 GB"></span><span class="pb-field__help">Can only lower the site limit.</span></label>
+    </div>
+    <label class="pb-choice"><input type="checkbox" class="pb-check" checked><span>Email when 90% full</span></label>
+    <div class="pb-fieldset__foot"><span class="pb-foot__status">No changes</span><button type="reset" class="pb-btn pb-btn--ghost" disabled>Discard</button><button class="pb-btn pb-btn--primary" disabled>Save limits</button></div>
+  </fieldset>
+</form>
+<form class="pb-card" data-section onsubmit="return false" style="margin-top:20px">
+  <div class="pb-card__head"><h3 class="pb-card__title">Danger zone</h3></div>
+  <p style="margin:0;font-size:15px;line-height:23px">Removes the user, their shares and 18.2 GB of files.</p>
+  <div class="pb-card__foot"><span class="pb-foot__status">Cannot be undone.</span><button class="pb-btn pb-btn--danger"><span class="pb-icon pb-icon--trash"></span>Delete user</button></div>
+</form>

@@ -1,0 +1,11 @@
+<div class="pb-evcal" data-evcal data-view="month" data-max="3">
+  <div class="pb-evcal__head">
+    <div class="pb-btngroup"><button type="button" class="pb-btn pb-btn--icon pb-btn--sm" data-evcal-nav="prev" aria-label="Previous month"><span class="pb-icon pb-icon--chevron-right pb-icon--flip"></span></button><button type="button" class="pb-btn pb-btn--sm" data-evcal-nav="today">Today</button><button type="button" class="pb-btn pb-btn--icon pb-btn--sm" data-evcal-nav="next" aria-label="Next month"><span class="pb-icon pb-icon--chevron-right"></span></button></div>
+    <h3 class="pb-evcal__title" aria-live="polite"></h3>
+    <div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="View" data-evcal-view><label><input type="radio" name="evv" value="month">month</label><label><input type="radio" name="evv" value="agenda">agenda</label></div>
+  </div>
+  <div class="pb-evcal__body"></div>
+  <div class="pb-evcal__legend"></div>
+  <script type="application/json">{"month": "2026-11", "today": "2026-11-22", "kinds": {"backup": {"label": "backup", "c": "var(--chart-1)"}, "maint": {"label": "maintenance", "c": "var(--pop-yellow)"}, "scrub": {"label": "scrub", "c": "var(--pop-mint)"}, "other": {"label": "other", "c": "var(--chart-3)"}}, "events": [{"date": "2026-11-01", "time": "03:00", "title": "restic \u2192 b2", "kind": "backup", "repeat": "daily"}, {"date": "2026-11-02", "time": "01:00", "title": "zpool scrub tank", "kind": "scrub", "repeat": "weekly:0"}, {"date": "2026-11-01", "time": "04:00", "title": "proxmox vzdump", "kind": "backup", "repeat": "weekly:3"}, {"date": "2026-11-14", "time": "02:00", "title": "Upgrade pve-02 kernel", "kind": "maint"}, {"date": "2026-11-24", "time": "02:00", "title": "Swap sdb on nas-01", "kind": "maint"}, {"date": "2026-11-28", "time": "18:00", "title": "Cert renewal check", "kind": "other"}, {"date": "2026-11-22", "time": "10:00", "title": "Rack cleanup", "kind": "other"}, {"date": "2026-11-13", "time": "03:00", "title": "restic \u2192 b2", "kind": "backup", "status": "down"}, {"date": "2026-11-19", "time": "03:00", "title": "restic \u2192 b2", "kind": "backup", "status": "down"}]}</script>
+</div>
+<p class="pb-note" data-evcal-out style="margin:8px 0 0">Failed runs are marked. “+N more” opens the agenda.</p>

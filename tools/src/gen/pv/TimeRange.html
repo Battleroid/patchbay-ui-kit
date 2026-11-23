@@ -1,0 +1,40 @@
+<div style="display:grid;gap:16px">
+  <div class="pb-toolbar" style="flex-wrap:wrap">
+    <div class="pb-trange" data-trange data-from="now-6h" data-to="now">
+      <div class="pb-btngroup">
+        <button type="button" class="pb-btn pb-btn--icon" data-trange-back aria-label="Earlier" title="Earlier"><span class="pb-icon pb-icon--chevron-right pb-icon--flip"></span></button>
+        <button type="button" class="pb-btn" data-trange-open><span class="pb-icon pb-icon--clock"></span><span class="pb-trange__label">Last 6 hours</span><span class="pb-icon pb-icon--chevron-down"></span></button>
+        <button type="button" class="pb-btn pb-btn--icon" data-trange-fwd aria-label="Later" title="Later"><span class="pb-icon pb-icon--chevron-right"></span></button>
+        <button type="button" class="pb-btn pb-btn--icon" data-trange-zoom aria-label="Zoom out" title="Zoom out"><span class="pb-icon pb-icon--zoom-out"></span></button>
+      </div>
+      <div class="pb-popover pb-trange__pop" role="dialog" aria-label="Time range">
+        <div class="pb-trange__grid">
+          <div class="pb-trange__abs"><h3>absolute range</h3>
+            <label class="pb-field"><span class="pb-field__label">From</span><span class="pb-input"><input data-tr-from spellcheck="false"></span></label>
+            <label class="pb-field"><span class="pb-field__label">To</span><span class="pb-input"><input data-tr-to spellcheck="false"></span></label>
+            <span class="pb-field__help" data-tr-err aria-live="polite"></span>
+            <button type="button" class="pb-btn pb-btn--primary" data-tr-apply>Apply range</button>
+            <div><h3 style="margin-bottom:6px">recently used</h3><div class="pb-trange__recent"></div></div>
+          </div>
+          <div class="pb-trange__quick"><span class="pb-input pb-input--sm"><span class="pb-icon pb-icon--search"></span><input type="search" placeholder="Search ranges" aria-label="Search quick ranges"></span><ul></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="pb-btngroup pb-refresh" data-refresh data-interval="0">
+      <button type="button" class="pb-btn" data-refresh-now aria-label="Refresh now"><span class="pb-icon pb-icon--refresh"></span>Refresh</button>
+      <button type="button" class="pb-btn" data-refresh-menu><span class="pb-refresh__dot"></span><span data-refresh-label>Off</span><span class="pb-icon pb-icon--chevron-down"></span></button>
+      <div class="pb-menu" role="menu" aria-label="Auto-refresh">
+        <button class="pb-menu__item" role="menuitemradio" data-interval="0">Off</button><hr class="pb-menu__sep">
+        <button class="pb-menu__item" role="menuitemradio" data-interval="5">5s</button><button class="pb-menu__item" role="menuitemradio" data-interval="10">10s</button><button class="pb-menu__item" role="menuitemradio" data-interval="30">30s</button><button class="pb-menu__item" role="menuitemradio" data-interval="60">1m</button><button class="pb-menu__item" role="menuitemradio" data-interval="300">5m</button>
+      </div>
+    </div>
+    <span class="pb-note" data-tr-out style="margin:0"></span>
+  </div>
+  <figure class="pb-ts" data-ts style="--h:220px">
+    <div class="pb-ts__head"><span class="pb-eyebrow">cpu · %</span><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm pb-ts__reset" hidden><span class="pb-icon pb-icon--zoom-out"></span>Reset zoom</button></div>
+    <div class="pb-ts__plot"></div>
+    <ul class="pb-ts__legend"></ul>
+    <script type="application/json">{"series":[],"unit":"%","threshold":{"v":85,"label":"alert 85%"}}</script>
+  </figure>
+  <p class="pb-note" style="margin:0">Drag across the chart to zoom; the range picker follows. Click legend items to hide a series, Alt-click to show only it. Focus the chart and use ← → to read values, Esc to reset.</p>
+</div>

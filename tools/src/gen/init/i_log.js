@@ -1,0 +1,2 @@
+document.querySelectorAll('[data-log]').forEach(function(l){pbLog(l);var M=[['info','GET /Items/latest 200 in 18 ms'],['debug','Cache hit for image tag 9f3c'],['info','User alex started playback of “Fan curve test”'],['warn','Client 10.0.20.14 is buffering; bitrate lowered to 4 Mbps'],['info','GET /Sessions 200 in 6 ms'],['error','Database is locked; retrying in 500 ms'],['info','Playback stopped after 4:12']],k=0;
+  setInterval(function(){var m=M[k++%M.length];l.pbAppend({level:m[0],msg:m[1]});},1800);});

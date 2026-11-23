@@ -1,0 +1,15 @@
+<div style="display:grid;gap:16px">
+  <label class="pb-field"><span class="pb-field__label">Hostname</span>
+    <span class="pb-input"><input value="nas-01"></span>
+    <span class="pb-field__help">Lowercase, no dots.</span></label>
+  <label class="pb-field"><span class="pb-field__label">Upstream</span>
+    <span class="pb-input"><span class="pb-input__affix">https://</span><input placeholder="jellyfin.lan:8096"></span></label>
+  <label class="pb-field"><span class="pb-field__label">Search</span>
+    <span class="pb-input"><span class="pb-icon pb-icon--search"></span><input placeholder="Filter services"><span class="pb-kbd">/</span></span></label>
+  <label class="pb-field" data-invalid><span class="pb-field__label">Port</span>
+    <span class="pb-input"><input value="80800"></span>
+    <span class="pb-field__help"><span class="pb-icon pb-icon--status-down pb-icon--16"></span>Port must be 1–65535.</span></label>
+  <label class="pb-field"><span class="pb-field__label">Description</span>
+    <span class="pb-input"><textarea maxlength="140" data-count="120" placeholder="What is this share for?">Photos from the rack rebuild.</textarea></span>
+    <span class="pb-field__meta"><span class="pb-field__help">Shown on the share page.</span><span class="pb-field__count" aria-live="polite"></span></span></label>
+</div>

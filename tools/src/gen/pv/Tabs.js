@@ -1,0 +1,1 @@
+document.querySelectorAll('.pb-tabs').forEach(function(l){var tabs=l.querySelectorAll('.pb-tab');tabs.forEach(function(t){t.onclick=function(){tabs.forEach(function(x){x.setAttribute('aria-selected',x===t);document.getElementById(x.getAttribute('aria-controls')).hidden=x!==t;});};});});

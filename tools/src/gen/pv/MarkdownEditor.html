@@ -1,0 +1,23 @@
+<div class="pb-md" data-md data-view="split" style="--md-h:240px">
+  <div class="pb-md__bar" role="toolbar" aria-label="Formatting">
+    <button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="bold" title="Bold (⌘B)" aria-label="Bold">B</button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="italic" title="Italic (⌘I)" aria-label="Italic"><i>I</i></button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="code" title="Code (⌘E)" aria-label="Inline code">`</button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="link" title="Link (⌘K)" aria-label="Link"><span class="pb-icon pb-icon--link"></span></button>
+    <span class="pb-md__sep"></span>
+    <button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="h" aria-label="Heading">H</button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="ul" aria-label="Bulleted list"><span class="pb-icon pb-icon--list"></span></button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="task" aria-label="Task list"><span class="pb-icon pb-icon--check"></span></button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="quote" aria-label="Quote">“</button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="block" aria-label="Code block">{ }</button>
+    <span class="pb-toolbar__spacer" style="flex:1"></span>
+    <div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="View" data-md-view><label><input type="radio" name="mdv" value="write">write</label><label><input type="radio" name="mdv" value="split" checked>split</label><label><input type="radio" name="mdv" value="preview">preview</label></div>
+  </div>
+  <div class="pb-md__panes"><textarea aria-label="Share description, markdown" spellcheck="true">## Rack rebuild
+
+Photos from **Saturday’s** rebuild. The new patch panel is in `U12`; see [the wiring notes](https://snap.lab.home/s/w1r3).
+
+- [x] Swap the switch
+- [x] Re-terminate the patch panel
+- [ ] Label every run
+
+> Fans are quieter at 30% now.
+
+```
+zpool status tank
+```</textarea><div class="pb-md__preview pb-prose" aria-live="polite"></div></div>
+  <div class="pb-md__foot"><span data-md-count></span><span>markdown · ⌘B ⌘I ⌘K ⌘E</span></div>
+</div>

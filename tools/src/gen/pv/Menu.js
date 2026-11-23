@@ -1,0 +1,1 @@
+document.querySelectorAll('[popovertarget]').forEach(function(b){var m=document.getElementById(b.getAttribute('popovertarget'));if(!m)return;m.addEventListener('toggle',function(e){if(e.newState==='open'){var r=b.getBoundingClientRect();m.style.left=r.left+'px';m.style.top=(r.bottom+6)+'px';}});});

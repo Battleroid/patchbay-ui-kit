@@ -1,0 +1,22 @@
+<div class="pb-tablewrap" data-bulk style="overflow:visible">
+  <div class="pb-tablescroll">
+  <table class="pb-table">
+    <thead><tr><th class="pb-cell-check"><input type="checkbox" class="pb-check" aria-label="Select all" data-all></th><th>Container</th><th>Image</th><th>Status</th><th class="pb-num">CPU</th></tr></thead>
+    <tbody>
+      <tr><td class="pb-cell-check"><input type="checkbox" class="pb-check" data-row checked aria-label="Select jellyfin"></td><td class="pb-table__name">jellyfin</td><td class="pb-mono">jellyfin:10.10.3</td><td><span class="pb-badge" data-status="ok"><span class="pb-icon"></span>running</span></td><td class="pb-num">12%</td></tr>
+      <tr><td class="pb-cell-check"><input type="checkbox" class="pb-check" data-row checked aria-label="Select sonarr"></td><td class="pb-table__name">sonarr</td><td class="pb-mono">sonarr:4.0.11</td><td><span class="pb-badge" data-status="ok"><span class="pb-icon"></span>running</span></td><td class="pb-num">2%</td></tr>
+      <tr><td class="pb-cell-check"><input type="checkbox" class="pb-check" data-row aria-label="Select radarr"></td><td class="pb-table__name">radarr</td><td class="pb-mono">radarr:5.14</td><td><span class="pb-badge" data-status="paused"><span class="pb-icon"></span>stopped</span></td><td class="pb-num">—</td></tr>
+      <tr><td class="pb-cell-check"><input type="checkbox" class="pb-check" data-row checked aria-label="Select prowlarr"></td><td class="pb-table__name">prowlarr</td><td class="pb-mono">prowlarr:1.25</td><td><span class="pb-badge" data-status="warn"><span class="pb-icon"></span>restarting</span></td><td class="pb-num">0%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="pb-bulkbar" role="region" aria-label="Bulk actions">
+    <span class="pb-bulkbar__count" data-bulk-count aria-live="polite"></span>
+    <span class="pb-bulkbar__sep"></span>
+    <button type="button" class="pb-btn pb-btn--sm" data-bulk-action="restart"><span class="pb-icon pb-icon--refresh"></span>Restart</button>
+    <button type="button" class="pb-btn pb-btn--sm" data-bulk-action="stop"><span class="pb-icon pb-icon--power"></span>Stop</button>
+    <button type="button" class="pb-btn pb-btn--sm pb-btn--danger" data-bulk-action="remove"><span class="pb-icon pb-icon--trash"></span>Remove</button>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" data-bulk-clear aria-label="Clear selection" title="Clear (Esc)"><span class="pb-icon pb-icon--close"></span></button>
+  </div>
+</div>
+<p class="pb-note" data-bulk-out style="margin:8px 0 0">Select rows to show the bar; Esc clears.</p>

@@ -1,0 +1,18 @@
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px;align-items:start" data-rack-demo>
+  <div class="pb-rack" data-rack data-units="12" aria-label="Rack A, 12U">
+    <div class="pb-rack__title">rack a · 12u</div>
+    <div class="pb-rack__rail"></div>
+    <div class="pb-rack__slots">
+      <button type="button" class="pb-rack__dev" data-kind="panel" data-u="12" data-status="ok"><span class="pb-icon pb-icon--network"></span><b>patch-24</b><small>24 ports</small></button>
+      <button type="button" class="pb-rack__dev" data-u="11" data-status="ok"><span class="pb-icon pb-icon--network"></span><b>sw-core</b><small>10.0.0.2</small><span class="pb-rack__led"></span></button>
+      <button type="button" class="pb-rack__dev" data-u="10" data-status="ok"><span class="pb-icon pb-icon--shield"></span><b>opnsense</b><small>10.0.0.1</small><span class="pb-rack__led"></span></button>
+      <div class="pb-rack__dev" data-kind="blank" data-u="9">blank</div>
+      <button type="button" class="pb-rack__dev" data-u="7" data-span="2" data-status="ok" data-host="pve-01" data-cpu="18%" data-mem="41 / 128 GB"><span class="pb-icon pb-icon--server"></span><b>pve-01</b><small>10.0.10.11</small><span class="pb-rack__led"></span></button>
+      <button type="button" class="pb-rack__dev" data-u="5" data-span="2" data-status="warn" data-host="pve-02" data-cpu="77%" data-mem="112 / 128 GB"><span class="pb-icon pb-icon--server"></span><b>pve-02</b><small>10.0.10.12</small><span class="pb-rack__led"></span></button>
+      <button type="button" class="pb-rack__dev" data-u="2" data-span="3" data-status="down" data-host="nas-01" data-cpu="—" data-mem="sdb faulted"><span class="pb-icon pb-icon--database"></span><b>nas-01</b><small>raidz2 · degraded</small><span class="pb-rack__led"></span></button>
+      <button type="button" class="pb-rack__dev" data-u="1" data-status="off" data-host="ups-1500" data-cpu="—" data-mem="on mains"><span class="pb-icon pb-icon--status-maint"></span><b>ups</b><small>1500 VA</small><span class="pb-rack__led"></span></button>
+    </div>
+    <div class="pb-rack__rail"></div>
+  </div>
+  <div class="pb-card" style="padding:16px" data-rack-detail><p class="pb-note" style="margin:0">Pick a device to see it here.</p></div>
+</div>

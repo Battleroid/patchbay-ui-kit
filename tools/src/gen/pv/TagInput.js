@@ -1,0 +1,8 @@
+function pbTags(box){var inp=box.querySelector('input');
+ function add(v){v=v.trim().replace(/,$/,'');if(!v)return;if([].some.call(box.querySelectorAll('.pb-tag'),function(t){return t.firstChild.textContent===v}))return;
+  var t=document.createElement('span');t.className='pb-tag';t.textContent=v;var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Remove '+v);b.innerHTML='<span class="pb-icon pb-icon--close"></span>';t.appendChild(b);box.insertBefore(t,inp);box.dispatchEvent(new Event('change',{bubbles:true}));}
+ box.addEventListener('click',function(e){var b=e.target.closest('.pb-tag button');if(b){b.parentNode.remove();inp.focus();}else if(e.target===box)inp.focus();});
+ inp.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===','||e.key==='Tab'&&inp.value){if(inp.value.trim()){e.preventDefault();add(inp.value);inp.value='';}}
+  else if(e.key==='Backspace'&&!inp.value){var l=box.querySelectorAll('.pb-tag');if(l.length)l[l.length-1].remove();}});
+ inp.addEventListener('paste',function(e){var t=(e.clipboardData||window.clipboardData).getData('text');if(/[,\n]/.test(t)){e.preventDefault();t.split(/[,\n]/).forEach(add);}});}
+document.querySelectorAll('[data-tags]').forEach(pbTags);

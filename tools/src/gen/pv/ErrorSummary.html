@@ -1,0 +1,7 @@
+<form class="pb-form" data-validate>
+  <div class="pb-errsum" role="alert" tabindex="-1" hidden><p class="pb-errsum__title"><span class="pb-icon pb-icon--status-down"></span>There is a problem</p><ul></ul></div>
+  <label class="pb-field"><span class="pb-field__label">Share name</span><span class="pb-input"><input id="es-name" required data-error="Enter a name for the share"></span></label>
+  <label class="pb-field"><span class="pb-field__label">Notify email</span><span class="pb-input"><input id="es-mail" type="email" value="alex@" data-error="Enter an email address like alex@lab.home"></span></label>
+  <label class="pb-field"><span class="pb-field__label">Expires in days</span><span class="pb-input"><input id="es-days" type="number" min="1" max="365" value="400" data-error="Expiry must be between 1 and 365 days"></span></label>
+  <div class="pb-form__actions"><button class="pb-btn pb-btn--primary">Create share</button></div>
+</form>

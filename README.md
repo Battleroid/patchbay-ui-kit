@@ -14,7 +14,11 @@
 - Tokens: `tokens.json` is the source; every value is also a CSS custom property (`var(--accent)`, `var(--space-4)`, `var(--radius-md)`). Use tokens, never raw hex or px.
 - Icons: `<span class="pb-icon pb-icon--NAME"></span>` (paints in `currentColor`). Raw SVGs are in `icons/soft` and `icons/hard`.
 - `demo.html` shows every component on one page; `index.html` opens it, so GitHub Pages serves the demo at the site root.
-- Components: ApiTokens, AppShell, Avatar, Badge, BarChart, Breadcrumbs, BulkActions, Button, ButtonGroup, Card, Chart, ChartGround, Checkbox, ChoiceCard, CodeArea, CodeInput, ColorPicker, Combobox, CommandPalette, ContextMenu, CopyField, CronBuilder, Dashboard, DataTable, DatePicker, DetailList, Diagram, Dialog, DiffViewer, Disclosure, DropZone, DualRange, EmptyState, ErrorSummary, Fieldset, FileBrowser, Flow, Gauge, Heatmap, Histogram, Icons, ImageViewer, InputTypes, JsonViewer, KeyValue, Link, ListItem, Loading, LogExplorer, LogViewer, Media, MediaPlayer, Menu, Notice, Notifications, Pagination, Pill, Popover, PrintReport, Progress, Prose, QRCode, QueryFilter, Rack, Radio, Range, Resizable, Scrollbars, Segmented, Select, SettingsPage, Shortcuts, SignIn, SiteBanner, SkipLink, Sortable, Sparkline, StatTile, StatusPage, Steps, StorageBar, Switch, Tabs, TagInput, Terminal, TextInput, TextUtils, ThemeSwitch, TimePicker, Timeline, Toast, Tooltip, TreeView, UploadQueue, VirtualList.
+- Density: `data-density="compact"` on `<html>` or a container for dense views.
+- App icons and a web manifest are in `app-icons/`; the alert email template is `email/alert.html`.
+- `tools/build.sh` rebuilds everything from `tools/src` (see `tools/README.md`). `npm test` runs the accessibility, layout and screenshot checks against `demo.html`.
+- License: MIT for the code and docs (`LICENSE`); the fonts are under the SIL Open Font License 1.1 (`fonts/OFL.txt`).
+- Components: AlertEmail, ApiTokens, AppIcons, AppShell, Avatar, Badge, BarChart, Breadcrumbs, BulkActions, Button, ButtonGroup, Card, Chart, ChartGround, Checkbox, ChoiceCard, CodeArea, CodeInput, ColorPicker, Combobox, CommandPalette, CommentThread, ContextMenu, CopyField, CronBuilder, Dashboard, DataTable, DatePicker, Density, DetailList, Diagram, Dialog, DiffViewer, Disclosure, DropZone, DualRange, EmptyState, ErrorSummary, EventCalendar, Fieldset, FileBrowser, FilePreview, Flow, Gauge, Heatmap, Histogram, Icons, ImageViewer, InputTypes, JsonViewer, KeyValue, Link, ListItem, Loading, LogExplorer, LogViewer, MarkdownEditor, Media, MediaPlayer, Menu, MobileNav, Notice, Notifications, NotifySettings, Pagination, Pill, Popover, PrintReport, Progress, Prose, QRCode, QueryFilter, Rack, Radio, Range, Resizable, Scrollbars, Segmented, Select, SessionTimeout, SettingsPage, ShareDialog, Shortcuts, SignIn, SiteBanner, SiteHeader, SkipLink, Sortable, Sparkline, StatTile, StatusPage, Steps, StorageBar, Switch, TableTools, Tabs, TagInput, Terminal, TextInput, TextUtils, ThemeSwitch, TimePicker, TimeRange, Timeline, Toast, Tooltip, TreeView, UploadQueue, VirtualList.
 
 A document-first system for small self-hosted apps: status pages, dashboards, file and media sharing, config editors. Text is set like a well-kept personal site — a comfortable serif on warm paper, mono for anything a machine would print — with a few saturated pop fills for color. It ships in two edge variants that share every color and type token: **soft** (rounded, diffuse shadows) and **hard** (square, ink borders, offset shadows), and in two themes: **light** (warm paper, the default) and **dark** (warm charcoal).
 
@@ -25,6 +29,9 @@ A document-first system for small self-hosted apps: status pages, dashboards, fi
 - Pick a theme with `data-theme="light"` or `data-theme="dark"` on `<html>` (whole app) or any container (one panel). Default to the system setting with a ThemeSwitch in the header tools; see ThemeSwitch for the no-flash snippet.
 - Start every app from AppShell: skip link, header (brand, ⌘K search, tools), side nav, page header, main, footer.
 - Components are CSS only. Class prefix is `pb-`. Previews show both variants side by side.
+- Dense views (log tables, admin lists) set `data-density="compact"` on `<html>` or a container: 28px controls, tighter rows and cards. See Density.
+- Windows high contrast (`forced-colors: active`) is handled in the bundle: borders, focus rings, selection and chart series stay visible. Never carry meaning in a background color alone.
+- Every app ships the AppIcons head snippet (favicon, touch icon, manifest, `theme-color`).
 
 ## Content
 
@@ -75,9 +82,10 @@ A document-first system for small self-hosted apps: status pages, dashboards, fi
 - Lists and records: ListItem rows, DetailList for one thing's fields, Data table for comparing many, Timeline for the record of events. Empty and failed states use EmptyState and Result; loading uses skeletons or a spinner (Loading).
 - Forms with more than two fields get an ErrorSummary at the top. Lists people filter often get a QueryFilter (`status:down host:nas-*`); selected rows get a BulkActions bar.
 - Homelab views: LogViewer for live logs, Terminal for command output, DiffViewer for config changes, FileBrowser for storage, CronBuilder for schedules, StorageBar for pools, Rack for hardware.
+- Time-based views put a TimeRange picker and auto-refresh in the page header; the time-series chart zooms by drag and follows the picker.
 - Charts: Chart for lines over time, BarChart for amounts per category (stacked or horizontal), Histogram for distributions, Gauge for one value against limits, donuts for parts of a whole (five at most), Heatmap for per-day activity or pass/fail, JsonViewer for structured data.
-- Over about 2,000 rows use VirtualList. Reorderable things use Sortable, never drag without a keyboard path. Uploads report progress in an UploadQueue. Every app lists its shortcuts in a Shortcuts sheet on `?`.
-- Feedback: Toast for the result of the user's own action (with Undo where possible), Notice for a problem on the page, Notifications for what happened while they were away, Dialog only to confirm or to collect input that cannot wait.
+- Over about 2,000 rows use VirtualList. Reorderable things use Sortable, never drag without a keyboard path. Uploads report progress in an UploadQueue. Every app lists its shortcuts in a Shortcuts sheet on `?`. Big tables use TableTools (columns, density, expandable rows, inline edit, CSV). Scheduled work shows in an EventCalendar.
+- Feedback: Toast for the result of the user's own action (with Undo where possible), Notice for a problem on the page, Notifications for what happened while they were away, Dialog only to confirm or to collect input that cannot wait. SessionTimeout warns a minute before sign-out. Alerts sent by email use the AlertEmail template.
 - Panels people pick or open are `pb-card--outline`: a quiet outline that turns `accent` on hover and focus.
 
 ## Layout
@@ -87,6 +95,7 @@ A document-first system for small self-hosted apps: status pages, dashboards, fi
 - Control height `size-control` (36px), small `size-control-sm` (28px).
 - Apps: AppShell with a 240px nav; under 900px the nav becomes a drawer. Page content uses `pb-pagehead` then `pb-layout` (content plus a 300px aside, stacking when narrow). Resizable splits list and preview panes.
 - Site banners sit above the shell header, one at a time.
+- Public sites and docs use SiteHeader (brand, links or dropdown menus, search, theme, one call to action) instead of AppShell; under 760px the links fold into a menu. Phone-first apps use MobileNav: a bottom tab bar (five tabs at most) and action sheets.
 - Page templates: Dashboard (12-column `pb-dash` grid), SettingsPage (section nav, setting rows, danger zone last), SignIn (sign-in, two-factor setup, code prompt), ApiTokens (show once, revoke). Start new screens from these.
 - Scrollbars are thin and themed automatically inside `.pb`.
 - Printing hides app chrome, drops shadows and expands scroll areas; reports use `pb-report` (see PrintReport).

@@ -1,0 +1,2 @@
+document.querySelectorAll('[data-qr]').forEach(pbQRCode);
+document.querySelectorAll('[data-copy-text]').forEach(function(b){b.addEventListener('click',function(){var l=b.querySelector('span:not(.pb-icon)');(navigator.clipboard?navigator.clipboard.writeText(b.dataset.copyText):Promise.reject()).then(function(){l.textContent='Copied';setTimeout(function(){l.textContent='Copy link'},1500)},function(){l.textContent='Press ⌘C'});});});

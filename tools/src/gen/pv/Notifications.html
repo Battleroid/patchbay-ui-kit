@@ -1,0 +1,26 @@
+<div style="display:grid;gap:20px;justify-items:start">
+  <div data-inbox>
+    <button type="button" class="pb-btn pb-btn--icon pb-bell" aria-label="Notifications"><span class="pb-icon pb-icon--bell"></span><span class="pb-bell__count"></span></button>
+    <div class="pb-inbox" popover role="dialog" aria-label="Notifications" tabindex="-1">
+      <div class="pb-inbox__head"><h3 class="pb-inbox__title">Notifications</h3><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-readall>Mark all read</button></div>
+      <ul class="pb-inbox__list">
+        <li class="pb-notif" data-unread data-status="down" tabindex="0"><span class="pb-icon pb-icon--status-down"></span><span class="pb-notif__title">Offsite backup failed</span><span class="pb-notif__time">2m</span><span class="pb-notif__body">403 from b2 bucket. Retry scheduled at 04:00.</span></li>
+        <li class="pb-notif" data-unread data-status="info" tabindex="0"><span class="pb-icon pb-icon--link"></span><span class="pb-notif__title">alex opened “Rack rebuild”</span><span class="pb-notif__time">1h</span><span class="pb-notif__body">Downloaded 4 of 6 files.</span></li>
+        <li class="pb-notif" data-status="ok" tabindex="0"><span class="pb-icon pb-icon--status-ok"></span><span class="pb-notif__title">Scrub finished on tank</span><span class="pb-notif__time">yesterday</span><span class="pb-notif__body">No errors. Took 5h 12m.</span></li>
+      </ul>
+      <p class="pb-inbox__empty" hidden>You're all caught up.</p>
+      <div class="pb-inbox__foot"><a class="pb-link" href="#" style="font-size:14px">View all activity</a></div>
+    </div>
+  </div>
+  <div data-inbox style="width:100%">
+    <button type="button" class="pb-btn pb-btn--icon pb-bell" aria-label="Notifications" hidden><span class="pb-icon pb-icon--bell"></span><span class="pb-bell__count"></span></button>
+    <div class="pb-inbox pb-inbox--inline" role="region" aria-label="Notifications">
+      <div class="pb-inbox__head"><h3 class="pb-inbox__title">Notifications</h3><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-readall>Mark all read</button></div>
+      <ul class="pb-inbox__list">
+        <li class="pb-notif" data-unread data-status="warn" tabindex="0"><span class="pb-icon pb-icon--status-warn"></span><span class="pb-notif__title">Certificate expires in 9 days</span><span class="pb-notif__time">3h</span><span class="pb-notif__body">*.lab.home · renewal failed twice.</span></li>
+        <li class="pb-notif" data-status="ok" tabindex="0"><span class="pb-icon pb-icon--status-ok"></span><span class="pb-notif__title">Nightly backup finished</span><span class="pb-notif__time">03:12</span></li>
+      </ul>
+      <p class="pb-inbox__empty" hidden>You're all caught up.</p>
+    </div>
+  </div>
+</div>

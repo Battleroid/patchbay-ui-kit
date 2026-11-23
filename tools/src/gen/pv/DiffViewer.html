@@ -1,0 +1,49 @@
+<div class="pb-diff" data-diff data-mode="unified" data-context="2">
+  <div class="pb-diff__head">
+    <span class="pb-icon pb-icon--diff" style="color:var(--ink-muted)"></span><span class="pb-diff__file">stacks/media/compose.yaml</span><span class="pb-diff__stat"></span>
+    <span class="pb-toolbar__spacer" style="flex:1"></span>
+    <div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="View" data-diff-mode><label><input type="radio" name="dmode" value="unified">unified</label><label><input type="radio" name="dmode" value="split">split</label></div>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Wrap lines" aria-pressed="false" data-diff-wrap><span class="pb-icon pb-icon--wrap"></span></button>
+  </div>
+  <div class="pb-diff__scroll"></div>
+  <script type="text/plain" data-diff-old>
+# media stack
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.9.11
+    container_name: jellyfin
+    user: 1000:1000
+    network_mode: host
+    volumes:
+      - /tank/config/jellyfin:/config
+      - /tank/media:/media:ro
+      - /fast/cache:/cache
+    restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:4.0.9
+    environment:
+      - TZ=America/New_York
+</script>
+  <script type="text/plain" data-diff-new>
+# media stack
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.10.3
+    container_name: jellyfin
+    user: 1000:1000
+    group_add:
+      - "993"
+    network_mode: host
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - /tank/config/jellyfin:/config
+      - /tank/media:/media:ro
+      - /fast/cache:/cache
+    restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:4.0.11
+    environment:
+      - TZ=America/New_York
+</script>
+</div>

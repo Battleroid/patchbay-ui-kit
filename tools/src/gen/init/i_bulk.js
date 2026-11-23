@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-bulk]').forEach(function(s){pbBulk(s);s.addEventListener('bulk',function(e){var o=s.parentElement.querySelector('[data-bulk-out]');if(o)o.textContent=e.detail.action+': '+e.detail.items.map(function(r){return r.querySelector('.pb-table__name').textContent}).join(', ');});});

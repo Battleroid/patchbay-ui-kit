@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-email-w]').forEach(function(g){var f=g.closest('div').parentElement.querySelector('.pb-emailframe');g.querySelectorAll('input').forEach(function(i){i.addEventListener('change',function(){if(i.checked)f.style.width=i.value+'px';});});});

@@ -1,0 +1,2 @@
+document.querySelectorAll('[data-logx]').forEach(function(l){pbLogX(l);var A=[['jellyfin','nas-01','media','GET /Sessions 200 in 6 ms','info'],['restic','nas-02','backup','Files: 214 new, 3 changed','info'],['nextcloud','nas-01','files','Database is locked; retrying in 500 ms','warn'],['jellyfin','nas-01','media','Transcode failed for session 9e2b: /dev/dri/renderD128 permission denied','error']],k=0;
+  setInterval(function(){var a=A[k++%A.length];l.pbAppend({t:Date.now(),labels:{app:a[0],host:a[1],namespace:a[2],container:a[0]+'-1',level:a[4]},line:a[3]});},2500);});

@@ -21,6 +21,6 @@
     <span class="pb-field__meta"><span class="pb-field__help">Shown on the share page.</span><span class="pb-field__count" aria-live="polite"></span></span></label>
 </div>
 <script>
-document.querySelectorAll('[data-count]').forEach(function(t){var c=t.closest('.pb-field').querySelector('.pb-field__count'),max=+t.dataset.count;function up(){var n=t.value.length;c.textContent=n+' / '+max;n>max?c.setAttribute('data-over',''):c.removeAttribute('data-over');}t.addEventListener('input',up);up();});
+document.querySelectorAll('.pb-field [data-count]').forEach(function(t){var c=t.closest('.pb-field').querySelector('.pb-field__count');if(!c)return;var max=+t.dataset.count;function up(){var n=t.value.length;c.textContent=n+' / '+max;n>max?c.setAttribute('data-over',''):c.removeAttribute('data-over');}t.addEventListener('input',up);up();});
 </script>
 </body></html>

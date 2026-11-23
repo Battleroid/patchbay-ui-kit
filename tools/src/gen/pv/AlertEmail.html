@@ -1,0 +1,67 @@
+<div style="display:grid;gap:12px">
+  <div class="pb-toolbar"><div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="Preview width" data-email-w><label><input type="radio" name="ew" value="640" checked>desktop</label><label><input type="radio" name="ew" value="375">phone</label></div><span class="pb-note" style="margin:0">Inline styles and tables only, so it survives Gmail, Outlook and Apple Mail. Dark mode where the client supports it.</span></div>
+  <iframe class="pb-emailframe" title="Alert email preview" style="width:640px;max-width:100%;height:760px;border:var(--stroke-1) solid var(--pb-border);border-radius:var(--pb-r-lg);background:#faf8f3" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;color-scheme&quot; content=&quot;light dark&quot;&gt;
+&lt;meta name=&quot;supported-color-schemes&quot; content=&quot;light dark&quot;&gt;
+&lt;title&gt;Backup failed on nas-02&lt;/title&gt;
+&lt;style&gt;
+  @media (prefers-color-scheme: dark) {
+    .pb-e-bg { background: #14120e !important; }
+    .pb-e-card { background: #1c1a15 !important; border-color: #36322a !important; }
+    .pb-e-ink { color: #f2ede3 !important; }
+    .pb-e-muted { color: #aaa396 !important; }
+    .pb-e-rule { border-color: #36322a !important; }
+    .pb-e-code { background: #191712 !important; color: #f2ede3 !important; }
+  }
+  @media (max-width: 600px) { .pb-e-pad { padding: 20px !important; } }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body class=&quot;pb-e-bg&quot; style=&quot;margin:0;padding:0;background:#faf8f3;&quot;&gt;
+&lt;!-- Preheader: shows in the inbox list, hidden in the message. --&gt;
+&lt;div style=&quot;display:none;max-height:0;overflow:hidden;opacity:0;&quot;&gt;restic → b2 failed at 03:12 with 403 Forbidden. Next try 04:00.&lt;/div&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; class=&quot;pb-e-bg&quot; style=&quot;background:#faf8f3;&quot;&gt;
+  &lt;tr&gt;&lt;td align=&quot;center&quot; style=&quot;padding:24px 12px;&quot;&gt;
+    &lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;max-width:560px;&quot;&gt;
+      &lt;tr&gt;&lt;td style=&quot;padding:0 4px 14px;font:600 17px/24px Georgia,&#x27;Source Serif 4&#x27;,serif;&quot; class=&quot;pb-e-ink&quot;&gt;
+        &lt;span style=&quot;display:inline-block;width:22px;height:22px;margin-right:8px;vertical-align:-5px;background:#1f3fd6;border-radius:6px;&quot;&gt;&lt;/span&gt;&lt;span style=&quot;color:#17150f;&quot; class=&quot;pb-e-ink&quot;&gt;lab.home&lt;/span&gt;
+      &lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class=&quot;pb-e-card&quot; style=&quot;background:#ffffff;border:1px solid #dcd6ca;border-radius:10px;overflow:hidden;&quot;&gt;
+        &lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;
+          &lt;tr&gt;&lt;td style=&quot;background:#c42d16;padding:10px 24px;font:600 13px/18px &#x27;Courier New&#x27;,monospace;color:#ffffff;letter-spacing:.04em;&quot;&gt;✕&amp;nbsp; FAILED · BACKUP&lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td class=&quot;pb-e-pad&quot; style=&quot;padding:24px 28px 8px;&quot;&gt;
+            &lt;h1 class=&quot;pb-e-ink&quot; style=&quot;margin:0 0 8px;font:600 23px/30px Georgia,&#x27;Source Serif 4&#x27;,serif;color:#17150f;&quot;&gt;Backup failed on nas-02&lt;/h1&gt;
+            &lt;p class=&quot;pb-e-muted&quot; style=&quot;margin:0;font:400 16px/24px Georgia,&#x27;Source Serif 4&#x27;,serif;color:#5b564c;&quot;&gt;&lt;code&gt;restic → b2&lt;/code&gt; stopped at 03:12 with &lt;b&gt;403 Forbidden&lt;/b&gt; from the bucket. The next try is at 04:00. If it fails again, last night’s photos won’t be offsite.&lt;/p&gt;
+          &lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td class=&quot;pb-e-pad&quot; style=&quot;padding:16px 28px 8px;&quot;&gt;
+            &lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;font:400 14px/20px &#x27;Courier New&#x27;,monospace;&quot;&gt;
+              &lt;tr&gt;&lt;td class=&quot;pb-e-muted pb-e-rule&quot; style=&quot;padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;width:38%;&quot;&gt;host&lt;/td&gt;&lt;td class=&quot;pb-e-ink pb-e-rule&quot; style=&quot;padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;&quot;&gt;nas-02&lt;/td&gt;&lt;/tr&gt;
+              &lt;tr&gt;&lt;td class=&quot;pb-e-muted pb-e-rule&quot; style=&quot;padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;&quot;&gt;job&lt;/td&gt;&lt;td class=&quot;pb-e-ink pb-e-rule&quot; style=&quot;padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;&quot;&gt;restic → b2&lt;/td&gt;&lt;/tr&gt;
+              &lt;tr&gt;&lt;td class=&quot;pb-e-muted pb-e-rule&quot; style=&quot;padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;&quot;&gt;started&lt;/td&gt;&lt;td class=&quot;pb-e-ink pb-e-rule&quot; style=&quot;padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;&quot;&gt;2026-11-23 03:00 EST&lt;/td&gt;&lt;/tr&gt;
+              &lt;tr&gt;&lt;td class=&quot;pb-e-muted pb-e-rule&quot; style=&quot;padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;&quot;&gt;last success&lt;/td&gt;&lt;td class=&quot;pb-e-ink pb-e-rule&quot; style=&quot;padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;&quot;&gt;2026-11-21 03:09&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+          &lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td class=&quot;pb-e-pad&quot; style=&quot;padding:8px 28px 4px;&quot;&gt;
+            &lt;pre class=&quot;pb-e-code&quot; style=&quot;margin:0;padding:12px 14px;background:#f5f2eb;border-radius:6px;font:400 12px/18px &#x27;Courier New&#x27;,monospace;color:#17150f;white-space:pre-wrap;word-break:break-word;&quot;&gt;Fatal: unable to open repository at b2:lab-backups:/restic
+  b2_download_file_by_name: 403: Forbidden&lt;/pre&gt;
+          &lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td class=&quot;pb-e-pad&quot; style=&quot;padding:20px 28px 28px;&quot;&gt;
+            &lt;table role=&quot;presentation&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;
+              &lt;td style=&quot;border-radius:6px;background:#1f3fd6;&quot;&gt;&lt;a href=&quot;https://console.lab.home/backups/restic&quot; style=&quot;display:inline-block;padding:11px 20px;font:600 14px/18px &#x27;Courier New&#x27;,monospace;color:#ffffff;text-decoration:none;border-radius:6px;&quot;&gt;Open the run log&lt;/a&gt;&lt;/td&gt;
+              &lt;td style=&quot;width:12px;&quot;&gt;&lt;/td&gt;
+              &lt;td&gt;&lt;a href=&quot;https://status.lab.home&quot; class=&quot;pb-e-ink&quot; style=&quot;font:400 15px/20px Georgia,serif;color:#1f3fd6;&quot;&gt;Status page&lt;/a&gt;&lt;/td&gt;
+            &lt;/tr&gt;&lt;/table&gt;
+          &lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+      &lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class=&quot;pb-e-muted&quot; style=&quot;padding:16px 4px 0;font:400 12px/18px &#x27;Courier New&#x27;,monospace;color:#5b564c;&quot;&gt;You get this because “A backup fails” is on for email. &lt;a href=&quot;https://console.lab.home/settings#notifications&quot; style=&quot;color:#5b564c;&quot;&gt;Change notifications&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+  &lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</div>

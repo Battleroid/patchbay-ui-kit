@@ -1,0 +1,49 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      update_screenshots:
+        description: Regenerate the screenshot baselines and commit them
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Regenerate screenshot baselines
+        if: ${{ inputs.update_screenshots }}
+        run: |
+          npx playwright test --grep screenshots --update-snapshots
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/__screenshots__
+          git commit -m "Update screenshot baselines" || echo "No changes"
+          git push
+      - name: Accessibility, layout and script checks
+        run: npx playwright test --grep-invert screenshots
+      - name: Screenshot comparison
+        # Baselines are made on this runner (run the workflow by hand with
+        # update_screenshots ticked). Skipped until they exist.
+        run: |
+          if [ -d tests/__screenshots__ ]; then npx playwright test --grep screenshots; else echo "No baselines yet; run the workflow with update_screenshots."; fi
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results

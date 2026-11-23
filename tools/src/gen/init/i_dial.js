@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-dial]').forEach(pbDial);document.querySelectorAll('[data-donut]').forEach(pbDonut);document.querySelectorAll('[data-dial][data-live]').forEach(function(d){var v=87.5;setInterval(function(){v=Math.max(60,Math.min(124,v+(Math.random()-.45)*9));d.pbSet(Math.round(v*10)/10);},1600);});

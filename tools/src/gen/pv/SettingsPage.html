@@ -1,0 +1,43 @@
+<div data-tpl="settings" style="height:820px;overflow:auto;padding:4px 16px 24px 4px">
+<header class="pb-pagehead"><nav class="pb-crumbs" aria-label="Breadcrumb"><ol><li><a href="#"><span class="pb-icon pb-icon--home"></span>Overview</a></li><li><span aria-current="page">Settings</span></li></ol></nav><h1 class="pb-pagehead__title">Settings</h1><p class="pb-pagehead__desc">Applies to everyone using snap on lab.home.</p></header>
+<div class="pb-settings">
+  <ul class="pb-settings__nav" data-section-nav aria-label="Settings sections">
+    <li><a href="#set-general"><span class="pb-icon pb-icon--settings"></span>General</a></li>
+    <li><a href="#set-storage"><span class="pb-icon pb-icon--database"></span>Storage</a></li>
+    <li><a href="#set-notify"><span class="pb-icon pb-icon--bell"></span>Notifications</a></li>
+    <li><a href="#set-security"><span class="pb-icon pb-icon--shield"></span>Security</a></li>
+    <li><a href="#set-danger"><span class="pb-icon pb-icon--status-warn"></span>Danger zone</a></li>
+  </ul>
+  <div class="pb-settings__main">
+    <section id="set-general"><h2>General</h2>
+      <form class="pb-form" data-section onsubmit="return false"><fieldset class="pb-fieldset"><legend>Instance</legend>
+        <div class="pb-form__row"><label class="pb-field"><span class="pb-field__label">Name</span><span class="pb-input"><input value="snap"></span></label><label class="pb-field"><span class="pb-field__label">Public URL</span><span class="pb-input"><input value="https://snap.lab.home"></span></label></div>
+        <label class="pb-field"><span class="pb-field__label">Time zone</span><span class="pb-select"><select><option>America/New_York</option><option>UTC</option><option>Europe/Berlin</option></select></span><span class="pb-field__help">Used for schedules and timestamps in emails.</span></label>
+        <div class="pb-fieldset__foot"><span class="pb-foot__status"></span><button type="reset" class="pb-btn pb-btn--ghost" disabled>Discard</button><button class="pb-btn pb-btn--primary" disabled>Save</button></div>
+      </fieldset></form></section>
+    <section id="set-storage"><h2>Storage</h2><p>Where uploads land and how long they stay.</p>
+      <form class="pb-form" data-section onsubmit="return false"><fieldset class="pb-fieldset"><legend>Uploads</legend>
+        <div class="pb-setting"><span class="pb-setting__label">Default pool</span><span class="pb-setting__desc">New shares are stored here.</span><span class="pb-select"><select aria-label="Default pool"><option>tank</option><option>fast</option></select></span></div>
+        <div class="pb-setting"><span class="pb-setting__label">Default expiry</span><span class="pb-setting__desc">People can pick a different one per share.</span><span class="pb-select"><select aria-label="Default expiry"><option>7 days</option><option>30 days</option><option>never</option></select></span></div>
+        <div class="pb-setting"><span class="pb-setting__label">Keep deleted files</span><span class="pb-setting__desc">Restorable from the trash for 14 days.</span><input type="checkbox" class="pb-switch" checked aria-label="Keep deleted files"></div>
+        <div class="pb-fieldset__foot"><span class="pb-foot__status"></span><button type="reset" class="pb-btn pb-btn--ghost" disabled>Discard</button><button class="pb-btn pb-btn--primary" disabled>Save</button></div>
+      </fieldset></form></section>
+    <section id="set-notify"><h2>Notifications</h2>
+      <fieldset class="pb-fieldset"><legend>Email me when</legend>
+        <div class="pb-setting"><span class="pb-setting__label">A share is opened</span><span class="pb-setting__desc">At most one email per share per day.</span><input type="checkbox" class="pb-switch" aria-label="A share is opened"></div>
+        <div class="pb-setting"><span class="pb-setting__label">A backup fails</span><span class="pb-setting__desc">Sent right away.</span><input type="checkbox" class="pb-switch" checked aria-label="A backup fails"></div>
+        <div class="pb-setting"><span class="pb-setting__label">A pool passes 80%</span><span class="pb-setting__desc">Once per pool until it drops below.</span><input type="checkbox" class="pb-switch" checked aria-label="A pool passes 80%"></div>
+      </fieldset></section>
+    <section id="set-security"><h2>Security</h2>
+      <fieldset class="pb-fieldset"><legend>Sign-in</legend>
+        <div class="pb-setting"><span class="pb-setting__label">Require two-factor</span><span class="pb-setting__desc">Everyone sets it up at their next sign-in.</span><input type="checkbox" class="pb-switch" checked aria-label="Require two-factor"></div>
+        <div class="pb-setting"><span class="pb-setting__label">Sign out after</span><span class="pb-setting__desc">Idle time before a session ends.</span><span class="pb-select"><select aria-label="Sign out after"><option>1 hour</option><option selected>12 hours</option><option>30 days</option></select></span></div>
+      </fieldset></section>
+    <section id="set-danger"><h2>Danger zone</h2>
+      <fieldset class="pb-fieldset pb-danger"><legend>Irreversible</legend>
+        <div class="pb-setting"><span class="pb-setting__label">Revoke every share link</span><span class="pb-setting__desc">Files stay; all 12 links stop working.</span><button type="button" class="pb-btn pb-btn--danger" data-danger="revoke">Revoke links</button></div>
+        <div class="pb-setting"><span class="pb-setting__label">Delete this instance</span><span class="pb-setting__desc">Removes users, shares and 18.2 GB of files.</span><button type="button" class="pb-btn pb-btn--danger" data-danger="delete">Delete snap</button></div>
+      </fieldset></section>
+  </div>
+</div>
+</div>

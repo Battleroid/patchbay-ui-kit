@@ -1,0 +1,19 @@
+<div style="display:grid;gap:12px;justify-items:start">
+  <button type="button" class="pb-btn pb-shell__search" data-cmd-open="cmdk" style="margin:0;width:320px"><span class="pb-icon pb-icon--search"></span>Search or jump to…<span class="pb-kbd">⌘K</span></button>
+  <p class="pb-note" style="margin:0" data-cmd-out>Press ⌘K or Ctrl+K.</p>
+  <dialog class="pb-dialog pb-cmd" id="cmdk" aria-label="Command palette">
+    <div class="pb-cmd__search"><span class="pb-icon pb-icon--search"></span><input placeholder="Type a command or search…" aria-label="Search commands" role="combobox" aria-controls="cmdk-list" aria-expanded="true" autocomplete="off"><span class="pb-kbd">esc</span></div>
+    <ul class="pb-cmd__list" id="cmdk-list" role="listbox">
+      <li class="pb-cmd__group" role="presentation">jump to</li>
+      <li class="pb-cmd__item" data-cmd="open:jellyfin" data-keywords="media video"><span class="pb-icon pb-icon--server"></span><span class="pb-cmd__label">Jellyfin</span><span class="pb-cmd__hint">media.lab.home</span></li>
+      <li class="pb-cmd__item" data-cmd="open:nextcloud" data-keywords="files"><span class="pb-icon pb-icon--server"></span><span class="pb-cmd__label">Nextcloud</span><span class="pb-cmd__hint">cloud.lab.home</span></li>
+      <li class="pb-cmd__item" data-cmd="open:shares"><span class="pb-icon pb-icon--link"></span><span class="pb-cmd__label">Shares</span><span class="pb-cmd__hint"><span class="pb-kbd">g</span><span class="pb-kbd">s</span></span></li>
+      <li class="pb-cmd__group" role="presentation">actions</li>
+      <li class="pb-cmd__item" data-cmd="new-share" data-keywords="upload link"><span class="pb-icon pb-icon--plus"></span><span class="pb-cmd__label">New share</span><span class="pb-cmd__hint"><span class="pb-kbd">n</span></span></li>
+      <li class="pb-cmd__item" data-cmd="restart" data-keywords="reboot"><span class="pb-icon pb-icon--refresh"></span><span class="pb-cmd__label">Restart a service…</span></li>
+      <li class="pb-cmd__item" data-cmd="theme" data-keywords="dark light"><span class="pb-icon pb-icon--moon"></span><span class="pb-cmd__label">Toggle dark theme</span><span class="pb-cmd__hint"><span class="pb-kbd">t</span></span></li>
+    </ul>
+    <p class="pb-cmd__empty" hidden>No results. Try a service name or an action.</p>
+    <div class="pb-cmd__foot"><span><span class="pb-kbd">↑</span><span class="pb-kbd">↓</span> move</span><span><span class="pb-kbd">↵</span> open</span><span><span class="pb-kbd">esc</span> close</span></div>
+  </dialog>
+</div>

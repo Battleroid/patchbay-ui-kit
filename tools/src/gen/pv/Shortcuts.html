@@ -1,0 +1,31 @@
+<div style="display:grid;gap:12px;justify-items:start">
+  <button type="button" class="pb-btn" data-keys-open="keys"><span class="pb-icon pb-icon--keyboard"></span>Keyboard shortcuts<span class="pb-kbd" style="margin-left:6px">?</span></button>
+  <p class="pb-note" style="margin:0">Press <span class="pb-kbd">?</span> anywhere outside a text field.</p>
+  <dialog class="pb-dialog pb-keys" id="keys" aria-labelledby="keys-t">
+    <header class="pb-dialog__head"><h2 class="pb-dialog__title" id="keys-t">Keyboard shortcuts</h2><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Close" onclick="this.closest('dialog').close()"><span class="pb-icon pb-icon--close"></span></button></header>
+    <div class="pb-dialog__body">
+      <span class="pb-input pb-keys__search"><span class="pb-icon pb-icon--search"></span><input type="search" placeholder="Find a shortcut" aria-label="Find a shortcut"></span>
+      <div class="pb-keys__groups">
+        <section class="pb-keys__group"><h3>general</h3><dl>
+          <div><dt>Search or jump to</dt><dd><span class="pb-kbd">⌘</span><span class="pb-kbd">K</span></dd></div>
+          <div><dt>Show shortcuts</dt><dd><span class="pb-kbd">?</span></dd></div>
+          <div data-keywords="dark light"><dt>Toggle theme</dt><dd><span class="pb-kbd">T</span></dd></div>
+          <div><dt>Close dialog or panel</dt><dd><span class="pb-kbd">Esc</span></dd></div></dl></section>
+        <section class="pb-keys__group"><h3>go to</h3><dl>
+          <div><dt>Overview</dt><dd><span class="pb-kbd">G</span>then<span class="pb-kbd">O</span></dd></div>
+          <div><dt>Shares</dt><dd><span class="pb-kbd">G</span>then<span class="pb-kbd">S</span></dd></div>
+          <div><dt>Logs</dt><dd><span class="pb-kbd">G</span>then<span class="pb-kbd">L</span></dd></div></dl></section>
+        <section class="pb-keys__group"><h3>lists</h3><dl>
+          <div><dt>Move selection</dt><dd><span class="pb-kbd">↑</span><span class="pb-kbd">↓</span></dd></div>
+          <div><dt>Select all</dt><dd><span class="pb-kbd">⌘</span><span class="pb-kbd">A</span></dd></div>
+          <div><dt>Open</dt><dd><span class="pb-kbd">↵</span></dd></div>
+          <div data-keywords="remove"><dt>Delete</dt><dd><span class="pb-kbd">⌫</span></dd></div></dl></section>
+        <section class="pb-keys__group"><h3>logs</h3><dl>
+          <div><dt>Pause or resume</dt><dd><span class="pb-kbd">Space</span></dd></div>
+          <div><dt>Jump to latest</dt><dd><span class="pb-kbd">End</span></dd></div>
+          <div><dt>Filter lines</dt><dd><span class="pb-kbd">/</span></dd></div></dl></section>
+      </div>
+      <p class="pb-keys__empty" hidden>No shortcut matches.</p>
+    </div>
+  </dialog>
+</div>

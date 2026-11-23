@@ -1,0 +1,22 @@
+<div class="pb-log" data-log data-max="500" style="--log-h:300px">
+  <div class="pb-toolbar">
+    <span class="pb-input pb-input--sm" style="width:200px"><span class="pb-icon pb-icon--search"></span><input type="search" placeholder="Filter lines" aria-label="Filter lines" data-log-search></span>
+    <div class="pb-seg pb-seg--sm" role="group" aria-label="Levels" data-log-level>
+      <label><input type="checkbox" value="debug">debug</label><label><input type="checkbox" value="info" checked>info</label><label><input type="checkbox" value="warn" checked>warn</label><label><input type="checkbox" value="error" checked>error</label>
+    </div>
+    <span class="pb-toolbar__spacer"></span>
+    <label class="pb-choice" style="font-size:14px"><input type="checkbox" class="pb-switch" checked data-log-follow>Follow</label>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm pb-tip" data-tip="Wrap lines" aria-label="Wrap lines" aria-pressed="false" data-log-wrap><span class="pb-icon pb-icon--wrap"></span></button>
+    <button type="button" class="pb-btn pb-btn--sm" aria-pressed="false" data-log-pause><span class="pb-icon pb-icon--pause"></span><span>Pause</span></button>
+  </div>
+  <div class="pb-log__body" role="log" aria-label="jellyfin logs" tabindex="0">
+<div class="pb-log__line" data-level="info"><span class="pb-log__time">01:12:04</span><span class="pb-log__lvl">info</span><span class="pb-log__msg">Startup complete in 4.2 s; listening on 0.0.0.0:8096</span></div>
+<div class="pb-log__line" data-level="debug"><span class="pb-log__time">01:12:05</span><span class="pb-log__lvl">debug</span><span class="pb-log__msg">Loaded 3 plugins from /config/plugins</span></div>
+<div class="pb-log__line" data-level="info"><span class="pb-log__time">01:12:09</span><span class="pb-log__lvl">info</span><span class="pb-log__msg">Library scan started for "Movies" (/media/movies)</span></div>
+<div class="pb-log__line" data-level="warn"><span class="pb-log__time">01:12:31</span><span class="pb-log__lvl">warn</span><span class="pb-log__msg">ffprobe took 11.8 s on /media/movies/rack-tour.mkv; consider a faster disk for /cache</span></div>
+<div class="pb-log__line" data-level="info"><span class="pb-log__time">01:13:02</span><span class="pb-log__lvl">info</span><span class="pb-log__msg">Library scan finished: 1,204 items, 3 new, 0 removed</span></div>
+<div class="pb-log__line" data-level="error"><span class="pb-log__time">01:13:40</span><span class="pb-log__lvl">error</span><span class="pb-log__msg">Transcode failed for session 7f3c: /dev/dri/renderD128 permission denied (uid 1000)</span></div>
+<div class="pb-log__line" data-level="info"><span class="pb-log__time">01:13:41</span><span class="pb-log__lvl">info</span><span class="pb-log__msg">Falling back to software transcoding for session 7f3c</span></div>
+  </div>
+  <div class="pb-log__foot"><span class="pb-log__live"><span>live</span></span><span data-log-count></span><span class="pb-toolbar__spacer" style="flex:1"></span><span>jellyfin · media.lab.home</span></div>
+</div>

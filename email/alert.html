@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>Backup failed on nas-02</title>
+<style>
+  @media (prefers-color-scheme: dark) {
+    .pb-e-bg { background: #14120e !important; }
+    .pb-e-card { background: #1c1a15 !important; border-color: #36322a !important; }
+    .pb-e-ink { color: #f2ede3 !important; }
+    .pb-e-muted { color: #aaa396 !important; }
+    .pb-e-rule { border-color: #36322a !important; }
+    .pb-e-code { background: #191712 !important; color: #f2ede3 !important; }
+  }
+  @media (max-width: 600px) { .pb-e-pad { padding: 20px !important; } }
+</style>
+</head>
+<body class="pb-e-bg" style="margin:0;padding:0;background:#faf8f3;">
+<!-- Preheader: shows in the inbox list, hidden in the message. -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">restic → b2 failed at 03:12 with 403 Forbidden. Next try 04:00.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="pb-e-bg" style="background:#faf8f3;">
+  <tr><td align="center" style="padding:24px 12px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+      <tr><td style="padding:0 4px 14px;font:600 17px/24px Georgia,'Source Serif 4',serif;" class="pb-e-ink">
+        <span style="display:inline-block;width:22px;height:22px;margin-right:8px;vertical-align:-5px;background:#1f3fd6;border-radius:6px;"></span><span style="color:#17150f;" class="pb-e-ink">lab.home</span>
+      </td></tr>
+      <tr><td class="pb-e-card" style="background:#ffffff;border:1px solid #dcd6ca;border-radius:10px;overflow:hidden;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr><td style="background:#c42d16;padding:10px 24px;font:600 13px/18px 'Courier New',monospace;color:#ffffff;letter-spacing:.04em;">✕&nbsp; FAILED · BACKUP</td></tr>
+          <tr><td class="pb-e-pad" style="padding:24px 28px 8px;">
+            <h1 class="pb-e-ink" style="margin:0 0 8px;font:600 23px/30px Georgia,'Source Serif 4',serif;color:#17150f;">Backup failed on nas-02</h1>
+            <p class="pb-e-muted" style="margin:0;font:400 16px/24px Georgia,'Source Serif 4',serif;color:#5b564c;"><code>restic → b2</code> stopped at 03:12 with <b>403 Forbidden</b> from the bucket. The next try is at 04:00. If it fails again, last night’s photos won’t be offsite.</p>
+          </td></tr>
+          <tr><td class="pb-e-pad" style="padding:16px 28px 8px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font:400 14px/20px 'Courier New',monospace;">
+              <tr><td class="pb-e-muted pb-e-rule" style="padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;width:38%;">host</td><td class="pb-e-ink pb-e-rule" style="padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;">nas-02</td></tr>
+              <tr><td class="pb-e-muted pb-e-rule" style="padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;">job</td><td class="pb-e-ink pb-e-rule" style="padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;">restic → b2</td></tr>
+              <tr><td class="pb-e-muted pb-e-rule" style="padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;">started</td><td class="pb-e-ink pb-e-rule" style="padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;">2026-11-23 03:00 EST</td></tr>
+              <tr><td class="pb-e-muted pb-e-rule" style="padding:7px 0;color:#5b564c;border-top:1px solid #e8e3d8;">last success</td><td class="pb-e-ink pb-e-rule" style="padding:7px 0;color:#17150f;border-top:1px solid #e8e3d8;">2026-11-21 03:09</td></tr>
+            </table>
+          </td></tr>
+          <tr><td class="pb-e-pad" style="padding:8px 28px 4px;">
+            <pre class="pb-e-code" style="margin:0;padding:12px 14px;background:#f5f2eb;border-radius:6px;font:400 12px/18px 'Courier New',monospace;color:#17150f;white-space:pre-wrap;word-break:break-word;">Fatal: unable to open repository at b2:lab-backups:/restic
+  b2_download_file_by_name: 403: Forbidden</pre>
+          </td></tr>
+          <tr><td class="pb-e-pad" style="padding:20px 28px 28px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+              <td style="border-radius:6px;background:#1f3fd6;"><a href="https://console.lab.home/backups/restic" style="display:inline-block;padding:11px 20px;font:600 14px/18px 'Courier New',monospace;color:#ffffff;text-decoration:none;border-radius:6px;">Open the run log</a></td>
+              <td style="width:12px;"></td>
+              <td><a href="https://status.lab.home" class="pb-e-ink" style="font:400 15px/20px Georgia,serif;color:#1f3fd6;">Status page</a></td>
+            </tr></table>
+          </td></tr>
+        </table>
+      </td></tr>
+      <tr><td class="pb-e-muted" style="padding:16px 4px 0;font:400 12px/18px 'Courier New',monospace;color:#5b564c;">You get this because “A backup fails” is on for email. <a href="https://console.lab.home/settings#notifications" style="color:#5b564c;">Change notifications</a></td></tr>
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>

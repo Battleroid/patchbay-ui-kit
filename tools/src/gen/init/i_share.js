@@ -1,0 +1,2 @@
+document.querySelectorAll('[data-share]').forEach(function(d){pbShare(d);});document.querySelectorAll('[data-avatar]').forEach(pbAvatar);
+document.querySelectorAll('[data-reveal]').forEach(function(b){var i=b.parentElement.querySelector('input');b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.setAttribute('aria-label',s?'Hide password':'Show password');b.querySelector('.pb-icon').className='pb-icon pb-icon--'+(s?'eye-off':'eye');});});

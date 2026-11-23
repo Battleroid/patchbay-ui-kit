@@ -1,0 +1,18 @@
+<div style="display:grid;gap:20px;padding-bottom:140px">
+  <div class="pb-toolbar">
+    <button type="button" class="pb-btn" popovertarget="pop-1">Share settings</button>
+    <span style="font-size:15px">Owned by <button type="button" class="pb-trigger" data-hovercard="hc-1">casey</button></span>
+    <span style="font-size:15px">Quota <button type="button" class="pb-tiptoggle" popovertarget="tt-1" aria-label="About quotas"><span class="pb-icon pb-icon--status-info"></span></button></span>
+  </div>
+  <div class="pb-popover" id="pop-1" popover role="dialog" aria-label="Share settings">
+    <p class="pb-popover__title">Rack rebuild</p><p>Anyone with the link can view. Expires in 7 days.</p>
+    <dl class="pb-dl"><div><dt>views</dt><dd class="pb-mono">3</dd></div><div><dt>size</dt><dd class="pb-mono">18.2 MB</dd></div></dl>
+    <div class="pb-popover__actions"><button class="pb-btn pb-btn--sm pb-btn--primary" autofocus>Copy link</button><button class="pb-btn pb-btn--sm pb-btn--ghost" popovertarget="pop-1" popovertargetaction="hide">Close</button></div>
+  </div>
+  <div class="pb-popover pb-hovercard" id="hc-1" popover="manual" role="dialog" aria-label="casey">
+    <div class="pb-hovercard__head"><span class="pb-avatar pb-avatar--lg" data-avatar data-name="Casey"></span><span><span class="pb-person__name">casey</span><span class="pb-person__meta">admin · 12 shares</span></span></div>
+    <p>Last active <time class="pb-reltime" data-ago="1500">recently</time>.</p>
+  </div>
+  <div class="pb-popover" id="tt-1" popover role="note" style="max-width:260px"><p>The most a user can store across all shares. Admins can raise it per user.</p></div>
+  <div class="pb-popover pb-popover--inline" style="max-width:300px"><p class="pb-popover__title">Inline popover</p><p>The same panel, shown in place for reference.</p></div>
+</div>

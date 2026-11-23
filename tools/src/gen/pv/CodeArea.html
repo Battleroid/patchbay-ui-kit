@@ -1,0 +1,15 @@
+<div class="pb-code">
+  <div class="pb-code__bar"><span>compose.yaml</span><span class="pb-code__lang">yaml</span>
+    <button class="pb-btn pb-btn--ghost pb-btn--sm"><span class="pb-icon pb-icon--copy"></span>Copy</button></div>
+  <div class="pb-code__body"><pre class="pb-code__gutter"></pre>
+    <div class="pb-code__edit"><pre class="pb-code__hl" aria-hidden="true"></pre><textarea class="pb-code__input" spellcheck="false" aria-label="compose.yaml"># media stack
+services:
+  jellyfin:
+    image: "jellyfin/jellyfin:10.10"
+    ports:
+      - 8096:8096
+    restart: unless-stopped
+    read_only: true
+    volumes:
+      - /tank/media:/media:ro</textarea></div></div>
+</div>
