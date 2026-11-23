@@ -7,7 +7,7 @@ C={ # name: (group, height, subtitle, layout)
  'EventCalendar':('Data',1404,'Month and agenda views for schedules and maintenance','rows'),
  'MarkdownEditor':('Forms',1014,'Write, split or preview with a formatting toolbar','rows'),
  'CommentThread':('Layout',479,'Comments with replies, resolve and a composer','cols'),
- 'NotifySettings':('Forms',1135,'Which events go to which channel, with test sends','rows'),
+ 'NotifySettings':('Forms',1021,'Which events go to which channel, with test sends','rows'),
  'MobileNav':('Layout',1452,'Bottom tab bar and action sheet for phones','rows'),
  'SessionTimeout':('Layout',407,'Idle warning with a countdown before sign-out','cols'),
  'ShareDialog':('Homelab',841,'Link, expiry, password, downloads, open limit, people and roles','cols'),
@@ -73,7 +73,7 @@ C={ # name: (group, height, subtitle, layout)
  'Button':('Actions',200,'Primary, secondary, danger, ghost, icon, busy, disabled','cols'),
  'TextInput':('Forms',520,'Label, affix, icon, error','cols'),
  'CodeArea':('Forms',330,'Editable, syntax highlighted, line numbers','cols'),
- 'DropZone':('Forms',790,'Idle, drag-over, upload rows, upload settings','cols'),
+ 'DropZone':('Forms',440,'Idle, drag-over, upload rows','cols'),
  'Pill':('Indicators',170,'Filters, removable tags, pop tags','cols'),
  'Badge':('Indicators',170,'Status badges, inline status, dots, counts','cols'),
  'Card':('Layout',560,'Panel, pop band, outlined panels that recolor on hover','cols'),
@@ -108,16 +108,15 @@ C={ # name: (group, height, subtitle, layout)
  'DataTable':('Data',820,'Toolbar, select, sort, status, numbers, pager','rows'),
  'MediaPlayer':('Layout',1100,'Video and audio with play, seek, time, volume, speed, captions, PiP, fullscreen','rows'),
  'Media':('Layout',1500,'Shared media: gallery, video, file','rows'),
- 'MediaList':('Layout',1852,'Videos with thumbnail, details, links and actions; full and compact','rows'),
- 'Chart':('Data',674,'Stats, meter, line, bar','cols'),
+ 'Chart':('Data',520,'Stats, meter, line, bar','cols'),
  'Sparkline':('Data',330,'Inline sparklines with a metric, metric rows','cols'),
  'StatTile':('Data',360,'Tiles with background sparklines on every ground','rows'),
- 'ChartGround':('Data',721,'Charts on panel and ink grounds, bands, thresholds','cols'),
+ 'ChartGround':('Data',640,'Charts on panel and ink grounds, bands, thresholds','cols'),
  'Flow':('Data',340,'Directed diagram with arrowheads, labels, async and failing links','rows'),
  'Diagram':('Data',330,'Topology: nodes, zones, edges','cols'),
  'StatusPage':('Pages',1600,'Banner, services with 90-day uptime, incidents','rows'),
 }
-PAIR="""(function(){var t=document.getElementById('pb-t'),r=document.getElementById('pb-r'),A=['id','for','name','list','popovertarget','aria-controls','data-open','data-hovercard','data-contextmenu','data-cmd-open','data-sheet-open','data-keys-open','data-dropset-reveal'];['soft','hard'].forEach(function(e){var s=document.createElement('section');s.setAttribute('data-edge',e);s.style.minWidth='0';s.innerHTML='<div class="pb-eyebrow" style="margin-bottom:16px">'+e+' edges</div>';var f=t.content.cloneNode(true);A.forEach(function(a){f.querySelectorAll('['+a+']').forEach(function(n){n.setAttribute(a,n.getAttribute(a)+'-'+e)})});f.querySelectorAll('a[href^=\"#\"]').forEach(function(a){var h=a.getAttribute('href');if(h.length>1)a.setAttribute('href',h+'-'+e)});s.appendChild(f);r.appendChild(s);});})();"""
+PAIR="""(function(){var t=document.getElementById('pb-t'),r=document.getElementById('pb-r'),A=['id','for','name','list','popovertarget','aria-controls','data-open','data-hovercard','data-contextmenu','data-cmd-open','data-sheet-open','data-keys-open'];['soft','hard'].forEach(function(e){var s=document.createElement('section');s.setAttribute('data-edge',e);s.style.minWidth='0';s.innerHTML='<div class="pb-eyebrow" style="margin-bottom:16px">'+e+' edges</div>';var f=t.content.cloneNode(true);A.forEach(function(a){f.querySelectorAll('['+a+']').forEach(function(n){n.setAttribute(a,n.getAttribute(a)+'-'+e)})});f.querySelectorAll('a[href^=\"#\"]').forEach(function(a){var h=a.getAttribute('href');if(h.length>1)a.setAttribute('href',h+'-'+e)});s.appendChild(f);r.appendChild(s);});})();"""
 for n,(g,h,sub,lay) in C.items():
     body=open(f'{PV}/{n}.html').read().strip().replace('{{SAMPLE}}','/_blob/557011fafc2e689aab4bcb66f9c7ebf9').replace('{{POSTER}}','/_blob/941b14fb8502a96c7f8d37427890c74d').replace('{{PHOTO1}}','/_blob/4cf72d5b6b2d5ce80ea8c557d6f3bbde').replace('{{THUMB1}}','/_blob/516a1e4b163519dbafb6aabbcfdf0d19').replace('{{PHOTO2}}','/_blob/b19641e7da3850cfcb333583b768a260').replace('{{THUMB2}}','/_blob/8faa535ec693ad7ff2c4788b8e17e5e1').replace('{{PHOTO3}}','/_blob/ac76c5c52653e57058ba4543350c60c1').replace('{{THUMB3}}','/_blob/5ef81fde23193ee89228e4731f7b2eb0').replace('{{PHOTO4}}','/_blob/0753c9520a064b4422eb07e3556a295e').replace('{{THUMB4}}','/_blob/cedaf603b97e9ab78758f001cf8e69a9').replace('{{PHOTO5}}','/_blob/2b18ee0e6f21309a43dc4c9ec3af0b3d').replace('{{THUMB5}}','/_blob/3c2338bd7680877b549f19d6820f2c30').replace('{{PHOTO6}}','/_blob/59388c4b5e17bf461a2357970a7122b6').replace('{{THUMB6}}','/_blob/665bd3891cb2f3c17652868f84b9b581')
     js=open(f'{PV}/{n}.js').read().strip() if os.path.exists(f'{PV}/{n}.js') else ''

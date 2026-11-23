@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-inline-cal]').forEach(function(h){var c=pbCalendar({range:true,from:'2026-11-13',to:'2026-11-22',today:'2026-11-22'});c.classList.add('pb-cal--inline');h.appendChild(c);});

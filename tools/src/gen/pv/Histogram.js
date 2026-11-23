@@ -1,4 +1,34 @@
-function pbVEsc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+/* Patchbay core: escaping, CSP-safe styling, delegated document listeners, placement, and the pbInit() hook registry. */
+function pbEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+/* Markup built as a string carries styles in data-style; pbStyled moves them into the CSSOM, which a strict style-src allows. */
+function pbStyled(c){if(!c||!c.querySelectorAll)return c;var l=[].slice.call(c.querySelectorAll('[data-style]'));if(c.hasAttribute&&c.hasAttribute('data-style'))l.unshift(c);
+  l.forEach(function(n){n.style.cssText=n.getAttribute('data-style');n.removeAttribute('data-style');});return c;}
+/* data-vars="--w:42%;--c:var(--chart-2)" sets custom properties without a style attribute. */
+function pbVars(el){(el.getAttribute('data-vars')||'').split(';').forEach(function(d){var i=d.indexOf(':');if(i<0)return;var k=d.slice(0,i).trim(),v=d.slice(i+1).trim();
+  if(!/^--[a-z0-9-]+$/.test(k)||!v||/url\(|expression|[;{}<>]/i.test(v))return;el.style.setProperty(k,v);});}
+/* One capturing listener per event type on document (window for resize); entries drop out once their element leaves the page. */
+var pbDocL={};
+function pbOnDoc(type,el,fn){var L=pbDocL[type];
+  if(!L){L=pbDocL[type]=new Set();(type==='resize'?window:document).addEventListener(type,function(e){L.forEach(function(x){
+    if(!x.el.isConnected){if(x.seen)L.delete(x);return;}x.seen=true;try{x.fn(e);}catch(err){console.error('[patchbay] '+type,err);}});},true);}
+  var x={el:el,fn:fn,seen:el.isConnected};L.add(x);return function(){L.delete(x);};}
+/* A scrolling box must be reachable by keyboard: focusable, a region, and named. */
+function pbScrollRegion(el,name){if(!el)return;if(!el.hasAttribute('tabindex'))el.tabIndex=0;if(!el.hasAttribute('role'))el.setAttribute('role','region');if(!el.hasAttribute('aria-label')&&!el.hasAttribute('aria-labelledby'))el.setAttribute('aria-label',name);}
+function pbPlace(trigger,panel,o){o=o||{};var r=o.rect||trigger.getBoundingClientRect(),w=panel.offsetWidth,h=panel.offsetHeight,g=o.gap==null?8:o.gap;
+  var below=r.bottom+g+h<=innerHeight||r.top-g-h<0,y=below?r.bottom+g:r.top-g-h,x=o.align==='end'?r.right-w:(o.align==='center'?r.left+r.width/2-w/2:r.left);
+  x=Math.max(8,Math.min(x,innerWidth-w-8));panel.style.left=x+'px';panel.style.top=Math.max(8,y)+'px';panel.dataset.side=below?'bottom':'top';
+  panel.style.setProperty('--ax',Math.max(10,Math.min(w-20,r.left+r.width/2-x-5))+'px');}
+/* pbHook(name, selector, fn) registers a behavior; pbInit(root, {only, skip}) binds every registered hook under root once per element. */
+var pbHooks=[],pbBound=new WeakMap();
+function pbHook(name,sel,fn){for(var i=0;i<pbHooks.length;i++)if(pbHooks[i].name===name)return;pbHooks.push({name:name,sel:sel,fn:fn});pbInit.hooks.push(name);}
+function pbInit(root,opts){root=root||document;opts=opts||{};
+  var list=function(v){return v==null?null:(typeof v==='string'?v.split(/[\s,]+/).filter(Boolean):[].slice.call(v));},only=list(opts.only),skip=list(opts.skip)||[];
+  pbHooks.forEach(function(h){if(only&&only.indexOf(h.name)<0||skip.indexOf(h.name)>=0)return;
+    var els=[].slice.call(root.querySelectorAll(h.sel));if(root.matches&&root.matches(h.sel))els.unshift(root);
+    els.forEach(function(el){if(el.closest('[data-pb-skip~="'+h.name+'"]'))return;var s=pbBound.get(el);if(!s){s=new Set();pbBound.set(el,s);}if(s.has(h.name))return;s.add(h.name);
+      try{h.fn(el);}catch(err){console.error('[patchbay] '+h.name,err);}});});
+  return root;}
+pbInit.hooks=[];
 function pbJSONData(el){var s=el.querySelector('script[type="application/json"]');return s?JSON.parse(s.textContent):{};}
 function pbNice(max,n){n=n||4;if(!(max>0))return {max:1,step:1/n};var raw=max/n,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p,st=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;return {max:st*Math.ceil(max/st),step:st};}
 function pbFmtN(v){return Math.abs(v)>=1000?(v/1000).toFixed(v%1000?1:0)+'k':String(Math.round(v*100)/100);}
@@ -10,11 +40,11 @@ function pbHeat(el){var D=pbJSONData(el),vals=D.values||[],end=D.end?new Date(D.
   var cells=[],months='',lastM=-1,DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],W={ok:'ok',warn:'warning',down:'failed'};
   for(var i=0;i<lead;i++)cells.push('<span class="pb-heat__cell" data-future></span>');
   for(i=0;i<n;i++){var d=new Date(start);d.setDate(start.getDate()+i);var v=vals[i],col=Math.floor((i+lead)/7),lab=d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})+' · '+(typeof v==='number'?v+' '+unit:v?(W[v]||v):'no data');
-    if(d.getMonth()!==lastM&&d.getDate()<=7){months+='<span style="--w:'+col+'">'+d.toLocaleDateString(undefined,{month:'short'})+'</span>';lastM=d.getMonth();}
-    cells.push('<span class="pb-heat__cell" '+(typeof v==='number'?'data-l="'+lvl(v)+'"':v?'data-status="'+v+'"':'')+' data-i="'+i+'" data-label="'+pbVEsc(lab)+'"></span>');}
-  var status=vals.some(function(v){return typeof v==='string'}),legend=status?'<span class="pb-heat__legend"><span class="pb-heat__cell" data-status="ok"></span>ok <span class="pb-heat__cell" data-status="warn" style="margin-left:6px"></span>warning <span class="pb-heat__cell" data-status="down" style="margin-left:6px"></span>failed</span>':'<span class="pb-heat__legend">less <span class="pb-heat__cell"></span><span class="pb-heat__cell" data-l="1"></span><span class="pb-heat__cell" data-l="2"></span><span class="pb-heat__cell" data-l="3"></span><span class="pb-heat__cell" data-l="4"></span> more</span>';
+    if(d.getMonth()!==lastM&&d.getDate()<=7){months+='<span data-style="--w:'+col+'">'+d.toLocaleDateString(undefined,{month:'short'})+'</span>';lastM=d.getMonth();}
+    cells.push('<span class="pb-heat__cell" '+(typeof v==='number'?'data-l="'+lvl(v)+'"':v?'data-status="'+v+'"':'')+' data-i="'+i+'" data-label="'+pbEsc(lab)+'"></span>');}
+  var status=vals.some(function(v){return typeof v==='string'}),legend=status?'<span class="pb-heat__legend"><span class="pb-heat__cell" data-status="ok"></span>ok <span class="pb-heat__cell pb-heat__cell--gap" data-status="warn"></span>warning <span class="pb-heat__cell pb-heat__cell--gap" data-status="down"></span>failed</span>':'<span class="pb-heat__legend">less <span class="pb-heat__cell"></span><span class="pb-heat__cell" data-l="1"></span><span class="pb-heat__cell" data-l="2"></span><span class="pb-heat__cell" data-l="3"></span><span class="pb-heat__cell" data-l="4"></span> more</span>';
   var tot=nums.reduce(function(a,b){return a+b},0),sum=status?vals.filter(function(v){return v==='down'}).length+' failed, '+vals.filter(function(v){return v==='warn'}).length+' warnings in '+n+' days':pbFmtN(tot)+' '+unit+' in '+n+' days';
-  el.innerHTML='<div class="pb-heat__scroll"><div class="pb-heat__wrap"><span></span><div class="pb-heat__months">'+months+'</div><div class="pb-heat__days"><span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span></div><div class="pb-heat__grid" tabindex="0" role="img" aria-label="'+pbVEsc((D.label||'Activity')+': '+sum+'. Use arrow keys to read days.')+'">'+cells.join('')+'</div></div></div><div class="pb-heat__foot"><span class="pb-heat__readout" aria-live="polite">'+pbVEsc(sum)+'</span>'+legend+'</div>';
+  el.innerHTML='<div class="pb-heat__scroll"><div class="pb-heat__wrap"><span></span><div class="pb-heat__months">'+months+'</div><div class="pb-heat__days"><span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span></div><div class="pb-heat__grid" tabindex="0" role="img" aria-label="'+pbEsc((D.label||'Activity')+': '+sum+'. Use arrow keys to read days.')+'">'+cells.join('')+'</div></div></div><div class="pb-heat__foot"><span class="pb-heat__readout" aria-live="polite">'+pbEsc(sum)+'</span>'+legend+'</div>',pbStyled(el);
   var g=el.querySelector('.pb-heat__grid'),ro=el.querySelector('.pb-heat__readout'),act=n-1,all=g.querySelectorAll('[data-i]');
   function show(i){all.forEach(function(c){c.removeAttribute('data-active')});var c=all[i];if(!c)return;c.setAttribute('data-active','');ro.textContent=c.dataset.label;act=i;}
   g.addEventListener('mouseover',function(e){var c=e.target.closest('[data-i]');if(c)show(+c.dataset.i);});
@@ -28,55 +58,55 @@ function pbDial(el){var v=+el.dataset.value,mn=+(el.dataset.min||0),mx=+(el.data
   var st=dn!=null&&v>=+dn?'down':w!=null&&v>=+w?'warn':'';st?el.setAttribute('data-status',st):el.removeAttribute('data-status');
   function pt(x,r){var a=Math.PI*(1-(x-mn)/(mx-mn));return [100+r*Math.cos(a),100-r*Math.sin(a)];}
   var ticks=[w,dn].filter(function(t){return t!=null}).map(function(t){var a=pt(+t,70),b=pt(+t,90);return '<line class="pb-dial__tick" x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'"/>'}).join('');
-  var svg='<svg viewBox="0 0 200 118" role="img" aria-label="'+pbVEsc((el.querySelector('figcaption')||{}).textContent||'')+' '+v+u+' of '+mx+u+'"><path class="pb-dial__track" d="M20 100 A80 80 0 0 1 180 100"/><path class="pb-dial__fill" d="M20 100 A80 80 0 0 1 180 100" stroke-dasharray="'+L.toFixed(1)+'" stroke-dashoffset="'+(L*(1-f)).toFixed(1)+'"/>'+ticks+'<text class="pb-dial__value" x="100" y="92">'+pbFmtN(v)+'<tspan class="pb-dial__unit" dx="2">'+pbVEsc(u)+'</tspan></text><text class="pb-dial__range" x="20" y="116" text-anchor="middle">'+mn+'</text><text class="pb-dial__range" x="180" y="116" text-anchor="middle">'+mx+'</text></svg>';
-  var old=el.querySelector('svg');if(old)old.remove();el.insertAdjacentHTML('afterbegin',svg);
+  var svg='<svg viewBox="0 0 200 118" role="img" aria-label="'+pbEsc((el.querySelector('figcaption')||{}).textContent||'')+' '+v+u+' of '+mx+u+'"><path class="pb-dial__track" d="M20 100 A80 80 0 0 1 180 100"/><path class="pb-dial__fill" d="M20 100 A80 80 0 0 1 180 100" stroke-dasharray="'+L.toFixed(1)+'" stroke-dashoffset="'+(L*(1-f)).toFixed(1)+'"/>'+ticks+'<text class="pb-dial__value" x="100" y="92">'+pbFmtN(v)+'<tspan class="pb-dial__unit" dx="2">'+pbEsc(u)+'</tspan></text><text class="pb-dial__range" x="20" y="116" text-anchor="middle">'+mn+'</text><text class="pb-dial__range" x="180" y="116" text-anchor="middle">'+mx+'</text></svg>';
+  var old=el.querySelector('svg');if(old)old.remove();el.insertAdjacentHTML('afterbegin',svg),pbStyled(el);
   var cap=el.querySelector('figcaption'),s=cap&&cap.querySelector('.pb-status');if(s)s.remove();
-  if(cap&&st){cap.insertAdjacentHTML('beforeend','<small class="pb-status" data-status="'+st+'"><span class="pb-icon"></span>'+(st==='down'?'critical · above '+dn+u:'high · above '+w+u)+'</small>');}
+  if(cap&&st){cap.insertAdjacentHTML('beforeend','<small class="pb-status" data-status="'+st+'"><span class="pb-icon"></span>'+(st==='down'?'critical · above '+dn+u:'high · above '+w+u)+'</small>'),pbStyled(cap);}
   el.pbSet=function(x){el.dataset.value=x;pbDial(el);};}
 
 /* Donut: legend li[data-value] with --c; data-total-label */
 function pbDonut(el){var lis=Array.from(el.querySelectorAll('.pb-donut__legend li')),vals=lis.map(function(l){return +l.dataset.value}),tot=vals.reduce(function(a,b){return a+b},0),C=2*Math.PI*60,off=0,gap=lis.length>1?2:0,h='';
-  lis.forEach(function(l,i){var len=tot?vals[i]/tot*C:0;h+='<circle class="pb-donut__seg" data-i="'+i+'" cx="74" cy="74" r="60" style="stroke:'+l.style.getPropertyValue('--c')+'" stroke-dasharray="'+Math.max(0,len-gap).toFixed(2)+' '+(C-Math.max(0,len-gap)).toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'"/>';off+=len;
+  lis.forEach(function(l,i){var len=tot?vals[i]/tot*C:0;h+='<circle class="pb-donut__seg" data-i="'+i+'" cx="74" cy="74" r="60" data-style="stroke:'+l.style.getPropertyValue('--c')+'" stroke-dasharray="'+Math.max(0,len-gap).toFixed(2)+' '+(C-Math.max(0,len-gap)).toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'"/>';off+=len;
     var p=l.querySelector('[data-pct]');if(p)p.textContent=(tot?Math.round(vals[i]/tot*100):0)+'%';l.dataset.i=i;});
-  var hole=el.querySelector('.pb-donut__hole');hole.innerHTML='<svg viewBox="0 0 148 148" aria-hidden="true"><circle cx="74" cy="74" r="60" fill="none" stroke="var(--surface-sunk)" stroke-width="18"/>'+h+'</svg><div class="pb-donut__center"><b>'+pbVEsc(el.dataset.total||pbFmtN(tot))+'</b><span>'+pbVEsc(el.dataset.totalLabel||'total')+'</span></div>';
+  var hole=el.querySelector('.pb-donut__hole');hole.innerHTML='<svg viewBox="0 0 148 148" aria-hidden="true"><circle cx="74" cy="74" r="60" fill="none" stroke="var(--surface-sunk)" stroke-width="18"/>'+h+'</svg><div class="pb-donut__center"><b>'+pbEsc(el.dataset.total||pbFmtN(tot))+'</b><span>'+pbEsc(el.dataset.totalLabel||'total')+'</span></div>',pbStyled(hole);
   function hl(i){el.toggleAttribute('data-hover',i!=null);el.querySelectorAll('[data-i]').forEach(function(x){x.toggleAttribute('data-hover',i!=null&&x.dataset.i==i)});}
   el.querySelectorAll('[data-i]').forEach(function(x){x.addEventListener('mouseenter',function(){hl(x.dataset.i)});x.addEventListener('mouseleave',function(){hl(null)});});}
 
 /* Bars: JSON {series:[{name,c}], cats:[], values:[[per cat] per series], unit, h} ; .pb-bars--h for horizontal */
 function pbBars(el){var D=pbJSONData(el),S=D.series||[],cats=D.cats||[],V=D.values||[],u=D.unit?' '+D.unit:'',tot=cats.map(function(_,j){return S.reduce(function(a,_,i){return a+(+V[i][j]||0)},0)}),nice=pbNice(Math.max.apply(null,tot.concat([0])),D.ticks||4),old=el.querySelector('.pb-bars__plot,.pb-bars__rows');if(old)old.remove();
-  var leg=S.length>1?'<div class="pb-legend pb-legend--box">'+S.map(function(s){return '<span><i style="--c:'+s.c+'"></i>'+pbVEsc(s.name)+'</span>'}).join('')+'</div>':'';
-  if(el.classList.contains('pb-bars--h')){var M=D.max||Math.max.apply(null,tot);var r='<div class="pb-bars__rows">'+cats.map(function(c,j){return '<div class="pb-bars__row" title="'+pbVEsc(c)+': '+S.map(function(s,i){return s.name+' '+V[i][j]+u}).join(', ')+'"><span>'+pbVEsc(c)+'</span><span class="pb-bars__track">'+S.map(function(s,i){return '<span class="pb-bars__seg" style="--v:'+(V[i][j]/M*100).toFixed(2)+'%;--c:'+s.c+'"></span>'}).join('')+'</span><span class="pb-bars__val">'+pbFmtN(tot[j])+u+'</span></div>'}).join('')+'</div>';
-    el.insertAdjacentHTML('beforeend',r+(leg&&!el.querySelector('.pb-legend')?leg:''));return;}
-  var y='',grid='';for(var t=0;t<=nice.max+1e-9;t+=nice.step){var at=(t/nice.max*100).toFixed(2)+'%';y+='<span style="--at:'+at+'">'+pbFmtN(t)+'</span>';if(t>0)grid+='<i class="pb-bars__grid" style="--at:'+at+'"></i>';}
-  var cols=cats.map(function(c,j){var tip='<span class="pb-bars__tip"><b>'+pbVEsc(c)+'</b>'+S.map(function(s,i){return '<span class="pb-bars__tr"><i style="--c:'+s.c+'"></i>'+pbVEsc(s.name)+'<span>'+pbFmtN(V[i][j])+u+'</span></span>'}).join('')+(S.length>1?'<span class="pb-bars__tr pb-bars__tr--total">total<span>'+pbFmtN(tot[j])+u+'</span></span>':'')+'</span>';
-    var tp=tot[j]/nice.max*100;return '<button type="button" class="pb-bars__col" style="--top:'+tp.toFixed(1)+'%"'+(tp>50?' data-tall'+(j>=cats.length/2?' data-flip':''):'')+(j<2?' data-edge-l':j>cats.length-3?' data-edge-r':'')+' aria-label="'+pbVEsc(c+': '+S.map(function(s,i){return s.name+' '+V[i][j]+u}).join(', '))+'">'+S.map(function(s,i){return '<span class="pb-bars__seg" style="--v:'+(V[i][j]/nice.max*100).toFixed(2)+'%;--c:'+s.c+'"></span>'}).join('')+tip+'</button>';}).join('');
+  var leg=S.length>1?'<div class="pb-legend pb-legend--box">'+S.map(function(s){return '<span><i data-style="--c:'+s.c+'"></i>'+pbEsc(s.name)+'</span>'}).join('')+'</div>':'';
+  if(el.classList.contains('pb-bars--h')){var M=D.max||Math.max.apply(null,tot);var r='<div class="pb-bars__rows">'+cats.map(function(c,j){return '<div class="pb-bars__row" title="'+pbEsc(c)+': '+S.map(function(s,i){return s.name+' '+V[i][j]+u}).join(', ')+'"><span>'+pbEsc(c)+'</span><span class="pb-bars__track">'+S.map(function(s,i){return '<span class="pb-bars__seg" data-style="--v:'+(V[i][j]/M*100).toFixed(2)+'%;--c:'+s.c+'"></span>'}).join('')+'</span><span class="pb-bars__val">'+pbFmtN(tot[j])+u+'</span></div>'}).join('')+'</div>';
+    el.insertAdjacentHTML('beforeend',r+(leg&&!el.querySelector('.pb-legend')?leg:'')),pbStyled(el);return;}
+  var y='',grid='';for(var t=0;t<=nice.max+1e-9;t+=nice.step){var at=(t/nice.max*100).toFixed(2)+'%';y+='<span data-style="--at:'+at+'">'+pbFmtN(t)+'</span>';if(t>0)grid+='<i class="pb-bars__grid" data-style="--at:'+at+'"></i>';}
+  var cols=cats.map(function(c,j){var tip='<span class="pb-bars__tip"><b>'+pbEsc(c)+'</b>'+S.map(function(s,i){return '<span class="pb-bars__tr"><i data-style="--c:'+s.c+'"></i>'+pbEsc(s.name)+'<span>'+pbFmtN(V[i][j])+u+'</span></span>'}).join('')+(S.length>1?'<span class="pb-bars__tr pb-bars__tr--total">total<span>'+pbFmtN(tot[j])+u+'</span></span>':'')+'</span>';
+    var tp=tot[j]/nice.max*100;return '<button type="button" class="pb-bars__col" data-style="--top:'+tp.toFixed(1)+'%"'+(tp>50?' data-tall'+(j>=cats.length/2?' data-flip':''):'')+(j<2?' data-edge-l':j>cats.length-3?' data-edge-r':'')+' aria-label="'+pbEsc(c+': '+S.map(function(s,i){return s.name+' '+V[i][j]+u}).join(', '))+'">'+S.map(function(s,i){return '<span class="pb-bars__seg" data-style="--v:'+(V[i][j]/nice.max*100).toFixed(2)+'%;--c:'+s.c+'"></span>'}).join('')+tip+'</button>';}).join('');
   var step=Math.ceil(cats.length/(D.labels||12));
-  el.insertAdjacentHTML('beforeend','<div class="pb-bars__plot" style="--h:'+(D.h||180)+'px"><div class="pb-bars__y" aria-hidden="true">'+y+'</div><div class="pb-bars__area">'+grid+'<div class="pb-bars__cols">'+cols+'</div></div><div class="pb-bars__x" aria-hidden="true">'+cats.map(function(c,j){return '<span>'+(j%step?'':pbVEsc(c))+'</span>'}).join('')+'</div></div>'+(leg&&!el.querySelector('.pb-legend')?leg:''));}
+  el.insertAdjacentHTML('beforeend','<div class="pb-bars__plot" data-style="--h:'+(D.h||180)+'px"><div class="pb-bars__y" aria-hidden="true">'+y+'</div><div class="pb-bars__area">'+grid+'<div class="pb-bars__cols">'+cols+'</div></div><div class="pb-bars__x" aria-hidden="true">'+cats.map(function(c,j){return '<span>'+(j%step?'':pbEsc(c))+'</span>'}).join('')+'</div></div>'+(leg&&!el.querySelector('.pb-legend')?leg:'')),pbStyled(el);}
 
 /* Histogram: JSON {bins:[[lo,hi,count]], unit, marks:[{at,label,status}], h, c} */
 function pbHist(el){var D=pbJSONData(el),B=D.bins||[],u=D.unit||'',lo=B.length?B[0][0]:0,hi=B.length?B[B.length-1][1]:1,nice=pbNice(Math.max.apply(null,B.map(function(b){return b[2]}).concat([0]))),old=el.querySelector('.pb-bars__plot');if(old)old.remove();
-  var y='',grid='';for(var t=0;t<=nice.max+1e-9;t+=nice.step){var at=(t/nice.max*100).toFixed(2)+'%';y+='<span style="--at:'+at+'">'+pbFmtN(t)+'</span>';if(t>0)grid+='<i class="pb-bars__grid" style="--at:'+at+'"></i>';}
+  var y='',grid='';for(var t=0;t<=nice.max+1e-9;t+=nice.step){var at=(t/nice.max*100).toFixed(2)+'%';y+='<span data-style="--at:'+at+'">'+pbFmtN(t)+'</span>';if(t>0)grid+='<i class="pb-bars__grid" data-style="--at:'+at+'"></i>';}
   function pos(x){for(var k=0;k<B.length;k++){if(x<=B[k][1])return (k+Math.max(0,(x-B[k][0])/(B[k][1]-B[k][0])))/B.length*100;}return 100;}
-  var marks=(D.marks||[]).map(function(m){return '<i class="pb-bars__mark"'+(m.status?' data-status="'+m.status+'"':'')+' style="--at:'+pos(m.at).toFixed(2)+'%"><span>'+pbVEsc(m.label)+' '+pbFmtN(m.at)+u+'</span></i>'}).join('');
-  var cols=B.map(function(b,j){return '<button type="button" class="pb-bars__col"'+(j<2?' data-edge-l':j>B.length-3?' data-edge-r':'')+' aria-label="'+b[0]+'–'+b[1]+u+': '+b[2]+'"><span class="pb-bars__seg" style="--v:'+(b[2]/nice.max*100).toFixed(2)+'%;--c:'+(D.c||'var(--chart-1)')+'"></span><span class="pb-bars__tip"><b>'+pbFmtN(b[0])+'–'+pbFmtN(b[1])+u+'</b><span class="pb-bars__tr">'+pbFmtN(b[2])+' '+(D.countLabel||'requests')+'</span></span></button>'}).join('');
+  var marks=(D.marks||[]).map(function(m){return '<i class="pb-bars__mark"'+(m.status?' data-status="'+m.status+'"':'')+' data-style="--at:'+pos(m.at).toFixed(2)+'%"><span>'+pbEsc(m.label)+' '+pbFmtN(m.at)+u+'</span></i>'}).join('');
+  var cols=B.map(function(b,j){return '<button type="button" class="pb-bars__col"'+(j<2?' data-edge-l':j>B.length-3?' data-edge-r':'')+' aria-label="'+b[0]+'–'+b[1]+u+': '+b[2]+'"><span class="pb-bars__seg" data-style="--v:'+(b[2]/nice.max*100).toFixed(2)+'%;--c:'+(D.c||'var(--chart-1)')+'"></span><span class="pb-bars__tip"><b>'+pbFmtN(b[0])+'–'+pbFmtN(b[1])+u+'</b><span class="pb-bars__tr">'+pbFmtN(b[2])+' '+(D.countLabel||'requests')+'</span></span></button>'}).join('');
   var step=Math.ceil(B.length/(D.labels||8));
-  el.insertAdjacentHTML('beforeend','<div class="pb-bars__plot" style="--h:'+(D.h||160)+'px;margin-top:'+((D.marks||[]).length?18:0)+'px"><div class="pb-bars__y" aria-hidden="true">'+y+'</div><div class="pb-bars__area">'+grid+'<div class="pb-bars__cols">'+cols+'</div>'+marks+'</div><div class="pb-bars__x" aria-hidden="true">'+B.map(function(b,j){return '<span>'+(j%step?'':pbFmtN(b[0]))+'</span>'}).join('')+'</div></div>');}
+  el.insertAdjacentHTML('beforeend','<div class="pb-bars__plot" data-style="--h:'+(D.h||160)+'px;margin-top:'+((D.marks||[]).length?18:0)+'px"><div class="pb-bars__y" aria-hidden="true">'+y+'</div><div class="pb-bars__area">'+grid+'<div class="pb-bars__cols">'+cols+'</div>'+marks+'</div><div class="pb-bars__x" aria-hidden="true">'+B.map(function(b,j){return '<span>'+(j%step?'':pbFmtN(b[0]))+'</span>'}).join('')+'</div></div>'),pbStyled(el);}
 
 /* JSON / YAML viewer: script[type=application/json] holds the data. */
 function pbJSON(el){var data=pbJSONData(el),body=el.querySelector('.pb-json__body'),pathEl=el.querySelector('.pb-json__path code'),depth=+(el.dataset.depth||2),mode=el.dataset.format||'json',cur='';
   function pth(p,k,arr){return arr?p+'['+k+']':(p?p+'.':'')+(/^[A-Za-z_$][\w$-]*$/.test(k)?k:'["'+k+'"]');}
   function yv(v){if(typeof v==='string')return /^[\w./:@-][\w ./:@-]*$/.test(v)&&!/^(true|false|null|yes|no|on|off|~|-?\d[\d.e+-]*)$/i.test(v)&&!/:\s|\s$/.test(v)&&!/^[\d:._-]+$/.test(v)?v:JSON.stringify(v);return String(v);}
-  function leafV(v){var t=v===null?'z':typeof v==='string'?'s':typeof v==='number'?'n':'b',txt=mode==='yaml'?yv(v):JSON.stringify(v);return '<span class="pb-json__'+t+'" data-v>'+pbVEsc(txt)+'</span>';}
-  function key(k,arr){if(arr)return mode==='yaml'?'<span class="pb-json__p">- </span>':'';return '<span class="pb-json__k" data-k>'+pbVEsc(mode==='yaml'?k:JSON.stringify(k))+'</span><span class="pb-json__p">: </span>';}
+  function leafV(v){var t=v===null?'z':typeof v==='string'?'s':typeof v==='number'?'n':'b',txt=mode==='yaml'?yv(v):JSON.stringify(v);return '<span class="pb-json__'+t+'" data-v>'+pbEsc(txt)+'</span>';}
+  function key(k,arr){if(arr)return mode==='yaml'?'<span class="pb-json__p">- </span>':'';return '<span class="pb-json__k" data-k>'+pbEsc(mode==='yaml'?k:JSON.stringify(k))+'</span><span class="pb-json__p">: </span>';}
   function node(k,v,p,d,arr,last){var comma=mode==='json'&&!last?'<span class="pb-json__p">,</span>':'';
     if(v&&typeof v==='object'){var isA=Array.isArray(v),ks=Object.keys(v),o=isA?'[':'{',c=isA?']':'}',n=ks.length;
-      if(!n)return '<div class="pb-json__leaf" data-path="'+pbVEsc(p)+'">'+(k!=null?key(k,arr):'')+'<span class="pb-json__p">'+(mode==='yaml'?(isA?'[]':'{}'):o+c)+'</span>'+comma+'</div>';
+      if(!n)return '<div class="pb-json__leaf" data-path="'+pbEsc(p)+'">'+(k!=null?key(k,arr):'')+'<span class="pb-json__p">'+(mode==='yaml'?(isA?'[]':'{}'):o+c)+'</span>'+comma+'</div>';
       var kids=ks.map(function(kk,i){return node(kk,v[kk],p===''&&k==null?pth('',kk,isA):pth(p,kk,isA),d+1,isA,i===n-1)}).join('');
-      return '<details'+(d<depth?' open':'')+' data-path="'+pbVEsc(p)+'"><summary>'+(k!=null?key(k,arr):'')+(mode==='json'?'<span class="pb-json__p">'+o+'</span>':'')+'<span class="pb-json__count">'+n+(isA?' item':' key')+(n>1?'s':'')+(mode==='json'?' '+c:'')+'</span>'+(mode==='json'?'<span class="pb-json__close">'+comma+'</span>':'')+'</summary><div class="pb-json__kids">'+kids+'</div>'+(mode==='json'?'<div class="pb-json__end" style="padding-left:16px"><span class="pb-json__p">'+c+'</span>'+comma+'</div>':'')+'</details>';}
-    return '<div class="pb-json__leaf" data-path="'+pbVEsc(p)+'">'+(k!=null?key(k,arr):'')+leafV(v)+comma+'</div>';}
-  function render(){if(mode==='yaml'&&data&&typeof data==='object'&&Object.keys(data).length){var isA=Array.isArray(data),ks=Object.keys(data);body.innerHTML=ks.map(function(k,i){return node(k,data[k],pth('',k,isA),1,isA,i===ks.length-1)}).join('');}else body.innerHTML=node(null,data,'',0,false,true);filter();}
+      return '<details'+(d<depth?' open':'')+' data-path="'+pbEsc(p)+'"><summary>'+(k!=null?key(k,arr):'')+(mode==='json'?'<span class="pb-json__p">'+o+'</span>':'')+'<span class="pb-json__count">'+n+(isA?' item':' key')+(n>1?'s':'')+(mode==='json'?' '+c:'')+'</span>'+(mode==='json'?'<span class="pb-json__close">'+comma+'</span>':'')+'</summary><div class="pb-json__kids">'+kids+'</div>'+(mode==='json'?'<div class="pb-json__end pb-json__end--kids"><span class="pb-json__p">'+c+'</span>'+comma+'</div>':'')+'</details>';}
+    return '<div class="pb-json__leaf" data-path="'+pbEsc(p)+'">'+(k!=null?key(k,arr):'')+leafV(v)+comma+'</div>';}
+  function render(){if(mode==='yaml'&&data&&typeof data==='object'&&Object.keys(data).length){var isA=Array.isArray(data),ks=Object.keys(data);body.innerHTML=ks.map(function(k,i){return node(k,data[k],pth('',k,isA),1,isA,i===ks.length-1)}).join(''),pbStyled(body);}else body.innerHTML=node(null,data,'',0,false,true),pbStyled(body);filter();}
   function filter(){var q=(el.querySelector('[data-json-search]')||{}).value;q=(q||'').trim().toLowerCase();body.querySelectorAll('mark').forEach(function(m){m.replaceWith(m.textContent)});body.querySelectorAll('[data-dim]').forEach(function(x){x.removeAttribute('data-dim')});if(!q)return;
-    body.querySelectorAll('.pb-json__leaf').forEach(function(l){var hit=false;l.querySelectorAll('[data-k],[data-v]').forEach(function(s){var t=s.textContent,i=t.toLowerCase().indexOf(q);if(i>=0){hit=true;s.innerHTML=pbVEsc(t.slice(0,i))+'<mark>'+pbVEsc(t.slice(i,i+q.length))+'</mark>'+pbVEsc(t.slice(i+q.length));}});
+    body.querySelectorAll('.pb-json__leaf').forEach(function(l){var hit=false;l.querySelectorAll('[data-k],[data-v]').forEach(function(s){var t=s.textContent,i=t.toLowerCase().indexOf(q);if(i>=0){hit=true;s.innerHTML=pbEsc(t.slice(0,i))+'<mark>'+pbEsc(t.slice(i,i+q.length))+'</mark>'+pbEsc(t.slice(i+q.length)),pbStyled(s);}});
       if(!hit)l.setAttribute('data-dim','');else{var p=l.parentElement;while(p&&p!==body){if(p.tagName==='DETAILS')p.open=true;p=p.parentElement;}}});}
   body.addEventListener('mouseover',function(e){var n=e.target.closest('[data-path]');if(n&&pathEl){cur=n.dataset.path;pathEl.textContent=cur||'(root)';}});
   body.addEventListener('focusin',function(e){var n=e.target.closest('[data-path]');if(n&&pathEl){cur=n.dataset.path;pathEl.textContent=cur||'(root)';}});
@@ -90,32 +120,12 @@ function pbJSON(el){var data=pbJSONData(el),body=el.querySelector('.pb-json__bod
   if(cpp)cpp.addEventListener('click',function(){copy(cur,cpp);});
   if(sr)sr.addEventListener('input',filter);
   el.pbYaml=function(){return toYaml(data);};render();}
-
-/* pbChartHover(svg, spec) adds a crosshair, dots and a tooltip to a hand-drawn SVG chart.
-   spec: {axis:'x'|'y', pos:[coord per point], labels:[title per point], unit:'',
-          series:[{name, c:'css color' or one per point, v:[values], at:[[x,y] per point], unit}], band: width of the hover column (optional)}
-   Coordinates are in the SVG's viewBox units. Arrow keys move between points when the chart has focus. */
-function pbChartHover(svg,S){function col(s,i){return Array.isArray(s.c)?s.c[i]:s.c;}var box=svg.parentNode,NS='http://www.w3.org/2000/svg',tip=box.querySelector(':scope > .pb-ts__tip'),u=S.unit||'',cur=-1,g;
-  if(!tip){tip=document.createElement('div');tip.className='pb-ts__tip';box.appendChild(tip);}
-  if(getComputedStyle(box).position==='static')box.style.position='relative';
-  svg.setAttribute('tabindex','0');svg.setAttribute('role','img');svg.classList.add('pb-hoverable');
-  function fmt(v){return typeof v==='number'?(Math.abs(v)>=100?Math.round(v):Math.round(v*10)/10).toLocaleString():v;}
-  function show(i){if(i<0||i>=S.pos.length)return;cur=i;g=svg.querySelector('.pb-ts__hover');if(!g){g=document.createElementNS(NS,'g');g.setAttribute('class','pb-ts__hover');}svg.appendChild(g);
-    var vb=svg.viewBox.baseVal,p=S.pos[i],h='';
-    if(S.band)h+=S.axis==='y'?'<rect class="pb-hover-band" x="'+vb.x+'" y="'+(p-S.band/2)+'" width="'+vb.width+'" height="'+S.band+'"/>':'<rect class="pb-hover-band" x="'+(p-S.band/2)+'" y="'+vb.y+'" width="'+S.band+'" height="'+vb.height+'"/>';
-    else h+='<line class="pb-ts__cross" x1="'+p+'" x2="'+p+'" y1="'+(S.top||vb.y)+'" y2="'+(S.bottom||vb.y+vb.height)+'"/>';
-    S.series.forEach(function(s){if(s.at&&s.at[i]&&!S.band)h+='<circle class="pb-ts__dot" cx="'+s.at[i][0]+'" cy="'+s.at[i][1]+'" r="4" style="fill:'+col(s,i)+'"/>';});
-    g.innerHTML=h;
-    tip.innerHTML='<b>'+pbVEsc(S.labels[i])+'</b>'+S.series.map(function(s){return '<span class="pb-bars__tr"><i style="--c:'+col(s,i)+'"></i>'+pbVEsc(s.name)+'<span>'+fmt(s.v[i])+(s.unit!=null?s.unit:u)+'</span></span>'}).join('');
-    tip.setAttribute('data-show','');
-    var r=svg.getBoundingClientRect(),br=box.getBoundingClientRect(),sx=r.width/vb.width,sy=r.height/vb.height,tw=tip.offsetWidth,th=tip.offsetHeight,
-      a=S.series[0].at&&S.series[0].at[i]||[p,p],px=(S.axis==='y'?a[0]:p)*sx+r.left-br.left,py=(S.axis==='y'?p:Math.min.apply(0,S.series.map(function(s){return s.at&&s.at[i]?s.at[i][1]:vb.height/2})))*sy+r.top-br.top;
-    var left=px+14+tw>br.width?px-14-tw:px+14,top=Math.max(0,Math.min(py-th/2,br.height-th));
-    tip.style.left=left+'px';tip.style.top=top+'px';}
-  function hide(){cur=-1;tip.removeAttribute('data-show');var e=svg.querySelector('.pb-ts__hover');if(e)e.remove();}
-  function near(e){var m=svg.getScreenCTM();if(!m)return -1;var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;pt=pt.matrixTransform(m.inverse());var v=S.axis==='y'?pt.y:pt.x,b=-1,d=1e9;
-    S.pos.forEach(function(p,i){var dd=Math.abs(p-v);if(dd<d){d=dd;b=i;}});return S.band&&d>S.band/2+4?-1:b;}
-  svg.onpointermove=function(e){var i=near(e);if(i<0)hide();else if(i!==cur)show(i);};
-  svg.onpointerleave=hide;svg.onblur=hide;
-  svg.onkeydown=function(e){var n=S.pos.length;if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();show(cur<0?0:Math.min(n-1,cur+1));}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();show(cur<0?n-1:Math.max(0,cur-1));}else if(e.key==='Escape')hide();};}
-document.querySelectorAll('[data-hist]').forEach(pbHist);
+/* pbInit() hooks, bound in this order: pbHook(name, selector, behavior). Skip one with data-pb-skip="name" on an ancestor or pbInit(root, {skip:['name']}). */
+pbHook('vars','[data-vars]',pbVars);
+pbHook('heat','[data-heat]',pbHeat);
+pbHook('dial','[data-dial]',pbDial);
+pbHook('donut','[data-donut]',pbDonut);
+pbHook('bars','[data-bars]',pbBars);
+pbHook('hist','[data-hist]',pbHist);
+pbHook('json','[data-json]',pbJSON);
+pbInit();
