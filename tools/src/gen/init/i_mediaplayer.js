@@ -1,2 +1,0 @@
-document.querySelectorAll('[data-player] video').forEach(function(v){if(v.querySelector('track'))return;var vtt='WEBVTT\n\n00:00.500 --> 00:03.500\nFour blocks drift across the frame.\n\n00:04.000 --> 00:07.000\nThe bar along the bottom counts ten seconds.\n\n00:07.500 --> 00:09.800\nEnd of the sample clip.\n';
-  var t=document.createElement('track');t.kind='captions';t.label='English';t.srclang='en';t.src=URL.createObjectURL(new Blob([vtt],{type:'text/vtt'}));v.appendChild(t);});

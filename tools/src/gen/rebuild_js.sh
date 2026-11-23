@@ -1,5 +1,63 @@
-set -e
-cd /home/claude/gen
-python3 /home/claude/gen/genjs.py
-python3 /home/claude/gen/genpv.py
-python3 assemble.py && bash /home/claude/gen/fixh.sh && python3 kit.py >/dev/null
+cd /home/claude/gen/pv
+python3 /home/claude/gen/genjs.py >/dev/null
+while read n libs init; do out=""; for l in $(echo $libs | tr ',' ' '); do out="$out $l"; done; cat $out $init > $n.js; done <<'L'
+ThemeSwitch _ui.js /home/claude/gen/init/i_theme.js
+AppShell _ui.js /home/claude/gen/init/i_shell.js
+Breadcrumbs _ui.js /home/claude/gen/init/i_pop.js
+ListItem _ui.js /home/claude/gen/init/i_av.js
+Avatar _ui.js /home/claude/gen/init/i_av.js
+ImageViewer _ui.js /home/claude/gen/init/i_lb.js
+TreeView _ui.js /home/claude/gen/init/i_tree.js
+CommandPalette _ui.js /home/claude/gen/init/i_cmd.js
+ContextMenu _ui.js /home/claude/gen/init/i_ctx.js
+Pagination _ui.js /home/claude/gen/init/i_pager.js
+ErrorSummary _ui.js /home/claude/gen/init/i_val.js
+Resizable _ui.js /home/claude/gen/init/i_split.js
+QRCode _qr.js,_ui.js /home/claude/gen/init/i_qr.js
+TextUtils _ui.js,/home/claude/gen/init/i_ago.js /home/claude/gen/init/i_text.js
+Popover _ui.js,/home/claude/gen/init/i_ago.js /home/claude/gen/init/i_popover.js
+SiteBanner /dev/null /home/claude/gen/init/i_dismiss.js
+SkipLink /dev/null /home/claude/gen/init/i_skip.js
+Progress /dev/null /home/claude/gen/init/i_progress.js
+Loading /dev/null /home/claude/gen/init/i_loading.js
+LogViewer _hl.js /home/claude/gen/init/i_log.js
+DiffViewer _hl.js /home/claude/gen/init/i_diff.js
+FileBrowser _hl.js /home/claude/gen/init/i_files.js
+Terminal _hl.js /home/claude/gen/init/i_term.js
+CronBuilder _hl.js /home/claude/gen/init/i_cron.js
+StorageBar _hl.js /home/claude/gen/init/i_stor.js
+Rack _hl.js /home/claude/gen/init/i_rack.js
+LogExplorer _hl.js /home/claude/gen/init/i_logx.js
+TimeRange _ui.js,_ts.js /home/claude/gen/init/i_ts.js
+SiteHeader _ui.js /home/claude/gen/init/i_site.js
+ShareDialog _qr.js,_ui.js,_overlay.js,_dt.js /home/claude/gen/init/i_share.js
+FilePreview _ui.js,_hl.js,_player.js,_dt.js /home/claude/gen/init/i_fp.js
+TableTools _ui.js,_dt.js /home/claude/gen/init/i_dt.js
+EventCalendar _misc.js /home/claude/gen/init/i_evcal.js
+MarkdownEditor _misc.js /home/claude/gen/init/i_md.js
+CommentThread _ui.js,_misc.js /home/claude/gen/init/i_thread.js
+NotifySettings _overlay.js,_misc.js /home/claude/gen/init/i_notify.js
+MobileNav _misc.js /home/claude/gen/init/i_sheet.js
+SessionTimeout _misc.js /home/claude/gen/init/i_session.js
+AlertEmail /dev/null /home/claude/gen/init/i_email.js
+DropZone _misc.js /home/claude/gen/init/i_dropset.js
+Chart _viz2.js /home/claude/gen/init/i_chart.js
+ChartGround _viz2.js /home/claude/gen/init/i_cg.js
+Heatmap _viz2.js /home/claude/gen/init/i_heat.js
+Gauge _viz2.js /home/claude/gen/init/i_dial.js
+BarChart _viz2.js /home/claude/gen/init/i_bars.js
+Histogram _viz2.js /home/claude/gen/init/i_hist.js
+JsonViewer _viz2.js /home/claude/gen/init/i_json.js
+BulkActions _ix.js /home/claude/gen/init/i_bulk.js
+QueryFilter _ix.js /home/claude/gen/init/i_qf.js
+Sortable _ix.js /home/claude/gen/init/i_sort.js
+Shortcuts _ix.js /home/claude/gen/init/i_keys.js
+UploadQueue _ix.js /home/claude/gen/init/i_upq.js
+VirtualList _ix.js /home/claude/gen/init/i_vl.js
+SettingsPage ../patchbay.js /home/claude/gen/init/i_settings.js
+SignIn ../patchbay.js /home/claude/gen/init/i_signin.js
+ApiTokens ../patchbay.js /home/claude/gen/init/i_tok.js
+Dashboard ../patchbay.js /home/claude/gen/init/i_dash.js
+PrintReport ../patchbay.js /home/claude/gen/init/i_print.js
+L
+cd /home/claude/gen && python3 assemble.py && bash /home/claude/gen/fixh.sh && python3 kit.py >/dev/null

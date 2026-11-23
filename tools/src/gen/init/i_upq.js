@@ -1,4 +1,4 @@
-document.querySelectorAll('[data-upq]').forEach(function(q){pbInit(q);var wrap=q.parentElement,slots=2;
+document.querySelectorAll('[data-upq]').forEach(function(q){pbUploadQueue(q);var wrap=q.parentElement,slots=2;
   function run(){var its=q.pbItems(),busy=its.filter(function(i){return i.state==='uploading'||i.state==='paused'}).length;its.filter(function(i){return i.state==='queued'}).slice(0,Math.max(0,slots-busy)).forEach(function(it){it.start();var rate=(1.5+Math.random()*5)*1048576,fail=/\.iso$/.test(it.name),iv=setInterval(function(){if(it.state==='canceled'){clearInterval(iv);run();return;}if(q.pbPaused()||it.state==='paused')return;var nb=Math.min(it.size,it.loaded+rate*0.4);if(fail&&nb>it.size*0.6){clearInterval(iv);it.fail('Server closed the connection at 60%');run();return;}it.progress(nb,rate);if(nb>=it.size){clearInterval(iv);it.done();run();}},400);});}
   q.addEventListener('retry',function(e){e.detail.name=e.detail.name.replace(/\.iso$/,'.img');run();});q.addEventListener('resume',run);
   function add(fs){fs.forEach(function(f){q.pbAdd(f)});run();}

@@ -10,13 +10,13 @@
   </ul>
   <div class="pb-settings__main">
     <section id="set-general"><h2>General</h2>
-      <form class="pb-form" data-section><fieldset class="pb-fieldset"><legend>Instance</legend>
+      <form class="pb-form" data-section onsubmit="return false"><fieldset class="pb-fieldset"><legend>Instance</legend>
         <div class="pb-form__row"><label class="pb-field"><span class="pb-field__label">Name</span><span class="pb-input"><input value="snap"></span></label><label class="pb-field"><span class="pb-field__label">Public URL</span><span class="pb-input"><input value="https://snap.lab.home"></span></label></div>
         <label class="pb-field"><span class="pb-field__label">Time zone</span><span class="pb-select"><select><option>America/New_York</option><option>UTC</option><option>Europe/Berlin</option></select></span><span class="pb-field__help">Used for schedules and timestamps in emails.</span></label>
         <div class="pb-fieldset__foot"><span class="pb-foot__status"></span><button type="reset" class="pb-btn pb-btn--ghost" disabled>Discard</button><button class="pb-btn pb-btn--primary" disabled>Save</button></div>
       </fieldset></form></section>
     <section id="set-storage"><h2>Storage</h2><p>Where uploads land and how long they stay.</p>
-      <form class="pb-form" data-section><fieldset class="pb-fieldset"><legend>Uploads</legend>
+      <form class="pb-form" data-section onsubmit="return false"><fieldset class="pb-fieldset"><legend>Uploads</legend>
         <div class="pb-setting"><span class="pb-setting__label">Default pool</span><span class="pb-setting__desc">New shares are stored here.</span><span class="pb-select"><select aria-label="Default pool"><option>tank</option><option>fast</option></select></span></div>
         <div class="pb-setting"><span class="pb-setting__label">Default expiry</span><span class="pb-setting__desc">People can pick a different one per share.</span><span class="pb-select"><select aria-label="Default expiry"><option>7 days</option><option>30 days</option><option>never</option></select></span></div>
         <div class="pb-setting"><span class="pb-setting__label">Keep deleted files</span><span class="pb-setting__desc">Restorable from the trash for 14 days.</span><input type="checkbox" class="pb-switch" checked aria-label="Keep deleted files"></div>

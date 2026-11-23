@@ -36,8 +36,7 @@ for (const t of themes) {
     for (const id of ids) {
       if (['c-logviewer', 'c-logexplorer', 'c-terminal', 'c-uploadqueue', 'c-gauge', 'c-textutils', 'c-timerange', 'c-heatmap'].includes(id)) continue; // live or time-based content
       const el = page.locator(`#${id}`);
-      // Scroll without the actionability wait: live demos above (upload queue, terminal) can keep nudging the page, and toHaveScreenshot already waits for a stable image.
-      await el.evaluate((e) => e.scrollIntoViewIfNeeded ? e.scrollIntoViewIfNeeded(true) : e.scrollIntoView({ block: "center" }));
+      await el.scrollIntoViewIfNeeded();
       await expect(el).toHaveScreenshot(`${t.theme}-${t.edge}-${id}.png`);
     }
   });

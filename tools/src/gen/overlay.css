@@ -16,6 +16,7 @@
 .pb-dialog__head > div { flex: 1; min-width: 0; }
 .pb-dialog__sub { margin: 2px 0 0; font: 400 14px/20px var(--font-serif); color: var(--ink-muted); }
 .pb-dialog__body .pb-form { margin-top: var(--space-2); }
+.pb-dialog__body.pb-prose { max-width: none; }
 .pb-dialog__foot .pb-foot__status { margin-right: auto; }
 .pb-dialog--scroll[open], .pb-dialog--drawer[open] { display: flex; flex-direction: column; max-height: min(85dvh, 760px); }
 .pb-dialog--scroll .pb-dialog__head, .pb-dialog--drawer .pb-dialog__head { padding-bottom: var(--space-4); border-bottom: var(--stroke-1) solid var(--line); }

@@ -93,8 +93,7 @@
 .pb-truncate { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pb-clamp-2, .pb-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
 .pb-clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; } .pb-clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
-.pb-midtrunc { display: inline-flex; min-width: 0; max-width: 100%; white-space: nowrap; }
-.pb-midtrunc--mono { font-family: var(--font-mono); }
+.pb-midtrunc { display: inline-flex; min-width: 0; max-width: 100%; white-space: nowrap; font-family: var(--font-mono); }
 .pb-midtrunc > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .pb-midtrunc > span:last-child { flex: none; }
 .pb-reltime { font-variant-numeric: tabular-nums; text-decoration: underline dotted var(--line-strong); text-underline-offset: 3px; cursor: default; }
@@ -233,23 +232,3 @@
 .pb-split--vertical[data-dragging] { cursor: row-resize; }
 
 @media (prefers-reduced-motion: reduce) { .pb-gallery img, .pb-tree__caret { transition: none; } .pb-lightbox[open] { animation: none; } .pb-tree [aria-busy="true"] > .pb-tree__row .pb-tree__meta::before { animation: none; } }
-
-/* Step count and QR size as attributes (strict CSP). */
-.pb-steps[data-n="2"] { --n: 2; }
-.pb-steps[data-n="3"] { --n: 3; }
-.pb-steps[data-n="4"] { --n: 4; }
-.pb-steps[data-n="5"] { --n: 5; }
-.pb-steps[data-n="6"] { --n: 6; }
-.pb-steps[data-n="7"] { --n: 7; }
-.pb-steps[data-n="8"] { --n: 8; }
-.pb-qr[data-size="sm"] { --qr-size: 132px; }
-.pb-qr[data-size="md"] { --qr-size: 148px; }
-.pb-qr[data-size="lg"] { --qr-size: 220px; }
-/* Inside a popover or menu the popover is the frame: no card, just the white quiet zone and the caption. */
-.pb-qr.pb-qr--bare { padding: 0; gap: var(--space-1); background: none; border: 0; border-radius: 0; box-shadow: none; }
-.pb-qr--bare .pb-qr__code { padding: 8px; border-radius: var(--pb-r-sm); }
-[data-edge="hard"] .pb-qr--bare .pb-qr__code { border-radius: 0; }
-.pb-qr--bare .pb-qr__caption { margin: 0; }
-.pb-lightbox__stage > .pb-player { width: min(calc(100% - 112px), 960px); }
-.pb-lightbox__stage > .pb-player--audio { width: min(calc(100% - 112px), 560px); }
-.pb-lightbox__thumbs button > .pb-icon { width: 20px; height: 20px; }

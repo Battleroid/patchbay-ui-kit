@@ -1,4 +1,0 @@
-document.querySelectorAll('[data-long]').forEach(function(b){var h='';for(var i=1;i<=8;i++)h+='<h3>'+['Faster uploads','Share passwords','Better previews','Quota warnings','Audit log','Mobile layout','Keyboard shortcuts','Fixes'][i-1]+'</h3><p>Uploads now resume after a dropped connection and verify each chunk. Large folders upload in parallel, up to four files at a time.</p>';b.innerHTML=h;});
-document.querySelectorAll('[data-demo]').forEach(function(b){b.addEventListener('click',function(){var sec=b.closest('section[data-edge]')||document.body;
-  if(b.dataset.demo==='confirm')pbConfirm({title:'Restart Jellyfin?',body:'Streams in progress will stop for about 20 seconds.',confirm:'Restart',status:'warn',container:sec});
-  else pbConfirm({title:'Delete user casey?',body:'Removes their 12 shares and 18.2 GB of files. This cannot be undone.',confirm:'Delete user',danger:true,typeToConfirm:'casey',container:sec});});});

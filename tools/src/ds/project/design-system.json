@@ -1204,9 +1204,9 @@
   ],
   "lastChange": {
     "by": "Casey",
-    "at": "2026-11-23T05:20:00Z",
+    "at": "2026-11-23T05:40:00Z",
     "via": "Claude chat",
-    "note": "Input affixes can trail the input (units like opens, GB) and sit flush with the right edge."
+    "note": "Notification grid: header holds channel names only; per-channel toggles move to an \"All events\" first row aligned with each column."
   },
   "layout": "files",
   "libraries": [],

@@ -1,1 +1,1 @@
-document.querySelectorAll('[data-dt]').forEach(function(t){pbInit(t);t.addEventListener('edit',function(e){var o=t.parentElement.querySelector('[data-dt-out]');if(o)o.textContent='Saved '+e.detail.key+' for '+e.detail.row.name+': '+e.detail.old+' → '+e.detail.value;});});
+document.querySelectorAll('[data-dt]').forEach(function(t){pbDataTable(t);t.addEventListener('edit',function(e){var o=t.parentElement.querySelector('[data-dt-out]');if(o)o.textContent='Saved '+e.detail.key+' for '+e.detail.row.name+': '+e.detail.old+' → '+e.detail.value;});});

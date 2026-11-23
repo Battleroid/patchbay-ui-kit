@@ -5,4 +5,3 @@ The settings page groups an app's options into sections with a nav beside them.
 - Saving: sections with inputs are `form[data-section]` with a `pb-fieldset__foot` (status, Discard, Save). Switches that apply at once need no Save.
 - Danger zone last: `pb-fieldset.pb-danger`, each action a `pb-btn--danger` that opens a type-to-confirm Dialog.
 - Under 760px the nav becomes a scrolling row above the sections.
-- Inside AppShell the section nav sticks below the shell header (`--pb-head-h`) and scrolls inside itself when long; the highlight follows the section at the top of the visible area.

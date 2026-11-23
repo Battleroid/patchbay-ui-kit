@@ -6,7 +6,3 @@ The app shell is the frame every app uses: header, side navigation, main area an
 - Page header: `header.pb-pagehead` with breadcrumbs, `h1.pb-pagehead__title`, `pb-pagehead__desc` and `pb-pagehead__actions` (primary action last).
 - `div.pb-layout` puts content and an `aside.pb-layout__aside` side by side; it stacks when the main area is narrower than 720px or the window under 960px.
 - Under 900px the nav becomes a drawer: `pbShell(el)` wires the toggle, Escape and outside clicks. `pb-shell--contained` keeps the shell inside a box for previews.
-- Breakpoints line up: under 900px the nav becomes a drawer and `pb-layout` stacks its aside under the content (inside a narrow container it stacks under 720px of its own width).
-- Page header: `.pb-pagehead` holds `h1.pb-pagehead__title`, an optional `.pb-pagehead__meta` line under it (mono, muted: owner, size, updated time, a badge) distinct from the prose `.pb-pagehead__desc`, and `.pb-pagehead__actions`.
-- Under 900px the nav is a fixed drawer from under the header to the bottom of the viewport; a long nav scrolls inside it.
-- The shell sets `--pb-head-h` (56px, the header height). Sticky things inside `pb-shell__main` offset by it: `pb-settings__nav` and `pb-layout__aside` stick at `calc(var(--pb-head-h, 0px) + var(--space-4))`, and the settings nav scrolls inside itself when the list is taller than the viewport. Ids in the main area get `scroll-margin-top`, so anchor jumps land below the header, and the section nav highlight uses the same offset. Use the variable for your own sticky elements.
