@@ -1933,6 +1933,9 @@ button.pb-item { width: 100%; font: inherit; text-align: left; background: none;
 .pb-qr--bare .pb-qr__code { padding: 8px; border-radius: var(--pb-r-sm); }
 [data-edge="hard"] .pb-qr--bare .pb-qr__code { border-radius: 0; }
 .pb-qr--bare .pb-qr__caption { margin: 0; }
+.pb-lightbox__stage > .pb-player { width: min(calc(100% - 112px), 960px); }
+.pb-lightbox__stage > .pb-player--audio { width: min(calc(100% - 112px), 560px); }
+.pb-lightbox__thumbs button > .pb-icon { width: 20px; height: 20px; }
 
 
 /* ---------- Log viewer ---------- */

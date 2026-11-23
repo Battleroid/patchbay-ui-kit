@@ -39,7 +39,7 @@
     "Gauge": [["_viz2.js"], ["i_dial.js"]],
     "Heatmap": [["_viz2.js"], []],
     "Histogram": [["_viz2.js"], []],
-    "ImageViewer": [["_ui.js"], []],
+    "ImageViewer": [["_ui.js", "_player.js"], []],
     "InputTypes": [["_forms.js"], []],
     "JsonViewer": [["_viz2.js"], []],
     "KeyValue": [["_forms.js"], []],
