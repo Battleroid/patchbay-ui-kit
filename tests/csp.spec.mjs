@@ -391,3 +391,17 @@ test('menu: arrows, Home/End and typeahead move through the items', async ({ pag
   await page.keyboard.type(label[0]);
   expect((await page.evaluate(() => document.activeElement.textContent.trim()))[0].toLowerCase()).toBe(label[0].toLowerCase());
 });
+test('tabs: roving tabindex and arrow keys select tabs', async ({ page }) => {
+  await page.goto('/components/Tabs/example.html');
+  const tabs = page.locator('.pb-tabs').first().locator('.pb-tab[aria-controls]');
+  expect(await tabs.evaluateAll((ts) => ts.map((t) => t.tabIndex))).toEqual([0, -1, -1]);
+  const changes = page.evaluate(() => new Promise((r) => { let n = 0; document.addEventListener('pb:tabchange', () => { if (++n === 2) r(n); }); }));
+  await tabs.first().focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(tabs.nth(1)).toBeFocused();
+  await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+  await page.keyboard.press('ArrowLeft'); await page.keyboard.press('ArrowLeft');
+  await expect(tabs.nth(2)).toHaveAttribute('aria-selected', 'true');
+  expect(await changes).toBe(2);
+  expect(await tabs.evaluateAll((ts) => ts.map((t) => t.tabIndex))).toEqual([-1, -1, 0]);
+});
