@@ -232,6 +232,16 @@ test('csp: form section tracks dirty, busy, saved and error', async ({ page }) =
   await form.locator('button[type=reset]').click();
   await expect(input).toHaveValue('30 GB');
   await expect(st).not.toHaveAttribute('data-state', /./);
+  // Discard leaves buttons that are not Discard or Save alone.
+  const kept = await page.evaluate(() => {
+    const f = document.createElement('form'); f.setAttribute('data-section', '');
+    f.innerHTML = '<span class="pb-input"><input type="password" value="x"><button type="button" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span><div class="pb-fieldset__foot"><span class="pb-foot__status">No changes</span><button type="reset" disabled>Discard</button><button disabled>Save</button></div>';
+    document.body.append(f); pb.pbInit(f);
+    const i = f.querySelector('input'); i.value = 'y'; i.dispatchEvent(new Event('input', { bubbles: true }));
+    f.reset();
+    return new Promise((r) => setTimeout(() => r([f.querySelector('[data-reveal]').disabled, f.querySelector('[type=reset]').disabled, i.value]), 50));
+  });
+  expect(kept).toEqual([false, true, 'x']);
   await settle(page, bag);
 });
 
