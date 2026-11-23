@@ -411,3 +411,5 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 }
 
 /* ---------- Icon set (generated) ---------- */
+/* The kit resets the page margin on the app root so shells and headers sit flush. */
+body.pb { margin: 0; }
