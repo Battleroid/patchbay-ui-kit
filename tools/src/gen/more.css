@@ -368,3 +368,12 @@
   .pb-term, .pb-player, .pb-lightbox, .pb-tile--ink, .pb-chart--ink, .pb-bulkbar { forced-color-adjust: auto; }
 }
 @media (forced-colors: active) { .pb-legend i, .pb-storage__legend i, .pb-donut__legend i, .pb-ts__legend i, .pb-evcal__legend i, .pb-bars__tr i, .pb-logx__lv i { forced-color-adjust: none; } }
+
+/* ---------- Classes that stand in for inline styles in script-built markup (strict CSP) ---------- */
+.pb-field__label .pb-code-inline--plain { text-transform: none; letter-spacing: 0; }
+.pb-dl dd[data-wrap] { overflow-wrap: anywhere; }
+.pb-json .pb-json__end--kids { padding-left: 16px; }
+.pb-heat__legend .pb-heat__cell--gap { margin-left: 6px; }
+.pb-toolbar.pb-logx__acts { margin-top: 6px; }
+.pb-pill.pb-pill--xs { height: 20px; font-size: 11px; }
+.pb-table th.pb-dt__detailcol { width: 36px; }
