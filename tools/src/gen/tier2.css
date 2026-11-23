@@ -232,3 +232,15 @@
 .pb-split--vertical[data-dragging] { cursor: row-resize; }
 
 @media (prefers-reduced-motion: reduce) { .pb-gallery img, .pb-tree__caret { transition: none; } .pb-lightbox[open] { animation: none; } .pb-tree [aria-busy="true"] > .pb-tree__row .pb-tree__meta::before { animation: none; } }
+
+/* Step count and QR size as attributes (strict CSP). */
+.pb-steps[data-n="2"] { --n: 2; }
+.pb-steps[data-n="3"] { --n: 3; }
+.pb-steps[data-n="4"] { --n: 4; }
+.pb-steps[data-n="5"] { --n: 5; }
+.pb-steps[data-n="6"] { --n: 6; }
+.pb-steps[data-n="7"] { --n: 7; }
+.pb-steps[data-n="8"] { --n: 8; }
+.pb-qr[data-size="sm"] { --qr-size: 132px; }
+.pb-qr[data-size="md"] { --qr-size: 148px; }
+.pb-qr[data-size="lg"] { --qr-size: 220px; }

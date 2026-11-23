@@ -1902,6 +1902,18 @@ button.pb-item { width: 100%; font: inherit; text-align: left; background: none;
 
 @media (prefers-reduced-motion: reduce) { .pb-gallery img, .pb-tree__caret { transition: none; } .pb-lightbox[open] { animation: none; } .pb-tree [aria-busy="true"] > .pb-tree__row .pb-tree__meta::before { animation: none; } }
 
+/* Step count and QR size as attributes (strict CSP). */
+.pb-steps[data-n="2"] { --n: 2; }
+.pb-steps[data-n="3"] { --n: 3; }
+.pb-steps[data-n="4"] { --n: 4; }
+.pb-steps[data-n="5"] { --n: 5; }
+.pb-steps[data-n="6"] { --n: 6; }
+.pb-steps[data-n="7"] { --n: 7; }
+.pb-steps[data-n="8"] { --n: 8; }
+.pb-qr[data-size="sm"] { --qr-size: 132px; }
+.pb-qr[data-size="md"] { --qr-size: 148px; }
+.pb-qr[data-size="lg"] { --qr-size: 220px; }
+
 
 /* ---------- Log viewer ---------- */
 .pb-log { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; background: var(--code-bg); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); overflow: hidden; min-height: 0; }
@@ -2536,6 +2548,21 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-auth__ok .pb-icon { width: 24px; height: 24px; }
 .pb-auth__card .pb-recovery { justify-items: center; }
 
+/* Markup-level sizing without inline styles (strict CSP): data-span on dashboard children, the inline sign-in variant. */
+.pb-dash > [data-span="1"] { --span: 1; }
+.pb-dash > [data-span="2"] { --span: 2; }
+.pb-dash > [data-span="3"] { --span: 3; }
+.pb-dash > [data-span="4"] { --span: 4; }
+.pb-dash > [data-span="5"] { --span: 5; }
+.pb-dash > [data-span="6"] { --span: 6; }
+.pb-dash > [data-span="7"] { --span: 7; }
+.pb-dash > [data-span="8"] { --span: 8; }
+.pb-dash > [data-span="9"] { --span: 9; }
+.pb-dash > [data-span="10"] { --span: 10; }
+.pb-dash > [data-span="11"] { --span: 11; }
+.pb-dash > [data-span="12"] { --span: 12; }
+.pb-auth--inline { --auth-h: auto; padding: 0; background: none; }
+
 
 /* ---------- Time range picker ---------- */
 .pb-trange { display: inline-flex; align-items: stretch; flex-wrap: nowrap; }
@@ -2916,6 +2943,13 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-toolbar.pb-logx__acts { margin-top: 6px; }
 .pb-pill.pb-pill--xs { height: 20px; font-size: 11px; }
 .pb-table th.pb-dt__detailcol { width: 36px; }
+
+/* Tab bar item count as an attribute (strict CSP). */
+.pb-tabbar[data-n="2"] { --n: 2; }
+.pb-tabbar[data-n="3"] { --n: 3; }
+.pb-tabbar[data-n="4"] { --n: 4; }
+.pb-tabbar[data-n="5"] { --n: 5; }
+.pb-tabbar[data-n="6"] { --n: 6; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

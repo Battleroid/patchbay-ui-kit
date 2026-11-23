@@ -377,3 +377,10 @@
 .pb-toolbar.pb-logx__acts { margin-top: 6px; }
 .pb-pill.pb-pill--xs { height: 20px; font-size: 11px; }
 .pb-table th.pb-dt__detailcol { width: 36px; }
+
+/* Tab bar item count as an attribute (strict CSP). */
+.pb-tabbar[data-n="2"] { --n: 2; }
+.pb-tabbar[data-n="3"] { --n: 3; }
+.pb-tabbar[data-n="4"] { --n: 4; }
+.pb-tabbar[data-n="5"] { --n: 5; }
+.pb-tabbar[data-n="6"] { --n: 6; }

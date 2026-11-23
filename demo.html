@@ -1912,6 +1912,18 @@ button.pb-item { width: 100%; font: inherit; text-align: left; background: none;
 
 @media (prefers-reduced-motion: reduce) { .pb-gallery img, .pb-tree__caret { transition: none; } .pb-lightbox[open] { animation: none; } .pb-tree [aria-busy="true"] > .pb-tree__row .pb-tree__meta::before { animation: none; } }
 
+/* Step count and QR size as attributes (strict CSP). */
+.pb-steps[data-n="2"] { --n: 2; }
+.pb-steps[data-n="3"] { --n: 3; }
+.pb-steps[data-n="4"] { --n: 4; }
+.pb-steps[data-n="5"] { --n: 5; }
+.pb-steps[data-n="6"] { --n: 6; }
+.pb-steps[data-n="7"] { --n: 7; }
+.pb-steps[data-n="8"] { --n: 8; }
+.pb-qr[data-size="sm"] { --qr-size: 132px; }
+.pb-qr[data-size="md"] { --qr-size: 148px; }
+.pb-qr[data-size="lg"] { --qr-size: 220px; }
+
 
 /* ---------- Log viewer ---------- */
 .pb-log { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; background: var(--code-bg); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); overflow: hidden; min-height: 0; }
@@ -2546,6 +2558,21 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-auth__ok .pb-icon { width: 24px; height: 24px; }
 .pb-auth__card .pb-recovery { justify-items: center; }
 
+/* Markup-level sizing without inline styles (strict CSP): data-span on dashboard children, the inline sign-in variant. */
+.pb-dash > [data-span="1"] { --span: 1; }
+.pb-dash > [data-span="2"] { --span: 2; }
+.pb-dash > [data-span="3"] { --span: 3; }
+.pb-dash > [data-span="4"] { --span: 4; }
+.pb-dash > [data-span="5"] { --span: 5; }
+.pb-dash > [data-span="6"] { --span: 6; }
+.pb-dash > [data-span="7"] { --span: 7; }
+.pb-dash > [data-span="8"] { --span: 8; }
+.pb-dash > [data-span="9"] { --span: 9; }
+.pb-dash > [data-span="10"] { --span: 10; }
+.pb-dash > [data-span="11"] { --span: 11; }
+.pb-dash > [data-span="12"] { --span: 12; }
+.pb-auth--inline { --auth-h: auto; padding: 0; background: none; }
+
 
 /* ---------- Time range picker ---------- */
 .pb-trange { display: inline-flex; align-items: stretch; flex-wrap: nowrap; }
@@ -2926,6 +2953,13 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-toolbar.pb-logx__acts { margin-top: 6px; }
 .pb-pill.pb-pill--xs { height: 20px; font-size: 11px; }
 .pb-table th.pb-dt__detailcol { width: 36px; }
+
+/* Tab bar item count as an attribute (strict CSP). */
+.pb-tabbar[data-n="2"] { --n: 2; }
+.pb-tabbar[data-n="3"] { --n: 3; }
+.pb-tabbar[data-n="4"] { --n: 4; }
+.pb-tabbar[data-n="5"] { --n: 5; }
+.pb-tabbar[data-n="6"] { --n: 6; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -4051,17 +4085,17 @@ services:
 <figure class="pb-donut" data-donut data-total="6.2 TB" data-total-label="used">
   <div class="pb-donut__hole"></div>
   <ul class="pb-donut__legend">
-    <li data-value="3.1" style="--c:var(--chart-1)"><i></i><span>media</span><span>3.1 TB</span><span data-pct></span></li>
-    <li data-value="1.7" style="--c:var(--pop-mint)"><i></i><span>photos</span><span>1.7 TB</span><span data-pct></span></li>
-    <li data-value="1.4" style="--c:var(--pop-yellow)"><i></i><span>backups</span><span>1.4 TB</span><span data-pct></span></li>
+    <li data-value="3.1" data-vars="--c:var(--chart-1)"><i></i><span>media</span><span>3.1 TB</span><span data-pct></span></li>
+    <li data-value="1.7" data-vars="--c:var(--pop-mint)"><i></i><span>photos</span><span>1.7 TB</span><span data-pct></span></li>
+    <li data-value="1.4" data-vars="--c:var(--pop-yellow)"><i></i><span>backups</span><span>1.4 TB</span><span data-pct></span></li>
   </ul>
 </figure>
 <figure class="pb-donut" data-donut data-total-label="clients">
   <div class="pb-donut__hole"></div>
   <ul class="pb-donut__legend">
-    <li data-value="23" style="--c:var(--chart-1)"><i></i><span>wired</span><span>23</span><span data-pct></span></li>
-    <li data-value="31" style="--c:var(--chart-2)"><i></i><span>wifi</span><span>31</span><span data-pct></span></li>
-    <li data-value="6" style="--c:var(--chart-3)"><i></i><span>iot vlan</span><span>6</span><span data-pct></span></li>
+    <li data-value="23" data-vars="--c:var(--chart-1)"><i></i><span>wired</span><span>23</span><span data-pct></span></li>
+    <li data-value="31" data-vars="--c:var(--chart-2)"><i></i><span>wifi</span><span>31</span><span data-pct></span></li>
+    <li data-value="6" data-vars="--c:var(--chart-3)"><i></i><span>iot vlan</span><span>6</span><span data-pct></span></li>
   </ul>
 </figure>
 </div></div></section><section class="spec spec--wide" id="c-barchart"><header class="spec__meta"><h3 class="spec__name">Bar chart</h3><p class="spec__note">Bar charts compare amounts across a few categories, stacked by series.</p></header><div class="spec__demo"><div style="display:grid;gap:28px">
@@ -4099,7 +4133,7 @@ services:
   <p class="pb-note" style="margin:0">10,000 rows; only the ones on screen exist in the page. Arrows, Page Up/Down, Home and End move.</p>
 </div></div></section><section class="spec" id="c-qrcode"><header class="spec__meta"><h3 class="spec__name">QR code</h3><p class="spec__note">QR codes let a phone open a share link or join a network without typing.</p></header><div class="spec__demo"><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:start">
   <figure class="pb-qr" data-qr="https://snap.lab.home/s/k7Qe2" style="margin:0"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">snap.lab.home/s/k7Qe2</figcaption><button class="pb-btn pb-btn--sm" data-copy-text="https://snap.lab.home/s/k7Qe2"><span class="pb-icon pb-icon--copy"></span><span>Copy link</span></button></figure>
-  <figure class="pb-qr" data-qr="WIFI:T:WPA;S:lab-guest;P:correct-horse-battery;;" style="margin:0;--qr-size:132px"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">Wi-Fi · lab-guest</figcaption></figure>
+  <figure class="pb-qr" data-qr="WIFI:T:WPA;S:lab-guest;P:correct-horse-battery;;" data-size="sm" style="margin:0"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">Wi-Fi · lab-guest</figcaption></figure>
 </div></div></section></section><section class="band" id="layout"><h2 class="band__t">Layout</h2><section class="spec" id="c-card"><header class="spec__meta"><h3 class="spec__name">Card</h3><p class="spec__note">A card is the base surface: surface, a border, radius-lg (soft) and the edge variant&#x27;s shadow.</p></header><div class="spec__demo"><div style="display:grid;gap:20px">
   <div class="pb-card">
     <div class="pb-card__head"><h3 class="pb-card__title">Snapshot schedule</h3><span class="pb-eyebrow">nightly</span></div>
@@ -4150,7 +4184,7 @@ services:
   <nav class="pb-crumbs pb-crumbs--path" aria-label="Long path"><ol><li><a href="#">tank</a></li><li><button type="button" popovertarget="crumb-more" aria-label="Show 3 hidden folders">…</button></li><li><a href="#">exports</a></li><li><span aria-current="page">proxmox-backup-2026-11-21.tar.zst</span></li></ol></nav>
   <div class="pb-menu" id="crumb-more" popover role="menu"><a class="pb-menu__item" href="#" role="menuitem"><span class="pb-icon pb-icon--folder"></span>backups</a><a class="pb-menu__item" href="#" role="menuitem"><span class="pb-icon pb-icon--folder"></span>vm</a><a class="pb-menu__item" href="#" role="menuitem"><span class="pb-icon pb-icon--folder"></span>pve-01</a></div>
 </div></div></section><section class="spec" id="c-steps"><header class="spec__meta"><h3 class="spec__name">Steps</h3><p class="spec__note">Steps show progress through a fixed sequence such as setup or a restore.</p></header><div class="spec__demo"><div style="display:grid;gap:28px">
-  <ol class="pb-steps" style="--n:4" aria-label="Setup progress">
+  <ol class="pb-steps" data-n="4" aria-label="Setup progress">
     <li class="pb-step" data-state="done"><span class="pb-step__label">Storage</span><span class="pb-step__desc">tank selected</span></li>
     <li class="pb-step" data-state="current" aria-current="step"><span class="pb-step__label">Users</span><span class="pb-step__desc">Invite people</span></li>
     <li class="pb-step"><span class="pb-step__label">Domain</span><span class="pb-step__desc">Optional</span></li>
@@ -4216,7 +4250,7 @@ services:
       <li><a class="pb-item" href="#"><span class="pb-item__lead"><span class="pb-icon pb-icon--play"></span></span><span><span class="pb-item__title">Fan curve test</span><span class="pb-item__desc">video · never expires</span></span><span></span></a></li>
       <li><a class="pb-item" href="#"><span class="pb-item__lead"><span class="pb-icon pb-icon--file"></span></span><span><span class="pb-item__title">VM backup</span><span class="pb-item__desc">4.1 GB · 1 open left</span></span><span></span></a></li>
     </ul></div>
-    <nav class="pb-tabbar" style="--n:5" aria-label="Main">
+    <nav class="pb-tabbar" data-n="5" aria-label="Main">
       <a href="#" aria-current="page"><span class="pb-icon pb-icon--link"></span>shares</a>
       <a href="#"><span class="pb-icon pb-icon--folder"></span>files</a>
       <button type="button" class="pb-tabbar__fab" aria-label="New share"><span class="pb-icon pb-icon--plus"></span></button>
@@ -4230,7 +4264,7 @@ services:
   </div>
   <div class="pb-phone" aria-label="Action sheet open">
     <div class="pb-phone__top">Shares</div><div class="pb-phone__body"></div><div aria-hidden="true" style="position:absolute;inset:0;z-index:4;background:color-mix(in srgb,var(--night) 45%,transparent)"></div>
-    <nav class="pb-tabbar" style="--n:4" aria-label="Main, four items"><a href="#"><span class="pb-icon pb-icon--home"></span>home</a><a href="#" aria-current="page"><span class="pb-icon pb-icon--link"></span>shares</a><a href="#"><span class="pb-icon pb-icon--activity"></span>activity</a><a href="#"><span class="pb-icon pb-icon--settings"></span>settings</a></nav>
+    <nav class="pb-tabbar" data-n="4" aria-label="Main, four items"><a href="#"><span class="pb-icon pb-icon--home"></span>home</a><a href="#" aria-current="page"><span class="pb-icon pb-icon--link"></span>shares</a><a href="#"><span class="pb-icon pb-icon--activity"></span>activity</a><a href="#"><span class="pb-icon pb-icon--settings"></span>settings</a></nav>
     <div class="pb-sheet pb-sheet--inline" style="display:grid;gap:8px;padding:8px"><div class="pb-sheet__group"><div class="pb-sheet__title"><b>Rack rebuild</b>6 images · 18.2 MB</div><button type="button" class="pb-sheet__item">Copy link</button><button type="button" class="pb-sheet__item">Edit share</button><button type="button" class="pb-sheet__item pb-sheet__item--danger">Stop sharing</button></div><div class="pb-sheet__group"><button type="button" class="pb-sheet__item pb-sheet__item--cancel">Cancel</button></div></div>
   </div>
 </div></div></section><section class="spec" id="c-sessiontimeout"><header class="spec__meta"><h3 class="spec__name">Session timeout</h3><p class="spec__note">The session warning tells someone they are about to be signed out for being idle, and lets them stay.</p></header><div class="spec__demo"><div style="display:grid;gap:16px;justify-items:start">
@@ -4557,39 +4591,39 @@ services:
 <div class="pb-storage" data-storage>
   <div class="pb-storage__head"><span class="pb-storage__name">tank</span><span class="pb-badge" data-status="ok"><span class="pb-icon"></span>healthy</span><span class="pb-storage__total"><b>6.2 TB</b> of 10.9 TB · 57%</span></div>
   <div class="pb-storage__bar" role="img" aria-label="tank: media 3.1 TB, photos 1.7 TB, backups 1.4 TB, free 4.7 TB">
-    <span data-key="media" style="--w:28.4%;--c:var(--chart-1)"></span><span data-key="photos" style="--w:15.6%;--c:var(--pop-mint)"></span><span data-key="backups" style="--w:12.8%;--c:var(--pop-yellow)"></span>
-    <i class="pb-storage__mark" style="--at:80%" title="80% warning"></i>
+    <span data-key="media" data-vars="--w:28.4%;--c:var(--chart-1)"></span><span data-key="photos" data-vars="--w:15.6%;--c:var(--pop-mint)"></span><span data-key="backups" data-vars="--w:12.8%;--c:var(--pop-yellow)"></span>
+    <i class="pb-storage__mark" data-vars="--at:80%" title="80% warning"></i>
   </div>
   <ul class="pb-storage__legend">
-    <li data-key="media"><i style="--c:var(--chart-1)"></i><span>media</span><span>3.1 TB</span></li>
-    <li data-key="photos"><i style="--c:var(--pop-mint)"></i><span>photos</span><span>1.7 TB</span></li>
-    <li data-key="backups"><i style="--c:var(--pop-yellow)"></i><span>backups</span><span>1.4 TB</span></li>
+    <li data-key="media"><i data-vars="--c:var(--chart-1)"></i><span>media</span><span>3.1 TB</span></li>
+    <li data-key="photos"><i data-vars="--c:var(--pop-mint)"></i><span>photos</span><span>1.7 TB</span></li>
+    <li data-key="backups"><i data-vars="--c:var(--pop-yellow)"></i><span>backups</span><span>1.4 TB</span></li>
     <li data-free><i></i><span>free</span><span>4.7 TB</span></li>
   </ul>
 </div>
 <div class="pb-storage" data-storage>
   <div class="pb-storage__head"><span class="pb-storage__name">fast</span><span class="pb-badge" data-status="warn"><span class="pb-icon"></span>86% full</span><span class="pb-storage__total"><b>1.2 TB</b> of 1.4 TB</span></div>
   <div class="pb-storage__bar" role="img" aria-label="fast: postgres 620 GB, vms 410 GB, cache 170 GB, free 200 GB">
-    <span data-key="pg" style="--w:44.3%;--c:var(--chart-1)"></span><span data-key="vm" style="--w:29.3%;--c:var(--pop-red)"></span><span data-key="cache" style="--w:12.1%;--c:var(--chart-3)"></span>
-    <i class="pb-storage__mark" style="--at:80%"></i><i class="pb-storage__mark" data-status="down" style="--at:90%"></i>
+    <span data-key="pg" data-vars="--w:44.3%;--c:var(--chart-1)"></span><span data-key="vm" data-vars="--w:29.3%;--c:var(--pop-red)"></span><span data-key="cache" data-vars="--w:12.1%;--c:var(--chart-3)"></span>
+    <i class="pb-storage__mark" data-vars="--at:80%"></i><i class="pb-storage__mark" data-status="down" data-vars="--at:90%"></i>
   </div>
   <ul class="pb-storage__legend">
-    <li data-key="pg"><i style="--c:var(--chart-1)"></i><span>postgres</span><span>620 GB</span></li>
-    <li data-key="vm"><i style="--c:var(--pop-red)"></i><span>vms</span><span>410 GB</span></li>
-    <li data-key="cache"><i style="--c:var(--chart-3)"></i><span>cache</span><span>170 GB</span></li>
+    <li data-key="pg"><i data-vars="--c:var(--chart-1)"></i><span>postgres</span><span>620 GB</span></li>
+    <li data-key="vm"><i data-vars="--c:var(--pop-red)"></i><span>vms</span><span>410 GB</span></li>
+    <li data-key="cache"><i data-vars="--c:var(--chart-3)"></i><span>cache</span><span>170 GB</span></li>
     <li data-free><i></i><span>free</span><span>200 GB</span></li>
   </ul>
 </div>
 <div class="pb-storage pb-storage--compact" data-storage>
   <div class="pb-storage__head"><span class="pb-storage__name">backup</span><span class="pb-storage__total"><b>3.4 TB</b> of 8 TB · 43%</span></div>
   <div class="pb-storage__bar pb-storage__bar--joined" role="img" aria-label="backup: restic 2.1 TB, proxmox 0.9 TB, photos 0.4 TB, free 4.6 TB">
-    <span data-key="r" style="--w:26.3%;--c:var(--chart-1)"></span><span data-key="x" style="--w:11.2%;--c:var(--pop-red)"></span><span data-key="o" style="--w:5%;--c:var(--pop-yellow)"></span>
-    <i class="pb-storage__mark" style="--at:80%"></i>
+    <span data-key="r" data-vars="--w:26.3%;--c:var(--chart-1)"></span><span data-key="x" data-vars="--w:11.2%;--c:var(--pop-red)"></span><span data-key="o" data-vars="--w:5%;--c:var(--pop-yellow)"></span>
+    <i class="pb-storage__mark" data-vars="--at:80%"></i>
   </div>
   <ul class="pb-storage__legend">
-    <li data-key="r"><i style="--c:var(--chart-1)"></i><span>restic</span><span>2.1 TB</span></li>
-    <li data-key="x"><i style="--c:var(--pop-red)"></i><span>proxmox</span><span>0.9 TB</span></li>
-    <li data-key="o"><i style="--c:var(--pop-yellow)"></i><span>photos</span><span>0.4 TB</span></li>
+    <li data-key="r"><i data-vars="--c:var(--chart-1)"></i><span>restic</span><span>2.1 TB</span></li>
+    <li data-key="x"><i data-vars="--c:var(--pop-red)"></i><span>proxmox</span><span>0.9 TB</span></li>
+    <li data-key="o"><i data-vars="--c:var(--pop-yellow)"></i><span>photos</span><span>0.4 TB</span></li>
     <li data-free><i></i><span>free</span><span>4.6 TB</span></li>
   </ul>
 </div>
@@ -4689,25 +4723,25 @@ services:
 <header class="pb-pagehead"><h1 class="pb-pagehead__title">Overview</h1><p class="pb-pagehead__desc">lab.home · 14 services · updated <time class="pb-reltime" data-ago="40">just now</time></p>
   <div class="pb-pagehead__actions"><div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="Range"><label><input type="radio" name="drange">24h</label><label><input type="radio" name="drange" checked>7d</label><label><input type="radio" name="drange">30d</label></div></div></header>
 <div class="pb-dash">
-  <div class="pb-tile pb-tile--accent" style="--span:3"><span class="pb-tile__label">uptime · 7d</span><span class="pb-tile__value">99.98<small>%</small></span><span class="pb-tile__delta">↑ 0.04 vs prev</span></div>
-  <div class="pb-tile" style="--span:3"><span class="pb-tile__label">wan ↓ · now</span><span class="pb-tile__value">412<small>Mb/s</small></span><span class="pb-tile__delta" data-tone="good">peak 940</span></div>
-  <div class="pb-tile pb-tile--mint" style="--span:3"><span class="pb-tile__label">backups ok</span><span class="pb-tile__value">31<small>/ 31</small></span><span class="pb-tile__delta">last 03:12</span></div>
-  <div class="pb-tile pb-tile--red" style="--span:3"><span class="pb-tile__label">incidents · 7d</span><span class="pb-tile__value">2</span><span class="pb-tile__delta">1 open</span></div>
-  <section class="pb-dash__panel" style="--span:8"><div class="pb-dash__head"><h3>WAN traffic</h3><a class="pb-link" href="#">Details</a></div>
+  <div class="pb-tile pb-tile--accent" data-span="3"><span class="pb-tile__label">uptime · 7d</span><span class="pb-tile__value">99.98<small>%</small></span><span class="pb-tile__delta">↑ 0.04 vs prev</span></div>
+  <div class="pb-tile" data-span="3"><span class="pb-tile__label">wan ↓ · now</span><span class="pb-tile__value">412<small>Mb/s</small></span><span class="pb-tile__delta" data-tone="good">peak 940</span></div>
+  <div class="pb-tile pb-tile--mint" data-span="3"><span class="pb-tile__label">backups ok</span><span class="pb-tile__value">31<small>/ 31</small></span><span class="pb-tile__delta">last 03:12</span></div>
+  <div class="pb-tile pb-tile--red" data-span="3"><span class="pb-tile__label">incidents · 7d</span><span class="pb-tile__value">2</span><span class="pb-tile__delta">1 open</span></div>
+  <section class="pb-dash__panel" data-span="8"><div class="pb-dash__head"><h3>WAN traffic</h3><a class="pb-link" href="#">Details</a></div>
     <figure class="pb-bars" data-bars style="margin:0"><script type="application/json">{"series":[{"name":"download","c":"var(--chart-1)"},{"name":"upload","c":"var(--chart-2)"}],"cats":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"values":[[38,44,29,51,47,62,58],[9,12,7,14,11,21,18]],"unit":"GB","h":150}</script></figure></section>
-  <section class="pb-dash__panel" style="--span:4"><div class="pb-dash__head"><h3>pve-02</h3><span class="pb-badge" data-status="warn" style="margin-left:auto"><span class="pb-icon"></span>busy</span></div>
+  <section class="pb-dash__panel" data-span="4"><div class="pb-dash__head"><h3>pve-02</h3><span class="pb-badge" data-status="warn" style="margin-left:auto"><span class="pb-icon"></span>busy</span></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;justify-items:center"><figure class="pb-dial" data-dial data-value="77" data-warn="80" data-down="95" data-unit="%"><figcaption>CPU</figcaption></figure><figure class="pb-dial" data-dial data-value="112" data-max="128" data-warn="100" data-down="120" data-unit="GB"><figcaption>Memory</figcaption></figure></div></section>
-  <section class="pb-dash__panel" style="--span:6"><div class="pb-dash__head"><h3>Storage</h3><a class="pb-link" href="#">Pools</a></div>
-    <div class="pb-storage" data-storage><div class="pb-storage__head"><span class="pb-storage__name">tank</span><span class="pb-storage__total"><b>6.2 TB</b> of 10.9 TB</span></div><div class="pb-storage__bar" role="img" aria-label="tank 57% used"><span data-key="m" style="--w:28.4%;--c:var(--chart-1)"></span><span data-key="p" style="--w:15.6%;--c:var(--pop-mint)"></span><span data-key="b" style="--w:12.8%;--c:var(--pop-yellow)"></span><i class="pb-storage__mark" style="--at:80%"></i></div>
-      <ul class="pb-storage__legend"><li data-key="m"><i style="--c:var(--chart-1)"></i><span>media</span><span>3.1 TB</span></li><li data-key="p"><i style="--c:var(--pop-mint)"></i><span>photos</span><span>1.7 TB</span></li><li data-key="b"><i style="--c:var(--pop-yellow)"></i><span>backups</span><span>1.4 TB</span></li></ul></div>
-    <div class="pb-storage" data-storage><div class="pb-storage__head"><span class="pb-storage__name">fast</span><span class="pb-badge" data-status="warn"><span class="pb-icon"></span>86%</span><span class="pb-storage__total"><b>1.2 TB</b> of 1.4 TB</span></div><div class="pb-storage__bar" role="img" aria-label="fast 86% used"><span data-key="g" style="--w:44.3%;--c:var(--chart-1)"></span><span data-key="v" style="--w:29.3%;--c:var(--pop-red)"></span><span data-key="c" style="--w:12.1%;--c:var(--chart-3)"></span><i class="pb-storage__mark" style="--at:80%"></i></div></div></section>
-  <section class="pb-dash__panel" style="--span:6"><div class="pb-dash__head"><h3>Recent activity</h3><a class="pb-link" href="#">All</a></div>
+  <section class="pb-dash__panel" data-span="6"><div class="pb-dash__head"><h3>Storage</h3><a class="pb-link" href="#">Pools</a></div>
+    <div class="pb-storage" data-storage><div class="pb-storage__head"><span class="pb-storage__name">tank</span><span class="pb-storage__total"><b>6.2 TB</b> of 10.9 TB</span></div><div class="pb-storage__bar" role="img" aria-label="tank 57% used"><span data-key="m" data-vars="--w:28.4%;--c:var(--chart-1)"></span><span data-key="p" data-vars="--w:15.6%;--c:var(--pop-mint)"></span><span data-key="b" data-vars="--w:12.8%;--c:var(--pop-yellow)"></span><i class="pb-storage__mark" data-vars="--at:80%"></i></div>
+      <ul class="pb-storage__legend"><li data-key="m"><i data-vars="--c:var(--chart-1)"></i><span>media</span><span>3.1 TB</span></li><li data-key="p"><i data-vars="--c:var(--pop-mint)"></i><span>photos</span><span>1.7 TB</span></li><li data-key="b"><i data-vars="--c:var(--pop-yellow)"></i><span>backups</span><span>1.4 TB</span></li></ul></div>
+    <div class="pb-storage" data-storage><div class="pb-storage__head"><span class="pb-storage__name">fast</span><span class="pb-badge" data-status="warn"><span class="pb-icon"></span>86%</span><span class="pb-storage__total"><b>1.2 TB</b> of 1.4 TB</span></div><div class="pb-storage__bar" role="img" aria-label="fast 86% used"><span data-key="g" data-vars="--w:44.3%;--c:var(--chart-1)"></span><span data-key="v" data-vars="--w:29.3%;--c:var(--pop-red)"></span><span data-key="c" data-vars="--w:12.1%;--c:var(--chart-3)"></span><i class="pb-storage__mark" data-vars="--at:80%"></i></div></div></section>
+  <section class="pb-dash__panel" data-span="6"><div class="pb-dash__head"><h3>Recent activity</h3><a class="pb-link" href="#">All</a></div>
     <ol class="pb-timeline">
       <li class="pb-event" data-status="down"><span class="pb-event__mark"><span class="pb-icon pb-icon--status-down"></span></span><p class="pb-event__title"><b>sdb</b> faulted on <b>nas-01</b></p><time class="pb-event__time">03:12</time></li>
       <li class="pb-event" data-status="info"><span class="pb-event__mark"><span class="pb-icon pb-icon--link"></span></span><p class="pb-event__title"><b>alex</b> opened <b>Rack rebuild</b></p><time class="pb-event__time">01:40</time></li>
       <li class="pb-event" data-status="ok"><span class="pb-event__mark"><span class="pb-icon pb-icon--status-ok"></span></span><p class="pb-event__title">Backup to <b>b2</b> finished</p><time class="pb-event__time">00:58</time></li>
     </ol></section>
-  <section class="pb-dash__panel" style="--span:12"><div class="pb-dash__head"><h3>Services</h3><a class="pb-link" href="#">Status page</a></div>
+  <section class="pb-dash__panel" data-span="12"><div class="pb-dash__head"><h3>Services</h3><a class="pb-link" href="#">Status page</a></div>
     <ul class="pb-list pb-list--compact pb-list--plain" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 24px">
       <li><div class="pb-item"><span class="pb-item__lead">jf</span><span><span class="pb-item__title">Jellyfin</span></span><span class="pb-item__end"><span class="pb-badge" data-status="ok"><span class="pb-icon"></span>up</span></span></div></li>
       <li><div class="pb-item"><span class="pb-item__lead">nc</span><span><span class="pb-item__title">Nextcloud</span></span><span class="pb-item__end"><span class="pb-badge" data-status="warn"><span class="pb-icon"></span>slow</span></span></div></li>
@@ -4760,7 +4794,7 @@ services:
   </div>
 </div>
 </div></div></section><section class="spec spec--wide" id="c-signin"><header class="spec__meta"><h3 class="spec__name">Sign-in and two-factor</h3><p class="spec__note">The sign-in screens cover password sign-in, two-factor setup and the code prompt.</p></header><div class="spec__demo"><div data-tpl="signin" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" data-signin onsubmit="return false" novalidate>
       <div class="pb-auth__brand"><span class="pb-brand"><span class="pb-brand__mark">sn</span>snap<span class="pb-brand__host">lab.home</span></span></div>
       <h1 class="pb-auth__title">Sign in</h1>
@@ -4775,12 +4809,12 @@ services:
       <p class="pb-auth__foot" style="margin:0">No account? Ask an admin for an invite.</p>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <div class="pb-auth__card" data-2fa>
       <div class="pb-auth__panel" data-2fa-step="setup">
         <h1 class="pb-auth__title">Set up two-factor</h1><p class="pb-auth__sub">Required for everyone on this instance.</p>
         <ol class="pb-auth__steps">
-          <li><p>Scan this with an authenticator app.</p><figure class="pb-qr pb-auth__center" data-qr="otpauth://totp/snap:casey?secret=JBSWY3DPEHPK3PXP&amp;issuer=snap" style="--qr-size:148px"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">or enter <span class="pb-mono">JBSW Y3DP EHPK 3PXP</span></figcaption></figure></li>
+          <li><p>Scan this with an authenticator app.</p><figure class="pb-qr pb-auth__center" data-qr="otpauth://totp/snap:casey?secret=JBSWY3DPEHPK3PXP&amp;issuer=snap" data-size="md"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">or enter <span class="pb-mono">JBSW Y3DP EHPK 3PXP</span></figcaption></figure></li>
           <li><p>Enter the 6-digit code it shows.</p><div class="pb-otp" role="group" aria-label="Code" data-otp><input inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" aria-label="Digit 3"><span class="pb-otp__sep" aria-hidden="true"></span><input inputmode="numeric" maxlength="1" aria-label="Digit 4"><input inputmode="numeric" maxlength="1" aria-label="Digit 5"><input inputmode="numeric" maxlength="1" aria-label="Digit 6"></div></li>
         </ol>
         <button class="pb-btn pb-btn--primary pb-btn--block" disabled data-2fa-done>Verify and turn on</button>
@@ -4796,7 +4830,7 @@ services:
       </div>
     </div>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <div class="pb-auth__card">
       <div class="pb-auth__panel" >
         <span class="pb-empty__icon pb-auth__ok" style="justify-self:center"><span class="pb-icon pb-icon--status-ok"></span></span>
@@ -4808,7 +4842,7 @@ services:
       </div>
     </div>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <span class="pb-empty__icon" style="justify-self:center"><span class="pb-icon pb-icon--shield"></span></span>
       <h1 class="pb-auth__title">Two-factor code</h1><p class="pb-auth__sub">Open your authenticator app for <b>casey</b>.</p>
@@ -4818,7 +4852,7 @@ services:
       <p class="pb-auth__foot" style="margin:0"><a class="pb-link" href="#">Use a recovery code</a></p>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--logo" role="img" aria-label="snap"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg></div>
       <h1 class="pb-auth__title">Sign in to snap</h1><p class="pb-auth__sub">lab.home</p>
@@ -4827,7 +4861,7 @@ services:
       <button class="pb-btn pb-btn--primary pb-btn--block">Sign in</button>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--stack"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg><span class="pb-auth__name">snap</span><span class="pb-brand__host">lab.home</span></div>
       <h1 class="pb-auth__title">Welcome back</h1><p class="pb-auth__sub">Sign in to share files.</p>
@@ -4836,7 +4870,7 @@ services:
       <button class="pb-btn pb-btn--primary pb-btn--block">Sign in</button>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--inline"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg><span class="pb-auth__name">snap</span></div>
       <h1 class="pb-auth__title">Sign in</h1><p class="pb-auth__sub">Use your lab.home account.</p>

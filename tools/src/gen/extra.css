@@ -388,3 +388,18 @@
 .pb-auth__ok { width: 48px; height: 48px; color: var(--ok); background: var(--ok-tint); }
 .pb-auth__ok .pb-icon { width: 24px; height: 24px; }
 .pb-auth__card .pb-recovery { justify-items: center; }
+
+/* Markup-level sizing without inline styles (strict CSP): data-span on dashboard children, the inline sign-in variant. */
+.pb-dash > [data-span="1"] { --span: 1; }
+.pb-dash > [data-span="2"] { --span: 2; }
+.pb-dash > [data-span="3"] { --span: 3; }
+.pb-dash > [data-span="4"] { --span: 4; }
+.pb-dash > [data-span="5"] { --span: 5; }
+.pb-dash > [data-span="6"] { --span: 6; }
+.pb-dash > [data-span="7"] { --span: 7; }
+.pb-dash > [data-span="8"] { --span: 8; }
+.pb-dash > [data-span="9"] { --span: 9; }
+.pb-dash > [data-span="10"] { --span: 10; }
+.pb-dash > [data-span="11"] { --span: 11; }
+.pb-dash > [data-span="12"] { --span: 12; }
+.pb-auth--inline { --auth-h: auto; padding: 0; background: none; }

@@ -6,7 +6,7 @@
 <body class="pb">
 <!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
 <div data-tpl="signin" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" data-signin onsubmit="return false" novalidate>
       <div class="pb-auth__brand"><span class="pb-brand"><span class="pb-brand__mark">sn</span>snap<span class="pb-brand__host">lab.home</span></span></div>
       <h1 class="pb-auth__title">Sign in</h1>
@@ -21,12 +21,12 @@
       <p class="pb-auth__foot" style="margin:0">No account? Ask an admin for an invite.</p>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <div class="pb-auth__card" data-2fa>
       <div class="pb-auth__panel" data-2fa-step="setup">
         <h1 class="pb-auth__title">Set up two-factor</h1><p class="pb-auth__sub">Required for everyone on this instance.</p>
         <ol class="pb-auth__steps">
-          <li><p>Scan this with an authenticator app.</p><figure class="pb-qr pb-auth__center" data-qr="otpauth://totp/snap:casey?secret=JBSWY3DPEHPK3PXP&amp;issuer=snap" style="--qr-size:148px"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">or enter <span class="pb-mono">JBSW Y3DP EHPK 3PXP</span></figcaption></figure></li>
+          <li><p>Scan this with an authenticator app.</p><figure class="pb-qr pb-auth__center" data-qr="otpauth://totp/snap:casey?secret=JBSWY3DPEHPK3PXP&amp;issuer=snap" data-size="md"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">or enter <span class="pb-mono">JBSW Y3DP EHPK 3PXP</span></figcaption></figure></li>
           <li><p>Enter the 6-digit code it shows.</p><div class="pb-otp" role="group" aria-label="Code" data-otp><input inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" aria-label="Digit 3"><span class="pb-otp__sep" aria-hidden="true"></span><input inputmode="numeric" maxlength="1" aria-label="Digit 4"><input inputmode="numeric" maxlength="1" aria-label="Digit 5"><input inputmode="numeric" maxlength="1" aria-label="Digit 6"></div></li>
         </ol>
         <button class="pb-btn pb-btn--primary pb-btn--block" disabled data-2fa-done>Verify and turn on</button>
@@ -42,7 +42,7 @@
       </div>
     </div>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <div class="pb-auth__card">
       <div class="pb-auth__panel" >
         <span class="pb-empty__icon pb-auth__ok" style="justify-self:center"><span class="pb-icon pb-icon--status-ok"></span></span>
@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <span class="pb-empty__icon" style="justify-self:center"><span class="pb-icon pb-icon--shield"></span></span>
       <h1 class="pb-auth__title">Two-factor code</h1><p class="pb-auth__sub">Open your authenticator app for <b>casey</b>.</p>
@@ -64,7 +64,7 @@
       <p class="pb-auth__foot" style="margin:0"><a class="pb-link" href="#">Use a recovery code</a></p>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--logo" role="img" aria-label="snap"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg></div>
       <h1 class="pb-auth__title">Sign in to snap</h1><p class="pb-auth__sub">lab.home</p>
@@ -73,7 +73,7 @@
       <button class="pb-btn pb-btn--primary pb-btn--block">Sign in</button>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--stack"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg><span class="pb-auth__name">snap</span><span class="pb-brand__host">lab.home</span></div>
       <h1 class="pb-auth__title">Welcome back</h1><p class="pb-auth__sub">Sign in to share files.</p>
@@ -82,7 +82,7 @@
       <button class="pb-btn pb-btn--primary pb-btn--block">Sign in</button>
     </form>
   </div>
-  <div class="pb-auth" style="--auth-h:auto;padding:0;background:none">
+  <div class="pb-auth pb-auth--inline">
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--inline"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg><span class="pb-auth__name">snap</span></div>
       <h1 class="pb-auth__title">Sign in</h1><p class="pb-auth__sub">Use your lab.home account.</p>
