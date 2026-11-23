@@ -314,6 +314,10 @@ a.pb-card:focus-visible, button.pb-card:focus-visible { outline: var(--stroke-2)
   font: 400 13px var(--font-mono); color: var(--ink-muted); background: var(--surface-sunk);
   border-right: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md) 0 0 var(--pb-r-md);
 }
+.pb-input > :not(.pb-input__affix) ~ .pb-input__affix {
+  margin: 0 calc(-1 * var(--space-3)) 0 0; padding: 0 var(--space-3) 0 var(--space-2);
+  border-right: 0; border-left: var(--stroke-1) solid var(--pb-border); border-radius: 0 var(--pb-r-md) var(--pb-r-md) 0;
+}
 .pb-field[data-invalid] .pb-input { border-color: var(--down); box-shadow: inset 0 0 0 1px var(--down); }
 .pb-field[data-invalid] .pb-field__help { color: var(--down); font-style: normal; }
 .pb-field[data-disabled] .pb-input { background: var(--surface-sunk); border-color: var(--line); box-shadow: none; }
@@ -3469,6 +3473,8 @@ Nov 22 03:00:14 restic[812]: done</pre></div>
     <span class="pb-field__help">Lowercase, no dots.</span></label>
   <label class="pb-field"><span class="pb-field__label">Upstream</span>
     <span class="pb-input"><span class="pb-input__affix">https://</span><input placeholder="jellyfin.lan:8096"></span></label>
+  <label class="pb-field"><span class="pb-field__label">Quota</span>
+    <span class="pb-input" style="width:180px"><input type="number" value="500" min="1"><span class="pb-input__affix">GB</span></span></label>
   <label class="pb-field"><span class="pb-field__label">Search</span>
     <span class="pb-input"><span class="pb-icon pb-icon--search"></span><input placeholder="Filter services"><span class="pb-kbd">/</span></span></label>
   <label class="pb-field" data-invalid><span class="pb-field__label">Port</span>
