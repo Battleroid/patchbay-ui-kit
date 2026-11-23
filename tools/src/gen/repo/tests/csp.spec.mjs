@@ -471,3 +471,16 @@ test('colorfield: empty is valid unless required', async ({ page }) => {
   });
   expect(r).toEqual([false, true, true, false]);
 });
+test('tags: uncommitted text is committed on blur and on submit', async ({ page }) => {
+  await page.goto('/components/TagInput/example.html');
+  const box = page.locator('[data-test="tags-form"] [data-tags]');
+  const inp = box.locator('input:not([type=hidden])');
+  await inp.fill('blurred');
+  await page.locator('body').click({ position: { x: 2, y: 2 } });
+  expect(await box.evaluate((b) => b.pbValues())).toEqual(['blurred']);
+  const sent = await page.evaluate(() => {
+    const f = document.querySelector('[data-test="tags-form"]'), i = f.querySelector('[data-tags] input:not([type=hidden])'); i.value = 'typed';
+    let v = null; f.addEventListener('submit', (e) => { e.preventDefault(); v = new FormData(f).get('labels'); }); f.requestSubmit(); return v;
+  });
+  expect(sent).toBe('blurred,typed');
+});
