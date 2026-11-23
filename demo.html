@@ -1288,6 +1288,7 @@ fieldset.pb-choices { min-width: 0; border: 0; margin: 0; padding: 0; }
 .pb-dialog__head > div { flex: 1; min-width: 0; }
 .pb-dialog__sub { margin: 2px 0 0; font: 400 14px/20px var(--font-serif); color: var(--ink-muted); }
 .pb-dialog__body .pb-form { margin-top: var(--space-2); }
+.pb-dialog__body.pb-prose { max-width: none; }
 .pb-dialog__foot .pb-foot__status { margin-right: auto; }
 .pb-dialog--scroll[open], .pb-dialog--drawer[open] { display: flex; flex-direction: column; max-height: min(85dvh, 760px); }
 .pb-dialog--scroll .pb-dialog__head, .pb-dialog--drawer .pb-dialog__head { padding-bottom: var(--space-4); border-bottom: var(--stroke-1) solid var(--line); }
@@ -1652,7 +1653,9 @@ fieldset.pb-choices { min-width: 0; border: 0; margin: 0; padding: 0; }
 .pb-dl--stack dd { padding-top: 2px; }
 .pb-dl--stack > div > dd:nth-of-type(1):last-child { grid-column: auto; }
 .pb-dl--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4) var(--space-6); }
-.pb-dl--grid > div { display: grid; gap: 2px; }
+.pb-dl--grid > div { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 2px; }
+.pb-dl--grid > div > dd:nth-of-type(1):last-child { grid-column: auto; }
+.pb-dl dd.pb-mono { font: 400 13px/20px var(--font-mono); }
 .pb-dl--grid dt, .pb-dl--grid dd { padding: 0; border: 0; }
 @media (max-width: 520px) { .pb-dl:not(.pb-dl--grid) { grid-template-columns: minmax(0, 1fr) auto; } .pb-dl:not(.pb-dl--grid) dt { grid-column: 1 / -1; padding-bottom: 0; border-bottom: 0; } .pb-dl:not(.pb-dl--grid) > div > dd:nth-of-type(1):last-child { grid-column: 1 / -1; } }
 
@@ -2678,6 +2681,9 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 [data-edge="hard"] .pb-sitehead--sticky[data-scrolled] { border-bottom-color: var(--ink); box-shadow: none; }
 .pb-sitehead--plain { background: transparent; border-bottom-color: transparent; }
 .pb-sitehead__bar { display: flex; align-items: center; gap: var(--space-4); min-width: 0; max-width: var(--size-page, 1120px); height: 60px; margin: 0 auto; padding: 0 var(--space-6); }
+.pb-sitehead__brand.pb-sitehead__brand--stack { flex-direction: column; align-items: flex-start; gap: 0; }
+.pb-sitehead__brand--stack > span { font-size: 23px; line-height: 28px; }
+.pb-sitehead--center .pb-sitehead__brand.pb-sitehead__brand--stack { align-items: center; }
 .pb-sitehead__brand { display: inline-flex; align-items: center; gap: var(--space-2); flex: none; color: var(--ink); text-decoration: none; font: 600 19px/24px var(--font-serif); letter-spacing: -0.01em; }
 .pb-sitehead__brand .pb-logo { --logo-size: 28px; }
 .pb-sitehead__brand small { font: 400 12px/16px var(--font-mono); color: var(--ink-muted); }
@@ -2729,6 +2735,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
   .pb-sitehead__toggle { display: inline-flex; }
   .pb-sitehead__bar { padding: 0 var(--space-4); }
   .pb-sitehead--center .pb-sitehead__bar { grid-template-columns: auto 1fr auto; }
+  .pb-sitehead--center .pb-sitehead__brand.pb-sitehead__brand--stack { align-items: flex-start; }
   .pb-sitehead[data-menu-open] .pb-sitehead__mobile { display: grid; }
   .pb-sitehead__util { display: none; }
 }
@@ -2768,7 +2775,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 @media (max-width: 520px) { .pb-share__row { grid-template-columns: minmax(0, 1fr); } .pb-share__row > :is(.pb-seg, .pb-select, .pb-switch, .pb-input) { grid-column: 1; grid-row: auto; justify-self: start; } .pb-share__invite { grid-template-columns: minmax(0, 1fr) auto; } .pb-share__invite > .pb-btn { grid-column: 1 / -1; } }
 
 /* ---------- File preview pane ---------- */
-.pb-fpreview { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; height: 100%; background: var(--surface); }
+.pb-fpreview { display: grid; grid-template-rows: auto minmax(120px, 1fr) minmax(0, auto); min-height: 0; height: 100%; background: var(--surface); }
 .pb-fpreview__head { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); border-bottom: 1px solid var(--line); }
 .pb-fpreview__name { flex: 1; min-width: 0; font: 600 15px/20px var(--font-serif); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pb-fpreview__name small { display: block; font: 400 12px/16px var(--font-mono); color: var(--ink-muted); }
@@ -2786,7 +2793,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-fpreview__page i { display: block; height: 5px; background: #d9d4c8; border-radius: 1px; }
 .pb-fpreview__page i:first-child { height: 9px; width: 60%; background: #17150f; margin-bottom: 6px; }
 .pb-fpreview__empty { padding: var(--space-6); text-align: center; font: italic 400 15px/22px var(--font-serif); color: var(--ink-muted); }
-.pb-fpreview__meta { max-height: 42%; overflow: auto; padding: var(--space-3) var(--space-4); border-top: 1px solid var(--line); }
+.pb-fpreview__meta { min-height: 0; overflow: auto; padding: var(--space-3) var(--space-4); border-top: 1px solid var(--line); }
 .pb-fpreview__meta[hidden] { display: none; }
 .pb-fpreview__body { min-height: 200px; }
 .pb-fpreview__meta .pb-dl { --dl-label: 9ch; }
@@ -2820,7 +2827,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-dt__exp .pb-icon { width: 16px; height: 16px; transition: transform 120ms; }
 .pb-dt__exp[aria-expanded="true"] .pb-icon { transform: rotate(90deg); }
 .pb-dt__detail > td { padding: var(--space-3) var(--space-4) var(--space-4) calc(var(--space-4) + 28px) !important; white-space: normal !important; background: var(--bg); }
-.pb-dt__detail .pb-dl { max-width: 640px; }
+.pb-dt__detail .pb-dl { max-width: 720px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3) var(--space-6); }
 .pb-dt__cell--edit { cursor: text; }
 .pb-dt__cell--edit:hover { box-shadow: inset 0 0 0 1px var(--line-strong); }
 .pb-dt__cell--edit::after { content: ""; display: inline-block; width: 12px; height: 12px; margin-left: 6px; vertical-align: -1px; background: var(--ink-muted); opacity: 0; -webkit-mask: var(--pb-ic-settings) center/contain no-repeat; mask: var(--pb-ic-settings) center/contain no-repeat; }
@@ -3002,6 +3009,76 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-sitehead__mobile > .pb-themeswitch { justify-self: start; margin-top: var(--space-2); }
 /* Grid rows for assistive tech; they add no boxes, the days stay items of the 7-column grid. */
 .pb-evcal__row { display: contents; }
+.pb-hoverable { cursor: crosshair; }
+.pb-hover-band { fill: var(--ink); fill-opacity: 0.06; }
+
+/* ---------- Drop zone settings ---------- */
+.pb-dropset { display: grid; gap: var(--space-3); }
+.pb-dropset__box { background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); }
+.pb-dropset__bar { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: 44px; padding: 0 var(--space-4); font: 500 14px/20px var(--font-mono); color: var(--ink); text-align: left; background: none; border: 0; border-radius: inherit; cursor: pointer; }
+.pb-dropset__bar:hover { background: var(--surface-sunk); }
+.pb-dropset__chev { width: 14px; height: 14px; flex: none; transition: transform 140ms; }
+.pb-dropset__bar[aria-expanded="true"] .pb-dropset__chev { transform: rotate(90deg); }
+.pb-dropset__bar[aria-expanded="true"] { border-bottom: 1px solid var(--line); border-radius: var(--pb-r-md) var(--pb-r-md) 0 0; }
+.pb-dropset__summary { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pb-dropset__change { font: 400 12px/16px var(--font-mono); color: var(--ink-muted); }
+.pb-dropset__bar:hover .pb-dropset__change { color: var(--accent); }
+.pb-dropset__panel { display: grid; gap: var(--space-3); padding: var(--space-4); }
+.pb-dropset__panel[hidden] { display: none; }
+.pb-dropset__row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 36px; flex-wrap: wrap; }
+.pb-dropset__row > span:first-child { font: 500 15px/20px var(--font-serif); color: var(--ink); }
+.pb-dropset__row small { display: block; font: italic 400 13px/18px var(--font-serif); color: var(--ink-muted); }
+.pb-dropset__sub { margin-top: calc(-1 * var(--space-1)); }
+.pb-dropset__sub[hidden] { display: none; }
+.pb-dropset__foot { display: flex; justify-content: flex-end; gap: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { .pb-dropset__chev { transition: none; } }
+
+/* ---------- Media list ---------- */
+.pb-medialist { container: pbmlist / inline-size; display: grid; margin: 0; padding: 0; list-style: none; background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); }
+.pb-mitem { display: grid; grid-template-columns: 232px minmax(0, 1fr) auto; gap: var(--space-4); align-items: start; padding: var(--space-4); }
+.pb-mitem + .pb-mitem { border-top: 1px solid var(--line); }
+.pb-mitem__thumb { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--night); border-radius: var(--pb-r-md); }
+.pb-mitem__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 200ms; }
+.pb-mitem__thumb:hover img { transform: scale(1.03); }
+.pb-mitem__play { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: rgba(0,0,0,0.28); transition: opacity 140ms; }
+.pb-mitem__play .pb-icon { width: 36px; height: 36px; padding: 9px; color: #fff; background: rgba(0,0,0,0.55); border-radius: 50%; box-sizing: content-box; }
+.pb-mitem__thumb:hover .pb-mitem__play, .pb-mitem__thumb:focus-visible .pb-mitem__play { opacity: 1; }
+.pb-mitem__dur { position: absolute; right: 6px; bottom: 6px; padding: 1px 5px; font: 500 11px/16px var(--font-mono); color: #fff; background: rgba(0,0,0,0.72); border-radius: 3px; }
+.pb-mitem__seen { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,0.3); }
+.pb-mitem__seen > span { display: block; width: var(--value); height: 100%; background: var(--pop-red, var(--down)); }
+.pb-mitem__state { position: absolute; left: 6px; top: 6px; }
+.pb-mitem__body { display: grid; gap: 4px; min-width: 0; }
+.pb-mitem__title { font: 600 17px/22px var(--font-serif); color: var(--ink); text-decoration: none; overflow-wrap: anywhere; }
+.pb-mitem__title:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 0.18em; }
+.pb-mitem__meta { display: flex; flex-wrap: wrap; gap: 2px 10px; font: 400 12px/18px var(--font-mono); color: var(--ink-muted); }
+.pb-mitem__meta > span + span::before { content: "·"; margin-right: 10px; }
+.pb-mitem__desc { margin: 2px 0 0; font: 400 14px/20px var(--font-serif); color: var(--ink-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pb-mitem__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.pb-mitem__links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 6px; font: 400 12px/18px var(--font-mono); }
+.pb-mitem__links a { display: inline-flex; align-items: center; gap: 4px; color: var(--accent); text-decoration: none; }
+.pb-mitem__links a:hover { text-decoration: underline; text-underline-offset: 0.18em; }
+.pb-mitem__links .pb-icon { width: 13px; height: 13px; }
+.pb-mitem__actions { display: flex; gap: 4px; }
+.pb-medialist--compact .pb-mitem { grid-template-columns: 128px minmax(0, 1fr) auto; gap: var(--space-3); padding: var(--space-3) var(--space-4); align-items: center; }
+.pb-medialist--compact .pb-mitem__desc, .pb-medialist--compact .pb-mitem__tags, .pb-medialist--compact .pb-mitem__links { display: none; }
+.pb-medialist--compact .pb-mitem__title { font-size: 15px; line-height: 20px; }
+@container pbmlist (max-width: 620px) {
+  .pb-mitem { grid-template-columns: 148px minmax(0, 1fr); gap: var(--space-3); }
+  .pb-mitem__actions { grid-column: 2; }
+  .pb-mitem__desc { -webkit-line-clamp: 1; }
+}
+@container pbmlist (max-width: 420px) {
+  .pb-mitem { grid-template-columns: minmax(0, 1fr); }
+  .pb-mitem__actions { grid-column: 1; }
+  .pb-medialist--compact .pb-mitem { grid-template-columns: 112px minmax(0, 1fr); }
+  .pb-medialist--compact .pb-mitem__actions { display: none; }
+}
+[data-edge="hard"] .pb-medialist, [data-edge="hard"] .pb-dropset__box { border-color: var(--ink); }
+[data-edge="hard"] .pb-mitem__thumb { border-radius: 0; outline: var(--stroke-1) solid var(--ink); }
+@media (prefers-reduced-motion: reduce) { .pb-mitem__thumb img, .pb-mitem__play { transition: none; } .pb-mitem__thumb:hover img { transform: none; } }
+.pb-mitem__state { max-width: calc(100% - 12px); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.pb-medialist--compact .pb-mitem__state { font-size: 0; gap: 0; padding: 0 4px; }
+.pb-medialist--compact .pb-mitem__state .pb-icon { font-size: initial; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -3351,7 +3428,7 @@ body{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip}
           <label><input type="radio" name="edge-hero" value="soft" checked>Soft edges</label><label><input type="radio" name="edge-hero" value="hard">Hard edges</label>
         </div>
       </div>
-      <div class="hero__count">108 components · 76 icons · 48 color tokens · 12 type styles</div>
+      <div class="hero__count">109 components · 76 icons · 48 color tokens · 12 type styles</div>
     </div>
     <div class="hero__sample">
   <div class="pb-card">
@@ -3840,7 +3917,7 @@ services:
     read_only: true
     volumes:
       - /tank/media:/media:ro</textarea></div></div>
-</div></div></section><section class="spec" id="c-dropzone"><header class="spec__meta"><h3 class="spec__name">Drop zone</h3><p class="spec__note">DropZone accepts files by drag or browse and lists uploads under it.</p></header><div class="spec__demo"><div style="display:grid;gap:16px">
+</div></div></section><section class="spec spec--wide" id="c-dropzone"><header class="spec__meta"><h3 class="spec__name">Drop zone</h3><p class="spec__note">DropZone accepts files by drag or browse and lists uploads under it.</p></header><div class="spec__demo"><div style="display:grid;gap:16px">
   <label class="pb-drop"><input type="file" multiple>
     <span class="pb-icon pb-icon--upload pb-drop__icon"></span>
     <span class="pb-drop__title">Drop files to share</span>
@@ -3852,6 +3929,33 @@ services:
     <div class="pb-filerow"><span class="pb-icon pb-icon--file"></span><span>rack-before.jpg</span><span class="pb-filerow__meta">4.1 MB · 62%</span>
       <div class="pb-progress" data-value="62"><span></span></div></div>
     <div class="pb-filerow"><span class="pb-icon pb-icon--status-ok" style="color:var(--ok)"></span><span>wiring.pdf</span><span class="pb-filerow__meta">820 KB · done</span></div>
+  </div>
+  <p class="pb-eyebrow" style="margin:8px 0 0">With upload settings</p>
+  <div class="pb-dropset" data-dropset>
+    <div class="pb-dropset__box">
+      <button type="button" class="pb-dropset__bar" aria-expanded="false" aria-controls="dz-opts">
+        <span class="pb-icon pb-icon--chevron-right pb-dropset__chev"></span>
+        <span class="pb-dropset__summary" data-dropset-summary aria-live="polite"></span>
+        <span class="pb-dropset__change">Change</span></button>
+      <div class="pb-dropset__panel" id="dz-opts" hidden>
+        <div class="pb-dropset__row"><span>Expires</span>
+          <div class="pb-seg" role="radiogroup" aria-label="Expires"><label><input type="radio" name="dz-exp" value="1h" data-sum="expires {v}">1h</label><label><input type="radio" name="dz-exp" value="1d" data-sum="expires {v}">1d</label><label><input type="radio" name="dz-exp" value="7d" data-sum="expires {v}">7d</label><label><input type="radio" name="dz-exp" value="30d" data-sum="expires {v}" checked>30d</label><label><input type="radio" name="dz-exp" value="never" data-sum="never expires">never</label></div></div>
+        <div class="pb-dropset__row"><span>Visibility</span>
+          <span class="pb-select"><select aria-label="Visibility" data-sum="{v}"><option value="unlisted" selected>unlisted</option><option value="public">public</option><option value="private">private · signed-in only</option></select></span></div>
+        <div class="pb-dropset__row"><span>File names</span>
+          <div class="pb-seg" role="radiogroup" aria-label="File names"><label><input type="radio" name="dz-name" value="random" data-sum="random name" checked>random</label><label><input type="radio" name="dz-name" value="original" data-sum="original name">original</label></div></div>
+        <div class="pb-dropset__row"><span>Password<small>People enter it before they see anything.</small></span>
+          <input type="checkbox" class="pb-switch" aria-label="Password" data-sum-on="password" data-sum-off="no password" data-dropset-reveal="dz-pw"></div>
+        <div class="pb-dropset__sub" id="dz-pw" hidden><span class="pb-input"><span class="pb-icon pb-icon--key"></span><input type="password" placeholder="at least 8 characters" aria-label="Share password" autocomplete="new-password"></span></div>
+        <div class="pb-dropset__row"><span>Strip photo location<small>Removes GPS from image metadata.</small></span>
+          <input type="checkbox" class="pb-switch" aria-label="Strip photo location" checked data-sum-on="" data-sum-off="keeps location"></div>
+        <div class="pb-dropset__foot"><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-dropset-reset>Reset</button><button type="button" class="pb-btn pb-btn--sm" data-dropset-default>Save as default</button></div>
+      </div>
+    </div>
+    <label class="pb-drop"><input type="file" multiple>
+      <span class="pb-icon pb-icon--upload pb-drop__icon"></span>
+      <span class="pb-drop__title">Drop files to share</span>
+      <span class="pb-drop__hint">or <u>browse</u> · paste an image · up to 4 GB each</span></label>
   </div>
 </div></div></section></section><section class="band" id="indicators"><h2 class="band__t">Indicators</h2><section class="spec" id="c-badge"><header class="spec__meta"><h3 class="spec__name">Badge</h3><p class="spec__note">Badges show state: an icon, a color and a word, always all three.</p></header><div class="spec__demo"><div style="display:grid;gap:14px">
   <div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -4437,6 +4541,66 @@ services:
       <dl class="pb-media__meta"><div><dt>shared by</dt><dd>casey</dd></div><div><dt>shared</dt><dd>2026-11-21</dd></div><div><dt>downloads</dt><dd>1 of 3</dd></div><div><dt>access</dt><dd>link + password</dd></div></dl>
     </div>
   </article>
+</div></div></section><section class="spec spec--wide" id="c-medialist"><header class="spec__meta"><h3 class="spec__name">Media list</h3><p class="spec__note">MediaList lists videos with a thumbnail on the left and details on the right.</p></header><div class="spec__demo"><div style="display:grid;gap:24px">
+<ul class="pb-medialist" aria-label="Videos">
+  <li class="pb-mitem">
+    <a class="pb-mitem__thumb" href="#" aria-label="Play Rack rebuild, part 2: cable management"><img src="media/photo-1.jpg" alt="" loading="lazy"><span class="pb-mitem__play"><span class="pb-icon pb-icon--play"></span></span><span class="pb-mitem__dur">12:48</span><span class="pb-mitem__seen" aria-hidden="true"><span data-vars="--value:62%"></span></span></a>
+    <div class="pb-mitem__body"><a class="pb-mitem__title" href="#">Rack rebuild, part 2: cable management</a>
+      <div class="pb-mitem__meta"><span>1080p · h.264</span><span>1.2 GB</span><span>Nov 18</span><span>214 views</span></div>
+      <p class="pb-mitem__desc">Re-terminating the patch panel, labelling every run and moving the UPS to the bottom of the rack.</p>
+      <div class="pb-mitem__tags"><span class="pb-pill">homelab</span><span class="pb-pill">rack</span></div>
+      <div class="pb-mitem__links"><a href="#"><span class="pb-icon pb-icon--link-external"></span>Open share page</a><a href="#"><span class="pb-icon pb-icon--download"></span>Original</a><a href="#"><span class="pb-icon pb-icon--captions"></span>Subtitles · en</a></div></div>
+    <div class="pb-mitem__actions"><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Copy link to Rack rebuild, part 2: cable management"><span class="pb-icon pb-icon--copy"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="More for Rack rebuild, part 2: cable management"><span class="pb-icon pb-icon--more"></span></button></div>
+  </li>
+  <li class="pb-mitem">
+    <a class="pb-mitem__thumb" href="#" aria-label="Play Flashing the T7920 BIOS"><img src="media/photo-3.jpg" alt="" loading="lazy"><span class="pb-mitem__play"><span class="pb-icon pb-icon--play"></span></span><span class="pb-mitem__dur">04:06</span></a>
+    <div class="pb-mitem__body"><a class="pb-mitem__title" href="#">Flashing the T7920 BIOS</a>
+      <div class="pb-mitem__meta"><span>4K · hevc</span><span>2.8 GB</span><span>Nov 12</span><span>38 views</span></div>
+      <p class="pb-mitem__desc">Why the update needed a FAT32 stick and two tries.</p>
+      <div class="pb-mitem__tags"><span class="pb-pill">hardware</span></div>
+      <div class="pb-mitem__links"><a href="#"><span class="pb-icon pb-icon--link-external"></span>Open share page</a><a href="#"><span class="pb-icon pb-icon--download"></span>Original</a><a href="#"><span class="pb-icon pb-icon--captions"></span>Subtitles · en</a></div></div>
+    <div class="pb-mitem__actions"><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Copy link to Flashing the T7920 BIOS"><span class="pb-icon pb-icon--copy"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="More for Flashing the T7920 BIOS"><span class="pb-icon pb-icon--more"></span></button></div>
+  </li>
+  <li class="pb-mitem">
+    <a class="pb-mitem__thumb" href="#" aria-label="Play ZFS scrub timelapse"><img src="media/photo-5.jpg" alt="" loading="lazy"><span class="pb-mitem__play"><span class="pb-icon pb-icon--play"></span></span><span class="pb-mitem__dur">00:52</span><span class="pb-badge pb-mitem__state" data-status="info"><span class="pb-icon pb-icon--refresh pb-spin"></span>transcoding 48%</span></a>
+    <div class="pb-mitem__body"><a class="pb-mitem__title" href="#">ZFS scrub timelapse</a>
+      <div class="pb-mitem__meta"><span>1080p · av1</span><span>86 MB</span><span>Nov 3</span><span>—</span></div>
+      <p class="pb-mitem__desc">Fourteen hours of a scrub on tank, sped up.</p>
+      <div class="pb-mitem__tags"><span class="pb-pill">zfs</span><span class="pb-pill">timelapse</span></div>
+      <div class="pb-mitem__links"><a href="#"><span class="pb-icon pb-icon--link-external"></span>Open share page</a><a href="#"><span class="pb-icon pb-icon--download"></span>Original</a><a href="#"><span class="pb-icon pb-icon--captions"></span>Subtitles · en</a></div></div>
+    <div class="pb-mitem__actions"><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Copy link to ZFS scrub timelapse"><span class="pb-icon pb-icon--copy"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="More for ZFS scrub timelapse"><span class="pb-icon pb-icon--more"></span></button></div>
+  </li>
+</ul>
+<div><p class="pb-eyebrow" style="margin:0 0 8px">Compact</p>
+<ul class="pb-medialist pb-medialist--compact" aria-label="Videos, compact">
+  <li class="pb-mitem">
+    <a class="pb-mitem__thumb" href="#" aria-label="Play Rack rebuild, part 2: cable management"><img src="media/photo-1.jpg" alt="" loading="lazy"><span class="pb-mitem__play"><span class="pb-icon pb-icon--play"></span></span><span class="pb-mitem__dur">12:48</span><span class="pb-mitem__seen" aria-hidden="true"><span data-vars="--value:62%"></span></span></a>
+    <div class="pb-mitem__body"><a class="pb-mitem__title" href="#">Rack rebuild, part 2: cable management</a>
+      <div class="pb-mitem__meta"><span>1080p · h.264</span><span>1.2 GB</span><span>Nov 18</span><span>214 views</span></div>
+      <p class="pb-mitem__desc">Re-terminating the patch panel, labelling every run and moving the UPS to the bottom of the rack.</p>
+      <div class="pb-mitem__tags"><span class="pb-pill">homelab</span><span class="pb-pill">rack</span></div>
+      <div class="pb-mitem__links"><a href="#"><span class="pb-icon pb-icon--link-external"></span>Open share page</a><a href="#"><span class="pb-icon pb-icon--download"></span>Original</a><a href="#"><span class="pb-icon pb-icon--captions"></span>Subtitles · en</a></div></div>
+    <div class="pb-mitem__actions"><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Copy link to Rack rebuild, part 2: cable management"><span class="pb-icon pb-icon--copy"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="More for Rack rebuild, part 2: cable management"><span class="pb-icon pb-icon--more"></span></button></div>
+  </li>
+  <li class="pb-mitem">
+    <a class="pb-mitem__thumb" href="#" aria-label="Play Flashing the T7920 BIOS"><img src="media/photo-3.jpg" alt="" loading="lazy"><span class="pb-mitem__play"><span class="pb-icon pb-icon--play"></span></span><span class="pb-mitem__dur">04:06</span></a>
+    <div class="pb-mitem__body"><a class="pb-mitem__title" href="#">Flashing the T7920 BIOS</a>
+      <div class="pb-mitem__meta"><span>4K · hevc</span><span>2.8 GB</span><span>Nov 12</span><span>38 views</span></div>
+      <p class="pb-mitem__desc">Why the update needed a FAT32 stick and two tries.</p>
+      <div class="pb-mitem__tags"><span class="pb-pill">hardware</span></div>
+      <div class="pb-mitem__links"><a href="#"><span class="pb-icon pb-icon--link-external"></span>Open share page</a><a href="#"><span class="pb-icon pb-icon--download"></span>Original</a><a href="#"><span class="pb-icon pb-icon--captions"></span>Subtitles · en</a></div></div>
+    <div class="pb-mitem__actions"><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Copy link to Flashing the T7920 BIOS"><span class="pb-icon pb-icon--copy"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="More for Flashing the T7920 BIOS"><span class="pb-icon pb-icon--more"></span></button></div>
+  </li>
+  <li class="pb-mitem">
+    <a class="pb-mitem__thumb" href="#" aria-label="Play ZFS scrub timelapse"><img src="media/photo-5.jpg" alt="" loading="lazy"><span class="pb-mitem__play"><span class="pb-icon pb-icon--play"></span></span><span class="pb-mitem__dur">00:52</span><span class="pb-badge pb-mitem__state" data-status="info"><span class="pb-icon pb-icon--refresh pb-spin"></span>transcoding 48%</span></a>
+    <div class="pb-mitem__body"><a class="pb-mitem__title" href="#">ZFS scrub timelapse</a>
+      <div class="pb-mitem__meta"><span>1080p · av1</span><span>86 MB</span><span>Nov 3</span><span>—</span></div>
+      <p class="pb-mitem__desc">Fourteen hours of a scrub on tank, sped up.</p>
+      <div class="pb-mitem__tags"><span class="pb-pill">zfs</span><span class="pb-pill">timelapse</span></div>
+      <div class="pb-mitem__links"><a href="#"><span class="pb-icon pb-icon--link-external"></span>Open share page</a><a href="#"><span class="pb-icon pb-icon--download"></span>Original</a><a href="#"><span class="pb-icon pb-icon--captions"></span>Subtitles · en</a></div></div>
+    <div class="pb-mitem__actions"><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Copy link to ZFS scrub timelapse"><span class="pb-icon pb-icon--copy"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="More for ZFS scrub timelapse"><span class="pb-icon pb-icon--more"></span></button></div>
+  </li>
+</ul></div>
 </div></div></section><section class="spec" id="c-prose"><header class="spec__meta"><h3 class="spec__name">Prose</h3><p class="spec__note">pb-prose sets long-form text — docs, notes, incident write-ups — in the serif at a 68ch measure.</p></header><div class="spec__demo"><article class="pb-prose">
   <h2 style="margin-top:0">Restoring a snapshot</h2>
   <p>Snapshots run nightly at <code>03:00</code> and are pruned after thirty days. Pick one from the <a href="#">snapshot list</a>, then mount it read-only before copying anything back. See <a href="https://restic.net">restic.net</a> for flags.</p>
@@ -4745,7 +4909,7 @@ services:
 </div><nav class="pb-sitehead__mobile" id="m2" aria-label="Site"><details><summary>Apps<span class="pb-icon pb-icon--chevron-down"></span></summary><div><a href="#">snap</a><a href="#">status</a><a href="#">vault</a><a href="#">console</a></div></details><details><summary>Resources<span class="pb-icon pb-icon--chevron-down"></span></summary><div><a href="#">Guides</a><a href="#">API</a><a href="#">Changelog</a></div></details><a href="#">Pricing</a><a href="#">Sign in</a><a class="pb-btn pb-btn--primary pb-btn--block" href="#">Request access</a></nav></header><div class="pb-siteframe__page"><h1 style="margin:0 0 6px;font:600 28px/34px var(--font-serif)">Dropdown menus</h1><p style="margin:0;font:400 16px/24px var(--font-serif);color:var(--ink-muted)">Apps and Resources open panels with icons and one-line descriptions. Arrow keys move inside, Esc closes.</p></div></div></div><div><span class="pb-eyebrow" style="display:block;margin-bottom:8px">utility bar, centered name, sub-nav</span><div class="pb-siteframe">
 <header class="pb-sitehead pb-sitehead--center" data-sitehead><div class="pb-sitehead__util"><div class="pb-sitehead__bar"><span class="pb-status" data-status="ok"><span class="pb-icon"></span>all systems normal</span><span class="pb-sitehead__spacer"></span><a href="#">Help</a><a href="#">Contact</a><a href="#">Sign in</a></div></div><div class="pb-sitehead__bar">
   <ul class="pb-sitenav" aria-label="Main"><li><a class="pb-sitenav__link" href="#">Journal</a></li><li><a class="pb-sitenav__link" href="#" aria-current="page">Projects</a></li><li><a class="pb-sitenav__link" href="#">About</a></li></ul>
-  <a class="pb-sitehead__brand" href="#" style="flex-direction:column;gap:0;line-height:1"><span style="font-size:23px;line-height:28px">casey’s lab</span><small>notes from the rack</small></a>
+  <a class="pb-sitehead__brand pb-sitehead__brand--stack" href="#"><span>casey’s lab</span><small>notes from the rack</small></a>
   <div class="pb-sitehead__actions"><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon" aria-label="Search"><span class="pb-icon pb-icon--search"></span></button><a class="pb-btn pb-btn--ghost pb-btn--icon" href="#" aria-label="RSS feed"><span class="pb-icon pb-icon--activity"></span></a><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-sitehead__toggle" data-site-menu aria-expanded="false" aria-controls="m3" aria-label="Open menu"><span class="pb-icon pb-icon--menu"></span></button></div>
 </div>
 <nav class="pb-subnav" aria-label="Projects"><div class="pb-subnav__in"><a href="#" aria-current="page">All</a><a href="#">Hardware</a><a href="#">Networking</a><a href="#">Storage</a><a href="#">Software</a><a href="#">Writeups</a></div></nav>
@@ -5103,7 +5267,7 @@ if(saved==='hard')setEdge('hard');
 const links=[...document.querySelectorAll('.nav a')];
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+e.target.id))})},{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('main>.band').forEach(s=>io.observe(s));
-document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>e.preventDefault()));
+document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>{if(f.method==='dialog'||(e.submitter&&e.submitter.formMethod==='dialog'))return;e.preventDefault();}));
 document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
 }
 /* Patchbay core: escaping, CSP-safe styling, delegated document listeners, placement, and the pbInit() hook registry. */
@@ -5857,6 +6021,34 @@ function pbJSON(el){var data=pbJSONData(el),body=el.querySelector('.pb-json__bod
   if(cpp)cpp.addEventListener('click',function(){copy(cur,cpp);});
   if(sr)sr.addEventListener('input',filter);
   el.pbYaml=function(){return toYaml(data);};render();}
+
+/* pbChartHover(svg, spec) adds a crosshair, dots and a tooltip to a hand-drawn SVG chart.
+   spec: {axis:'x'|'y', pos:[coord per point], labels:[title per point], unit:'',
+          series:[{name, c:'css color' or one per point, v:[values], at:[[x,y] per point], unit}], band: width of the hover column (optional)}
+   Coordinates are in the SVG's viewBox units. Arrow keys move between points when the chart has focus. */
+function pbChartHover(svg,S){function col(s,i){return Array.isArray(s.c)?s.c[i]:s.c;}var box=svg.parentNode,NS='http://www.w3.org/2000/svg',tip=box.querySelector(':scope > .pb-ts__tip'),u=S.unit||'',cur=-1,g;
+  if(!tip){tip=document.createElement('div');tip.className='pb-ts__tip';box.appendChild(tip);}
+  if(getComputedStyle(box).position==='static')box.style.position='relative';
+  svg.setAttribute('tabindex','0');svg.setAttribute('role','img');svg.classList.add('pb-hoverable');
+  function fmt(v){return typeof v==='number'?(Math.abs(v)>=100?Math.round(v):Math.round(v*10)/10).toLocaleString():v;}
+  function show(i){if(i<0||i>=S.pos.length)return;cur=i;g=svg.querySelector('.pb-ts__hover');if(!g){g=document.createElementNS(NS,'g');g.setAttribute('class','pb-ts__hover');}svg.appendChild(g);
+    var vb=svg.viewBox.baseVal,p=S.pos[i],h='';
+    if(S.band)h+=S.axis==='y'?'<rect class="pb-hover-band" x="'+vb.x+'" y="'+(p-S.band/2)+'" width="'+vb.width+'" height="'+S.band+'"/>':'<rect class="pb-hover-band" x="'+(p-S.band/2)+'" y="'+vb.y+'" width="'+S.band+'" height="'+vb.height+'"/>';
+    else h+='<line class="pb-ts__cross" x1="'+p+'" x2="'+p+'" y1="'+(S.top||vb.y)+'" y2="'+(S.bottom||vb.y+vb.height)+'"/>';
+    S.series.forEach(function(s){if(s.at&&s.at[i]&&!S.band)h+='<circle class="pb-ts__dot" cx="'+s.at[i][0]+'" cy="'+s.at[i][1]+'" r="4" data-style="fill:'+col(s,i)+'"/>';});
+    g.innerHTML=h;pbStyled(g);
+    tip.innerHTML='<b>'+pbEsc(S.labels[i])+'</b>'+S.series.map(function(s){return '<span class="pb-bars__tr"><i data-style="--c:'+col(s,i)+'"></i>'+pbEsc(s.name)+'<span>'+fmt(s.v[i])+(s.unit!=null?s.unit:u)+'</span></span>'}).join('');
+    pbStyled(tip);tip.setAttribute('data-show','');
+    var r=svg.getBoundingClientRect(),br=box.getBoundingClientRect(),sx=r.width/vb.width,sy=r.height/vb.height,tw=tip.offsetWidth,th=tip.offsetHeight,
+      a=S.series[0].at&&S.series[0].at[i]||[p,p],px=(S.axis==='y'?a[0]:p)*sx+r.left-br.left,py=(S.axis==='y'?p:Math.min.apply(0,S.series.map(function(s){return s.at&&s.at[i]?s.at[i][1]:vb.height/2})))*sy+r.top-br.top;
+    var left=px+14+tw>br.width?px-14-tw:px+14,top=Math.max(0,Math.min(py-th/2,br.height-th));
+    tip.style.left=left+'px';tip.style.top=top+'px';}
+  function hide(){cur=-1;tip.removeAttribute('data-show');var e=svg.querySelector('.pb-ts__hover');if(e)e.remove();}
+  function near(e){var m=svg.getScreenCTM();if(!m)return -1;var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;pt=pt.matrixTransform(m.inverse());var v=S.axis==='y'?pt.y:pt.x,b=-1,d=1e9;
+    S.pos.forEach(function(p,i){var dd=Math.abs(p-v);if(dd<d){d=dd;b=i;}});return S.band&&d>S.band/2+4?-1:b;}
+  svg.onpointermove=function(e){var i=near(e);if(i<0)hide();else if(i!==cur)show(i);};
+  svg.onpointerleave=hide;svg.onblur=hide;
+  svg.onkeydown=function(e){var n=S.pos.length;if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();show(cur<0?0:Math.min(n-1,cur+1));}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();show(cur<0?n-1:Math.max(0,cur-1));}else if(e.key==='Escape')hide();};}
 /* Bulk bar: scope [data-bulk] holds row checkboxes (.pb-check[data-row]), an optional [data-all] and the .pb-bulkbar. Fires bulk {action, items}. */
 function pbBulk(scope){var bar=scope.querySelector('.pb-bulkbar');if(!bar)return;var cnt=bar.querySelector('[data-bulk-count]'),all=scope.querySelector('[data-all]');
   function boxes(){return Array.from(scope.querySelectorAll('.pb-check[data-row]')).filter(function(b){return !b.closest('[hidden]')});}
@@ -6204,6 +6396,21 @@ function pbSession(dlg){var c=dlg.querySelector('.pb-session__count'),bar=dlg.qu
   dlg.querySelector('[data-session-stay]').addEventListener('click',function(){clearInterval(iv);dlg.close('stay');dlg.dispatchEvent(new CustomEvent('stay'));});
   var so=dlg.querySelector('[data-session-out]');if(so)so.addEventListener('click',function(){clearInterval(iv);dlg.close('out');dlg.dispatchEvent(new CustomEvent('expire'));});
   dlg.addEventListener('cancel',function(e){e.preventDefault();});}
+/* Drop zone settings: .pb-dropset[data-dropset]. The bar summarises every control with data-sum ("expires {v}") or data-sum-on / data-sum-off. Fires change with the settings. */
+function pbDropSet(el){var bar=el.querySelector('.pb-dropset__bar'),panel=el.querySelector('.pb-dropset__panel'),sum=el.querySelector('[data-dropset-summary]'),init=[];
+  function ctl(){return Array.from(panel.querySelectorAll('input,select'));}
+  ctl().forEach(function(c){init.push(c.type==='checkbox'||c.type==='radio'?c.checked:c.value);});
+  function read(){var parts=[],o={};ctl().forEach(function(c){var k=c.name||c.getAttribute('aria-label');
+      if(c.type==='radio'){if(c.checked){o[k]=c.value;parts.push(c.dataset.sum.replace('{v}',c.value));}}
+      else if(c.type==='checkbox'){o[k]=c.checked;var t=c.checked?c.dataset.sumOn:c.dataset.sumOff;if(t)parts.push(t);var r=c.dataset.dropsetReveal&&el.querySelector('#'+c.dataset.dropsetReveal);if(r)r.hidden=!c.checked;}
+      else if(c.dataset.sum){o[k]=c.value;parts.push(c.dataset.sum.replace('{v}',c.options?c.options[c.selectedIndex].text.split(' · ')[0]:c.value));}});
+    sum.textContent=parts.filter(Boolean).join(' · ');return o;}
+  bar.addEventListener('click',function(){var o=bar.getAttribute('aria-expanded')!=='true';bar.setAttribute('aria-expanded',o);panel.hidden=!o;if(o){var f=panel.querySelector('input:checked,input,select');if(f)f.focus();}});
+  panel.addEventListener('change',function(){el.dispatchEvent(new CustomEvent('change',{detail:read()}));});
+  panel.addEventListener('keydown',function(e){if(e.key==='Escape'){bar.setAttribute('aria-expanded','false');panel.hidden=true;bar.focus();}});
+  var rs=el.querySelector('[data-dropset-reset]');if(rs)rs.addEventListener('click',function(){ctl().forEach(function(c,i){if(c.type==='checkbox'||c.type==='radio')c.checked=init[i];else c.value=init[i];});read();});
+  var df=el.querySelector('[data-dropset-default]');if(df)df.addEventListener('click',function(){ctl().forEach(function(c){init.push(0);});init=ctl().map(function(c){return c.type==='checkbox'||c.type==='radio'?c.checked:c.value});var t=df.textContent;df.textContent='Saved';df.disabled=true;setTimeout(function(){df.textContent=t;df.disabled=false;},1400);el.dispatchEvent(new CustomEvent('default',{detail:read()}));});
+  read();}
 /* Patchbay form controls and small behaviors: combobox, tags, code input, colors, copy, reveal, key/value, ranges, counters, toggles, tabs, form sections, tables, code areas. */
 function pbCombo(c){var inp=c.querySelector('input'),lb=c.querySelector('.pb-listbox'),opts=[].slice.call(lb.querySelectorAll('.pb-option:not(.pb-option--empty)')),empty=lb.querySelector('.pb-option--empty'),groups=[].slice.call(lb.querySelectorAll('.pb-listbox__group')),act=-1,uid='o'+Math.random().toString(36).slice(2,7);
  opts.forEach(function(o,i){o.id=uid+i;o.dataset.label=o.childNodes[1]?o.childNodes[1].textContent:o.textContent;});
@@ -6388,6 +6595,7 @@ pbHook('evcal','[data-evcal]',pbEventCal);
 pbHook('md','[data-md]',pbMdEditor);
 pbHook('thread','[data-thread]',pbThread);
 pbHook('notify','[data-notify]',pbNotify);
+pbHook('dropset','[data-dropset]',pbDropSet);
 pbHook('sheet','dialog.pb-sheet',pbSheet);
 pbHook('session','dialog.pb-session:not([open])',pbSession);
 pbHook('themeswitch','[data-theme-switch]',pbThemeSwitch);
@@ -6495,23 +6703,32 @@ document.querySelectorAll('.pb-chart[data-kind=line] svg').forEach(function(s){v
  function path(d){return d.map(function(v,i){return (i?'L':'M')+(L+i*(R-L)/24).toFixed(1)+' '+(B-(v/max)*(B-T)).toFixed(1)}).join(' ');}
  var a=series(0.4,360,110),b=series(2,90,30),c=series(1.1,320,60);
  el('path',{d:path(a)+' L'+R+' '+B+' L'+L+' '+B+'Z',class:'pb-area pb-s1'},s);
- el('path',{d:path(c),class:'pb-line pb-s3 pb-dashed'},s);el('path',{d:path(a),class:'pb-line pb-s1'},s);el('path',{d:path(b),class:'pb-line pb-s2'},s);});
+ el('path',{d:path(c),class:'pb-line pb-s3 pb-dashed'},s);el('path',{d:path(a),class:'pb-line pb-s1'},s);el('path',{d:path(b),class:'pb-line pb-s2'},s);
+ var xs=a.map(function(v,i){return L+i*(R-L)/24}),at=function(d){return d.map(function(v,i){return [xs[i],B-(v/max)*(B-T)]})};
+ s.setAttribute('aria-label','WAN throughput over 24 hours, down, up and last week');
+ pbChartHover(s,{pos:xs,top:T,bottom:B,unit:' mbps',labels:xs.map(function(v,i){return ('0'+i).slice(-2)+':00'}),series:[{name:'down',c:'var(--chart-1)',v:a,at:at(a)},{name:'up',c:'var(--chart-2)',v:b,at:at(b)},{name:'last week',c:'var(--chart-3)',v:c,at:at(c)}]});});
 document.querySelectorAll('.pb-chart[data-kind=bar] svg').forEach(function(s){var d=[['tank',6.2,8],['fast',1.4,2],['backup',9.1,12],['scratch',0.3,1]];var L=64,R=396,h=20,g=10;
  d.forEach(function(r,i){var y=4+i*(h+g),w=(R-L);el('text',{x:L-8,y:y+14,'text-anchor':'end',class:'pb-axis'},s).textContent=r[0];
   el('rect',{x:L,y:y,width:w,height:h,class:'pb-bar',style:'fill:var(--surface-sunk);stroke:var(--line)'},s);
   el('rect',{x:L,y:y,width:w*r[1]/r[2],height:h,class:'pb-bar '+(r[1]/r[2]>0.75?'pb-s2':'pb-s1')},s);
-  el('text',{x:L+w*r[1]/r[2]+6,y:y+14,class:'pb-axis',style:'fill:var(--ink)'},s).textContent=r[1]+' / '+r[2];});});
+  el('text',{x:L+w*r[1]/r[2]+6,y:y+14,class:'pb-axis',style:'fill:var(--ink)'},s).textContent=r[1]+' / '+r[2];});
+ s.setAttribute('aria-label','Disk used per pool');
+ pbChartHover(s,{axis:'y',band:h+g,pos:d.map(function(r,i){return 4+i*(h+g)+h/2}),labels:d.map(function(r){return r[0]}),series:[
+  {name:'used',c:d.map(function(r){return r[1]/r[2]>0.75?'var(--chart-2)':'var(--chart-1)'}),unit:' TB',v:d.map(function(r){return r[1]}),at:d.map(function(r,i){return [L+(R-L)*r[1]/r[2],4+i*(h+g)+h/2]})},
+  {name:'size',c:'var(--ink-muted)',unit:' TB',v:d.map(function(r){return r[2]})},
+  {name:'free',c:'var(--ink-muted)',unit:'%',v:d.map(function(r){return Math.round((1-r[1]/r[2])*100)})}]});});
 })();
 (function(){
 function pbSeries(seed,n,base,amp){var o=[];for(var i=0;i<n;i++)o.push(base+amp*Math.sin(i/2.6+seed)+amp*0.45*Math.sin(i*1.9+seed*3));return o;}
 function pbPath(d,W,H,pad){var mn=Math.min.apply(0,d),mx=Math.max.apply(0,d),r=mx-mn||1;pad=pad||2;return d.map(function(v,i){return (i?'L':'M')+(i*(W/(d.length-1))).toFixed(1)+' '+(pad+(H-2*pad)*(1-(v-mn)/r)).toFixed(1)}).join(' ');}
 var NS='http://www.w3.org/2000/svg';
-function cgDraw(){document.querySelectorAll('.pb-chart[data-g] svg').forEach(function(s){var c=s.parentNode,g=c.dataset.g,W=Math.max(200,s.parentNode.clientWidth-(g==='plain'?0:32)),H=150;s.setAttribute('viewBox','0 0 '+W+' '+H);s.style.height=H+'px';
+function cgDraw(){document.querySelectorAll('.pb-chart[data-g] svg').forEach(function(s){var c=s.parentNode,g=c.dataset.g,W=Math.max(200,s.parentNode.clientWidth-(g==='plain'?0:32)),H=150,hv;s.setAttribute('viewBox','0 0 '+W+' '+H);s.style.height=H+'px';
  var L=34,R=W-4,T=10,B=H-22,h='';function y(v,mx){return B-(v/mx)*(B-T)}function x(i,n){return L+i*(R-L)/(n-1)}
  if(g==='plain'){var d=[38,41,40,52,39,44,47,40,42,61,45,43,44,46];var mx=70,bw=(R-L)/d.length;[0,35,70].forEach(function(v){h+='<line class="pb-grid" x1="'+L+'" x2="'+R+'" y1="'+y(v,mx)+'" y2="'+y(v,mx)+'"/><text class="pb-axis" x="'+(L-6)+'" y="'+(y(v,mx)+4)+'" text-anchor="end">'+v+'</text>';});
   d.forEach(function(v,i){h+='<rect class="pb-bar '+(v>55?'pb-s2':'pb-s1')+'" x="'+(L+i*bw+2)+'" y="'+y(v,mx)+'" width="'+Math.max(1,bw-4)+'" height="'+(B-y(v,mx))+'"/>';});
   h+='<line class="pb-threshold" x1="'+L+'" x2="'+R+'" y1="'+y(55,mx)+'" y2="'+y(55,mx)+'"/><text class="pb-threshold-label" x="'+R+'" y="'+(y(55,mx)-6)+'" text-anchor="end">quota 55</text>';
-  ['nov 9','nov 15','nov 22'].forEach(function(t,i){h+='<text class="pb-axis" x="'+(L+[0,0.5,1][i]*(R-L))+'" y="'+(B+16)+'" text-anchor="'+['start','middle','end'][i]+'">'+t+'</text>';});}
+  ['nov 9','nov 15','nov 22'].forEach(function(t,i){h+='<text class="pb-axis" x="'+(L+[0,0.5,1][i]*(R-L))+'" y="'+(B+16)+'" text-anchor="'+['start','middle','end'][i]+'">'+t+'</text>';});
+  hv={band:bw,pos:d.map(function(v,i){return L+i*bw+bw/2}),labels:d.map(function(v,i){return 'nov '+(9+i)}),series:[{name:'backup',c:d.map(function(v){return v>55?'var(--chart-2)':'var(--chart-1)'}),unit:' GB',v:d,at:d.map(function(v,i){return [L+i*bw+bw/2,y(v,mx)]})},{name:'quota',c:'var(--down)',unit:' GB',v:d.map(function(){return 55})}]};}
  else{var n=36,mx=g==='ink'?300:1000,a=pbSeries(g==='ink'?2:0.3,n,g==='ink'?190:360,g==='ink'?40:120),b=g==='ink'?pbSeries(4,n,70,12):null;if(g==='panel')a=a.map(function(v,i){return i>=21&&i<=26?v+420:v});
   if(g==='panel')h+='<rect class="pb-band pb-band--warn" x="'+x(21,n)+'" y="'+T+'" width="'+(x(26,n)-x(21,n))+'" height="'+(B-T)+'"/><text class="pb-band-label" x="'+(x(21,n)+6)+'" y="'+(T+12)+'">redis full</text>';
   if(g==='ink')h+='<rect class="pb-band" x="'+x(8,n)+'" y="'+T+'" width="'+(x(13,n)-x(8,n))+'" height="'+(B-T)+'"/><text class="pb-band-label" x="'+(x(8,n)+6)+'" y="'+(T+12)+'">scrub</text>';
@@ -6520,8 +6737,11 @@ function cgDraw(){document.querySelectorAll('.pb-chart[data-g] svg').forEach(fun
   h+='<path class="pb-area pb-s1" d="'+path(a)+' L'+R+' '+B+' L'+L+' '+B+'Z"/>';if(b)h+='<path class="pb-line pb-s2" d="'+path(b)+'"/>';h+='<path class="pb-line pb-s1" d="'+path(a)+'"/>';
   h+='<circle class="pb-s1 pb-dot-end" cx="'+R+'" cy="'+y(a[n-1],mx)+'" r="4"/>';
   if(g==='panel')h+='<line class="pb-threshold" x1="'+L+'" x2="'+R+'" y1="'+y(500,mx)+'" y2="'+y(500,mx)+'"/><text class="pb-threshold-label" x="'+(L+6)+'" y="'+(y(500,mx)-6)+'">slo 500</text>';
+  var lab=g==='ink'?function(i){var hr=i*168/(n-1);return ['mon','tue','wed','thu','fri','sat','sun'][Math.min(6,Math.floor(hr/24))]+' '+('0'+Math.floor(hr%24)).slice(-2)+':00'}:function(i){var m=Math.round(i*1440/(n-1));return ('0'+Math.floor(m/60)%24).slice(-2)+':'+('0'+m%60).slice(-2)};
+  var xs=a.map(function(v,i){return x(i,n)}),at=function(d){return d.map(function(v,i){return [x(i,n),y(Math.min(v,mx),mx)]})};
+  hv={pos:xs,top:T,bottom:B,labels:xs.map(function(v,i){return lab(i)}),series:g==='ink'?[{name:'rack',c:'var(--pop-mint)',unit:' W',v:a,at:at(a)},{name:'nas',c:'var(--pop-yellow)',unit:' W',v:b,at:at(b)}]:[{name:'p95',c:'var(--chart-1)',unit:' ms',v:a,at:at(a)},{name:'slo',c:'var(--down)',unit:' ms',v:a.map(function(){return 500})}]};
   (g==='ink'?['mon','thu','sun']:['00','12','24']).forEach(function(t,i){h+='<text class="pb-axis" x="'+(L+[0,0.5,1][i]*(R-L))+'" y="'+(B+16)+'" text-anchor="'+['start','middle','end'][i]+'">'+t+'</text>';});}
- s.innerHTML=h;});}
+ s.innerHTML=h;s.setAttribute('aria-label',c.querySelector('.pb-eyebrow').textContent);pbChartHover(s,hv);});}
 cgDraw();addEventListener('resize',cgDraw);if(document.fonts)document.fonts.ready.then(cgDraw);
 })();
 (function(){

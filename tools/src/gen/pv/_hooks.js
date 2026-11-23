@@ -38,6 +38,7 @@ pbHook('evcal','[data-evcal]',pbEventCal);
 pbHook('md','[data-md]',pbMdEditor);
 pbHook('thread','[data-thread]',pbThread);
 pbHook('notify','[data-notify]',pbNotify);
+pbHook('dropset','[data-dropset]',pbDropSet);
 pbHook('sheet','dialog.pb-sheet',pbSheet);
 pbHook('session','dialog.pb-session:not([open])',pbSession);
 pbHook('themeswitch','[data-theme-switch]',pbThemeSwitch);

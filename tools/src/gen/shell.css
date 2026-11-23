@@ -165,7 +165,9 @@
 .pb-dl--stack dd { padding-top: 2px; }
 .pb-dl--stack > div > dd:nth-of-type(1):last-child { grid-column: auto; }
 .pb-dl--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4) var(--space-6); }
-.pb-dl--grid > div { display: grid; gap: 2px; }
+.pb-dl--grid > div { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 2px; }
+.pb-dl--grid > div > dd:nth-of-type(1):last-child { grid-column: auto; }
+.pb-dl dd.pb-mono { font: 400 13px/20px var(--font-mono); }
 .pb-dl--grid dt, .pb-dl--grid dd { padding: 0; border: 0; }
 @media (max-width: 520px) { .pb-dl:not(.pb-dl--grid) { grid-template-columns: minmax(0, 1fr) auto; } .pb-dl:not(.pb-dl--grid) dt { grid-column: 1 / -1; padding-bottom: 0; border-bottom: 0; } .pb-dl:not(.pb-dl--grid) > div > dd:nth-of-type(1):last-child { grid-column: 1 / -1; } }
 

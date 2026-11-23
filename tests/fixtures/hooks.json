@@ -38,6 +38,7 @@
  "md": "[data-md]",
  "thread": "[data-thread]",
  "notify": "[data-notify]",
+ "dropset": "[data-dropset]",
  "sheet": "dialog.pb-sheet",
  "session": "dialog.pb-session:not([open])",
  "themeswitch": "[data-theme-switch]",

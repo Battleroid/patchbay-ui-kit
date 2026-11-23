@@ -1204,9 +1204,9 @@
   ],
   "lastChange": {
     "by": "Casey",
-    "at": "2026-11-23T05:20:00Z",
+    "at": "2026-11-24T02:30:00Z",
     "via": "Claude chat",
-    "note": "Input affixes can trail the input (units like opens, GB) and sit flush with the right edge."
+    "note": "Media list; drop zone upload settings; chart hover tooltips; dialog close fix; site header stacked name alignment; tighter table detail rows; file preview details no longer clip."
   },
   "layout": "files",
   "libraries": [],

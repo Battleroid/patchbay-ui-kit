@@ -7,3 +7,5 @@ Dialog is the native `<dialog>` element, opened with `showModal()`, in five shap
 - Writing: titles are questions for confirms ("Delete snapshot?"); the body names exactly what changes and whether it can be undone; the action button repeats the verb ("Delete user"), never "OK". Put `autofocus` on a form dialog's first field; confirms focus Cancel.
 - Escape and Cancel close without acting. Do not stack dialogs; for a follow-up, close the first.
 - Open a static dialog with `[data-open="dialog-id"]` on a button.
+- Close and acknowledge buttons use `<form method="dialog">` with `value`. If the page stops form submits globally, skip forms whose method is `dialog`, or the buttons stop closing it.
+- A long body with `pb-prose` spans the full dialog width; the scroll bar sits at the dialog edge.
