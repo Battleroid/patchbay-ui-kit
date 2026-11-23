@@ -93,7 +93,8 @@
 .pb-truncate { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pb-clamp-2, .pb-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
 .pb-clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; } .pb-clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
-.pb-midtrunc { display: inline-flex; min-width: 0; max-width: 100%; white-space: nowrap; font-family: var(--font-mono); }
+.pb-midtrunc { display: inline-flex; min-width: 0; max-width: 100%; white-space: nowrap; }
+.pb-midtrunc--mono { font-family: var(--font-mono); }
 .pb-midtrunc > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .pb-midtrunc > span:last-child { flex: none; }
 .pb-reltime { font-variant-numeric: tabular-nums; text-decoration: underline dotted var(--line-strong); text-underline-offset: 3px; cursor: default; }
