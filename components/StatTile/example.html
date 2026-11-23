@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · StatTile</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · StatTile</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div class="pb-tiles">
   <div class="pb-tile pb-tile--accent pb-tile--hero" style="grid-column:span 2"><span class="pb-tile__label">uptime · 30d</span><span class="pb-tile__value">99.98<small>%</small></span><span class="pb-tile__delta">↑ 0.04 vs prev</span><svg class="pb-tile__bg" data-tile="1"></svg></div>
   <div class="pb-tile"><span class="pb-tile__label">wan ↓ · 24h</span><span class="pb-tile__value">412<small>Mb/s</small></span><span class="pb-tile__delta" data-tone="good">peak 940</span><svg class="pb-tile__bg" data-tile="2"></svg></div>

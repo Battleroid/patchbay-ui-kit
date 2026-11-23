@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · ErrorSummary</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · ErrorSummary</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <form class="pb-form" data-validate>
   <div class="pb-errsum" role="alert" tabindex="-1" hidden><p class="pb-errsum__title"><span class="pb-icon pb-icon--status-down"></span>There is a problem</p><ul></ul></div>
   <label class="pb-field"><span class="pb-field__label">Share name</span><span class="pb-input"><input id="es-name" required data-error="Enter a name for the share"></span></label>

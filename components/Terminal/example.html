@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · Terminal</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · Terminal</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:16px">
 <div class="pb-term" data-term>
   <div class="pb-term__head"><span class="pb-term__cmd">docker compose pull &amp;&amp; docker compose up -d</span><span class="pb-term__meta">12.4 s</span><span class="pb-term__exit"><span class="pb-icon pb-icon--check"></span>exit 0</span>

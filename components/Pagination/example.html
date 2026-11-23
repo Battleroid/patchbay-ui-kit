@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · Pagination</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · Pagination</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:20px">
   <nav class="pb-pager" aria-label="Pagination" data-pager data-total="16" data-page="6" data-size="20" data-items="312"><ul class="pb-pager__pages"></ul><span class="pb-pager__info"></span>
     <label class="pb-pager__size">per page <span class="pb-select pb-select--sm"><select><option>20</option><option>50</option><option>100</option></select></span></label></nav>

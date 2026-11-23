@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · VirtualList</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · VirtualList</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:12px">
   <div class="pb-toolbar"><span class="pb-mono" style="font-size:12px;color:var(--ink-muted)" data-vl-range></span><span class="pb-toolbar__spacer"></span>
     <form class="pb-vlist__goto" data-vl-form><label class="pb-field__label" for="vl-line">go to line</label><span class="pb-input pb-input--sm"><input id="vl-line" type="number" min="1" max="10000" value="5000" inputmode="numeric" data-vl-goto><button type="submit" class="pb-input__action">Go</button></span></form></div>

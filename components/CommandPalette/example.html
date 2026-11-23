@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · CommandPalette</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · CommandPalette</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:12px;justify-items:start">
   <button type="button" class="pb-btn pb-shell__search" data-cmd-open="cmdk" style="margin:0;width:320px"><span class="pb-icon pb-icon--search"></span>Search or jump to…<span class="pb-kbd">⌘K</span></button>
   <p class="pb-note" style="margin:0" data-cmd-out>Press ⌘K or Ctrl+K.</p>

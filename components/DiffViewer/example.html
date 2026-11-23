@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · DiffViewer</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · DiffViewer</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div class="pb-diff" data-diff data-mode="unified" data-context="2">
   <div class="pb-diff__head">
     <span class="pb-icon pb-icon--diff" style="color:var(--ink-muted)"></span><span class="pb-diff__file">stacks/media/compose.yaml</span><span class="pb-diff__stat"></span>

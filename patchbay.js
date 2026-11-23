@@ -1,6 +1,7 @@
 /* Patchbay behaviors. Load after the markup and call pbInit() (or pbInit(el) for markup added later; it binds each element once),
    or add data-pb-auto to this script tag to run pbInit() on DOMContentLoaded. pbInit(root, {only, skip}) limits it by hook name (pbInit.hooks).
-   Also exposes pbConfirm(), pbToast(), pbInbox(), pbCalendar(), pbClock(), pbTheme(), pbQRSvg(), pbQRCode(), pbPlace(), pbVirtual(), pbAnsi(), pbCronParse(), pbEsc() and pbStyled() for app code. */
+   Also exposes pbConfirm(), pbToast(), pbInbox(), pbCalendar(), pbClock(), pbTheme(), pbQRSvg(), pbQRCode(), pbPlace(), pbVirtual(), pbAnsi(),
+   pbCronParse(), pbSection(), pbHook(), pbEsc() and pbStyled() for app code. Needs no inline script or style: CSP script-src 'self'; style-src 'self'. */
 /* Patchbay core: escaping, CSP-safe styling, delegated document listeners, placement, and the pbInit() hook registry. */
 function pbEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 /* Markup built as a string carries styles in data-style; pbStyled moves them into the CSSOM, which a strict style-src allows. */

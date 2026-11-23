@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · FilePreview</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · FilePreview</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div class="pb-split" data-split data-start="52" data-min="30" data-max="75" style="height:520px;border:var(--stroke-1) solid var(--pb-border);border-radius:var(--pb-r-lg)">
   <div class="pb-split__pane"><div class="pb-files" data-files data-preview-src style="--files-h:470px;border:0;border-radius:0;box-shadow:none;height:100%">
     <div class="pb-files__body"><div class="pb-files__head" role="presentation"><span></span><button type="button" data-sort="name" aria-sort="ascending">Name</button><button type="button" data-sort="size">Size</button><button type="button" data-sort="date">Modified</button></div>

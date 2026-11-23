@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · StorageBar</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · StorageBar</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:28px">
 <div class="pb-storage" data-storage>
   <div class="pb-storage__head"><span class="pb-storage__name">tank</span><span class="pb-badge" data-status="ok"><span class="pb-icon"></span>healthy</span><span class="pb-storage__total"><b>6.2 TB</b> of 10.9 TB · 57%</span></div>

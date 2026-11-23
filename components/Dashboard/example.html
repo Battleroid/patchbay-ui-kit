@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · Dashboard</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · Dashboard</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div data-tpl="dash">
 <header class="pb-pagehead"><h1 class="pb-pagehead__title">Overview</h1><p class="pb-pagehead__desc">lab.home · 14 services · updated <time class="pb-reltime" data-ago="40">just now</time></p>
   <div class="pb-pagehead__actions"><div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="Range"><label><input type="radio" name="drange">24h</label><label><input type="radio" name="drange" checked>7d</label><label><input type="radio" name="drange">30d</label></div></div></header>

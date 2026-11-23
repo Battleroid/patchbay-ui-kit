@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · Loading</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · Loading</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:20px">
   <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap"><span class="pb-spinner pb-spinner--sm" role="status" aria-label="Loading"></span><span class="pb-spinner" role="status" aria-label="Loading"></span><span class="pb-spinner pb-spinner--lg" role="status" aria-label="Loading"></span><span class="pb-loading" role="status"><span class="pb-spinner pb-spinner--sm"></span>Checking 12 services…</span></div>
   <div class="pb-card" aria-busy="true" aria-label="Loading service" style="padding:16px"><div style="display:flex;gap:12px;align-items:center"><span class="pb-skel pb-skel--circle" style="width:36px;height:36px"></span><div style="flex:1"><span class="pb-skel pb-skel--title"></span><span class="pb-skel pb-skel--text" style="width:70%"></span></div></div><span class="pb-skel pb-skel--block" style="margin-top:12px;height:72px"></span></div>

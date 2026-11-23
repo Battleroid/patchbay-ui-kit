@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · CronBuilder</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · CronBuilder</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div class="pb-cron" data-cron-builder data-cron="30 3 * * 1-5">
   <div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="Preset" data-cron-preset style="justify-self:start">
     <label><input type="radio" name="cpre" value="hourly">hourly</label><label><input type="radio" name="cpre" value="daily">daily</label><label><input type="radio" name="cpre" value="weekly">weekly</label><label><input type="radio" name="cpre" value="monthly">monthly</label><label><input type="radio" name="cpre" value="custom">custom</label>

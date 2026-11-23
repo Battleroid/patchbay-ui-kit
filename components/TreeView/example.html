@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · TreeView</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · TreeView</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <ul class="pb-tree" role="tree" aria-label="Files" data-tree style="max-width:420px">
   <li role="treeitem" aria-expanded="true"><div class="pb-tree__row"><span class="pb-tree__caret"></span><span class="pb-icon pb-icon--database"></span><span class="pb-tree__label">tank</span><span class="pb-tree__meta">6.2 TB</span></div>
     <ul role="group">

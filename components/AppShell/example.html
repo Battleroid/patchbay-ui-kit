@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · AppShell</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · AppShell</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="height:640px;overflow:auto;border:1px solid var(--line);border-radius:var(--pb-r-lg);contain:paint">
 <div class="pb-shell pb-shell--contained" data-shell style="min-height:640px">
   <a class="pb-skip" href="#main-c">Skip to content</a>

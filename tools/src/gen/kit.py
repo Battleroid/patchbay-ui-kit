@@ -94,6 +94,7 @@ page=f'''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="pb-theme-boot.js"></script>
 <title>Patchbay kit</title>
 <style>
 /* VOICE: calm documentation site, like a well-kept personal blog

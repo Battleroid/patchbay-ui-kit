@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · MarkdownEditor</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · MarkdownEditor</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div class="pb-md" data-md data-view="split" style="--md-h:240px">
   <div class="pb-md__bar" role="toolbar" aria-label="Formatting">
     <button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="bold" title="Bold (⌘B)" aria-label="Bold">B</button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="italic" title="Italic (⌘I)" aria-label="Italic"><i>I</i></button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="code" title="Code (⌘E)" aria-label="Inline code">`</button><button type="button" class="pb-btn pb-btn--ghost" data-md-cmd="link" title="Link (⌘K)" aria-label="Link"><span class="pb-icon pb-icon--link"></span></button>

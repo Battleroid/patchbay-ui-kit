@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · SiteHeader</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · SiteHeader</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:24px"><div><span class="pb-eyebrow" style="display:block;margin-bottom:8px">links, search, theme, call to action</span><div class="pb-siteframe" data-theme-scope><header class="pb-sitehead" data-sitehead><div class="pb-sitehead__bar">
   <a class="pb-sitehead__brand" href="#"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg>patchbay</a>
   <ul class="pb-sitenav" aria-label="Main"><li><a class="pb-sitenav__link" href="#" aria-current="page">Docs</a></li><li><a class="pb-sitenav__link" href="#">Components</a></li><li><a class="pb-sitenav__link" href="#">Tokens</a></li><li><a class="pb-sitenav__link" href="#">Changelog</a></li></ul>

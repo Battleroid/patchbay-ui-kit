@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · TagInput</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · TagInput</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:20px">
   <label class="pb-field"><span class="pb-field__label">Allowed networks</span>
     <span class="pb-input pb-tags" data-tags><span class="pb-tag">10.0.0.0/16<button type="button" aria-label="Remove 10.0.0.0/16"><span class="pb-icon pb-icon--close"></span></button></span><span class="pb-tag">100.64.0.0/10<button type="button" aria-label="Remove 100.64.0.0/10"><span class="pb-icon pb-icon--close"></span></button></span><input placeholder="Add CIDR…" aria-label="Add network"></span>

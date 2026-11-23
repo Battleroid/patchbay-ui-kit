@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · DatePicker</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · DatePicker</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:20px">
   <label class="pb-field" style="max-width:240px"><span class="pb-field__label">Expires on</span>
     <span class="pb-input pb-datefield" data-today="2026-11-22" data-min="2026-11-22"><input type="text" inputmode="numeric" placeholder="yyyy-mm-dd" pattern="\d{4}-\d{2}-\d{2}" value="2026-11-29" aria-label="Expires on"><button type="button" class="pb-input__btn" data-cal aria-label="Open calendar"><span class="pb-icon pb-icon--calendar"></span></button></span>

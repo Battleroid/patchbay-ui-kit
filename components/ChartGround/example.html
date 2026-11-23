@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · ChartGround</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · ChartGround</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:24px">
   <div class="pb-chart pb-chart--panel" data-g="panel"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span class="pb-eyebrow">nextcloud · p95 · ms</span><span class="pb-legend"><span><i style="--c:var(--chart-1)"></i>p95</span><span><i class="pb-dashed" style="--c:var(--down)"></i>slo 500</span></span></div><svg></svg></div>
   <div class="pb-chart pb-chart--ink" data-g="ink"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span class="pb-eyebrow">power · 7d · w</span><span class="pb-legend"><span><i style="--c:var(--pop-mint)"></i>rack</span><span><i style="--c:var(--pop-yellow)"></i>nas</span></span></div><svg></svg></div>

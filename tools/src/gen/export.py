@@ -8,7 +8,8 @@ shutil.copy('/home/claude/ds/project/tokens.json',O); T=json.load(open(f'{O}/tok
 import sys; sys.path.insert(0,'/home/claude/gen'); from tokcss_lib import tokens_css
 L=['/* Patchbay — tokens and components. Generated from tokens.json. Light and dark themes: data-theme on <html> or any container. */',tokens_css(T,lambda f:'fonts/'+os.path.basename(f))]
 open(f'{O}/patchbay.css','w').write('\n'.join(L)+'\n\n'+open('/home/claude/ds/project/components/bundle.css').read())
-shutil.copy('/home/claude/gen/patchbay.js',f'{O}/patchbay.js')
+shutil.copy('/home/claude/gen/patchbay.js',f'{O}/patchbay.js'); shutil.copy('/home/claude/gen/patchbay.mjs',f'{O}/patchbay.mjs')
+shutil.copy('/home/claude/gen/repo/pb-theme-boot.js',f'{O}/pb-theme-boot.js')
 C='/home/claude/ds/project/components'
 for n in sorted(os.listdir(C)):
     if not os.path.isdir(f'{C}/{n}') or n=='Cover': continue
@@ -17,12 +18,12 @@ for n in sorted(os.listdir(C)):
     for i in range(1,7): body=body.replace('{{PHOTO%d}}'%i,'../../media/photo-%d.jpg'%i).replace('{{THUMB%d}}'%i,'../../media/thumb-%d.jpg'%i)
     js=open(f'pv/{n}.js').read().strip() if os.path.exists(f'pv/{n}.js') else ''
     open(f'{O}/components/{n}/example.html','w').write(f'''<!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · {n}</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · {n}</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{{margin:0;padding:32px}}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 {body}
 {('<script>'+chr(10)+js+chr(10)+'</script>') if js else ''}
 </body></html>

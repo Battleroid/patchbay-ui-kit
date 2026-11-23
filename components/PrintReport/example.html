@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · PrintReport</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · PrintReport</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div data-tpl="print" style="display:grid;gap:12px">
   <div class="pb-toolbar pb-noprint"><button type="button" class="pb-btn" onclick="window.print()"><span class="pb-icon pb-icon--printer"></span>Print or save as PDF</button><span class="pb-note">The page below is the print layout; app chrome is hidden when printing.</span></div>
   <div class="pb-paper" data-theme="light"><article class="pb-report">

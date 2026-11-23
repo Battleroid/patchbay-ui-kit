@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · JsonViewer</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · JsonViewer</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div class="pb-json" data-json data-depth="2" data-format="json">
   <div class="pb-toolbar">
     <span class="pb-input pb-input--sm" style="width:150px"><span class="pb-icon pb-icon--search"></span><input type="search" placeholder="Find key or value" aria-label="Find key or value" data-json-search></span>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · DualRange</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · DualRange</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:24px">
   <div class="pb-field"><span style="display:flex;justify-content:space-between"><span class="pb-field__label" id="sz-l">File size</span><output class="pb-output" data-out>10 MB – 2 GB</output></span>
     <div class="pb-range2" role="group" aria-labelledby="sz-l" data-range2 data-unit="size"><input type="range" class="pb-range" min="0" max="100" value="20" aria-label="Minimum size"><input type="range" class="pb-range" min="0" max="100" value="70" aria-label="Maximum size"></div>

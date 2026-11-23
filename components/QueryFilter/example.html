@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-edge="soft" data-theme="light">
+<html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · QueryFilter</title><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · QueryFilter</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
 <style>body{margin:0;padding:32px}</style></head>
 <body class="pb">
-<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->
 <div style="display:grid;gap:12px">
 <div class="pb-qf" data-qf data-value="-status:up host:nas-*">
   <div class="pb-qf__box"><span class="pb-icon pb-icon--filter"></span><input placeholder="Filter: status:down host:nas-* latency>200" aria-label="Filter services"></div>
