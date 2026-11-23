@@ -1204,9 +1204,9 @@
   ],
   "lastChange": {
     "by": "Casey",
-    "at": "2026-11-24T03:00:00Z",
+    "at": "2026-11-24T03:20:00Z",
     "via": "Claude chat",
-    "note": "App shell header tools align with the page content; compact upload settings in two or three columns with a slim drop zone."
+    "note": "Compact upload settings: Expires, Visibility and File names on one row; Strip photo location, Password and the password field on the next."
   },
   "layout": "files",
   "libraries": [],
