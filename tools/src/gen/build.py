@@ -46,7 +46,7 @@ C={ # name: (group, height, subtitle, layout)
 
  'ThemeSwitch':('Foundations',340,'Light, dark or system; scoped or page-wide','cols'),
  'TextUtils':('Foundations',440,'Relative time, truncation, middle truncation, clamp','cols'),
- 'AppShell':('Pages',1440,'Header, sidebar nav, page header, layout, footer, skip link','rows'),
+ 'AppShell':('Pages',1452,'Header, sidebar nav, page header, layout, footer, skip link','rows'),
  'Breadcrumbs':('Layout',200,'Page trail, file path, collapsed middle','cols'),
  'ListItem':('Layout',430,'Rows with lead, text, meta and actions','cols'),
  'EmptyState':('Layout',1340,'Empty lists, no results, 404 and 500 pages','cols'),
@@ -73,7 +73,7 @@ C={ # name: (group, height, subtitle, layout)
  'Button':('Actions',200,'Primary, secondary, danger, ghost, icon, busy, disabled','cols'),
  'TextInput':('Forms',520,'Label, affix, icon, error','cols'),
  'CodeArea':('Forms',330,'Editable, syntax highlighted, line numbers','cols'),
- 'DropZone':('Forms',790,'Idle, drag-over, upload rows, upload settings','cols'),
+ 'DropZone':('Forms',1221,'Idle, drag-over, upload rows, upload settings','cols'),
  'Pill':('Indicators',170,'Filters, removable tags, pop tags','cols'),
  'Badge':('Indicators',170,'Status badges, inline status, dots, counts','cols'),
  'Card':('Layout',560,'Panel, pop band, outlined panels that recolor on hover','cols'),
