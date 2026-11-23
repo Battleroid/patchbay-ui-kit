@@ -408,3 +408,13 @@ test('tabs: roving tabindex and arrow keys select tabs', async ({ page }) => {
   expect(await changes).toBe(2);
   expect(await tabs.evaluateAll((ts) => ts.map((t) => t.tabIndex))).toEqual(Array(n - 1).fill(-1).concat([0]));
 });
+test('lightbox: members are read when it opens', async ({ page }) => {
+  await page.goto('/components/ImageViewer/example.html');
+  const gal = page.locator('[data-lightbox]').first();
+  await gal.evaluate((g) => { const li = g.querySelectorAll('li'); g.append(li[0]); li[1].remove(); });
+  await gal.locator('a[href]').last().click();
+  const lb = page.locator('dialog.pb-lightbox[open]');
+  const n = await gal.locator('a[href]').count();
+  await expect(lb.locator('.pb-lightbox__count')).toHaveText(`${n} / ${n}`);
+  await expect(lb.locator('.pb-lightbox__thumbs button')).toHaveCount(n);
+});
