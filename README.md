@@ -1,5 +1,7 @@
 # Patchbay
 
+**Demo:** [battleroid.github.io/patchbay-ui-kit](https://battleroid.github.io/patchbay-ui-kit/) (or open `demo.html` locally).
+
 ## Using these files
 
 - Link `patchbay.css` (tokens, fonts, every component). Fonts load from `fonts/` beside it; keep the two together.
@@ -11,7 +13,7 @@
 - Form sections keep their Save/Discard buttons inside the panel (see `components/Fieldset`).
 - Tokens: `tokens.json` is the source; every value is also a CSS custom property (`var(--accent)`, `var(--space-4)`, `var(--radius-md)`). Use tokens, never raw hex or px.
 - Icons: `<span class="pb-icon pb-icon--NAME"></span>` (paints in `currentColor`). Raw SVGs are in `icons/soft` and `icons/hard`.
-- `demo.html` shows every component on one page.
+- `demo.html` shows every component on one page; `index.html` opens it, so GitHub Pages serves the demo at the site root.
 - Components: ApiTokens, AppShell, Avatar, Badge, BarChart, Breadcrumbs, BulkActions, Button, ButtonGroup, Card, Chart, ChartGround, Checkbox, ChoiceCard, CodeArea, CodeInput, ColorPicker, Combobox, CommandPalette, ContextMenu, CopyField, CronBuilder, Dashboard, DataTable, DatePicker, DetailList, Diagram, Dialog, DiffViewer, Disclosure, DropZone, DualRange, EmptyState, ErrorSummary, Fieldset, FileBrowser, Flow, Gauge, Heatmap, Histogram, Icons, ImageViewer, InputTypes, JsonViewer, KeyValue, Link, ListItem, Loading, LogExplorer, LogViewer, Media, MediaPlayer, Menu, Notice, Notifications, Pagination, Pill, Popover, PrintReport, Progress, Prose, QRCode, QueryFilter, Rack, Radio, Range, Resizable, Scrollbars, Segmented, Select, SettingsPage, Shortcuts, SignIn, SiteBanner, SkipLink, Sortable, Sparkline, StatTile, StatusPage, Steps, StorageBar, Switch, Tabs, TagInput, Terminal, TextInput, TextUtils, ThemeSwitch, TimePicker, Timeline, Toast, Tooltip, TreeView, UploadQueue, VirtualList.
 
 A document-first system for small self-hosted apps: status pages, dashboards, file and media sharing, config editors. Text is set like a well-kept personal site — a comfortable serif on warm paper, mono for anything a machine would print — with a few saturated pop fills for color. It ships in two edge variants that share every color and type token: **soft** (rounded, diffuse shadows) and **hard** (square, ink borders, offset shadows), and in two themes: **light** (warm paper, the default) and **dark** (warm charcoal).
