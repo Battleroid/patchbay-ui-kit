@@ -347,3 +347,19 @@ test('bulk: foreign data-bulk markup is left alone', async ({ page }) => {
   await page.evaluate(() => { const b = document.createElement('button'); b.setAttribute('data-bulk', 'archive'); b.textContent = 'Archive'; document.body.append(b); pbInit(); });
   expect(errors).toEqual([]);
 });
+test('inbox: read events fire for every item and read-all is cancelable', async ({ page }) => {
+  await page.goto('/components/Notifications/example.html');
+  const r = await page.evaluate(async () => {
+    const w = document.querySelector('[data-inbox]'), panel = w.querySelector('.pb-inbox'), log = [];
+    pbInbox(w, { onRead: (n, was) => log.push('read:' + was) });
+    w.addEventListener('pb:readall', (e) => { log.push('readall:' + e.detail.items.length); e.preventDefault(); });
+    const f = document.createElement('form'); f.method = 'post'; f.action = '/nowhere'; const ra = panel.querySelector('[data-readall]'); ra.type = 'submit'; ra.replaceWith(f); f.append(ra);
+    let submitted = false; f.addEventListener('submit', (e) => { submitted = true; e.preventDefault(); });
+    const n = panel.querySelector('.pb-notif'); n.click(); n.click(); ra.click();
+    return { log, submitted, left: panel.querySelectorAll('.pb-notif[data-unread]').length };
+  });
+  expect(r.log.slice(0, 2)).toEqual(['read:true', 'read:false']);
+  expect(r.log[2]).toMatch(/^readall:\d+$/);
+  expect(r.submitted).toBe(false);
+  expect(r.left).toBe(0);
+});
