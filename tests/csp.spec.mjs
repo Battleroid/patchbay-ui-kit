@@ -484,3 +484,23 @@ test('tags: uncommitted text is committed on blur and on submit', async ({ page 
   });
   expect(sent).toBe('blurred,typed');
 });
+test('inbox: the bell toggles the panel with and without popovertarget', async ({ page }) => {
+  await page.goto('/components/Notifications/example.html');
+  const w = page.locator('[data-inbox]').first(), bell = w.locator('.pb-bell'), panel = w.locator('.pb-inbox');
+  const isOpen = () => panel.evaluate((p) => p.matches(':popover-open'));
+  await bell.click(); expect(await isOpen()).toBe(true);
+  await bell.click(); expect(await isOpen()).toBe(false);
+  await bell.click(); expect(await isOpen()).toBe(true);
+  await page.keyboard.press('Escape'); expect(await isOpen()).toBe(false);
+  // Native popovertarget on a fresh inbox: one toggle per click, no fight.
+  const ok = await page.evaluate(async () => {
+    const src = document.querySelector('[data-inbox]'), c = src.cloneNode(true); c.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+    const p = c.querySelector('.pb-inbox'); p.id = 'inbox-native'; c.querySelector('.pb-bell').setAttribute('popovertarget', 'inbox-native'); document.body.append(c); pbInit(c);
+    return c.querySelector('.pb-bell') ? true : false;
+  });
+  expect(ok).toBe(true);
+  const nb = page.locator('[popovertarget="inbox-native"]'), np = page.locator('#inbox-native');
+  await nb.scrollIntoViewIfNeeded();
+  await nb.click(); expect(await np.evaluate((p) => p.matches(':popover-open'))).toBe(true);
+  await nb.click(); expect(await np.evaluate((p) => p.matches(':popover-open'))).toBe(false);
+});
