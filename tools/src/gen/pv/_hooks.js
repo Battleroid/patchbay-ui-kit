@@ -1,5 +1,6 @@
 /* pbInit() hooks, bound in this order: pbHook(name, selector, behavior). Skip one with data-pb-skip="name" on an ancestor or pbInit(root, {skip:['name']}). */
 pbHook('vars','[data-vars]',pbVars);
+pbHook('progress','.pb-progress[data-value]',pbProgress);
 pbHook('datefield','.pb-datefield,.pb-daterange',pbDateField);
 pbHook('timefield','.pb-timefield',pbTimeField);
 pbHook('combo','[data-combo]',pbCombo);
@@ -7,7 +8,7 @@ pbHook('tags','[data-tags]',pbTags);
 pbHook('otp','[data-otp]',pbOtp);
 pbHook('swatches','[data-swatch-group]',pbSwatches);
 pbHook('colorfield','[data-colorfield]',pbColorField);
-pbHook('copy','[data-copy],[data-copy-text]',pbCopyField);
+pbHook('copy','[data-copy],[data-copy-text],[data-copy-value],[data-copy-target]',pbCopyField);
 pbHook('reveal','[data-reveal]',pbReveal);
 pbHook('kv','[data-kv]',pbKV);
 pbHook('range2','[data-range2]',pbDualRange);

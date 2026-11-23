@@ -28,6 +28,7 @@
     "Diagram": [[], ["i_diagram.js"]],
     "Dialog": [["_overlay.js", "_forms.js"], ["i_dialog.js"]],
     "DiffViewer": [["_hl.js"], []],
+    "DropZone": [["_forms.js"], []],
     "DualRange": [["_forms.js"], []],
     "ErrorSummary": [["_ui.js"], ["i_val.js"]],
     "EventCalendar": [["_misc.js"], ["i_evcal.js"]],
