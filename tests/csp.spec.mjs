@@ -504,3 +504,39 @@ test('inbox: the bell toggles the panel with and without popovertarget', async (
   await nb.click(); expect(await np.evaluate((p) => p.matches(':popover-open'))).toBe(true);
   await nb.click(); expect(await np.evaluate((p) => p.matches(':popover-open'))).toBe(false);
 });
+
+// xFormat "date": daily series show the UTC date only. Auckland is UTC+13, so noon UTC is 01:00 the next day there:
+// a chart that formatted in local time would read Nov 23.
+test.describe('time series: xFormat date', () => {
+  test.use({ timezoneId: 'Pacific/Auckland', locale: 'en-US' });
+  test('the tooltip heading and axis show the UTC date, no time of day', async ({ page }) => {
+    const bag = await load(page, pages[0].path);
+    await page.evaluate(() => {
+      const day = (n) => Date.UTC(2026, 10, 20 + n, 12);
+      const data = { unit: ' views', xFormat: 'date', series: [
+        { name: 'Views', c: 'var(--pb-accent)', data: [0, 1, 2, 3, 4].map((n) => [day(n), 10 + n]) },
+        { name: 'Visitors', c: 'var(--pb-ok)', data: [0, 1, 2, 3, 4].map((n) => [day(n), 3 + n]) },
+      ] };
+      const f = document.createElement('figure'); f.className = 'pb-ts'; f.setAttribute('data-ts', ''); f.setAttribute('data-vars', '--h:220px'); f.id = 'ts-date';
+      f.innerHTML = '<div class="pb-ts__head"><span class="pb-eyebrow">views per day</span></div><div class="pb-ts__plot"></div><ul class="pb-ts__legend"></ul><script type="application/json">' + JSON.stringify(data) + '<\/script>';
+      document.body.append(f); pb.pbInit(f);
+    });
+    const fig = page.locator('#ts-date');
+    await fig.scrollIntoViewIfNeeded();
+    const box = await fig.locator('svg').boundingBox();
+    // The point at 20+2 = Nov 22 sits in the middle of the plot (left pad 40, right pad 8).
+    await page.mouse.move(box.x + 40 + (box.width - 48) / 2 - 20, box.y + 60);
+    await page.mouse.move(box.x + 40 + (box.width - 48) / 2, box.y + 60);
+    const tip = fig.locator('.pb-ts__tip');
+    await expect(tip).toHaveAttribute('data-show', '');
+    await expect(tip.locator('b')).toHaveText('Nov 22, 2026');
+    await expect(tip).toContainText('Views12 views');
+    await expect(tip).not.toContainText(/\d:\d\d/);
+    // Five days across a wide plot: one tick a day, each under its point (the Nov 22 tick sits where the crosshair is).
+    const ticks = await fig.locator('text.pb-axis[y]:not([text-anchor="end"][x="34"])').evaluateAll((ns) => ns.filter((n) => /\//.test(n.textContent)).map((n) => [n.textContent, +n.getAttribute('x')]));
+    expect(ticks.map((t) => t[0])).toEqual(['11/20', '11/21', '11/22', '11/23', '11/24']);
+    const cx = +(await fig.locator('.pb-ts__cross').getAttribute('x1'));
+    expect(Math.abs(ticks[2][1] - cx)).toBeLessThan(1);
+    await settle(page, bag);
+  });
+});
