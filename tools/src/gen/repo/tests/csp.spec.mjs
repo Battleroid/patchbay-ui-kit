@@ -116,6 +116,11 @@ for (const p of pages) {
     await fig.locator('.pb-player__seek input').evaluate((r) => { r.value = 500; r.dispatchEvent(new Event('input', { bubbles: true })); r.dispatchEvent(new Event('change', { bubbles: true })); });
     await fig.locator('[data-speed]').click();
     await page.keyboard.press('Escape');
+    const audio = sec('MediaPlayer').locator('.pb-player--audio').first();
+    await audio.locator('[data-play]').click();
+    await expect.poll(() => audio.locator('audio').evaluate((m) => !m.paused)).toBe(true);
+    await audio.locator('[data-play]').click();
+    await expect.poll(() => audio.locator('audio').evaluate((m) => m.paused)).toBe(true);
 
     // Lightbox: open, zoom, next.
     const gal = sec('ImageViewer').locator('[data-lightbox]').first();
