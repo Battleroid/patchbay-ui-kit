@@ -2506,6 +2506,26 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-access__admin { margin-top: var(--space-3); padding: var(--space-3); border: var(--stroke-1) dashed var(--down); border-radius: var(--pb-r-md); background: color-mix(in srgb, var(--down-tint) 60%, transparent); }
 @media (max-width: 480px) { .pb-access > li { grid-template-columns: minmax(0, 1fr); } .pb-access > li > .pb-seg { grid-column: 1; grid-row: auto; justify-self: start; } }
 
+/* ---------- Logo and brand variants for sign-in ---------- */
+.pb-logo { display: block; width: var(--logo-size, 48px); height: var(--logo-size, 48px); flex: none; object-fit: contain; }
+.pb-logo .pb-logo__bg { rx: 12px; }
+[data-edge="hard"] .pb-logo .pb-logo__bg { rx: 0; }
+.pb-auth__brand--logo { justify-content: center; }
+.pb-auth__brand--logo .pb-logo { --logo-size: 56px; }
+.pb-auth__brand--stack { flex-direction: column; gap: var(--space-2); }
+.pb-auth__brand--stack .pb-auth__name { font: 600 21px/26px var(--font-serif); letter-spacing: -0.01em; color: var(--ink); }
+.pb-auth__brand--stack .pb-brand__host { margin-top: -6px; }
+.pb-auth__brand--inline .pb-logo { --logo-size: 36px; }
+.pb-auth__brand--inline .pb-auth__name { font: 600 21px/26px var(--font-serif); color: var(--ink); }
+.pb-auth__steps > li > .pb-auth__center { grid-column: 1 / -1; justify-self: center; text-align: center; }
+.pb-auth__steps > li > .pb-qr.pb-auth__center { margin: var(--space-2) 0 0; }
+
+.pb-auth__panel { display: grid; gap: var(--space-4); }
+.pb-auth__panel[hidden] { display: none; }
+.pb-auth__ok { width: 48px; height: 48px; color: var(--ok); background: var(--ok-tint); }
+.pb-auth__ok .pb-icon { width: 24px; height: 24px; }
+.pb-auth__card .pb-recovery { justify-items: center; }
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .pb-spin, .pb-progressbar:indeterminate { animation: none; }
