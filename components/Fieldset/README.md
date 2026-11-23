@@ -9,3 +9,4 @@ Fieldset groups a form section under a legend, and the section's actions always 
 - Server-rendered state: a `.pb-foot__status[data-state=saved|error]` from the server stays until the next input. A section that holds `[data-invalid]` starts dirty so the user can fix and resubmit.
 - Card sections (danger zone, summaries) use `.pb-card__foot` the same way.
 - Each section saves on its own. A page with one long form uses a single footer on its last section.
+- On bind a clean section disables Discard and Save even if the markup forgot to; a server-rendered `data-state="error"` (or `dirty`) leaves them enabled so the user can retry.

@@ -1218,7 +1218,7 @@ function pbSection(f){var form=f.elements?f:(f.querySelector('form')||f.closest(
    if(state==='clean')st.removeAttribute('data-state');else st.dataset.state=state;
    var ic={saved:'status-ok',error:'status-down',busy:'refresh'}[state];if(ic){var i=document.createElement('span');i.className='pb-icon pb-icon--'+ic+(state==='busy'?' pb-spin':'');st.prepend(i);}}
  function check(){if(ser()===snap)set('clean',clean);else set('dirty','Unsaved changes');}
- snap=ser();if(form.querySelector('[data-invalid]'))set('dirty','Unsaved changes');
+ snap=ser();if(form.querySelector('[data-invalid]'))set('dirty','Unsaved changes');else{var s0=st&&st.dataset.state;btns().forEach(function(b){b.disabled=s0!=='error'&&s0!=='dirty';});}
  form.addEventListener('input',check);form.addEventListener('change',check);
  form.addEventListener('reset',function(){setTimeout(function(){restore();set('clean',clean);});});
  form.addEventListener('submit',function(){set('busy','Saving…');});

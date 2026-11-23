@@ -363,3 +363,15 @@ test('inbox: read events fire for every item and read-all is cancelable', async 
   expect(r.submitted).toBe(false);
   expect(r.left).toBe(0);
 });
+test('section: Save and Discard start disabled on a clean form', async ({ page }) => {
+  await page.goto('/components/Fieldset/example.html');
+  const r = await page.evaluate(() => {
+    const f = document.createElement('form'); f.setAttribute('data-section', '');
+    f.innerHTML = '<input value="a"><div class="pb-fieldset__foot"><span class="pb-foot__status">No changes</span><button type="reset">Discard</button><button>Save</button></div>';
+    document.body.append(f); pbInit(f);
+    const before = [...f.querySelectorAll('button')].map((b) => b.disabled);
+    const i = f.querySelector('input'); i.value = 'b'; i.dispatchEvent(new Event('input', { bubbles: true }));
+    return before.concat([...f.querySelectorAll('button')].map((b) => b.disabled));
+  });
+  expect(r).toEqual([true, true, false, false]);
+});
