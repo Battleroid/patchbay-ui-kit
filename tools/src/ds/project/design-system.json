@@ -1204,9 +1204,9 @@
   ],
   "lastChange": {
     "by": "Casey",
-    "at": "2026-11-24T02:30:00Z",
+    "at": "2026-11-24T03:00:00Z",
     "via": "Claude chat",
-    "note": "Media list; drop zone upload settings; chart hover tooltips; dialog close fix; site header stacked name alignment; tighter table detail rows; file preview details no longer clip."
+    "note": "App shell header tools align with the page content; compact upload settings in two or three columns with a slim drop zone."
   },
   "layout": "files",
   "libraries": [],

@@ -38,4 +38,29 @@
       <span class="pb-drop__title">Drop files to share</span>
       <span class="pb-drop__hint">or <u>browse</u> · paste an image · up to 4 GB each</span></label>
   </div>
+  <p class="pb-eyebrow" style="margin:8px 0 0">Compact settings</p>
+  <div class="pb-dropset pb-dropset--compact" data-dropset>
+    <div class="pb-dropset__box">
+      <button type="button" class="pb-dropset__bar" aria-expanded="true" aria-controls="dz2-opts">
+        <span class="pb-icon pb-icon--chevron-right pb-dropset__chev"></span>
+        <span class="pb-dropset__summary" data-dropset-summary aria-live="polite"></span>
+        <span class="pb-dropset__change">Change</span></button>
+      <div class="pb-dropset__panel" id="dz2-opts">
+        <div class="pb-dropset__field pb-dropset__field--wide"><span class="pb-dropset__label" id="dz2-exp-l">Expires</span>
+          <div class="pb-seg" role="radiogroup" aria-labelledby="dz2-exp-l"><label><input type="radio" name="dz2-exp" value="1h" data-sum="expires {v}">1h</label><label><input type="radio" name="dz2-exp" value="1d" data-sum="expires {v}">1d</label><label><input type="radio" name="dz2-exp" value="7d" data-sum="expires {v}">7d</label><label><input type="radio" name="dz2-exp" value="30d" data-sum="expires {v}" checked>30d</label><label><input type="radio" name="dz2-exp" value="never" data-sum="never expires">never</label></div></div>
+        <label class="pb-dropset__field"><span class="pb-dropset__label">Visibility</span>
+          <span class="pb-select"><select data-sum="{v}"><option value="unlisted" selected>unlisted</option><option value="public">public</option><option value="private">private · signed-in only</option></select></span></label>
+        <div class="pb-dropset__field"><span class="pb-dropset__label" id="dz2-name-l">File names</span>
+          <div class="pb-seg" role="radiogroup" aria-labelledby="dz2-name-l"><label><input type="radio" name="dz2-name" value="random" data-sum="random name" checked>random</label><label><input type="radio" name="dz2-name" value="original" data-sum="original name">original</label></div></div>
+        <label class="pb-dropset__field pb-dropset__field--switch"><input type="checkbox" class="pb-switch" data-sum-on="password" data-sum-off="no password" data-dropset-reveal="dz2-pw"><span>Password</span></label>
+        <label class="pb-dropset__field pb-dropset__field--switch"><input type="checkbox" class="pb-switch" checked data-sum-on="" data-sum-off="keeps location"><span>Strip location</span></label>
+        <div class="pb-dropset__sub" id="dz2-pw" hidden><span class="pb-input"><span class="pb-icon pb-icon--key"></span><input type="password" placeholder="share password, at least 8 characters" aria-label="Share password" autocomplete="new-password"></span></div>
+        <div class="pb-dropset__foot"><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-dropset-reset>Reset</button><button type="button" class="pb-btn pb-btn--sm" data-dropset-default>Save as default</button></div>
+      </div>
+    </div>
+    <label class="pb-drop pb-drop--slim"><input type="file" multiple>
+      <span class="pb-icon pb-icon--upload pb-drop__icon"></span>
+      <span class="pb-drop__title">Drop files to share</span>
+      <span class="pb-drop__hint">or <u>browse</u> · up to 4 GB each</span></label>
+  </div>
 </div>
