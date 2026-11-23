@@ -748,7 +748,7 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 .pb-btngroup > .pb-btn + .pb-btn { margin-left: calc(-1 * var(--stroke-1)); }
 .pb-btngroup > .pb-btn:not(.pb-btn ~ .pb-btn) { border-radius: var(--pb-r-md) 0 0 var(--pb-r-md); }
 .pb-btngroup > .pb-btn:not(:has(~ .pb-btn)) { border-radius: 0 var(--pb-r-md) var(--pb-r-md) 0; }
-.pb-btngroup > .pb-btn:only-of-type { border-radius: var(--pb-r-md); }
+.pb-btngroup > .pb-btn:not(.pb-btn ~ .pb-btn):not(:has(~ .pb-btn)) { border-radius: var(--pb-r-md); }
 .pb-btngroup > .pb-btn:hover, .pb-btngroup > .pb-btn:focus-visible { z-index: 1; }
 .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--accent-hover); }
 [data-edge="hard"] .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--ink); }
@@ -3399,6 +3399,7 @@ Nov 22 03:00:14 restic[812]: done</pre></div>
   <div class="pb-btngroup"><button class="pb-btn pb-btn--primary"><span class="pb-icon pb-icon--upload"></span>Deploy</button><button class="pb-btn pb-btn--primary pb-btn--icon" aria-label="More deploy options"><span class="pb-icon pb-icon--chevron-down"></span></button></div>
   <div class="pb-btngroup" aria-label="Pages"><button class="pb-btn pb-btn--sm pb-btn--icon" aria-label="Previous"><span class="pb-icon pb-icon--chevron-right" style="transform:scaleX(-1)"></span></button><button class="pb-btn pb-btn--sm">1</button><button class="pb-btn pb-btn--sm" aria-current="page">2</button><button class="pb-btn pb-btn--sm">3</button><button class="pb-btn pb-btn--sm pb-btn--icon" aria-label="Next"><span class="pb-icon pb-icon--chevron-right"></span></button></div>
   <div class="pb-toolbar" style="width:100%"><span class="pb-select pb-select--sm" style="min-width:120px"><select aria-label="Host"><option>all hosts</option></select></span><button class="pb-btn pb-btn--sm"><span class="pb-icon pb-icon--filter"></span>Filter</button><span class="pb-toolbar__spacer"></span><button class="pb-btn pb-btn--sm pb-btn--icon" aria-label="More"><span class="pb-icon pb-icon--more"></span></button></div>
+  <div class="pb-btngroup" aria-label="Share" data-test="mixed"><button class="pb-btn">Copy link</button><a class="pb-btn" href="#">Open</a><button class="pb-btn">Revoke</button></div>
 </div></div></section><section class="spec" id="c-segmented"><header class="spec__meta"><h3 class="spec__name">Segmented</h3><p class="spec__note">Segmented controls are conjoined toggle buttons built from native radios or checkboxes.</p></header><div class="spec__demo"><div style="display:grid;gap:16px;justify-items:start">
   <div class="pb-seg" role="radiogroup" aria-label="Window">
     <label><input type="radio" name="win">1h</label><label><input type="radio" name="win" checked>24h</label><label><input type="radio" name="win">7d</label><label><input type="radio" name="win">30d</label></div>
