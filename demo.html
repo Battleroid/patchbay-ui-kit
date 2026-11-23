@@ -345,7 +345,8 @@ a.pb-card:focus-visible, button.pb-card:focus-visible { outline: var(--stroke-2)
 .pb-code__hl, .pb-code__input {
   margin: 0; padding: var(--space-3) var(--space-4); font: inherit; white-space: pre; tab-size: 2; letter-spacing: 0;
 }
-.pb-code__hl { color: var(--ink); pointer-events: none; }
+.pb-code__hl { color: var(--ink); user-select: text; }
+.pb-code__edit:has(> .pb-code__input) .pb-code__hl { pointer-events: none; }
 .pb-code__input {
   position: absolute; inset: 0; width: 100%; height: 100%; border: 0; outline: 0; resize: none; overflow: hidden;
   background: transparent; color: transparent; caret-color: var(--ink);
@@ -6243,7 +6244,8 @@ return src.split('\n').map(function(l){var m;
   if(/^\//.test(x))return s[1]+'<span class="tok-s">'+esc(x)+'</span>';
   return s[1]+'<span class="tok-t">'+esc(x)+'</span>';}
 }).join('\n')+'\n';}
-function pbCodeArea(c){var ta=c.querySelector('textarea'),h=c.querySelector('.pb-code__hl'),g=c.querySelector('.pb-code__gutter');if(!ta||!h)return;
+function pbCodeArea(c){var ta=c.querySelector('textarea'),h=c.querySelector('.pb-code__hl'),g=c.querySelector('.pb-code__gutter');if(!h)return;
+ if(!ta){if(c.dataset.lang==='yaml'||c.hasAttribute('data-highlight')){h.innerHTML=pbCodeHL(h.textContent);}return;}
  function up(){h.innerHTML=pbCodeHL(ta.value),pbStyled(h);if(g)g.textContent=ta.value.split('\n').map(function(_,i){return i+1}).join('\n');}
  ta.addEventListener('input',up);up();}
 /* .pb-progress[data-value="0..100"] sets --value for the bar inside; el.pbSet(v) updates it. */

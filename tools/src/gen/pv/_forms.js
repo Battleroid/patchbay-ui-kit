@@ -119,7 +119,8 @@ return src.split('\n').map(function(l){var m;
   if(/^\//.test(x))return s[1]+'<span class="tok-s">'+esc(x)+'</span>';
   return s[1]+'<span class="tok-t">'+esc(x)+'</span>';}
 }).join('\n')+'\n';}
-function pbCodeArea(c){var ta=c.querySelector('textarea'),h=c.querySelector('.pb-code__hl'),g=c.querySelector('.pb-code__gutter');if(!ta||!h)return;
+function pbCodeArea(c){var ta=c.querySelector('textarea'),h=c.querySelector('.pb-code__hl'),g=c.querySelector('.pb-code__gutter');if(!h)return;
+ if(!ta){if(c.dataset.lang==='yaml'||c.hasAttribute('data-highlight')){h.innerHTML=pbCodeHL(h.textContent);}return;}
  function up(){h.innerHTML=pbCodeHL(ta.value),pbStyled(h);if(g)g.textContent=ta.value.split('\n').map(function(_,i){return i+1}).join('\n');}
  ta.addEventListener('input',up);up();}
 /* .pb-progress[data-value="0..100"] sets --value for the bar inside; el.pbSet(v) updates it. */
