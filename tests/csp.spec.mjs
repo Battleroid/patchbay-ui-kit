@@ -310,3 +310,9 @@ test('layout: sticky navs inside the shell clear the header', async ({ page }) =
   });
   expect(top).toBe('72px');
 });
+
+test('layout: inputs in a form row line up when only one has help', async ({ page }) => {
+  await page.goto('/components/TextInput/example.html');
+  const tops = await page.locator('[data-test="formrow"] .pb-input').evaluateAll((ns) => ns.map((n) => Math.round(n.getBoundingClientRect().top)));
+  expect(tops[0]).toBe(tops[1]);
+});
