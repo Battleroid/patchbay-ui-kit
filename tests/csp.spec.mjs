@@ -418,3 +418,14 @@ test('lightbox: members are read when it opens', async ({ page }) => {
   await expect(lb.locator('.pb-lightbox__count')).toHaveText(`${n} / ${n}`);
   await expect(lb.locator('.pb-lightbox__thumbs button')).toHaveCount(n);
 });
+test('lightbox: closing does not steal focus moved elsewhere', async ({ page }) => {
+  await page.goto('/components/ImageViewer/example.html');
+  await page.evaluate(() => { const b = document.createElement('button'); b.id = 'elsewhere'; b.textContent = 'x'; document.body.append(b); });
+  await page.locator('[data-lightbox] a[href]').first().click();
+  await page.evaluate(() => { document.querySelector('dialog.pb-lightbox').close(); document.getElementById('elsewhere').focus(); });
+  await page.waitForTimeout(50);
+  await expect(page.locator('#elsewhere')).toBeFocused();
+  await page.locator('[data-lightbox] a[href]').nth(1).click();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[data-lightbox] a[href]').nth(1)).toBeFocused();
+});
