@@ -1925,6 +1925,11 @@ button.pb-item { width: 100%; font: inherit; text-align: left; background: none;
 .pb-qr[data-size="sm"] { --qr-size: 132px; }
 .pb-qr[data-size="md"] { --qr-size: 148px; }
 .pb-qr[data-size="lg"] { --qr-size: 220px; }
+/* Inside a popover or menu the popover is the frame: no card, just the white quiet zone and the caption. */
+.pb-qr.pb-qr--bare { padding: 0; gap: var(--space-1); background: none; border: 0; border-radius: 0; box-shadow: none; }
+.pb-qr--bare .pb-qr__code { padding: 8px; border-radius: var(--pb-r-sm); }
+[data-edge="hard"] .pb-qr--bare .pb-qr__code { border-radius: 0; }
+.pb-qr--bare .pb-qr__caption { margin: 0; }
 
 
 /* ---------- Log viewer ---------- */
@@ -4139,6 +4144,7 @@ services:
 </div></div></section><section class="spec" id="c-qrcode"><header class="spec__meta"><h3 class="spec__name">QR code</h3><p class="spec__note">QR codes let a phone open a share link or join a network without typing.</p></header><div class="spec__demo"><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:start">
   <figure class="pb-qr" data-qr="https://snap.lab.home/s/k7Qe2" style="margin:0"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">snap.lab.home/s/k7Qe2</figcaption><button class="pb-btn pb-btn--sm" data-copy-text="https://snap.lab.home/s/k7Qe2"><span class="pb-icon pb-icon--copy"></span><span>Copy link</span></button></figure>
   <figure class="pb-qr" data-qr="WIFI:T:WPA;S:lab-guest;P:correct-horse-battery;;" data-size="sm" style="margin:0"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">Wi-Fi · lab-guest</figcaption></figure>
+  <figure class="pb-qr pb-qr--bare" data-qr="https://snap.lab.home/s/k7Qe2" data-size="sm" style="margin:0"><div class="pb-qr__code"></div><figcaption class="pb-qr__caption">bare, for a popover</figcaption></figure>
 </div></div></section></section><section class="band" id="layout"><h2 class="band__t">Layout</h2><section class="spec" id="c-card"><header class="spec__meta"><h3 class="spec__name">Card</h3><p class="spec__note">A card is the base surface: surface, a border, radius-lg (soft) and the edge variant&#x27;s shadow.</p></header><div class="spec__demo"><div style="display:grid;gap:20px">
   <div class="pb-card">
     <div class="pb-card__head"><h3 class="pb-card__title">Snapshot schedule</h3><span class="pb-eyebrow">nightly</span></div>

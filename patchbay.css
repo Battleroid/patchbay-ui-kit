@@ -1914,6 +1914,11 @@ button.pb-item { width: 100%; font: inherit; text-align: left; background: none;
 .pb-qr[data-size="sm"] { --qr-size: 132px; }
 .pb-qr[data-size="md"] { --qr-size: 148px; }
 .pb-qr[data-size="lg"] { --qr-size: 220px; }
+/* Inside a popover or menu the popover is the frame: no card, just the white quiet zone and the caption. */
+.pb-qr.pb-qr--bare { padding: 0; gap: var(--space-1); background: none; border: 0; border-radius: 0; box-shadow: none; }
+.pb-qr--bare .pb-qr__code { padding: 8px; border-radius: var(--pb-r-sm); }
+[data-edge="hard"] .pb-qr--bare .pb-qr__code { border-radius: 0; }
+.pb-qr--bare .pb-qr__caption { margin: 0; }
 
 
 /* ---------- Log viewer ---------- */
