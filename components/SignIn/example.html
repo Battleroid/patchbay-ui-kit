@@ -814,7 +814,7 @@ function pbJSON(el){var data=pbJSONData(el),body=el.querySelector('.pb-json__bod
   if(sr)sr.addEventListener('input',filter);
   el.pbYaml=function(){return toYaml(data);};render();}
 /* Bulk bar: scope [data-bulk] holds row checkboxes (.pb-check[data-row]), an optional [data-all] and the .pb-bulkbar. Fires bulk {action, items}. */
-function pbBulk(scope){var bar=scope.querySelector('.pb-bulkbar'),cnt=bar.querySelector('[data-bulk-count]'),all=scope.querySelector('[data-all]');
+function pbBulk(scope){var bar=scope.querySelector('.pb-bulkbar');if(!bar)return;var cnt=bar.querySelector('[data-bulk-count]'),all=scope.querySelector('[data-all]');
   function boxes(){return Array.from(scope.querySelectorAll('.pb-check[data-row]')).filter(function(b){return !b.closest('[hidden]')});}
   function sync(){var B=boxes(),n=B.filter(function(b){return b.checked}).length;B.forEach(function(b){var r=b.closest('tr,.pb-item,li');if(r)r.setAttribute('aria-selected',b.checked);});if(all){all.checked=n&&n===B.length;all.indeterminate=n>0&&n<B.length;}bar.hidden=!n;if(cnt)cnt.textContent=n+' selected';}
   scope.addEventListener('change',function(e){if(e.target===all){boxes().forEach(function(b){b.checked=all.checked});}if(e.target.matches('.pb-check'))sync();});
@@ -1264,7 +1264,7 @@ function pbSection(f){var form=f.elements?f:(f.querySelector('form')||f.closest(
  form.addEventListener('pb:error',function(e){set('error',(e.detail&&e.detail.message)||'Could not save');});
  f.pbSnapshot=function(){snap=ser();check();};}
 function pbDialogOpen(b){b.addEventListener('click',function(){document.getElementById(b.dataset.open).showModal();});}
-function pbTableBasic(t){var body=t.tBodies[0];if(!body||t.closest('[data-dt],[data-bulk]'))return;var wrap=t.closest('.pb-tablewrap'),all=t.querySelector('[data-all]'),rows=[].slice.call(body.rows),out=wrap&&wrap.querySelector('[data-selcount]');
+function pbTableBasic(t){var body=t.tBodies[0];if(!body||t.closest('[data-dt],[data-bulk]:has(.pb-bulkbar)'))return;var wrap=t.closest('.pb-tablewrap'),all=t.querySelector('[data-all]'),rows=[].slice.call(body.rows),out=wrap&&wrap.querySelector('[data-selcount]');
  function chk(r){return r.querySelector('.pb-check');}
  function sync(){var n=0;rows.forEach(function(r){var c=chk(r);if(!c)return;r.setAttribute('aria-selected',c.checked);if(c.checked)n++;});all.checked=n===rows.length;all.indeterminate=n>0&&n<rows.length;out.textContent=n?n+' selected':'';}
  var sel=all&&out;if(sel){rows.forEach(function(r){var c=chk(r);if(c)c.addEventListener('change',sync);});all.addEventListener('change',function(){rows.forEach(function(r){var c=chk(r);if(c)c.checked=all.checked});sync();});}
@@ -1365,7 +1365,7 @@ pbHook('donut','[data-donut]',pbDonut);
 pbHook('bars','[data-bars]',pbBars);
 pbHook('hist','[data-hist]',pbHist);
 pbHook('json','[data-json]',pbJSON);
-pbHook('bulk','[data-bulk]',pbBulk);
+pbHook('bulk','[data-bulk]:has(.pb-bulkbar)',pbBulk);
 pbHook('qf','[data-qf]',pbQuery);
 pbHook('sortable','[data-sortable]',pbSortable);
 pbHook('keys','dialog.pb-keys',pbShortcuts);

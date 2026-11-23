@@ -1,5 +1,5 @@
 /* Bulk bar: scope [data-bulk] holds row checkboxes (.pb-check[data-row]), an optional [data-all] and the .pb-bulkbar. Fires bulk {action, items}. */
-function pbBulk(scope){var bar=scope.querySelector('.pb-bulkbar'),cnt=bar.querySelector('[data-bulk-count]'),all=scope.querySelector('[data-all]');
+function pbBulk(scope){var bar=scope.querySelector('.pb-bulkbar');if(!bar)return;var cnt=bar.querySelector('[data-bulk-count]'),all=scope.querySelector('[data-all]');
   function boxes(){return Array.from(scope.querySelectorAll('.pb-check[data-row]')).filter(function(b){return !b.closest('[hidden]')});}
   function sync(){var B=boxes(),n=B.filter(function(b){return b.checked}).length;B.forEach(function(b){var r=b.closest('tr,.pb-item,li');if(r)r.setAttribute('aria-selected',b.checked);});if(all){all.checked=n&&n===B.length;all.indeterminate=n>0&&n<B.length;}bar.hidden=!n;if(cnt)cnt.textContent=n+' selected';}
   scope.addEventListener('change',function(e){if(e.target===all){boxes().forEach(function(b){b.checked=all.checked});}if(e.target.matches('.pb-check'))sync();});

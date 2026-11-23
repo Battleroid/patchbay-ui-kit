@@ -341,3 +341,9 @@ test('tags: a hidden field carries the tags and pbSet replaces them', async ({ p
   await box.locator('.pb-tag button').first().click();
   expect(await page.evaluate(() => new FormData(document.querySelector('[data-test="tags-form"]')).get('labels'))).toBe('y,z');
 });
+test('bulk: foreign data-bulk markup is left alone', async ({ page }) => {
+  const errors = []; page.on('pageerror', (e) => errors.push(String(e))); page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+  await page.goto('/components/BulkActions/example.html');
+  await page.evaluate(() => { const b = document.createElement('button'); b.setAttribute('data-bulk', 'archive'); b.textContent = 'Archive'; document.body.append(b); pbInit(); });
+  expect(errors).toEqual([]);
+});

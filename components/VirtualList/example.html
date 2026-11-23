@@ -42,7 +42,7 @@ function pbInit(root,opts){root=root||document;opts=opts||{};
   return root;}
 pbInit.hooks=[];
 /* Bulk bar: scope [data-bulk] holds row checkboxes (.pb-check[data-row]), an optional [data-all] and the .pb-bulkbar. Fires bulk {action, items}. */
-function pbBulk(scope){var bar=scope.querySelector('.pb-bulkbar'),cnt=bar.querySelector('[data-bulk-count]'),all=scope.querySelector('[data-all]');
+function pbBulk(scope){var bar=scope.querySelector('.pb-bulkbar');if(!bar)return;var cnt=bar.querySelector('[data-bulk-count]'),all=scope.querySelector('[data-all]');
   function boxes(){return Array.from(scope.querySelectorAll('.pb-check[data-row]')).filter(function(b){return !b.closest('[hidden]')});}
   function sync(){var B=boxes(),n=B.filter(function(b){return b.checked}).length;B.forEach(function(b){var r=b.closest('tr,.pb-item,li');if(r)r.setAttribute('aria-selected',b.checked);});if(all){all.checked=n&&n===B.length;all.indeterminate=n>0&&n<B.length;}bar.hidden=!n;if(cnt)cnt.textContent=n+' selected';}
   scope.addEventListener('change',function(e){if(e.target===all){boxes().forEach(function(b){b.checked=all.checked});}if(e.target.matches('.pb-check'))sync();});
@@ -166,7 +166,7 @@ function pbSectionNav(nav){var links=Array.from(nav.querySelectorAll('a[href^="#
   links.forEach(function(a){a.addEventListener('click',function(e){var t=document.getElementById(a.getAttribute('href').slice(1));if(!t)return;e.preventDefault();lock=Date.now()+1000;t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});set(t.id);var f=t.querySelector('h2');if(f){f.tabIndex=-1;f.focus({preventScroll:true});}});});pick();}
 /* pbInit() hooks, bound in this order: pbHook(name, selector, behavior). Skip one with data-pb-skip="name" on an ancestor or pbInit(root, {skip:['name']}). */
 pbHook('vars','[data-vars]',pbVars);
-pbHook('bulk','[data-bulk]',pbBulk);
+pbHook('bulk','[data-bulk]:has(.pb-bulkbar)',pbBulk);
 pbHook('qf','[data-qf]',pbQuery);
 pbHook('sortable','[data-sortable]',pbSortable);
 pbHook('keys','dialog.pb-keys',pbShortcuts);

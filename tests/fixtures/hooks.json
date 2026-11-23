@@ -69,7 +69,7 @@
  "bars": "[data-bars]",
  "hist": "[data-hist]",
  "json": "[data-json]",
- "bulk": "[data-bulk]",
+ "bulk": "[data-bulk]:has(.pb-bulkbar)",
  "qf": "[data-qf]",
  "sortable": "[data-sortable]",
  "keys": "dialog.pb-keys",

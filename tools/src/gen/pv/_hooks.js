@@ -69,7 +69,7 @@ pbHook('donut','[data-donut]',pbDonut);
 pbHook('bars','[data-bars]',pbBars);
 pbHook('hist','[data-hist]',pbHist);
 pbHook('json','[data-json]',pbJSON);
-pbHook('bulk','[data-bulk]',pbBulk);
+pbHook('bulk','[data-bulk]:has(.pb-bulkbar)',pbBulk);
 pbHook('qf','[data-qf]',pbQuery);
 pbHook('sortable','[data-sortable]',pbSortable);
 pbHook('keys','dialog.pb-keys',pbShortcuts);
