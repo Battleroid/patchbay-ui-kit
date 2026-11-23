@@ -2,14 +2,19 @@
 
 **Demo:** [battleroid.github.io/patchbay-ui-kit](https://battleroid.github.io/patchbay-ui-kit/) (or open `demo.html` locally).
 
-## Using these files
+## Setup
 
-- Link `patchbay.css` (tokens, fonts, every component). Fonts load from `fonts/` beside it; keep the two together.
-- Put `class="pb"` on the app root, `data-edge="soft"` or `data-edge="hard"` on `<html>`, and `data-theme="light"` or `data-theme="dark"` (a theme switch can set it; see `components/ThemeSwitch`).
+- **CSS:** link `patchbay.css` (tokens, fonts, every component). Fonts load from `fonts/` beside it; keep the two together. There is no `tokens.css` or `components/bundle.css` any more; it is all in `patchbay.css`.
+- **Theme without a flash:** put `<script src="pb-theme-boot.js"></script>` in `<head>` before the stylesheet (a plain blocking script, not `defer` or a module). It applies the saved choice (`localStorage` `pb-theme`: `light`, `dark` or `system`), else `<html data-theme-default="light">`, else the system setting, as `data-theme` and `data-theme-choice` on `<html>`.
+- **Root:** `class="pb"` on the app root (the body margin is reset there), `data-edge="soft"` or `data-edge="hard"` on `<html>`.
+- **Behaviors, classic script:** `<script src="patchbay.js" data-pb-auto></script>` at the end of `<body>` runs `pbInit()` on DOMContentLoaded. Without `data-pb-auto` nothing runs until you call `pbInit()`.
+- **Behaviors, ES module:** `import pbInit, { pbToast, pbConfirm } from './patchbay.mjs'; pbInit();`. Exports: `pbInit` (also the default), `pbConfirm`, `pbToast`, `pbInbox`, `pbTheme`, `pbPlace`, `pbCalendar`, `pbClock`, `pbQRSvg`, `pbQRCode`, `pbVirtual`, `pbAnsi`, `pbCronParse`, `pbSection`, `pbHook`, `pbEsc`, `pbStyled`.
+- **`pbInit(root = document, {only, skip} = {})`** binds every hook under `root` (and `root` itself) once per element, so it is safe to call again after an htmx swap or for markup you insert: `pbInit(el)`. `only` and `skip` take hook names; `data-pb-skip="name other"` on an ancestor skips those hooks below it. One element that throws logs `[patchbay] name` and the rest still bind. `pbInit.hooks` lists the names in order: `vars`, `progress`, `datefield`, `timefield`, `combo`, `tags`, `otp`, `swatches`, `colorfield`, `copy`, `reveal`, `kv`, `range2`, `toggle`, `indeterminate`, `count`, `stepper`, `colortext`, `strength`, `range`, `tabs`, `section`, `dialog`, `inbox`, `table`, `player`, `codearea`, `shell`, `sitehead`, `trange`, `refresh`, `ts`, `share`, `fpreview`, `dt`, `evcal`, `md`, `thread`, `notify`, `sheet`, `session`, `themeswitch`, `popover`, `hovercard`, `tree`, `cmd`, `contextmenu`, `lightbox`, `avatar`, `pager`, `validate`, `reltime`, `midtrunc`, `clamp`, `qr`, `split`, `log`, `logx`, `diff`, `files`, `term`, `cron`, `storage`, `rack`, `heat`, `dial`, `donut`, `bars`, `hist`, `json`, `bulk`, `qf`, `sortable`, `keys`, `upq`, `sectionnav`, `dismiss`. Register your own with `pbHook(name, selector, fn)` before calling `pbInit()`.
+- **Strict CSP, no inline style needed:** the kit runs under `default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'` (add `media-src 'self' blob:` for the media player and its captions). It never uses `eval`, `new Function`, inline handlers or `style` attributes. Markup it builds as a string carries styles in `data-style`, which `pbStyled(container)` moves into the CSSOM right after insertion; call it after inserting your own strings too. In your markup, set custom properties with `data-vars="--w:42%;--c:var(--chart-2)"` (names `--a-z0-9`, values without `;`, `url(` or `expression`), and use the attribute forms for layout: `.pb-dash > [data-span="1..12"]`, `.pb-steps[data-n]`, `.pb-tabbar[data-n]`, `.pb-qr[data-size=sm|md|lg]`, `.pb-auth--inline`, `.pb-progress[data-value]`. `tests/fixtures/csp.html` is every component under that policy.
+- **Script helpers:** `pbToast({title, body, bodyHTML, …})` and `pbConfirm({title, body, bodyHTML, typeToConfirm, …})` treat `body` as text and escape it; `bodyHTML` is the explicit opt-in for markup you trust; a DOM Node as `body` is appended. `pbEsc(s)` escapes `& < > " '`.
 - Start every app from `components/AppShell` (header, nav, page header, footer, skip link).
 - Before building a part, read `components/<Name>/README.md` for its markup and rules, and copy the markup from `components/<Name>/example.html`.
-- Behaviors (date and time pickers, combobox, tags, code input, color, copy, key/value, dual range, counters, password strength, toggles, tabs, menus, dialogs, table selection and sort, form section save state, app shell drawer, theme switch, popovers and hover cards, tree view, ⌘K command palette, context menus, image viewer, avatars, pagination, error summary, relative time, middle truncation, QR codes, resizable panels): load `patchbay.js` at the end of `<body>` and call `pbInit()` once, or `pbInit(el)` for markup added later. Each component's README names the markup hooks (`data-cal`, `data-clock`, `data-combo`, `data-tags`, `data-otp`, `data-copy`, `data-kv`, …).
-- `components/<Name>/example.html` files are self-contained: each carries its own copy of the script it needs.
+- Each component's README names its markup hooks (`data-cal`, `data-clock`, `data-combo`, `data-tags`, `data-otp`, `data-copy`, `data-kv`, …). `components/<Name>/example.html` files are self-contained: each carries its own copy of the script it needs, built from the same sources as `patchbay.js`, plus example-only glue (fake saves, sample data).
 - Form sections keep their Save/Discard buttons inside the panel (see `components/Fieldset`).
 - Tokens: `tokens.json` is the source; every value is also a CSS custom property (`var(--accent)`, `var(--space-4)`, `var(--radius-md)`). Use tokens, never raw hex or px.
 - Icons: `<span class="pb-icon pb-icon--NAME"></span>` (paints in `currentColor`). Raw SVGs are in `icons/soft` and `icons/hard`.
@@ -24,9 +29,10 @@ A document-first system for small self-hosted apps: status pages, dashboards, fi
 
 ## Setup
 
-- Load `tokens.css`, then `components/bundle.css`. Put `class="pb"` on the app root.
+- Load `patchbay.css` (tokens, fonts and every component) and, in `<head>`, `pb-theme-boot.js`. Put `class="pb"` on the app root.
+- Behaviors come from `patchbay.js` (classic script; add `data-pb-auto` to run `pbInit()` on DOMContentLoaded) or `patchbay.mjs` (ES module; `import pbInit from './patchbay.mjs'`). Both need no inline script or style, so they work under `script-src 'self'; style-src 'self'`.
 - Pick a variant with `data-edge="soft"` (default) or `data-edge="hard"` on `<html>` or any container. Use one variant per app; do not mix them on a page.
-- Pick a theme with `data-theme="light"` or `data-theme="dark"` on `<html>` (whole app) or any container (one panel). Default to the system setting with a ThemeSwitch in the header tools; see ThemeSwitch for the no-flash snippet.
+- Pick a theme with `data-theme="light"` or `data-theme="dark"` on `<html>` (whole app) or any container (one panel). Default to the system setting with a ThemeSwitch in the header tools; `pb-theme-boot.js` in `<head>` applies the saved choice before the CSS paints (see ThemeSwitch).
 - Start every app from AppShell: skip link, header (brand, ⌘K search, tools), side nav, page header, main, footer.
 - Components are CSS only. Class prefix is `pb-`. Previews show both variants side by side.
 - Dense views (log tables, admin lists) set `data-density="compact"` on `<html>` or a container: 28px controls, tighter rows and cards. See Density.

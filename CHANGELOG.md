@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-24
+- Strict CSP: the kit runs under `default-src 'none'; script-src 'self'; style-src 'self'` (plus `media-src` for media). Script-built markup carries `data-style`, applied by `pbStyled()`; markup sets custom properties with `data-vars` and attribute forms (`data-span`, `data-n`, `data-size`, `pb-auth--inline`, `.pb-progress[data-value]`). No `eval`, `new Function`, inline handlers or style attributes.
+- `patchbay.mjs` (ES module with named exports and `pbInit` as the default) beside `patchbay.js`; `pb-theme-boot.js` replaces the inline no-flash theme snippet.
+- `pbInit(root, {only, skip})` is idempotent: hooks are registered with `pbHook(name, selector, fn)`, each element binds once, `data-pb-skip` opts out, one failing element no longer stops the rest. `patchbay.js` runs it on DOMContentLoaded only with `data-pb-auto`.
+- Form sections track real dirty state against a snapshot, show busy while saving, and settle on `pb:saved` / `pb:error`; Discard restores the snapshot and no longer disables reveal buttons.
+- `pbToast` and `pbConfirm` escape `body`; `bodyHTML` is the opt-in for markup, and a Node can be passed. Confirm dialogs are labelled and described. `pbInbox(el, {unread, lazy, onOpen, onRead, onReadAll})`.
+- Tabs fire `pb:tabchange` and leave link tabs alone; steppers fire `input`; copy buttons take `data-copy-value` and `data-copy-target`; tables skip `[data-dt]` and `[data-bulk]`; menus take `data-align="end"` on the trigger; new `progress`, `vars`, `codearea` and `indeterminate` hooks.
+- Popovers, date and time pickers, colour fields, the inbox, context menus, the shell and the site header share one capturing document listener per event type (`pbOnDoc`) and one placement function (`pbPlace`).
+- One `pbEsc` escapes `& < > " '` everywhere. Component scripts are generated from the shared sources (`tools/src/gen/scripts.json`), so the copies in examples cannot drift.
+- Breaking: raw HTML passed as `body` to `pbToast` or `pbConfirm` is now shown as text; pass it as `bodyHTML`. `pbInbox`, `pbPopovers` and `pbRelTime` bind through `pbInit`, so calling them twice no longer doubles listeners.
+
 ## 2026-11-23
 - Time range and auto-refresh pickers; zoomable time-series chart with crosshair and legend toggles.
 - Share dialog, file preview pane, table tools (columns, resize, density, expandable rows, inline edit, CSV, sticky column).
