@@ -413,3 +413,14 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 /* ---------- Icon set (generated) ---------- */
 /* The kit resets the page margin on the app root so shells and headers sit flush. */
 body.pb { margin: 0; }
+/* Hued tags: user-defined labels only (never status), hue picked by the app from a stable hash of the tag name. */
+.pb-pill[data-hue] { height: 22px; padding: 0 var(--space-2); color: var(--ink); background: color-mix(in srgb, var(--pb-hue) 22%, var(--surface)); border-color: color-mix(in srgb, var(--pb-hue) 40%, var(--surface)); }
+.pb-pill[data-hue="1"] { --pb-hue: var(--chart-1); }
+.pb-pill[data-hue="2"] { --pb-hue: var(--chart-2); }
+.pb-pill[data-hue="3"] { --pb-hue: var(--chart-4); }
+.pb-pill[data-hue="4"] { --pb-hue: var(--pop-mint); }
+.pb-pill[data-hue="5"] { --pb-hue: var(--pop-yellow); }
+.pb-pill[data-hue="6"] { --pb-hue: var(--pop-red); }
+[data-edge="hard"] .pb-pill[data-hue] { border-color: var(--ink); }
+/* Pills inline with text (table cells, tiles) sit on the text's middle, not its baseline. */
+td .pb-pill, .pb-tile .pb-pill, p .pb-pill { vertical-align: middle; line-height: 16px; }
