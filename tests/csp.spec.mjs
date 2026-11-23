@@ -437,3 +437,12 @@ test('lightbox: modifier clicks keep the link behavior', async ({ page }) => {
   });
   expect(r).toEqual([false, false]);
 });
+test('player: duration shows --:-- or data-duration until metadata loads', async ({ page }) => {
+  await page.goto('/components/MediaPlayer/example.html');
+  const r = await page.evaluate(() => {
+    const mk = (attr) => { const f = document.createElement('figure'); f.className = 'pb-player'; f.setAttribute('data-player', ''); if (attr) f.dataset.duration = attr;
+      f.innerHTML = '<video preload="none" src="../../media/sample.mp4"></video>'; document.body.append(f); pbInit(f); return f.querySelector('[data-dur]').textContent; };
+    return [mk(), mk('252'), mk('4:12')];
+  });
+  expect(r).toEqual(['--:--', '4:12', '4:12']);
+});

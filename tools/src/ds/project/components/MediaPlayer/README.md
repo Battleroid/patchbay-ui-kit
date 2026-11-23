@@ -7,3 +7,4 @@ MediaPlayer wraps a plain `<video>` or `<audio>` in kit controls: play and pause
 - Seek colors: played in `accent` (docked) or `pop-mint` (overlay), buffered in `line-strong`, the rest `surface-sunk`.
 - Always give the figure an `aria-label` naming the file. Offer a Download button next to the player for shared files.
 - Video height is capped at `--pb-player-max-h` (default `80vh`); set it on the figure or a container, e.g. `data-vars="--pb-player-max-h:60vh"`.
+- Until the media's duration is known (for example with `preload="none"`) the time reads `--:--`; give the figure `data-duration="252"` (seconds) or `data-duration="4:12"` to show the real length up front.
