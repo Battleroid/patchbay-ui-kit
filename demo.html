@@ -2592,6 +2592,11 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-dash > [data-span="11"] { --span: 11; }
 .pb-dash > [data-span="12"] { --span: 12; }
 .pb-auth--inline { --auth-h: auto; padding: 0; background: none; }
+/* Bare tiles: the item is only a drag wrapper around your own media tile; the handle floats on its corner. */
+.pb-sortable--tiles { grid-template-columns: repeat(auto-fill, minmax(var(--tile-min, 160px), 1fr)); gap: var(--space-3); }
+.pb-sortable--tiles .pb-sort__item { position: relative; display: block; min-height: 0; padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; touch-action: none; }
+.pb-sortable--tiles .pb-sort__handle { position: absolute; top: 6px; right: 6px; z-index: 1; background: color-mix(in srgb, var(--surface) 88%, transparent); border-radius: var(--pb-r-sm); }
+[data-edge="hard"] .pb-sortable--tiles .pb-sort__handle { border-radius: 0; box-shadow: inset 0 0 0 1px var(--ink); }
 
 
 /* ---------- Time range picker ---------- */
