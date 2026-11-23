@@ -395,7 +395,7 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 .pb-node[data-role="core"] { background: var(--accent); border-color: var(--accent); }
 .pb-node[data-role="core"] > .pb-icon, .pb-node[data-role="core"] .pb-node__name, .pb-node[data-role="core"] .pb-node__host { color: var(--on-accent); }
 [data-edge="hard"] .pb-node[data-role="core"] { border-color: var(--ink); }
-.pb-node[data-role="edge"] .pb-node__host { color: var(--on-pop); }
+.pb-node[data-role="edge"] .pb-node__host, .pb-node[data-role="edge"] .pb-node__name, .pb-node[data-role="edge"] > .pb-icon { color: var(--on-pop); }
 .pb-node[data-status="down"] { border-color: var(--down); box-shadow: inset 0 0 0 1px var(--down), var(--pb-shadow-sm); }
 .pb-node .pb-dot { margin-left: var(--space-1); }
 .pb-dot { display: inline-block; width: 8px; height: 8px; border-radius: var(--pb-r-pill); background: var(--unknown); flex: none; }

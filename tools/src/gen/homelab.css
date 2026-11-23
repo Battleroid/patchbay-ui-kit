@@ -10,7 +10,7 @@
 .pb-log__line[data-level="info"] .pb-log__lvl { color: var(--info); }
 .pb-log__line[data-level="warn"] .pb-log__lvl { color: var(--warn); }
 .pb-log__line[data-level="error"] { background: color-mix(in srgb, var(--down) 8%, transparent); }
-.pb-log__line[data-level="error"] .pb-log__lvl { color: var(--down); }
+.pb-log__line[data-level="error"] .pb-log__lvl { color: color-mix(in srgb, var(--down) 82%, var(--ink)); }
 .pb-log__line[data-level="debug"] .pb-log__msg { color: var(--ink-muted); }
 .pb-log__msg mark { background: var(--mark); color: var(--ink); border-radius: 2px; }
 .pb-log__src { color: var(--syn-function); }

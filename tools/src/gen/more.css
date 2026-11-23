@@ -280,7 +280,8 @@
 .pb-comment__acts button { padding: 0; font: 500 12px/18px var(--font-mono); color: var(--ink-muted); background: none; border: 0; cursor: pointer; }
 .pb-comment__acts button:hover { color: var(--accent); text-decoration: underline; }
 .pb-comment__replies { grid-column: 2; display: grid; gap: var(--space-3); margin: var(--space-3) 0 0; padding: 0 0 0 var(--space-3); list-style: none; border-left: 2px solid var(--line); }
-.pb-comment[data-resolved] > :not(.pb-avatar):not(.pb-comment__head) { opacity: 0.55; }
+/* Resolved comments recede by colour, not opacity, so the text keeps its contrast. */
+.pb-comment[data-resolved] .pb-comment__body, .pb-comment[data-resolved] .pb-comment__acts, .pb-comment[data-resolved] .pb-comment__acts button { color: var(--ink-muted); }
 .pb-comment__chip { padding: 0 6px; font: 500 11px/18px var(--font-mono); color: var(--ok); background: var(--ok-tint); border-radius: 3px; }
 .pb-composer { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--space-3); }
 .pb-composer__box { display: grid; gap: 6px; }
