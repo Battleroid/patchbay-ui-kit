@@ -266,7 +266,7 @@
 
 /* ---------- Settings page ---------- */
 .pb-settings { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--space-8); align-items: start; }
-.pb-settings__nav { position: sticky; top: var(--space-4); display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.pb-settings__nav { position: sticky; top: calc(var(--pb-head-h, 0px) + var(--space-4)); max-height: calc(100dvh - var(--pb-head-h, 0px) - var(--space-8)); overflow-y: auto; display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
 .pb-settings__nav a { display: flex; align-items: center; gap: var(--space-2); padding: 6px var(--space-3); font: 400 15px/20px var(--font-serif); color: var(--ink-muted); text-decoration: none; border-radius: var(--pb-r-md); }
 .pb-settings__nav a:hover { color: var(--ink); background: var(--surface-sunk); }
 .pb-settings__nav a[aria-current="true"] { color: var(--accent); background: var(--accent-tint); font-weight: 600; }
@@ -388,3 +388,23 @@
 .pb-auth__ok { width: 48px; height: 48px; color: var(--ok); background: var(--ok-tint); }
 .pb-auth__ok .pb-icon { width: 24px; height: 24px; }
 .pb-auth__card .pb-recovery { justify-items: center; }
+
+/* Markup-level sizing without inline styles (strict CSP): data-span on dashboard children, the inline sign-in variant. */
+.pb-dash > [data-span="1"] { --span: 1; }
+.pb-dash > [data-span="2"] { --span: 2; }
+.pb-dash > [data-span="3"] { --span: 3; }
+.pb-dash > [data-span="4"] { --span: 4; }
+.pb-dash > [data-span="5"] { --span: 5; }
+.pb-dash > [data-span="6"] { --span: 6; }
+.pb-dash > [data-span="7"] { --span: 7; }
+.pb-dash > [data-span="8"] { --span: 8; }
+.pb-dash > [data-span="9"] { --span: 9; }
+.pb-dash > [data-span="10"] { --span: 10; }
+.pb-dash > [data-span="11"] { --span: 11; }
+.pb-dash > [data-span="12"] { --span: 12; }
+.pb-auth--inline { --auth-h: auto; padding: 0; background: none; }
+/* Bare tiles: the item is only a drag wrapper around your own media tile; the handle floats on its corner. */
+.pb-sortable--tiles { grid-template-columns: repeat(auto-fill, minmax(var(--tile-min, 160px), 1fr)); gap: var(--space-3); }
+.pb-sortable--tiles .pb-sort__item { position: relative; display: block; min-height: 0; padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
+.pb-sortable--tiles .pb-sort__handle { touch-action: none; position: absolute; top: 6px; right: 6px; z-index: 1; background: color-mix(in srgb, var(--surface) 88%, transparent); border-radius: var(--pb-r-sm); }
+[data-edge="hard"] .pb-sortable--tiles .pb-sort__handle { border-radius: 0; box-shadow: inset 0 0 0 1px var(--ink); }

@@ -49,3 +49,4 @@ function pbQR(text){
 function pbQRSvg(text,quiet){var q=pbQR(text),z=quiet==null?0:quiet,n=q.size+2*z,d='';
   for(var r=0;r<q.size;r++)for(var c=0;c<q.size;c++)if(q.dark(r,c))d+='M'+(c+z)+' '+(r+z)+'h1v1h-1z';
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+n+' '+n+'" shape-rendering="crispEdges" role="img" aria-label="QR code"><path fill="#17150f" d="'+d+'"/></svg>';}
+function pbQRCode(el){var t=el.dataset.qr,box=el.querySelector('.pb-qr__code');try{box.innerHTML=pbQRSvg(t);box.firstChild.setAttribute('aria-label','QR code for '+t);}catch(e){box.textContent='Too long for a QR code';}}

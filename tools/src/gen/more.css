@@ -109,9 +109,10 @@
   .pb-sitehead__search { width: auto; padding: 0 var(--space-2); }
   .pb-sitehead__search > :not(.pb-icon) { display: none; }
 }
-@container pbsite (max-width: 880px) { .pb-sitehead__actions > .pb-themeswitch { display: none; } }
+@container pbsite (max-width: 480px) { .pb-sitehead__brand { flex: 0 1 auto; min-width: 0; overflow: hidden; } .pb-sitehead__brand small { display: none; } }
 @container pbsite (max-width: 760px) {
   .pb-sitehead__bar > .pb-sitenav, .pb-sitehead__actions > :not(.pb-sitehead__toggle):not(.pb-sitehead__keep) { display: none; }
+  .pb-sitehead:not(:has(.pb-sitehead__mobile [data-theme-switch])) .pb-sitehead__actions > .pb-themeswitch { display: inline-flex; }
   .pb-sitehead__toggle { display: inline-flex; }
   .pb-sitehead__bar { padding: 0 var(--space-4); }
   .pb-sitehead--center .pb-sitehead__bar { grid-template-columns: auto 1fr auto; }
@@ -279,7 +280,8 @@
 .pb-comment__acts button { padding: 0; font: 500 12px/18px var(--font-mono); color: var(--ink-muted); background: none; border: 0; cursor: pointer; }
 .pb-comment__acts button:hover { color: var(--accent); text-decoration: underline; }
 .pb-comment__replies { grid-column: 2; display: grid; gap: var(--space-3); margin: var(--space-3) 0 0; padding: 0 0 0 var(--space-3); list-style: none; border-left: 2px solid var(--line); }
-.pb-comment[data-resolved] > :not(.pb-avatar):not(.pb-comment__head) { opacity: 0.55; }
+/* Resolved comments recede by colour, not opacity, so the text keeps its contrast. */
+.pb-comment[data-resolved] .pb-comment__body, .pb-comment[data-resolved] .pb-comment__acts, .pb-comment[data-resolved] .pb-comment__acts button { color: var(--ink-muted); }
 .pb-comment__chip { padding: 0 6px; font: 500 11px/18px var(--font-mono); color: var(--ok); background: var(--ok-tint); border-radius: 3px; }
 .pb-composer { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--space-3); }
 .pb-composer__box { display: grid; gap: 6px; }
@@ -368,3 +370,22 @@
   .pb-term, .pb-player, .pb-lightbox, .pb-tile--ink, .pb-chart--ink, .pb-bulkbar { forced-color-adjust: auto; }
 }
 @media (forced-colors: active) { .pb-legend i, .pb-storage__legend i, .pb-donut__legend i, .pb-ts__legend i, .pb-evcal__legend i, .pb-bars__tr i, .pb-logx__lv i { forced-color-adjust: none; } }
+
+/* ---------- Classes that stand in for inline styles in script-built markup (strict CSP) ---------- */
+.pb-field__label .pb-code-inline--plain { text-transform: none; letter-spacing: 0; }
+.pb-dl dd[data-wrap] { overflow-wrap: anywhere; }
+.pb-json .pb-json__end--kids { padding-left: 16px; }
+.pb-heat__legend .pb-heat__cell--gap { margin-left: 6px; }
+.pb-toolbar.pb-logx__acts { margin-top: 6px; }
+.pb-pill.pb-pill--xs { height: 20px; font-size: 11px; }
+.pb-table th.pb-dt__detailcol { width: 36px; }
+
+/* Tab bar item count as an attribute (strict CSP). */
+.pb-tabbar[data-n="2"] { --n: 2; }
+.pb-tabbar[data-n="3"] { --n: 3; }
+.pb-tabbar[data-n="4"] { --n: 4; }
+.pb-tabbar[data-n="5"] { --n: 5; }
+.pb-tabbar[data-n="6"] { --n: 6; }
+.pb-sitehead__mobile > .pb-themeswitch { justify-self: start; margin-top: var(--space-2); }
+/* Grid rows for assistive tech; they add no boxes, the days stay items of the 7-column grid. */
+.pb-evcal__row { display: contents; }

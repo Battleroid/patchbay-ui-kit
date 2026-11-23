@@ -3,3 +3,4 @@ test-results/
 playwright-report/
 tools/dist/
 tools/.work/
+__pycache__/

@@ -33,18 +33,12 @@ SECTIONS=[
 ]
 NAMES={'ButtonGroup':'Button group','TextInput':'Text input','InputTypes':'Input types','CodeArea':'Code area','DropZone':'Drop zone','DataTable':'Data table','StatusPage':'Status page','ChartGround':'Chart grounds','DatePicker':'Date picker','MediaPlayer':'Media player','StatTile':'Stat tile','ThemeSwitch':'Theme switch','TextUtils':'Text helpers','CommandPalette':'Command palette','ContextMenu':'Context menu','ErrorSummary':'Error summary','SiteBanner':'Site banner','DetailList':'Detail list','TreeView':'Tree view','QRCode':'QR code','ListItem':'List item','EmptyState':'Empty and result states','ImageViewer':'Image viewer','SkipLink':'Skip link','AppShell':'App shell','Resizable':'Resizable panels','BulkActions':'Bulk actions','QueryFilter':'Query filter','UploadQueue':'Upload queue','JsonViewer':'JSON viewer','VirtualList':'Virtual list','LogViewer':'Log viewer','LogExplorer':'Log explorer','TimeRange':'Time range and charts','SiteHeader':'Site header','ShareDialog':'Share dialog','FilePreview':'File preview','TableTools':'Table tools','EventCalendar':'Event calendar','MarkdownEditor':'Markdown editor','CommentThread':'Comment thread','NotifySettings':'Notification settings','MobileNav':'Phone navigation','SessionTimeout':'Session timeout','AppIcons':'App icons','AlertEmail':'Alert email','DiffViewer':'Diff viewer','FileBrowser':'File browser','CronBuilder':'Cron builder','StorageBar':'Storage bar','BarChart':'Bar chart','SettingsPage':'Settings page','SignIn':'Sign-in and two-factor','ApiTokens':'API tokens','PrintReport':'Print and reports','Gauge':'Gauges and donuts','Heatmap':'Calendar heatmap'}
 scripts=[]
-LIBS=[('patchbay.js',open('/home/claude/gen/patchbay.js').read().strip())]+[(n,open(f'{PV}/{n}').read().strip()) for n in ('_qr.js','_ui.js','_pickers.js','_overlay.js','_player.js','_hl.js','_viz2.js','_ix.js','_ts.js','_dt.js','_misc.js')]
-TPL=('SettingsPage','SignIn','ApiTokens','Dashboard','PrintReport')
+import pbscripts as S
 AGO="document.querySelectorAll('time[data-ago]').forEach(function(t){t.setAttribute('datetime',new Date(Date.now()-t.dataset.ago*1000).toISOString());});"
-used=[]
 def spec(n):
-    b,js=frag(n)
-    for ln,lt in LIBS:
-        if lt in js:
-            js=js.replace(lt,'').strip()
-            if ln not in used: used.append(ln)
-    if n in TPL: js=js.replace('pbInit(r);',"r.querySelectorAll('[data-section-nav]').forEach(pbSectionNav);")
-    js=js.replace(AGO,'')
+    b,_=frag(n)
+    # The page carries the whole bundle once and calls pbInit() at the end; each component adds only its example glue.
+    js=S.page_glue(n).replace(AGO,'').strip() if n in S.COMPONENTS else ''
     if js: scripts.append(f'(function(){{\n{js}\n}})();')
     wide=' spec--wide' if n in ('DataTable','StatusPage','Media','Diagram','InputTypes','StatTile','Flow','ChartGround','AppShell','SiteBanner','Resizable','ImageViewer','EmptyState','LogViewer','LogExplorer','DiffViewer','FileBrowser','Terminal','Heatmap','BarChart','JsonViewer','BulkActions','QueryFilter','VirtualList','Dashboard','SettingsPage','SignIn','ApiTokens','PrintReport','Rack','Gauge','TimeRange','SiteHeader','FilePreview','TableTools','EventCalendar','MarkdownEditor','NotifySettings','AlertEmail','AppIcons','Density') else ''
     return f'<section class="spec{wide}" id="c-{n.lower()}"><header class="spec__meta"><h3 class="spec__name">{NAMES.get(n,n)}</h3><p class="spec__note">{first_sentence(n)}</p></header><div class="spec__demo">{b}</div></section>'
@@ -100,6 +94,7 @@ page=f'''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="pb-theme-boot.js"></script>
 <title>Patchbay kit</title>
 <style>
 /* VOICE: calm documentation site, like a well-kept personal blog
@@ -215,10 +210,10 @@ document.querySelectorAll('main>.band').forEach(s=>io.observe(s));
 document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>e.preventDefault()));
 document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
 }}
-{chr(10).join(t for n,t in LIBS if n in used and n!='patchbay.js')}
+{S.bundle()}
 {AGO}
-document.querySelectorAll('.nav [data-theme-switch]').forEach(pbThemeSwitch);
 {chr(10).join(scripts)}
+pbInit();
 </script>
 </body>
 </html>'''

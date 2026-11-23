@@ -161,7 +161,7 @@
 .pb-btngroup > .pb-btn + .pb-btn { margin-left: calc(-1 * var(--stroke-1)); }
 .pb-btngroup > .pb-btn:not(.pb-btn ~ .pb-btn) { border-radius: var(--pb-r-md) 0 0 var(--pb-r-md); }
 .pb-btngroup > .pb-btn:not(:has(~ .pb-btn)) { border-radius: 0 var(--pb-r-md) var(--pb-r-md) 0; }
-.pb-btngroup > .pb-btn:only-of-type { border-radius: var(--pb-r-md); }
+.pb-btngroup > .pb-btn:not(.pb-btn ~ .pb-btn):not(:has(~ .pb-btn)) { border-radius: var(--pb-r-md); }
 .pb-btngroup > .pb-btn:hover, .pb-btngroup > .pb-btn:focus-visible { z-index: 1; }
 .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--accent-hover); }
 [data-edge="hard"] .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--ink); }
@@ -256,7 +256,7 @@
 
 /* ---------- Fieldset / form layout ---------- */
 .pb-form { display: grid; gap: var(--space-4); }
-.pb-form__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); }
+.pb-form__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); align-items: start; }
 .pb-form__actions { display: flex; justify-content: flex-end; gap: var(--space-2); padding-top: var(--space-2); }
 .pb-fieldset { display: grid; gap: var(--space-4); margin: 0; padding: var(--space-4) var(--space-6) var(--space-6); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); background: var(--surface); }
 .pb-fieldset > legend { padding: 0 6px; margin-left: -6px; font: 600 11px/14px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
@@ -348,11 +348,11 @@
 .pb-table tbody tr[aria-selected="true"] td { background: var(--accent-tint); }
 .pb-table th:first-child, .pb-table td:first-child { padding-left: var(--space-4); }
 .pb-table th:last-child, .pb-table td:last-child { padding-right: var(--space-4); }
-.pb-table .pb-num { text-align: right; font: 400 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; }
+.pb-table .pb-num { white-space: nowrap; text-align: right; font: 400 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; }
 .pb-table th.pb-num { font: 600 11px/14px var(--font-mono); }
-.pb-table .pb-mono { font-size: 13px; color: var(--ink-muted); }
+.pb-table .pb-mono { white-space: nowrap; font-size: 13px; color: var(--ink-muted); }
 .pb-table .pb-cell-check { width: 1%; padding-right: 0; }
-.pb-table .pb-cell-actions { width: 1%; text-align: right; }
+.pb-table .pb-cell-actions { white-space: nowrap; width: 1%; text-align: right; }
 .pb-table__name { font-weight: 600; }
 .pb-th-sort {
   display: inline-flex; align-items: center; gap: 4px; margin: 0 -4px; padding: 2px 4px; font: inherit; letter-spacing: inherit; text-transform: inherit;
