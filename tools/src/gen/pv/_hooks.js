@@ -43,6 +43,7 @@ pbHook('session','dialog.pb-session:not([open])',pbSession);
 pbHook('themeswitch','[data-theme-switch]',pbThemeSwitch);
 pbHook('popover','[popovertarget]',pbPopover);
 pbHook('hovercard','[data-hovercard]',pbHovercard);
+pbHook('menu','[popover][role=menu]',pbMenuKeys);
 pbHook('tree','[data-tree]',pbTree);
 pbHook('cmd','dialog.pb-cmd',pbCommand);
 pbHook('contextmenu','[data-contextmenu]',pbContext);

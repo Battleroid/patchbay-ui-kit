@@ -375,3 +375,19 @@ test('section: Save and Discard start disabled on a clean form', async ({ page }
   });
   expect(r).toEqual([true, true, false, false]);
 });
+test('menu: arrows, Home/End and typeahead move through the items', async ({ page }) => {
+  await page.goto('/components/Menu/example.html');
+  await page.locator('[popovertarget]').first().click();
+  const menu = page.locator('[popover][role=menu]:popover-open');
+  const items = menu.locator('[role^=menuitem]');
+  await expect(items.first()).toBeFocused();
+  await page.keyboard.press('ArrowDown');
+  await expect(items.nth(1)).toBeFocused();
+  await page.keyboard.press('ArrowUp'); await page.keyboard.press('ArrowUp');
+  await expect(items.last()).toBeFocused();
+  await page.keyboard.press('Home');
+  await expect(items.first()).toBeFocused();
+  const label = (await items.nth(2).textContent()).trim();
+  await page.keyboard.type(label[0]);
+  expect((await page.evaluate(() => document.activeElement.textContent.trim()))[0].toLowerCase()).toBe(label[0].toLowerCase());
+});

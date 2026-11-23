@@ -43,6 +43,7 @@
  "themeswitch": "[data-theme-switch]",
  "popover": "[popovertarget]",
  "hovercard": "[data-hovercard]",
+ "menu": "[popover][role=menu]",
  "tree": "[data-tree]",
  "cmd": "dialog.pb-cmd",
  "contextmenu": "[data-contextmenu]",
