@@ -429,3 +429,11 @@ test('lightbox: closing does not steal focus moved elsewhere', async ({ page }) 
   await page.keyboard.press('Escape');
   await expect(page.locator('[data-lightbox] a[href]').nth(1)).toBeFocused();
 });
+test('lightbox: modifier clicks keep the link behavior', async ({ page }) => {
+  await page.goto('/components/ImageViewer/example.html');
+  const r = await page.evaluate(() => {
+    const a = document.querySelector('[data-lightbox] a[href]'); const ev = new MouseEvent('click', { bubbles: true, cancelable: true, ctrlKey: true });
+    a.dispatchEvent(ev); return [ev.defaultPrevented, !!document.querySelector('dialog.pb-lightbox[open]')];
+  });
+  expect(r).toEqual([false, false]);
+});
