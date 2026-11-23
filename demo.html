@@ -2421,6 +2421,13 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 
 .pb-kbd { white-space: nowrap; }
 
+.pb-vlist__goto { display: flex; align-items: center; gap: var(--space-2); margin: 0; }
+.pb-vlist__goto .pb-field__label { white-space: nowrap; }
+.pb-vlist__goto .pb-input { width: 140px; }
+.pb-vlist__goto input { -moz-appearance: textfield; font-variant-numeric: tabular-nums; }
+.pb-vlist__goto input::-webkit-inner-spin-button, .pb-vlist__goto input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.pb-input--sm .pb-input__action { margin-right: calc(-1 * var(--space-2)); padding: 0 var(--space-2); font-size: 12px; }
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .pb-spin, .pb-progressbar:indeterminate { animation: none; }
@@ -3471,7 +3478,7 @@ services:
   <script type="application/json">{"name": "media", "version": 3, "public": true, "owner": null, "limits": {"cpus": 2.5, "memory": "4g"}, "services": {"jellyfin": {"image": "jellyfin/jellyfin:10.10.3", "ports": ["8096:8096"], "devices": ["/dev/dri:/dev/dri"], "healthcheck": {"test": ["CMD", "curl", "-f", "http://localhost:8096/health"], "interval": "30s", "retries": 3}}, "sonarr": {"image": "lscr.io/linuxserver/sonarr:4.0.11", "environment": {"TZ": "America/New_York", "PUID": 1000, "PGID": 1000}, "ports": []}}, "volumes": {"config": {"driver": "local"}, "media": {"external": true}}}</script>
 </div></div></section><section class="spec spec--wide" id="c-virtuallist"><header class="spec__meta"><h3 class="spec__name">Virtual list</h3><p class="spec__note">Virtual lists scroll through tens of thousands of rows while only drawing the visible ones.</p></header><div class="spec__demo"><div style="display:grid;gap:12px">
   <div class="pb-toolbar"><span class="pb-mono" style="font-size:12px;color:var(--ink-muted)" data-vl-range></span><span class="pb-toolbar__spacer"></span>
-    <label class="pb-inline" style="gap:8px;font:400 14px/20px var(--font-serif)">Go to line <span class="pb-input pb-input--sm" style="width:90px"><input type="number" min="1" max="10000" value="5000" data-vl-goto aria-label="Line number"></span></label><button type="button" class="pb-btn pb-btn--sm" data-vl-go>Go</button></div>
+    <form class="pb-vlist__goto" data-vl-form><label class="pb-field__label" for="vl-line">go to line</label><span class="pb-input pb-input--sm"><input id="vl-line" type="number" min="1" max="10000" value="5000" inputmode="numeric" data-vl-goto><button type="submit" class="pb-input__action">Go</button></span></form></div>
   <div class="pb-vlist" data-vlist aria-label="10,000 audit events" style="--vh:300px"></div>
   <p class="pb-note" style="margin:0">10,000 rows; only the ones on screen exist in the page. Arrows, Page Up/Down, Home and End move.</p>
 </div></div></section><section class="spec" id="c-qrcode"><header class="spec__meta"><h3 class="spec__name">QR code</h3><p class="spec__note">QR codes let a phone open a share link or join a network without typing.</p></header><div class="spec__demo"><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:start">
@@ -5136,7 +5143,7 @@ document.querySelectorAll('[data-json]').forEach(pbJSON);
 document.querySelectorAll('[data-vlist]').forEach(function(v){var wrap=v.parentElement,rng=wrap.querySelector('[data-vl-range]'),A=['GET','GET','GET','POST','PUT','DELETE'],P=['/api/shares','/api/files/tank/media','/api/users/alex','/api/hosts/pve-01/metrics','/api/backups/run','/api/tokens/7f3c'],C=[200,200,200,201,204,304,404,500];
   function r(i){var x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x);}
   pbVirtual(v,{count:10000,render:function(i){var t=new Date(Date.UTC(2026,10,22,0,0,0)+i*8640);var c=C[Math.floor(r(i+3)*C.length)];return '<span>'+(i+1)+'</span><span>'+A[Math.floor(r(i)*A.length)]+'</span><span>'+P[Math.floor(r(i+1)*P.length)]+' <span style="color:var(--'+(c>=500?'down':c>=400?'warn':'ink-muted')+')">'+c+'</span></span><span>'+t.toISOString().slice(11,19)+'</span>';},onRange:function(a,b){if(rng)rng.textContent='rendering rows '+(a+1)+'–'+b+' of 10,000';}});
-  var g=wrap.querySelector('[data-vl-goto]');wrap.querySelector('[data-vl-go]').addEventListener('click',function(){v.pbScrollTo(+g.value-1,true);});});
+  var g=wrap.querySelector('[data-vl-goto]');wrap.querySelector('[data-vl-form]').addEventListener('submit',function(e){e.preventDefault();e.stopImmediatePropagation();var n=Math.max(1,Math.min(10000,Math.round(+g.value)||1));g.value=n;v.pbScrollTo(n-1,true);},true);});
 })();
 (function(){
 document.querySelectorAll('[data-qr]').forEach(pbQRCode);
