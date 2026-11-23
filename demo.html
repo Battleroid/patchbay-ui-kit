@@ -3111,6 +3111,9 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
   .pb-dropset--compact .pb-seg { justify-self: stretch; display: flex; }
   .pb-dropset--compact .pb-seg > label { flex: 1; justify-content: center; }
 }
+/* Images fit the preview area instead of scrolling it. */
+.pb-fpreview__body--image { overflow: hidden; }
+.pb-fpreview__body--image > img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; object-fit: contain; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
