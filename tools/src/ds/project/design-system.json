@@ -1204,9 +1204,9 @@
   ],
   "lastChange": {
     "by": "Casey",
-    "at": "2026-11-23T05:00:00Z",
+    "at": "2026-11-23T05:20:00Z",
     "via": "Claude chat",
-    "note": "Button groups round their ends when a popover menu follows; live progress and loading demos; spinners slow down instead of stopping under reduced motion; notification grid columns fixed width with stacked headers; bulk action bar docks inside the table with rounded corners."
+    "note": "Input affixes can trail the input (units like opens, GB) and sit flush with the right edge."
   },
   "layout": "files",
   "libraries": [],

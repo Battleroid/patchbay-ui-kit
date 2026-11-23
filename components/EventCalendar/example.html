@@ -80,8 +80,8 @@ function pbThread(th){var comp=th.parentElement.querySelector('[data-composer]')
 
 /* Notification grid: table in .pb-notify[data-notify]; header checkboxes [data-col] toggle a channel; [data-test] buttons fire test. */
 function pbNotify(el){var t=el.querySelector('table');
-  function col(i){return Array.from(t.querySelectorAll('tbody tr')).map(function(r){return r.cells[i].querySelector('input')}).filter(Boolean);}
-  function sync(){t.querySelectorAll('thead [data-col]').forEach(function(h){var c=col(+h.dataset.col),n=c.filter(function(x){return x.checked}).length;h.checked=n===c.length;h.indeterminate=n>0&&n<c.length;});}
+  function col(i){return Array.from(t.querySelectorAll('tbody tr:not(.pb-notify__all)')).map(function(r){return r.cells[i].querySelector('input')}).filter(Boolean);}
+  function sync(){t.querySelectorAll('[data-col]').forEach(function(h){var c=col(+h.dataset.col),n=c.filter(function(x){return x.checked}).length;h.checked=n===c.length;h.indeterminate=n>0&&n<c.length;});}
   t.addEventListener('change',function(e){var h=e.target.closest('[data-col]');if(h)col(+h.dataset.col).forEach(function(x){x.checked=h.checked});sync();el.dispatchEvent(new CustomEvent('change'));});
   el.querySelectorAll('[data-test]').forEach(function(b){b.addEventListener('click',function(){var l=b.textContent;b.disabled=true;b.textContent='Sending…';setTimeout(function(){b.disabled=false;b.textContent=l;el.dispatchEvent(new CustomEvent('test',{detail:b.dataset.test}));if(typeof pbToast==='function')pbToast({title:'Test sent to '+b.dataset.test,status:'ok',container:el.closest('section')||document.body});},700);});});sync();}
 

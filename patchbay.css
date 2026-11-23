@@ -2834,8 +2834,8 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-notify__ev small { font: italic 400 13px/18px var(--font-serif); color: var(--ink-muted); }
 .pb-notify .pb-table { table-layout: fixed; min-width: 520px; }
 .pb-notify col.pb-notify__ch { width: 112px; }
-.pb-notify th .pb-choice { display: flex; flex-direction: column-reverse; align-items: center; justify-content: center; gap: 6px; font: inherit; color: inherit; }
-.pb-notify th { vertical-align: bottom; }
+.pb-notify .pb-notify__all td { background: var(--bg); }
+.pb-notify .pb-notify__all .pb-notify__ev b { font-weight: 600; }
 .pb-notify tfoot td { background: var(--bg); }
 
 /* ---------- Phone patterns: tab bar and action sheet ---------- */
