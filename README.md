@@ -34,7 +34,7 @@ A document-first system for small self-hosted apps: status pages, dashboards, fi
 - Pick a variant with `data-edge="soft"` (default) or `data-edge="hard"` on `<html>` or any container. Use one variant per app; do not mix them on a page.
 - Pick a theme with `data-theme="light"` or `data-theme="dark"` on `<html>` (whole app) or any container (one panel). Default to the system setting with a ThemeSwitch in the header tools; `pb-theme-boot.js` in `<head>` applies the saved choice before the CSS paints (see ThemeSwitch).
 - Start every app from AppShell: skip link, header (brand, ⌘K search, tools), side nav, page header, main, footer.
-- Components are CSS only. Class prefix is `pb-`. Previews show both variants side by side.
+- Class prefix is `pb-`. Previews show both variants side by side. Behavior is optional: the markup and CSS work without script, and `patchbay.js` adds the interactive parts.
 - Dense views (log tables, admin lists) set `data-density="compact"` on `<html>` or a container: 28px controls, tighter rows and cards. See Density.
 - Windows high contrast (`forced-colors: active`) is handled in the bundle: borders, focus rings, selection and chart series stay visible. Never carry meaning in a background color alone.
 - Every app ships the AppIcons head snippet (favicon, touch icon, manifest, `theme-color`).
