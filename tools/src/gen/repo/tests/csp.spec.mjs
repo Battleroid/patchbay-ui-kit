@@ -126,6 +126,10 @@ for (const p of pages) {
     await expect(lb).toHaveAttribute('data-zoom', '');
     await lb.locator('.pb-lightbox__nav--next').click();
     await expect(lb.locator('.pb-lightbox__count')).toHaveText(/^2 \//);
+    await lb.locator('.pb-lightbox__thumbs button').last().click();
+    await expect(lb.locator('.pb-lightbox__stage .pb-player .pb-player__bar')).toHaveCount(1);
+    await lb.locator('.pb-lightbox__thumbs button').first().click();
+    await expect(lb.locator('.pb-lightbox__stage .pb-player')).toHaveCount(0);
     await page.keyboard.press('Escape');
 
     // Code input: type and paste.
