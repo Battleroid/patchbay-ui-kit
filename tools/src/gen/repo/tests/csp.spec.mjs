@@ -316,3 +316,9 @@ test('layout: inputs in a form row line up when only one has help', async ({ pag
   const tops = await page.locator('[data-test="formrow"] .pb-input').evaluateAll((ns) => ns.map((n) => Math.round(n.getBoundingClientRect().top)));
   expect(tops[0]).toBe(tops[1]);
 });
+
+test('layout: a choice-card legend sits a label gap above the cards', async ({ page }) => {
+  await page.goto('/components/ChoiceCard/example.html');
+  const gap = await page.locator('[data-test="cards-in-form"] fieldset').evaluate((f) => Math.round(f.querySelector('.pb-choicecard').getBoundingClientRect().top - f.querySelector('legend').getBoundingClientRect().bottom));
+  expect(gap).toBe(6);
+});

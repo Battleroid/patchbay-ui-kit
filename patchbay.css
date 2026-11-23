@@ -1223,7 +1223,10 @@ th[aria-sort="descending"] .pb-th-sort::after { opacity: 1; -webkit-mask-image: 
 .pb-range2 .pb-range::-moz-range-thumb { pointer-events: auto; }
 
 /* ---------- Choice cards ---------- */
-.pb-choicecards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--space-3); border: 0; margin: 0; padding: 0; }
+.pb-choicecards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--space-3); min-width: 0; border: 0; margin: 0; padding: 0; }
+/* A legend is not a grid item, so the gap never reaches it: give it the same 6px a field label has to its input. */
+fieldset.pb-choices { min-width: 0; border: 0; margin: 0; padding: 0; }
+.pb-choicecards > legend, .pb-choices > legend { float: none; padding: 0; margin: 0 0 6px; }
 .pb-choicecard {
   position: relative; display: grid; gap: 4px; align-content: start; padding: var(--space-4) var(--space-4) var(--space-4); padding-right: 44px;
   background: var(--surface); border: var(--stroke-1) solid var(--pb-border-control); border-radius: var(--pb-r-lg); cursor: pointer;
