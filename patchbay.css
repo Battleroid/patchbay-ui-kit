@@ -1557,6 +1557,7 @@ th[aria-sort="descending"] .pb-th-sort::after { opacity: 1; -webkit-mask-image: 
 [data-edge="hard"] .pb-pagehead { border-bottom-color: var(--ink); }
 .pb-pagehead > .pb-crumbs { grid-column: 1 / -1; }
 .pb-pagehead__title { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); font: 600 32px/38px var(--font-serif); letter-spacing: -0.01em; }
+.pb-pagehead__meta { grid-column: 1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); margin: 0; font: 400 13px/18px var(--font-mono); color: var(--ink-muted); }
 .pb-pagehead__desc { grid-column: 1; margin: 0; font: 400 17px/27px var(--font-serif); color: var(--ink-muted); }
 .pb-pagehead__actions { grid-column: 2; grid-row: 2 / span 2; display: flex; flex-wrap: wrap; gap: var(--space-2); align-self: end; }
 @media (max-width: 640px) { .pb-pagehead { grid-template-columns: minmax(0, 1fr); } .pb-pagehead__actions { grid-column: 1; grid-row: auto; } }
