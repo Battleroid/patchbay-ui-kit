@@ -1386,7 +1386,7 @@ fieldset.pb-choices { min-width: 0; border: 0; margin: 0; padding: 0; }
 }
 .pb-player:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
 .pb-player__stage { position: relative; background: var(--night); }
-.pb-player video { display: block; width: 100%; height: auto; max-height: 75vh; background: var(--night); object-fit: contain; cursor: pointer; }
+.pb-player video { display: block; width: 100%; height: auto; max-height: var(--pb-player-max-h, 80vh); background: var(--night); object-fit: contain; cursor: pointer; }
 .pb-player__big {
   position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; display: grid; place-items: center; padding: 0;
   color: var(--ink); background: var(--surface); border: var(--stroke-1) solid var(--pb-border-control); border-radius: var(--pb-r-pill);

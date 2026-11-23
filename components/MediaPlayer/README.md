@@ -6,3 +6,4 @@ MediaPlayer wraps a plain `<video>` or `<audio>` in kit controls: play and pause
 - Keyboard (focus anywhere in the player): Space or K play/pause, J / L back and forward 10 s, ← / → 5 s, ↑ / ↓ volume, M mute, C captions, F fullscreen, 0–9 jump to 0–90 %, < / > speed. Speed menu: ↑↓ and Enter.
 - Seek colors: played in `accent` (docked) or `pop-mint` (overlay), buffered in `line-strong`, the rest `surface-sunk`.
 - Always give the figure an `aria-label` naming the file. Offer a Download button next to the player for shared files.
+- Video height is capped at `--pb-player-max-h` (default `80vh`); set it on the figure or a container, e.g. `data-vars="--pb-player-max-h:60vh"`.
