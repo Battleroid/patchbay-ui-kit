@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" data-edge="soft" data-theme="light">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patchbay · SkipLink</title><link rel="stylesheet" href="../../patchbay.css">
+<style>body{margin:0;padding:32px}</style></head>
+<body class="pb">
+<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<div style="position:relative;min-height:90px;padding-top:44px">
+  <a class="pb-skip" href="#skip-target" data-demo-focus>Skip to content</a>
+  <p class="pb-note" style="margin:0">Hidden until focused. It is the first focusable element on every page; press Tab once to see it.</p>
+  <div id="skip-target" tabindex="-1"></div>
+</div>
+<script>
+document.querySelectorAll('[data-demo-focus]').forEach(function(a){a.style.transform='none';});
+</script>
+</body></html>

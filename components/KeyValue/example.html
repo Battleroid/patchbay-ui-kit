@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" data-edge="soft" data-theme="light">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patchbay · KeyValue</title><link rel="stylesheet" href="../../patchbay.css">
+<style>body{margin:0;padding:32px}</style></head>
+<body class="pb">
+<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<div class="pb-field"><span class="pb-field__label">Environment</span>
+  <div class="pb-kv" data-kv>
+    <div class="pb-kv__head"><span>key</span><span>value</span></div>
+    <div class="pb-kv__row"><span class="pb-input"><input value="TZ" aria-label="Key"></span><span class="pb-input"><input value="America/New_York" aria-label="Value"></span><button type="button" class="pb-btn pb-btn--icon" aria-pressed="false" aria-label="Mark secret" data-secret><span class="pb-icon pb-icon--lock"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon" aria-label="Remove TZ" data-remove><span class="pb-icon pb-icon--trash"></span></button></div>
+    <div class="pb-kv__row"><span class="pb-input"><input value="DB_PASSWORD" aria-label="Key"></span><span class="pb-input"><input type="password" value="hunter2hunter2" aria-label="Value"></span><button type="button" class="pb-btn pb-btn--icon" aria-pressed="true" aria-label="Mark secret" data-secret><span class="pb-icon pb-icon--lock"></span></button><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon" aria-label="Remove DB_PASSWORD" data-remove><span class="pb-icon pb-icon--trash"></span></button></div>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm pb-kv__add" data-add><span class="pb-icon pb-icon--plus"></span>Add variable</button>
+  </div>
+  <span class="pb-field__help">Secret values are hidden and never shown in logs.</span></div>
+<script>
+document.querySelectorAll('[data-kv]').forEach(function(kv){var add=kv.querySelector('[data-add]');
+ kv.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var row=b.closest('.pb-kv__row');
+  if(b.hasAttribute('data-remove')){var n=row.nextElementSibling;row.remove();(n&&n.querySelector('input')||add).focus();}
+  else if(b.hasAttribute('data-secret')){var on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);row.querySelectorAll('input')[1].type=on?'password':'text';}
+  else if(b.hasAttribute('data-add')){var r=kv.querySelector('.pb-kv__row').cloneNode(true);r.querySelectorAll('input').forEach(function(i){i.value='';i.type='text'});r.querySelector('[data-secret]').setAttribute('aria-pressed','false');r.querySelector('[data-remove]').setAttribute('aria-label','Remove row');kv.insertBefore(r,add);r.querySelector('input').focus();}});
+ kv.addEventListener('input',function(e){var i=e.target;if(i.closest('.pb-kv__row')&&i===i.closest('.pb-kv__row').querySelector('input')){i.value=i.value.toUpperCase().replace(/[^A-Z0-9_]/g,'_');var x=i.closest('.pb-kv__row').querySelector('[data-remove]');x.setAttribute('aria-label','Remove '+(i.value||'row'));}});});
+</script>
+</body></html>

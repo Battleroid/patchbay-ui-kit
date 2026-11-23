@@ -1,0 +1,100 @@
+# Patchbay
+
+## Using these files
+
+- Link `patchbay.css` (tokens, fonts, every component). Fonts load from `fonts/` beside it; keep the two together.
+- Put `class="pb"` on the app root, `data-edge="soft"` or `data-edge="hard"` on `<html>`, and `data-theme="light"` or `data-theme="dark"` (a theme switch can set it; see `components/ThemeSwitch`).
+- Start every app from `components/AppShell` (header, nav, page header, footer, skip link).
+- Before building a part, read `components/<Name>/README.md` for its markup and rules, and copy the markup from `components/<Name>/example.html`.
+- Behaviors (date and time pickers, combobox, tags, code input, color, copy, key/value, dual range, counters, password strength, toggles, tabs, menus, dialogs, table selection and sort, form section save state, app shell drawer, theme switch, popovers and hover cards, tree view, ⌘K command palette, context menus, image viewer, avatars, pagination, error summary, relative time, middle truncation, QR codes, resizable panels): load `patchbay.js` at the end of `<body>` and call `pbInit()` once, or `pbInit(el)` for markup added later. Each component's README names the markup hooks (`data-cal`, `data-clock`, `data-combo`, `data-tags`, `data-otp`, `data-copy`, `data-kv`, …).
+- `components/<Name>/example.html` files are self-contained: each carries its own copy of the script it needs.
+- Form sections keep their Save/Discard buttons inside the panel (see `components/Fieldset`).
+- Tokens: `tokens.json` is the source; every value is also a CSS custom property (`var(--accent)`, `var(--space-4)`, `var(--radius-md)`). Use tokens, never raw hex or px.
+- Icons: `<span class="pb-icon pb-icon--NAME"></span>` (paints in `currentColor`). Raw SVGs are in `icons/soft` and `icons/hard`.
+- `demo.html` shows every component on one page.
+- Components: ApiTokens, AppShell, Avatar, Badge, BarChart, Breadcrumbs, BulkActions, Button, ButtonGroup, Card, Chart, ChartGround, Checkbox, ChoiceCard, CodeArea, CodeInput, ColorPicker, Combobox, CommandPalette, ContextMenu, CopyField, CronBuilder, Dashboard, DataTable, DatePicker, DetailList, Diagram, Dialog, DiffViewer, Disclosure, DropZone, DualRange, EmptyState, ErrorSummary, Fieldset, FileBrowser, Flow, Gauge, Heatmap, Histogram, Icons, ImageViewer, InputTypes, JsonViewer, KeyValue, Link, ListItem, Loading, LogViewer, Media, MediaPlayer, Menu, Notice, Notifications, Pagination, Pill, Popover, PrintReport, Progress, Prose, QRCode, QueryFilter, Rack, Radio, Range, Resizable, Scrollbars, Segmented, Select, SettingsPage, Shortcuts, SignIn, SiteBanner, SkipLink, Sortable, Sparkline, StatTile, StatusPage, Steps, StorageBar, Switch, Tabs, TagInput, Terminal, TextInput, TextUtils, ThemeSwitch, TimePicker, Timeline, Toast, Tooltip, TreeView, UploadQueue, VirtualList.
+
+A document-first system for small self-hosted apps: status pages, dashboards, file and media sharing, config editors. Text is set like a well-kept personal site — a comfortable serif on warm paper, mono for anything a machine would print — with a few saturated pop fills for color. It ships in two edge variants that share every color and type token: **soft** (rounded, diffuse shadows) and **hard** (square, ink borders, offset shadows), and in two themes: **light** (warm paper, the default) and **dark** (warm charcoal).
+
+## Setup
+
+- Load `tokens.css`, then `components/bundle.css`. Put `class="pb"` on the app root.
+- Pick a variant with `data-edge="soft"` (default) or `data-edge="hard"` on `<html>` or any container. Use one variant per app; do not mix them on a page.
+- Pick a theme with `data-theme="light"` or `data-theme="dark"` on `<html>` (whole app) or any container (one panel). Default to the system setting with a ThemeSwitch in the header tools; see ThemeSwitch for the no-flash snippet.
+- Start every app from AppShell: skip link, header (brand, ⌘K search, tools), side nav, page header, main, footer.
+- Components are CSS only. Class prefix is `pb-`. Previews show both variants side by side.
+
+## Content
+
+- Write plainly and briefly. Sentence case for titles and buttons ("Copy link", "Recent incidents").
+- Lowercase for UI chrome: meta labels, pill text, badge words (`up`, `degraded`, `expires`). Real names keep their casing (`Jellyfin`, `Home Assistant`).
+- Hosts, ports, paths, IDs, sizes and times are mono and shown in full: `nas-01.lan:5001`, `2026-11-21`, `4.1 GB`.
+- Join a label and its scope with `·` (`uptime · 30d`). Use `—` for a missing value. Units follow the number, smaller, in `ink-muted`.
+- Incident and helper text says what happened and what to do: "Port must be 1–65535.", "Raised maxmemory; watching response times."
+- No emoji. State is always icon + word + color.
+
+## Color
+
+- Ground is `bg` (warm paper). Cards, inputs and buttons sit on `surface` (white). `surface-sunk` fills hover rows, kbd, inline code, meter tracks. Code sits on `code-bg`.
+- Text: `ink` for content and values, `ink-muted` for hosts, captions, helper text and axis labels. Both pass 6:1 on every ground in both themes.
+- `accent` is the one interactive color: links, the primary button, the selected pill, the focus ring, chart-1. `accent-tint` marks selection and drag-over.
+- Pop fills — `pop-yellow`, `pop-mint`, `pop-red` — carry color: card bands, the status banner, solid badges, pop pills, diagram roles, image placeholders. Text on them is `on-pop` (ink). Use at most two pops in one view.
+- Status colors mean state only: `ok`, `warn`, `down`, `info`, `unknown`, each with a `*-tint` ground for badges. Never use them for decoration. `ok` and `down` differ by hue, so the icon and word are required.
+- Code: `syn-keyword`, `syn-string`, `syn-number`, `syn-function`, `syn-type`, `syn-comment` (italic); all read on `code-bg` and `surface`.
+- Dark theme: every color token has a dark value with the same role and the same contrast rules (text 4.5:1, marks 3:1); accent and status colors are lightened, tints darkened, `on-accent` turns dark. Never hard-code a hex; a raw color breaks one of the themes.
+- Terminal output uses the `term-*` colors (red, green, yellow, blue, magenta, cyan), the same in both themes and 7:1 or better on `night`.
+- `night` and `on-night` are the same in both themes: video stages, the image viewer, ink tiles and ink toasts. QR codes are always dark on white.
+- Charts: `chart-1` (accent), `chart-2` (vermilion), `chart-3` (dashed baseline), `chart-4` (ochre); `chart-grid` for rules. Four series at most.
+
+## Type
+
+- `serif` (Source Serif 4, falling back to Times New Roman) for titles, prose, card titles, service and node names, helper text.
+- `mono` (Obel Mono) for controls (`ui`), code (`code`), labels (`label`, uppercase, tracked), and every number (`metric`, `metric-xl`), with tabular figures.
+- Prose is `body` (17/27) at `size-measure` (68ch). Dense UI copy is `body-sm`. Captions and help are `note` (italic).
+- One `display` or `metric-xl` per page.
+
+## Shape and depth
+
+- Soft: `radius-lg` for cards, panels, drop zones; `radius-md` for buttons, inputs, code, nodes; `radius-sm` for badges and kbd; `radius-pill` for pills. Borders `line` (cards) and `line-strong` (controls). Shadows `shadow-soft-sm/md/lg`.
+- Hard: `radius-0` everywhere. Borders are `ink`. Shadows are offsets: `shadow-hard-sm` (2px) on controls, `shadow-hard-md` (4px) on cards, `shadow-hard-lg` (6px) on popovers and active drop zones. Buttons press into their shadow on `:active`.
+- Both: `shadow-inset` on fields; `stroke-1` borders; `stroke-2` focus ring in `accent`, 2px offset, on every focusable element.
+- Rules and dividers are `line` hairlines; in hard they turn `ink`.
+
+## Controls
+
+- Build on native elements and style them with `pb-` classes: `pb-check`, `pb-radio`, `pb-switch`, `.pb-select`, `.pb-input` (every input type), `pb-range`, `pb-progressbar`, `pb-meterbar`, `pb-fieldset`, `pb-details`, `pb-dialog`, `[popover].pb-menu`, `table.pb-table`. Keyboard, form and accessibility behavior comes from the browser.
+- Dates and times: use DatePicker and TimePicker; the browser's own date, time and color popups cannot be styled. Colors: ColorPicker.
+- Long lists: Combobox (one value, searchable), TagInput (many values). Codes: CodeInput. Values to copy: CopyField. Env vars and headers: KeyValue. Min–max: DualRange. Options with detail: ChoiceCard.
+- Pick the control by intent: Checkbox for independent options in a form, Switch for settings that apply at once, Radio for 2–6 exclusive options with hints, Segmented for short exclusive choices in a toolbar, Select for more than six.
+- Conjoined controls: `pb-seg` for toggles (radios or checkboxes), `pb-btngroup` for related actions, split buttons and pagers, `pb-toolbar` for a row of mixed controls.
+- Labels on every field (`pb-field__label`, uppercase mono). Help and errors go under the field in `note` style; errors in `down` with `status-down`.
+- Video and audio: always MediaPlayer, never the browser's default controls.
+- Navigation and finding: AppShell nav, Breadcrumbs, CommandPalette (⌘K), Pagination, TreeView for nested storage. Context menus duplicate actions found elsewhere; never hide an action only there.
+- Lists and records: ListItem rows, DetailList for one thing's fields, Data table for comparing many, Timeline for the record of events. Empty and failed states use EmptyState and Result; loading uses skeletons or a spinner (Loading).
+- Forms with more than two fields get an ErrorSummary at the top. Lists people filter often get a QueryFilter (`status:down host:nas-*`); selected rows get a BulkActions bar.
+- Homelab views: LogViewer for live logs, Terminal for command output, DiffViewer for config changes, FileBrowser for storage, CronBuilder for schedules, StorageBar for pools, Rack for hardware.
+- Charts: Chart for lines over time, BarChart for amounts per category (stacked or horizontal), Histogram for distributions, Gauge for one value against limits, donuts for parts of a whole (five at most), Heatmap for per-day activity or pass/fail, JsonViewer for structured data.
+- Over about 2,000 rows use VirtualList. Reorderable things use Sortable, never drag without a keyboard path. Uploads report progress in an UploadQueue. Every app lists its shortcuts in a Shortcuts sheet on `?`.
+- Feedback: Toast for the result of the user's own action (with Undo where possible), Notice for a problem on the page, Notifications for what happened while they were away, Dialog only to confirm or to collect input that cannot wait.
+- Panels people pick or open are `pb-card--outline`: a quiet outline that turns `accent` on hover and focus.
+
+## Layout
+
+- 4px grid: `space-1` … `space-12`. Card padding `space-6`, gaps between cards `space-6`, between sections `space-8`.
+- Pages max `size-page` (1120px), centered, with `space-8` gutters. Prose columns max `size-measure`.
+- Control height `size-control` (36px), small `size-control-sm` (28px).
+- Apps: AppShell with a 240px nav; under 900px the nav becomes a drawer. Page content uses `pb-pagehead` then `pb-layout` (content plus a 300px aside, stacking when narrow). Resizable splits list and preview panes.
+- Site banners sit above the shell header, one at a time.
+- Page templates: Dashboard (12-column `pb-dash` grid), SettingsPage (section nav, setting rows, danger zone last), SignIn (sign-in, two-factor setup, code prompt), ApiTokens (show once, revoke). Start new screens from these.
+- Scrollbars are thin and themed automatically inside `.pb`.
+- Printing hides app chrome, drops shadows and expands scroll areas; reports use `pb-report` (see PrintReport).
+
+## Motion
+
+- Hover color changes over 120ms; buttons press 1px (soft) or 2px into their shadow (hard). Spinners on busy buttons and short actions; skeletons for first loads. Nothing moves under `prefers-reduced-motion`.
+
+## Iconography
+
+- One 76-glyph stroke set, 24px grid, 1.75px stroke, in two cuts that follow `data-edge`: round caps and circle frames (soft), square caps and square frames (hard). Use `<span class="pb-icon pb-icon--NAME">`; it paints in `currentColor`.
+- Statuses: `status-ok`, `status-warn`, `status-down`, `status-info`, `status-unknown`, `status-paused`, `status-maint`. Links: `link`, `link-external`, `link-internal`. Plus objects (`server`, `database`, `network`, `file`, `folder`, `cloud`, `terminal`, `lock`, `key`) and actions (`copy`, `download`, `upload`, `refresh`, `search`, `filter`, `settings`, `trash`, `plus`, `minus`, `close`, `more`, `menu`, `sort`, `arrow-up`, `arrow-down`, `eye`, `eye-off`, `calendar`, `bell`, `inbox`) and media (`play`, `pause`, `volume`, `volume-off`, `skip-back`, `skip-forward`, `captions`, `pip`, `fullscreen`, `fullscreen-exit`, `image`, `zoom-in`, `zoom-out`) and chrome (`home`, `user`, `qr`, `sun`, `moon`, `monitor`, `grip`, `keyboard`, `shield`, `printer`, `grid`, `list`, `wrap`, `diff`, `cpu`, `chart`).
+- SVG files are in the Icons Soft and Icons Hard asset groups (ink `#17150f`). No logo: set an app's name in `display` or `h1` type.

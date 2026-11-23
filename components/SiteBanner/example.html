@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" data-edge="soft" data-theme="light">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patchbay · SiteBanner</title><link rel="stylesheet" href="../../patchbay.css">
+<style>body{margin:0;padding:32px}</style></head>
+<body class="pb">
+<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<div style="display:grid;gap:10px">
+  <div class="pb-sitebar" role="region" aria-label="Announcement"><span class="pb-icon pb-icon--status-maint"></span><p>Maintenance tonight 02:00–04:00. Shares stay online; uploads pause. <a href="#">Details</a></p><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" data-dismiss aria-label="Dismiss"><span class="pb-icon pb-icon--close"></span></button></div>
+  <div class="pb-sitebar" data-status="warn" role="region" aria-label="Warning"><span class="pb-icon pb-icon--status-warn"></span><p>tank is 92% full. New uploads may fail. <a href="#">Free up space</a></p></div>
+  <div class="pb-sitebar" data-status="down" role="alert"><span class="pb-icon pb-icon--status-down"></span><p>Offline. Changes are saved locally and will sync when the connection returns.</p></div>
+  <div class="pb-sitebar" data-status="ok" role="status"><span class="pb-icon pb-icon--status-ok"></span><p>Update 2.4.0 installed. <a href="#">What changed</a></p><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" data-dismiss aria-label="Dismiss"><span class="pb-icon pb-icon--close"></span></button></div>
+</div>
+<script>
+document.querySelectorAll('[data-dismiss]').forEach(function(b){b.addEventListener('click',function(){var s=b.closest('.pb-sitebar,.pb-notice,.pb-toast');if(s)s.remove();});});
+</script>
+</body></html>

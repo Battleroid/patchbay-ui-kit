@@ -1,0 +1,8 @@
+The app shell is the frame every app uses: header, side navigation, main area and footer.
+
+- Markup: `div.pb-shell[data-shell]` with `header.pb-shell__head`, `nav.pb-shell__nav`, `main.pb-shell__main` (inner `pb-shell__inner` caps the width), `footer.pb-shell__foot`. Put `a.pb-skip` first.
+- Header: `pb-shell__navbtn` (menu, phones only, `data-nav-toggle`), `a.pb-brand` (`pb-brand__mark`, name, `pb-brand__host`), the ⌘K search button `pb-shell__search`, then `pb-shell__tools` (notifications bell, theme switch, avatar).
+- Navigation: `ul.pb-nav` of `a.pb-nav__item` with an icon and optional `pb-count` or `pb-dot`; `aria-current="page"` on the current one. A group is a `button.pb-nav__item[aria-expanded]` followed by `ul.pb-nav__sub`. `p.pb-nav__heading` splits sections.
+- Page header: `header.pb-pagehead` with breadcrumbs, `h1.pb-pagehead__title`, `pb-pagehead__desc` and `pb-pagehead__actions` (primary action last).
+- `div.pb-layout` puts content and an `aside.pb-layout__aside` side by side; it stacks when the main area is narrower than 720px or the window under 960px.
+- Under 900px the nav becomes a drawer: `pbShell(el)` wires the toggle, Escape and outside clicks. `pb-shell--contained` keeps the shell inside a box for previews.

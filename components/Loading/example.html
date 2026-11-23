@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" data-edge="soft" data-theme="light">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patchbay · Loading</title><link rel="stylesheet" href="../../patchbay.css">
+<style>body{margin:0;padding:32px}</style></head>
+<body class="pb">
+<!-- Set data-edge="hard" on <html> for the hard variant, data-theme="dark" for the dark theme. -->
+<div style="display:grid;gap:20px">
+  <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap"><span class="pb-spinner pb-spinner--sm" role="status" aria-label="Loading"></span><span class="pb-spinner" role="status" aria-label="Loading"></span><span class="pb-spinner pb-spinner--lg" role="status" aria-label="Loading"></span><span class="pb-loading" role="status"><span class="pb-spinner pb-spinner--sm"></span>Checking 12 services…</span></div>
+  <div class="pb-card" aria-busy="true" aria-label="Loading service" style="padding:16px"><div style="display:flex;gap:12px;align-items:center"><span class="pb-skel pb-skel--circle" style="width:36px;height:36px"></span><div style="flex:1"><span class="pb-skel pb-skel--title"></span><span class="pb-skel pb-skel--text" style="width:70%"></span></div></div><span class="pb-skel pb-skel--block" style="margin-top:12px;height:72px"></span></div>
+  <ul class="pb-list pb-list--compact" aria-busy="true" aria-label="Loading list">
+    <li class="pb-item"><span class="pb-skel" style="width:28px;height:28px"></span><span><span class="pb-skel pb-skel--text" style="width:40%"></span><span class="pb-skel pb-skel--text" style="width:65%"></span></span><span class="pb-skel pb-skel--text" style="width:48px"></span></li>
+    <li class="pb-item"><span class="pb-skel" style="width:28px;height:28px"></span><span><span class="pb-skel pb-skel--text" style="width:55%"></span><span class="pb-skel pb-skel--text" style="width:35%"></span></span><span class="pb-skel pb-skel--text" style="width:48px"></span></li>
+  </ul>
+</div>
+
+</body></html>
