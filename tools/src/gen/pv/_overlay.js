@@ -1,5 +1,4 @@
 /* pbConfirm(opts) → Promise<boolean>. pbToast(opts) → toast element with .update(opts) and .close(). pbInbox(el) wires a bell + inbox. */
-function pbEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 function pbConfirm(o){o=o||{};return new Promise(function(res){var d=document.createElement('dialog');d.className='pb-dialog pb-dialog--sm';var st=o.danger?'down':(o.status||'');
   d.innerHTML='<form method="dialog"><div class="pb-dialog__head">'+(st?'<span class="pb-dialog__icon" data-status="'+st+'"><span class="pb-icon pb-icon--status-'+(st==='info'?'info':st)+'"></span></span>':'')+'<div><h3 class="pb-dialog__title">'+pbEsc(o.title||'Are you sure?')+'</h3></div></div>'+
    '<div class="pb-dialog__body">'+(o.body?'<p>'+o.body+'</p>':'')+(o.typeToConfirm?'<label class="pb-field"><span class="pb-field__label">Type <span class="pb-code-inline" style="text-transform:none;letter-spacing:0">'+pbEsc(o.typeToConfirm)+'</span> to confirm</span><span class="pb-input"><input autocomplete="off" spellcheck="false"></span></label>':'')+'</div>'+

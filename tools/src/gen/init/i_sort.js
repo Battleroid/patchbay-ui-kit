@@ -1,1 +1,1 @@
-document.querySelectorAll('[data-sortable]').forEach(function(l){pbSortable(l);l.addEventListener('reorder',function(e){var o=l.closest('div').parentElement.querySelector('[data-sort-out]');if(o)o.textContent='Order: '+e.detail.join(' → ');});});
+document.querySelectorAll('[data-sortable]').forEach(function(l){pbInit(l);l.addEventListener('reorder',function(e){var o=l.closest('div').parentElement.querySelector('[data-sort-out]');if(o)o.textContent='Order: '+e.detail.join(' → ');});});
