@@ -401,7 +401,7 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .pb-spin { animation: none; }
+  .pb-spin { animation-duration: 2.4s; }
   .pb-btn, .pb-drop { transition: none; }
   .pb-btn:active { transform: none; }
 }

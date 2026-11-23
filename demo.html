@@ -741,8 +741,9 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 .pb-btngroup { display: inline-flex; border-radius: var(--pb-r-md); box-shadow: var(--pb-shadow-sm); }
 .pb-btngroup > .pb-btn { position: relative; box-shadow: none; border-radius: 0; }
 .pb-btngroup > .pb-btn + .pb-btn { margin-left: calc(-1 * var(--stroke-1)); }
-.pb-btngroup > .pb-btn:first-child { border-radius: var(--pb-r-md) 0 0 var(--pb-r-md); }
-.pb-btngroup > .pb-btn:last-child { border-radius: 0 var(--pb-r-md) var(--pb-r-md) 0; }
+.pb-btngroup > .pb-btn:not(.pb-btn ~ .pb-btn) { border-radius: var(--pb-r-md) 0 0 var(--pb-r-md); }
+.pb-btngroup > .pb-btn:not(:has(~ .pb-btn)) { border-radius: 0 var(--pb-r-md) var(--pb-r-md) 0; }
+.pb-btngroup > .pb-btn:only-of-type { border-radius: var(--pb-r-md); }
 .pb-btngroup > .pb-btn:hover, .pb-btngroup > .pb-btn:focus-visible { z-index: 1; }
 .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--accent-hover); }
 [data-edge="hard"] .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--ink); }
@@ -879,6 +880,9 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 .pb-progressbar:indeterminate::-webkit-progress-bar { background: transparent; }
 .pb-progressbar:indeterminate::-moz-progress-bar { background: transparent; }
 @keyframes pb-stripes { to { background-position: 22.63px 0; } }
+@media (prefers-reduced-motion: reduce) { .pb-progressbar:indeterminate { animation-duration: 3s; } }
+.pb-progressbar::-webkit-progress-value { transition: inline-size 200ms linear; }
+.pb-demo-row { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
 .pb-meterbar::-webkit-meter-bar { height: 8px; background: var(--surface-sunk); border: 0; border-radius: var(--pb-r-pill); }
 .pb-meterbar::-webkit-meter-optimum-value { background: var(--ok); }
 .pb-meterbar::-webkit-meter-suboptimum-value { background: var(--warn); }
@@ -1666,7 +1670,7 @@ button.pb-item { width: 100%; font: inherit; text-align: left; background: none;
 /* ---------- Theme switch ---------- */
 .pb-themeswitch .pb-icon { width: 16px; height: 16px; }
 
-@media (prefers-reduced-motion: reduce) { .pb-skel::after, .pb-spinner { animation: none; } .pb-shell__nav, .pb-skip { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .pb-skel::after { animation: none; } .pb-skel { animation: pb-pulse 2s ease-in-out infinite; } .pb-spinner { animation-duration: 2.4s; } .pb-shell__nav, .pb-skip { transition: none; } }
 
 
 /* ---------- Avatar ---------- */
@@ -2282,8 +2286,10 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-json__path code { color: var(--ink); }
 
 /* ---------- Bulk action bar ---------- */
-.pb-bulkbar { position: sticky; bottom: var(--space-3); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); width: max-content; max-width: calc(100% - 2 * var(--space-3)); margin: var(--space-3) auto 0; padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); color: var(--on-night); background: var(--night); border-radius: var(--pb-r-lg); box-shadow: var(--pb-shadow-lg); font: 500 13px/20px var(--font-mono); }
+.pb-bulkbar { position: sticky; bottom: var(--space-3); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); width: max-content; max-width: calc(100% - 2 * var(--space-3)); margin: var(--space-3) auto; padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); color: var(--on-night); background: var(--night); border-radius: var(--pb-r-lg); box-shadow: var(--pb-shadow-lg); font: 500 13px/20px var(--font-mono); }
 .pb-bulkbar[hidden] { display: none; }
+.pb-tablewrap:has(> .pb-bulkbar) { overflow: clip; }
+.pb-bulkbar { box-shadow: var(--pb-shadow-md); }
 [data-edge="hard"] .pb-bulkbar { border-radius: 0; box-shadow: 4px 4px 0 var(--accent); }
 .pb-bulkbar__count { font-variant-numeric: tabular-nums; }
 .pb-bulkbar__sep { width: 1px; height: 20px; background: var(--ink-line); }
@@ -2832,7 +2838,10 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-notify .pb-table td:first-child, .pb-notify .pb-table th:first-child { text-align: left; }
 .pb-notify__ev b { display: block; font: 500 15px/20px var(--font-serif); color: var(--ink); }
 .pb-notify__ev small { font: italic 400 13px/18px var(--font-serif); color: var(--ink-muted); }
-.pb-notify th .pb-choice { justify-content: center; gap: 6px; font: inherit; color: inherit; }
+.pb-notify .pb-table { table-layout: fixed; min-width: 520px; }
+.pb-notify col.pb-notify__ch { width: 112px; }
+.pb-notify th .pb-choice { display: flex; flex-direction: column-reverse; align-items: center; justify-content: center; gap: 6px; font: inherit; color: inherit; }
+.pb-notify th { vertical-align: bottom; }
 .pb-notify tfoot td { background: var(--bg); }
 
 /* ---------- Phone patterns: tab bar and action sheet ---------- */
@@ -2907,9 +2916,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .pb-spin, .pb-progressbar:indeterminate { animation: none; }
-  .pb-check::before, .pb-radio::before, .pb-switch::before, .pb-details > summary::before { transition: none; }
-  .pb-card--outline { transition: none; }
+  .pb-spin { animation-duration: 2.4s; }
   .pb-btn, .pb-drop { transition: none; }
   .pb-btn:active { transform: none; }
 }
@@ -3405,7 +3412,7 @@ Nov 22 03:00:14 restic[812]: done</pre></div>
     <hr class="pb-menu__sep">
     <button class="pb-menu__item pb-menu__item--danger" role="menuitem"><span class="pb-icon pb-icon--trash"></span>Delete<span class="pb-menu__key">⌫</span></button>
   </div>
-</div></div></section><section class="spec spec--wide" id="c-bulkactions"><header class="spec__meta"><h3 class="spec__name">Bulk actions</h3><p class="spec__note">The bulk action bar appears when rows are selected and acts on all of them.</p></header><div class="spec__demo"><div class="pb-tablewrap" data-bulk style="overflow:visible">
+</div></div></section><section class="spec spec--wide" id="c-bulkactions"><header class="spec__meta"><h3 class="spec__name">Bulk actions</h3><p class="spec__note">The bulk action bar appears when rows are selected and acts on all of them.</p></header><div class="spec__demo"><div class="pb-tablewrap" data-bulk>
   <div class="pb-tablescroll">
   <table class="pb-table">
     <thead><tr><th class="pb-cell-check"><input type="checkbox" class="pb-check" aria-label="Select all" data-all></th><th>Container</th><th>Image</th><th>Status</th><th class="pb-num">CPU</th></tr></thead>
@@ -3685,6 +3692,7 @@ zpool status tank
 ```</textarea><div class="pb-md__preview pb-prose" aria-live="polite"></div></div>
   <div class="pb-md__foot"><span data-md-count></span><span>markdown · ⌘B ⌘I ⌘K ⌘E</span></div>
 </div></div></section><section class="spec spec--wide" id="c-notifysettings"><header class="spec__meta"><h3 class="spec__name">Notification settings</h3><p class="spec__note">The notification grid sets which events go to which channel.</p></header><div class="spec__demo"><div class="pb-tablewrap pb-notify" data-notify><div class="pb-tablescroll"><table class="pb-table">
+  <colgroup><col><col class="pb-notify__ch"><col class="pb-notify__ch"><col class="pb-notify__ch"></colgroup>
   <thead><tr><th>Event</th><th><label class="pb-choice"><input type="checkbox" class="pb-check" data-col="1">email</label></th><th><label class="pb-choice"><input type="checkbox" class="pb-check" data-col="2">push</label></th><th><label class="pb-choice"><input type="checkbox" class="pb-check" data-col="3">webhook</label></th></tr></thead>
   <tbody><tr><td class="pb-notify__ev"><b>A backup fails</b><small>Right away, every time.</small></td><td><input type="checkbox" class="pb-check" aria-label="A backup fails by email" checked></td><td><input type="checkbox" class="pb-check" aria-label="A backup fails by push" checked></td><td><input type="checkbox" class="pb-check" aria-label="A backup fails by webhook" checked></td></tr><tr><td class="pb-notify__ev"><b>A pool passes 80%</b><small>Once until it drops below.</small></td><td><input type="checkbox" class="pb-check" aria-label="A pool passes 80% by email" checked></td><td><input type="checkbox" class="pb-check" aria-label="A pool passes 80% by push" checked></td><td><input type="checkbox" class="pb-check" aria-label="A pool passes 80% by webhook"></td></tr><tr><td class="pb-notify__ev"><b>A disk reports errors</b><small>SMART or ZFS checksum errors.</small></td><td><input type="checkbox" class="pb-check" aria-label="A disk reports errors by email" checked></td><td><input type="checkbox" class="pb-check" aria-label="A disk reports errors by push" checked></td><td><input type="checkbox" class="pb-check" aria-label="A disk reports errors by webhook" checked></td></tr><tr><td class="pb-notify__ev"><b>A share is opened</b><small>At most once per share per day.</small></td><td><input type="checkbox" class="pb-check" aria-label="A share is opened by email"></td><td><input type="checkbox" class="pb-check" aria-label="A share is opened by push" checked></td><td><input type="checkbox" class="pb-check" aria-label="A share is opened by webhook"></td></tr><tr><td class="pb-notify__ev"><b>Someone comments</b><small>On shares you own.</small></td><td><input type="checkbox" class="pb-check" aria-label="Someone comments by email" checked></td><td><input type="checkbox" class="pb-check" aria-label="Someone comments by push"></td><td><input type="checkbox" class="pb-check" aria-label="Someone comments by webhook"></td></tr><tr><td class="pb-notify__ev"><b>Weekly summary</b><small>Sunday morning.</small></td><td><input type="checkbox" class="pb-check" aria-label="Weekly summary by email" checked></td><td><input type="checkbox" class="pb-check" aria-label="Weekly summary by push"></td><td><input type="checkbox" class="pb-check" aria-label="Weekly summary by webhook"></td></tr></tbody>
   <tfoot><tr><td><span class="pb-note" style="margin:0">Send a test to check each channel.</span></td><td><button type="button" class="pb-btn pb-btn--sm" data-test="email">Test</button></td><td><button type="button" class="pb-btn pb-btn--sm" data-test="push">Test</button></td><td><button type="button" class="pb-btn pb-btn--sm" data-test="webhook">Test</button></td></tr></tfoot>
@@ -3799,6 +3807,8 @@ services:
   <div class="pb-gauge"><span class="pb-gauge__label">fast · used</span><span class="pb-gauge__value">40%</span><meter class="pb-meterbar" min="0" max="100" low="70" high="90" optimum="10" value="40">40%</meter></div>
   <div class="pb-gauge"><span class="pb-gauge__label">tank · used</span><span class="pb-gauge__value">78%</span><meter class="pb-meterbar" min="0" max="100" low="70" high="90" optimum="10" value="78">78%</meter></div>
   <div class="pb-gauge"><span class="pb-gauge__label">backup · used</span><span class="pb-gauge__value">96%</span><meter class="pb-meterbar" min="0" max="100" low="70" high="90" optimum="10" value="96">96%</meter></div>
+  <div class="pb-gauge" data-demo-progress><span class="pb-gauge__label">Copying 214 photos</span><span class="pb-gauge__value" data-demo-value>0%</span><progress class="pb-progressbar" max="100" value="0">0%</progress></div>
+  <div class="pb-demo-row"><button type="button" class="pb-btn pb-btn--sm" data-demo-run><span class="pb-icon pb-icon--play"></span>Run again</button><button type="button" class="pb-btn pb-btn--primary pb-btn--sm" data-demo-busy><span class="pb-icon pb-icon--refresh"></span>Sync now</button></div>
 </div></div></section><section class="spec" id="c-loading"><header class="spec__meta"><h3 class="spec__name">Loading</h3><p class="spec__note">Loading indicators show that something is on its way.</p></header><div class="spec__demo"><div style="display:grid;gap:20px">
   <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap"><span class="pb-spinner pb-spinner--sm" role="status" aria-label="Loading"></span><span class="pb-spinner" role="status" aria-label="Loading"></span><span class="pb-spinner pb-spinner--lg" role="status" aria-label="Loading"></span><span class="pb-loading" role="status"><span class="pb-spinner pb-spinner--sm"></span>Checking 12 services…</span></div>
   <div class="pb-card" aria-busy="true" aria-label="Loading service" style="padding:16px"><div style="display:flex;gap:12px;align-items:center"><span class="pb-skel pb-skel--circle" style="width:36px;height:36px"></span><div style="flex:1"><span class="pb-skel pb-skel--title"></span><span class="pb-skel pb-skel--text" style="width:70%"></span></div></div><span class="pb-skel pb-skel--block" style="margin-top:12px;height:72px"></span></div>
@@ -3806,6 +3816,11 @@ services:
     <li class="pb-item"><span class="pb-skel" style="width:28px;height:28px"></span><span><span class="pb-skel pb-skel--text" style="width:40%"></span><span class="pb-skel pb-skel--text" style="width:65%"></span></span><span class="pb-skel pb-skel--text" style="width:48px"></span></li>
     <li class="pb-item"><span class="pb-skel" style="width:28px;height:28px"></span><span><span class="pb-skel pb-skel--text" style="width:55%"></span><span class="pb-skel pb-skel--text" style="width:35%"></span></span><span class="pb-skel pb-skel--text" style="width:48px"></span></li>
   </ul>
+  <div data-demo-load>
+    <div class="pb-card" style="padding:16px" data-demo-real hidden><div style="display:flex;gap:12px;align-items:center"><span class="pb-avatar" style="width:36px;height:36px">nc</span><div><b style="display:block;font:500 16px/22px var(--font-serif)">nextcloud</b><span class="pb-mono" style="font-size:12px;color:var(--ink-muted)">nas-01.lan:8080 · up 12 days</span></div></div></div>
+    <div class="pb-card" style="padding:16px" data-demo-skel aria-busy="true" aria-label="Loading service"><div style="display:flex;gap:12px;align-items:center"><span class="pb-skel pb-skel--circle" style="width:36px;height:36px"></span><div style="flex:1"><span class="pb-skel pb-skel--title"></span><span class="pb-skel pb-skel--text" style="width:60%"></span></div></div></div>
+    <div class="pb-demo-row" style="margin-top:12px"><button type="button" class="pb-btn pb-btn--sm" data-demo-reload><span class="pb-icon pb-icon--refresh"></span>Load again</button><span class="pb-loading" data-demo-status role="status"><span class="pb-spinner pb-spinner--sm"></span>Loading nextcloud…</span></div>
+  </div>
 </div></div></section><section class="spec" id="c-tooltip"><header class="spec__meta"><h3 class="spec__name">Tooltip</h3><p class="spec__note">Tooltips are short labels on hover and focus, set with class=&quot;pb-tip&quot; and data-tip=&quot;…&quot;.</p></header><div class="spec__demo"><div style="display:flex;gap:16px;align-items:center;padding:36px 0 0 32px">
   <button class="pb-btn pb-btn--icon pb-tip" data-tip="Copy host" data-tip-open aria-label="Copy host"><span class="pb-icon pb-icon--copy"></span></button>
   <button class="pb-btn pb-btn--icon pb-tip" data-tip="Restart" aria-label="Restart"><span class="pb-icon pb-icon--refresh"></span></button>
@@ -6167,6 +6182,19 @@ document.querySelectorAll('[data-toast]').forEach(function(b){b.addEventListener
 })();
 (function(){
 document.querySelectorAll('[data-inbox]').forEach(pbInbox);
+})();
+(function(){
+document.querySelectorAll('[data-demo-progress]').forEach(function(g){var box=g.parentElement,bar=g.querySelector('progress'),val=g.querySelector('[data-demo-value]'),run=box.querySelector('[data-demo-run]'),busy=box.querySelector('[data-demo-busy]'),t;
+  function go(){clearInterval(t);var v=0;bar.value=0;val.textContent='0%';run.disabled=true;t=setInterval(function(){v=Math.min(100,v+2+Math.random()*4|0);bar.value=v;bar.textContent=v+'%';val.textContent=v<100?v+'%':'done';if(v>=100){clearInterval(t);run.disabled=false;}},120);}
+  run.addEventListener('click',go);var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();go();}},{threshold:0.5});io.observe(g);
+  busy.addEventListener('click',function(){if(busy.getAttribute('aria-busy'))return;var i=busy.querySelector('.pb-icon'),l=busy.lastChild;busy.setAttribute('aria-busy','true');i.classList.add('pb-spin');l.textContent='Syncing';setTimeout(function(){busy.removeAttribute('aria-busy');i.classList.remove('pb-spin');i.className='pb-icon pb-icon--status-ok';l.textContent='Synced';setTimeout(function(){i.className='pb-icon pb-icon--refresh';l.textContent='Sync now';},1600);},2200);});
+});
+})();
+(function(){
+document.querySelectorAll('[data-demo-load]').forEach(function(d){var real=d.querySelector('[data-demo-real]'),skel=d.querySelector('[data-demo-skel]'),st=d.querySelector('[data-demo-status]'),btn=d.querySelector('[data-demo-reload]'),t;
+  function load(){clearTimeout(t);real.hidden=true;skel.hidden=false;st.hidden=false;btn.disabled=true;t=setTimeout(function(){real.hidden=false;skel.hidden=true;st.hidden=true;btn.disabled=false;},2200);}
+  btn.addEventListener('click',load);real.hidden=true;var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();load();}},{threshold:0.5});io.observe(d);
+});
 })();
 (function(){
 

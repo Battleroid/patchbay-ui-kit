@@ -293,7 +293,10 @@
 .pb-notify .pb-table td:first-child, .pb-notify .pb-table th:first-child { text-align: left; }
 .pb-notify__ev b { display: block; font: 500 15px/20px var(--font-serif); color: var(--ink); }
 .pb-notify__ev small { font: italic 400 13px/18px var(--font-serif); color: var(--ink-muted); }
-.pb-notify th .pb-choice { justify-content: center; gap: 6px; font: inherit; color: inherit; }
+.pb-notify .pb-table { table-layout: fixed; min-width: 520px; }
+.pb-notify col.pb-notify__ch { width: 112px; }
+.pb-notify th .pb-choice { display: flex; flex-direction: column-reverse; align-items: center; justify-content: center; gap: 6px; font: inherit; color: inherit; }
+.pb-notify th { vertical-align: bottom; }
 .pb-notify tfoot td { background: var(--bg); }
 
 /* ---------- Phone patterns: tab bar and action sheet ---------- */

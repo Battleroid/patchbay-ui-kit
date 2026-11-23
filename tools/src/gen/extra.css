@@ -133,8 +133,10 @@
 .pb-json__path code { color: var(--ink); }
 
 /* ---------- Bulk action bar ---------- */
-.pb-bulkbar { position: sticky; bottom: var(--space-3); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); width: max-content; max-width: calc(100% - 2 * var(--space-3)); margin: var(--space-3) auto 0; padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); color: var(--on-night); background: var(--night); border-radius: var(--pb-r-lg); box-shadow: var(--pb-shadow-lg); font: 500 13px/20px var(--font-mono); }
+.pb-bulkbar { position: sticky; bottom: var(--space-3); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); width: max-content; max-width: calc(100% - 2 * var(--space-3)); margin: var(--space-3) auto; padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); color: var(--on-night); background: var(--night); border-radius: var(--pb-r-lg); box-shadow: var(--pb-shadow-lg); font: 500 13px/20px var(--font-mono); }
 .pb-bulkbar[hidden] { display: none; }
+.pb-tablewrap:has(> .pb-bulkbar) { overflow: clip; }
+.pb-bulkbar { box-shadow: var(--pb-shadow-md); }
 [data-edge="hard"] .pb-bulkbar { border-radius: 0; box-shadow: 4px 4px 0 var(--accent); }
 .pb-bulkbar__count { font-variant-numeric: tabular-nums; }
 .pb-bulkbar__sep { width: 1px; height: 20px; background: var(--ink-line); }

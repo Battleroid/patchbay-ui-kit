@@ -11,6 +11,14 @@
   <div class="pb-gauge"><span class="pb-gauge__label">fast · used</span><span class="pb-gauge__value">40%</span><meter class="pb-meterbar" min="0" max="100" low="70" high="90" optimum="10" value="40">40%</meter></div>
   <div class="pb-gauge"><span class="pb-gauge__label">tank · used</span><span class="pb-gauge__value">78%</span><meter class="pb-meterbar" min="0" max="100" low="70" high="90" optimum="10" value="78">78%</meter></div>
   <div class="pb-gauge"><span class="pb-gauge__label">backup · used</span><span class="pb-gauge__value">96%</span><meter class="pb-meterbar" min="0" max="100" low="70" high="90" optimum="10" value="96">96%</meter></div>
+  <div class="pb-gauge" data-demo-progress><span class="pb-gauge__label">Copying 214 photos</span><span class="pb-gauge__value" data-demo-value>0%</span><progress class="pb-progressbar" max="100" value="0">0%</progress></div>
+  <div class="pb-demo-row"><button type="button" class="pb-btn pb-btn--sm" data-demo-run><span class="pb-icon pb-icon--play"></span>Run again</button><button type="button" class="pb-btn pb-btn--primary pb-btn--sm" data-demo-busy><span class="pb-icon pb-icon--refresh"></span>Sync now</button></div>
 </div>
-
+<script>
+document.querySelectorAll('[data-demo-progress]').forEach(function(g){var box=g.parentElement,bar=g.querySelector('progress'),val=g.querySelector('[data-demo-value]'),run=box.querySelector('[data-demo-run]'),busy=box.querySelector('[data-demo-busy]'),t;
+  function go(){clearInterval(t);var v=0;bar.value=0;val.textContent='0%';run.disabled=true;t=setInterval(function(){v=Math.min(100,v+2+Math.random()*4|0);bar.value=v;bar.textContent=v+'%';val.textContent=v<100?v+'%':'done';if(v>=100){clearInterval(t);run.disabled=false;}},120);}
+  run.addEventListener('click',go);var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();go();}},{threshold:0.5});io.observe(g);
+  busy.addEventListener('click',function(){if(busy.getAttribute('aria-busy'))return;var i=busy.querySelector('.pb-icon'),l=busy.lastChild;busy.setAttribute('aria-busy','true');i.classList.add('pb-spin');l.textContent='Syncing';setTimeout(function(){busy.removeAttribute('aria-busy');i.classList.remove('pb-spin');i.className='pb-icon pb-icon--status-ok';l.textContent='Synced';setTimeout(function(){i.className='pb-icon pb-icon--refresh';l.textContent='Sync now';},1600);},2200);});
+});
+</script>
 </body></html>

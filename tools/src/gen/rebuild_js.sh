@@ -18,6 +18,8 @@ TextUtils _ui.js,/home/claude/gen/init/i_ago.js /home/claude/gen/init/i_text.js
 Popover _ui.js,/home/claude/gen/init/i_ago.js /home/claude/gen/init/i_popover.js
 SiteBanner /dev/null /home/claude/gen/init/i_dismiss.js
 SkipLink /dev/null /home/claude/gen/init/i_skip.js
+Progress /dev/null /home/claude/gen/init/i_progress.js
+Loading /dev/null /home/claude/gen/init/i_loading.js
 LogViewer _hl.js /home/claude/gen/init/i_log.js
 DiffViewer _hl.js /home/claude/gen/init/i_diff.js
 FileBrowser _hl.js /home/claude/gen/init/i_files.js

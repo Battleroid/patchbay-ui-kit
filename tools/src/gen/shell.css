@@ -192,4 +192,4 @@ button.pb-item { width: 100%; font: inherit; text-align: left; background: none;
 /* ---------- Theme switch ---------- */
 .pb-themeswitch .pb-icon { width: 16px; height: 16px; }
 
-@media (prefers-reduced-motion: reduce) { .pb-skel::after, .pb-spinner { animation: none; } .pb-shell__nav, .pb-skip { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .pb-skel::after { animation: none; } .pb-skel { animation: pb-pulse 2s ease-in-out infinite; } .pb-spinner { animation-duration: 2.4s; } .pb-shell__nav, .pb-skip { transition: none; } }
