@@ -2988,6 +2988,8 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-tabbar[data-n="5"] { --n: 5; }
 .pb-tabbar[data-n="6"] { --n: 6; }
 .pb-sitehead__mobile > .pb-themeswitch { justify-self: start; margin-top: var(--space-2); }
+/* Grid rows for assistive tech; they add no boxes, the days stay items of the 7-column grid. */
+.pb-evcal__row { display: contents; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
