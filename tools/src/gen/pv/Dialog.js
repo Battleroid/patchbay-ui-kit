@@ -89,13 +89,20 @@ function pbCombo(c){var inp=c.querySelector('input'),lb=c.querySelector('.pb-lis
  inp.addEventListener('keydown',function(e){var v=vis();if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(lb.hidden){open(true);return;}setAct(Math.max(0,Math.min(v.length-1,act+(e.key==='ArrowDown'?1:-1))));}
   else if(e.key==='Enter'&&!lb.hidden&&v[act]){e.preventDefault();choose(v[act]);}else if(e.key==='Escape'){close();}});
  inp.addEventListener('blur',close);c.querySelector('[data-combo-toggle]').addEventListener('mousedown',function(e){e.preventDefault();lb.hidden?(inp.focus(),open(true)):close();});}
-function pbTags(box){var inp=box.querySelector('input');
- function add(v){v=v.trim().replace(/,$/,'');if(!v)return;if([].some.call(box.querySelectorAll('.pb-tag'),function(t){return t.firstChild.textContent===v}))return;
-  var t=document.createElement('span');t.className='pb-tag';t.textContent=v;var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Remove '+v);b.innerHTML='<span class="pb-icon pb-icon--close"></span>',pbStyled(b);t.appendChild(b);box.insertBefore(t,inp);box.dispatchEvent(new Event('change',{bubbles:true}));}
- box.addEventListener('click',function(e){var b=e.target.closest('.pb-tag button');if(b){b.parentNode.remove();inp.focus();}else if(e.target===box)inp.focus();});
+function pbTags(box){var inp=box.querySelector('input:not([type=hidden])'),sep=box.dataset.sep||',',hid=box.querySelector('input[type=hidden],[data-tags-input]');
+ if(!hid&&box.dataset.name){hid=document.createElement('input');hid.type='hidden';hid.name=box.dataset.name;box.appendChild(hid);}
+ function vals(){return [].map.call(box.querySelectorAll('.pb-tag'),function(t){return t.firstChild.textContent;});}
+ function sync(fire){if(hid)hid.value=vals().join(sep);if(fire)box.dispatchEvent(new Event('change',{bubbles:true}));}
+ function add(v,quiet){v=String(v).trim().replace(/,$/,'');if(!v)return;if(vals().indexOf(v)>=0)return;
+  var t=document.createElement('span');t.className='pb-tag';t.textContent=v;var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Remove '+v);b.innerHTML='<span class="pb-icon pb-icon--close"></span>';t.appendChild(b);box.insertBefore(t,inp);sync(!quiet);}
+ box.addEventListener('click',function(e){var b=e.target.closest('.pb-tag button');if(b){b.parentNode.remove();sync(true);inp.focus();}else if(e.target===box)inp.focus();});
  inp.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===','||e.key==='Tab'&&inp.value){if(inp.value.trim()){e.preventDefault();add(inp.value);inp.value='';}}
-  else if(e.key==='Backspace'&&!inp.value){var l=box.querySelectorAll('.pb-tag');if(l.length)l[l.length-1].remove();}});
- inp.addEventListener('paste',function(e){var t=(e.clipboardData||window.clipboardData).getData('text');if(/[,\n]/.test(t)){e.preventDefault();t.split(/[,\n]/).forEach(add);}});}
+  else if(e.key==='Backspace'&&!inp.value){var l=box.querySelectorAll('.pb-tag');if(l.length){l[l.length-1].remove();sync(true);}}});
+ inp.addEventListener('paste',function(e){var t=(e.clipboardData||window.clipboardData).getData('text');if(/[,\n]/.test(t)){e.preventDefault();t.split(/[,\n]/).forEach(function(v){add(v);});}});
+ /* el.pbSet(['a','b'] or 'a,b') replaces the tags; el.pbValues() reads them. */
+ box.pbSet=function(v){if(typeof v==='string')v=v.split(sep);box.querySelectorAll('.pb-tag').forEach(function(t){t.remove();});(v||[]).forEach(function(x){add(x,true);});sync(true);};
+ box.pbValues=vals;
+ if(hid&&hid.value&&!box.querySelector('.pb-tag'))hid.value.split(sep).forEach(function(x){add(x,true);});sync(false);}
 function pbOtp(g){var ins=[].slice.call(g.querySelectorAll('input'));
  function done(){var v=ins.map(function(i){return i.value}).join('');var f=g.closest('.pb-field');if(v.length===ins.length){f&&f.setAttribute('data-valid','');g.dispatchEvent(new CustomEvent('complete',{detail:v,bubbles:true}));}else f&&f.removeAttribute('data-valid');}
  ins.forEach(function(inp,i){inp.addEventListener('input',function(){inp.value=inp.value.replace(/\D/g,'').slice(-1);if(inp.value&&ins[i+1])ins[i+1].focus();done();});

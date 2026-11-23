@@ -329,3 +329,15 @@ test('layout: a choice-card legend sits a label gap above the cards', async ({ p
   const gap = await page.locator('[data-test="cards-in-form"] fieldset').evaluate((f) => Math.round(f.querySelector('.pb-choicecard').getBoundingClientRect().top - f.querySelector('legend').getBoundingClientRect().bottom));
   expect(gap).toBe(6);
 });
+test('tags: a hidden field carries the tags and pbSet replaces them', async ({ page }) => {
+  await page.goto('/components/TagInput/example.html');
+  const box = page.locator('[data-test="tags-form"] [data-tags]');
+  await box.locator('input:not([type=hidden])').fill('nas');
+  await box.locator('input:not([type=hidden])').press('Enter');
+  await box.locator('input:not([type=hidden])').fill('backup');
+  await box.locator('input:not([type=hidden])').press('Enter');
+  expect(await page.evaluate(() => new FormData(document.querySelector('[data-test="tags-form"]')).get('labels'))).toBe('nas,backup');
+  await box.evaluate((b) => b.pbSet(['x', 'y', 'z']));
+  await box.locator('.pb-tag button').first().click();
+  expect(await page.evaluate(() => new FormData(document.querySelector('[data-test="tags-form"]')).get('labels'))).toBe('y,z');
+});
