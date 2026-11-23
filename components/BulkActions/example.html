@@ -107,7 +107,7 @@ function pbQuery(el){var S=JSON.parse((el.querySelector('script[type="applicatio
   if(el.dataset.value)el.pbSet(el.dataset.value);}
 
 /* Sortable: drag .pb-sort__handle, or focus it and press Space, arrows, Space (Esc cancels). Fires reorder with the ids. */
-function pbSortable(list){var live=document.createElement('div');live.className='pb-sr';live.setAttribute('aria-live','assertive');list.after(live);var grid=list.classList.contains('pb-sortable--grid');
+function pbSortable(list){var live=document.createElement('div');live.className='pb-sr';live.setAttribute('aria-live','assertive');list.after(live);var grid=list.classList.contains('pb-sortable--grid')||list.classList.contains('pb-sortable--tiles');
   function items(){return Array.from(list.querySelectorAll(':scope > .pb-sort__item'));}
   function label(it){return (it.querySelector('[data-sort-label]')||it).textContent.trim();}
   function num(){items().forEach(function(it,i){var n=it.querySelector('.pb-sort__num');if(n)n.textContent=i+1;});}
