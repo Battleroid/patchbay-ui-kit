@@ -458,3 +458,16 @@ test('css: focus ring, label code, no-wrap cells and stacked groups', async ({ p
   });
   expect(r).toEqual({ input: 'none', wrap: 'solid', code: 'none', group: true });
 });
+test('colorfield: empty is valid unless required', async ({ page }) => {
+  await page.goto('/components/ColorPicker/example.html');
+  const r = await page.evaluate(() => {
+    const mk = (req) => { const l = document.createElement('label'); l.className = 'pb-field';
+      l.innerHTML = '<span class="pb-field__label">C</span><span class="pb-input" data-colorfield><button type="button" class="pb-input__swatch" aria-label="Pick"></button><input value=""' + (req ? ' required' : '') + '></span>';
+      document.body.append(l); pbInit(l); return l; };
+    const a = mk(false), b = mk(true), out = [a.hasAttribute('data-invalid'), b.hasAttribute('data-invalid')];
+    const i = a.querySelector('input'); i.value = 'zz'; i.dispatchEvent(new Event('change')); out.push(a.hasAttribute('data-invalid'));
+    i.value = ''; i.dispatchEvent(new Event('change')); out.push(a.hasAttribute('data-invalid'));
+    return out;
+  });
+  expect(r).toEqual([false, true, true, false]);
+});

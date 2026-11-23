@@ -89,7 +89,9 @@ function pbSwatches(g){var s=[].slice.call(g.querySelectorAll('.pb-swatch'));
 function pbColorField(f){var sw=f.querySelector('.pb-input__swatch'),inp=f.querySelector('input'),pop=document.createElement('div');pop.className='pb-colorpop';pop.setAttribute('popover','');pop.setAttribute('role','dialog');pop.setAttribute('aria-label','Choose a color');
  pop.innerHTML='<span class="pb-eyebrow">kit colors</span><div class="pb-swatches">'+PB_SW.map(function(c){return '<button type="button" class="pb-swatch" data-style="--c:'+c[0]+'" data-hex="'+c[0]+'" aria-label="'+c[1]+'"></button>'}).join('')+'</div><span class="pb-eyebrow">custom</span><div class="pb-swatches"><label class="pb-swatch pb-swatch--custom" aria-label="Custom color"><span class="pb-icon pb-icon--plus"></span><input type="color"></label></div>',pbStyled(pop);
  (f.closest('label,.pb-field')||f).after(pop);
- function set(h){if(!/^#[0-9a-f]{6}$/i.test(h)){f.closest('.pb-field').setAttribute('data-invalid','');return;}f.closest('.pb-field').removeAttribute('data-invalid');h=h.toLowerCase();inp.value=h;sw.style.setProperty('--c',h);pop.querySelectorAll('[data-hex]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.hex===h)});}
+ var fld=f.closest('.pb-field')||f;
+ function set(h){if(!h&&!inp.required){fld.removeAttribute('data-invalid');sw.style.removeProperty('--c');pop.querySelectorAll('[data-hex]').forEach(function(b){b.setAttribute('aria-pressed','false')});return;}
+  if(!/^#[0-9a-f]{6}$/i.test(h)){fld.setAttribute('data-invalid','');return;}fld.removeAttribute('data-invalid');h=h.toLowerCase();inp.value=h;sw.style.setProperty('--c',h);pop.querySelectorAll('[data-hex]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.hex===h)});}
  function place(){pbPlace(f,pop,{gap:6});}
  sw.addEventListener('click',function(){if(pop.matches(':popover-open'))return pop.hidePopover();set(inp.value);pop.showPopover();place();(pop.querySelector('[aria-pressed="true"]')||pop.querySelector('.pb-swatch')).focus();});
  pbOnDoc('scroll',f,function(){if(pop.matches(':popover-open'))place();});pbOnDoc('resize',f,function(){if(pop.matches(':popover-open'))place();});
