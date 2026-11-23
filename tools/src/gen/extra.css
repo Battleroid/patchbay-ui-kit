@@ -266,7 +266,7 @@
 
 /* ---------- Settings page ---------- */
 .pb-settings { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--space-8); align-items: start; }
-.pb-settings__nav { position: sticky; top: var(--space-4); display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.pb-settings__nav { position: sticky; top: calc(var(--pb-head-h, 0px) + var(--space-4)); max-height: calc(100dvh - var(--pb-head-h, 0px) - var(--space-8)); overflow-y: auto; display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
 .pb-settings__nav a { display: flex; align-items: center; gap: var(--space-2); padding: 6px var(--space-3); font: 400 15px/20px var(--font-serif); color: var(--ink-muted); text-decoration: none; border-radius: var(--pb-r-md); }
 .pb-settings__nav a:hover { color: var(--ink); background: var(--surface-sunk); }
 .pb-settings__nav a[aria-current="true"] { color: var(--accent); background: var(--accent-tint); font-weight: 600; }

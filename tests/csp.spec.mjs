@@ -287,3 +287,12 @@ test('layout: a lone link in a mixed button group keeps square sides', async ({ 
   expect(await radius('a')).toBe('0px 0px');
   expect(await radius('button >> nth=0')).not.toBe('0px 0px');
 });
+
+test('layout: sticky navs inside the shell clear the header', async ({ page }) => {
+  await page.goto('/components/AppShell/example.html');
+  const top = await page.evaluate(() => {
+    const ul = document.createElement('ul'); ul.className = 'pb-settings__nav'; document.querySelector('.pb-shell__main').append(ul);
+    return getComputedStyle(ul).top;
+  });
+  expect(top).toBe('72px');
+});
