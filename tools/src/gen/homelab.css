@@ -228,7 +228,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-log__tag:hover { color: var(--ink); background: var(--accent-tint); }
 .pb-log__tag[data-c="1"] { box-shadow: inset 2px 0 0 var(--chart-1); } .pb-log__tag[data-c="2"] { box-shadow: inset 2px 0 0 var(--pop-mint); } .pb-log__tag[data-c="3"] { box-shadow: inset 2px 0 0 var(--pop-yellow); } .pb-log__tag[data-c="4"] { box-shadow: inset 2px 0 0 var(--pop-red); }
 .pb-logx .pb-log__line { cursor: pointer; }
-.pb-logx .pb-log__line[aria-expanded="true"] { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.pb-logx .pb-log__line[data-open="true"] { background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .pb-log__detail { margin: 2px var(--space-3) 6px calc(8ch + 5ch + 2 * var(--space-3) + var(--space-3)); padding: var(--space-2) var(--space-3); font: 400 12px/18px var(--font-mono); white-space: normal; background: var(--surface); border: var(--stroke-1) solid var(--line); border-radius: var(--pb-r-md); }
 .pb-log__detail table { width: 100%; border-collapse: collapse; }
 .pb-log__detail td { padding: 2px 6px 2px 0; vertical-align: middle; }
@@ -238,3 +238,6 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-logx__logql { display: flex; align-items: center; gap: var(--space-2); min-width: 0; flex: 1; }
 .pb-logx__logql code { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 12px/16px var(--font-mono); color: var(--ink); }
 @media (max-width: 640px) { .pb-log__detail { margin-left: var(--space-3); } .pb-logx__bk { grid-template-columns: minmax(0, 1fr); } }
+/* The timestamp is the expand button for a log line (a line holds label buttons, so it cannot be one itself). */
+.pb-logx__toggle { padding: 0; font: inherit; text-align: left; color: var(--ink-muted); background: none; border: 0; cursor: pointer; }
+.pb-logx__toggle:hover { color: var(--ink); text-decoration: underline; }
