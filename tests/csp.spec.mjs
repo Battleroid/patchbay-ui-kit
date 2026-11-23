@@ -446,3 +446,15 @@ test('player: duration shows --:-- or data-duration until metadata loads', async
   });
   expect(r).toEqual(['--:--', '4:12', '4:12']);
 });
+test('css: focus ring, label code, no-wrap cells and stacked groups', async ({ page }) => {
+  await page.goto('/components/TextInput/example.html');
+  await page.locator('.pb-input input').first().focus();
+  await page.keyboard.press('Shift+Tab'); await page.keyboard.press('Tab');
+  const r = await page.evaluate(() => {
+    const i = document.activeElement, wrap = i.closest('.pb-input');
+    const lab = document.createElement('span'); lab.className = 'pb-field__label'; lab.innerHTML = 'Type <span class="pb-code-inline">casey</span>'; document.body.append(lab);
+    const g = document.createElement('div'); g.style.display = 'grid'; g.innerHTML = '<div class="pb-btngroup"><button class="pb-btn">a</button></div>'; document.body.append(g);
+    return { input: getComputedStyle(i).outlineStyle, wrap: getComputedStyle(wrap).outlineStyle, code: getComputedStyle(lab.firstElementChild).textTransform, group: g.firstChild.getBoundingClientRect().width < g.getBoundingClientRect().width };
+  });
+  expect(r).toEqual({ input: 'none', wrap: 'solid', code: 'none', group: true });
+});

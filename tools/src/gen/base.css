@@ -434,3 +434,9 @@ td .pb-pill, .pb-tile .pb-pill, p .pb-pill { vertical-align: middle; line-height
 .pb-prose :is(th, td).pb-num { text-align: right; }
 .pb-prose caption { caption-side: bottom; padding-top: var(--space-2); text-align: left; font: italic 400 14px/20px var(--font-serif); color: var(--ink-muted); }
 [data-edge="hard"] .pb-prose th { border-bottom-color: var(--ink); }
+/* Conjoined controls keep their own width in grid stacks (block variants still stretch). */
+.pb-seg:not(.pb-seg--block), .pb-btngroup { justify-self: start; }
+/* Inline code in an uppercase label keeps its own case and spacing. */
+.pb-field__label .pb-code-inline { text-transform: none; letter-spacing: 0; }
+.pb-progress > span { transition: width 200ms ease; }
+@media (prefers-reduced-motion: reduce) { .pb-progress > span { transition: none; } }

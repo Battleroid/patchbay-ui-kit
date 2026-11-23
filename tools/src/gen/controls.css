@@ -348,11 +348,11 @@
 .pb-table tbody tr[aria-selected="true"] td { background: var(--accent-tint); }
 .pb-table th:first-child, .pb-table td:first-child { padding-left: var(--space-4); }
 .pb-table th:last-child, .pb-table td:last-child { padding-right: var(--space-4); }
-.pb-table .pb-num { text-align: right; font: 400 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; }
+.pb-table .pb-num { white-space: nowrap; text-align: right; font: 400 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; }
 .pb-table th.pb-num { font: 600 11px/14px var(--font-mono); }
-.pb-table .pb-mono { font-size: 13px; color: var(--ink-muted); }
+.pb-table .pb-mono { white-space: nowrap; font-size: 13px; color: var(--ink-muted); }
 .pb-table .pb-cell-check { width: 1%; padding-right: 0; }
-.pb-table .pb-cell-actions { width: 1%; text-align: right; }
+.pb-table .pb-cell-actions { white-space: nowrap; width: 1%; text-align: right; }
 .pb-table__name { font-weight: 600; }
 .pb-th-sort {
   display: inline-flex; align-items: center; gap: 4px; margin: 0 -4px; padding: 2px 4px; font: inherit; letter-spacing: inherit; text-transform: inherit;

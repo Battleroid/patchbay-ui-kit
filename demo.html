@@ -936,11 +936,11 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 .pb-table tbody tr[aria-selected="true"] td { background: var(--accent-tint); }
 .pb-table th:first-child, .pb-table td:first-child { padding-left: var(--space-4); }
 .pb-table th:last-child, .pb-table td:last-child { padding-right: var(--space-4); }
-.pb-table .pb-num { text-align: right; font: 400 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; }
+.pb-table .pb-num { white-space: nowrap; text-align: right; font: 400 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; }
 .pb-table th.pb-num { font: 600 11px/14px var(--font-mono); }
-.pb-table .pb-mono { font-size: 13px; color: var(--ink-muted); }
+.pb-table .pb-mono { white-space: nowrap; font-size: 13px; color: var(--ink-muted); }
 .pb-table .pb-cell-check { width: 1%; padding-right: 0; }
-.pb-table .pb-cell-actions { width: 1%; text-align: right; }
+.pb-table .pb-cell-actions { white-space: nowrap; width: 1%; text-align: right; }
 .pb-table__name { font-weight: 600; }
 .pb-th-sort {
   display: inline-flex; align-items: center; gap: 4px; margin: 0 -4px; padding: 2px 4px; font: inherit; letter-spacing: inherit; text-transform: inherit;
@@ -3027,6 +3027,12 @@ td .pb-pill, .pb-tile .pb-pill, p .pb-pill { vertical-align: middle; line-height
 .pb-prose :is(th, td).pb-num { text-align: right; }
 .pb-prose caption { caption-side: bottom; padding-top: var(--space-2); text-align: left; font: italic 400 14px/20px var(--font-serif); color: var(--ink-muted); }
 [data-edge="hard"] .pb-prose th { border-bottom-color: var(--ink); }
+/* Conjoined controls keep their own width in grid stacks (block variants still stretch). */
+.pb-seg:not(.pb-seg--block), .pb-btngroup { justify-self: start; }
+/* Inline code in an uppercase label keeps its own case and spacing. */
+.pb-field__label .pb-code-inline { text-transform: none; letter-spacing: 0; }
+.pb-progress > span { transition: width 200ms ease; }
+@media (prefers-reduced-motion: reduce) { .pb-progress > span { transition: none; } }
 :root, [data-edge="soft"] {
   --pb-ic-status-ok: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12.5l2.75 2.75L16 9.5'/%3E%3C/svg%3E");
   --pb-ic-status-warn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.5L21.5 20h-19z'/%3E%3Cpath d='M12 10v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
@@ -3703,7 +3709,7 @@ Nov 22 03:00:14 restic[812]: done</pre></div>
   <label class="pb-choice"><input type="checkbox" class="pb-check"><span>Verify after upload<span class="pb-choice__hint">Reads every chunk back. Doubles run time.</span></span></label>
   <label class="pb-choice"><input type="checkbox" class="pb-check" data-indeterminate><span>Select all hosts</span></label>
   <label class="pb-choice"><input type="checkbox" class="pb-check" disabled><span>Encrypt at rest (always on)</span></label>
-</div></div></section><section class="spec" id="c-radio"><header class="spec__meta"><h3 class="spec__name">Radio</h3><p class="spec__note">Radios are native &lt;input type=&quot;radio&quot; class=&quot;pb-radio&quot;&gt; in a fieldset with a legend; they stay round in both edge variants so they never read as checkboxes.</p></header><div class="spec__demo"><fieldset class="pb-choices" style="border:0;margin:0;padding:0">
+</div></div></section><section class="spec" id="c-radio"><header class="spec__meta"><h3 class="spec__name">Radio</h3><p class="spec__note">Radios are native &lt;input type=&quot;radio&quot; class=&quot;pb-radio&quot;&gt; in a fieldset with a legend; they stay round in both edge variants so they never read as checkboxes.</p></header><div class="spec__demo"><fieldset class="pb-choices">
   <legend class="pb-field__label" style="margin-bottom:12px">Retention</legend>
   <label class="pb-choice"><input type="radio" class="pb-radio" name="ret" checked><span>7 days</span></label>
   <label class="pb-choice"><input type="radio" class="pb-radio" name="ret"><span>30 days<span class="pb-choice__hint">Recommended for media.</span></span></label>
