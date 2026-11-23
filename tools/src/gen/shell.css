@@ -48,7 +48,7 @@
   .pb-shell { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "main" "foot"; }
   .pb-shell__navbtn { display: inline-flex; }
   .pb-shell__search { display: none; }
-  .pb-shell__nav { position: fixed; z-index: 60; top: 56px; left: 0; bottom: 0; width: min(300px, 86vw); height: auto; transform: translateX(-105%); transition: transform 160ms; box-shadow: var(--pb-shadow-lg); background: var(--surface); }
+  .pb-shell__nav { position: fixed; z-index: 60; top: var(--pb-head-h, 56px); left: 0; bottom: 0; align-self: stretch; width: min(300px, 86vw); height: auto; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-105%); transition: transform 160ms; box-shadow: var(--pb-shadow-lg); background: var(--surface); }
   .pb-shell[data-nav-open] .pb-shell__nav { transform: none; }
   .pb-shell--contained { overflow: hidden; }
   .pb-shell--contained .pb-shell__nav { position: absolute; top: 56px; bottom: 0; height: auto; }

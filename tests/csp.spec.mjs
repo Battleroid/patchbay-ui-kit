@@ -262,3 +262,28 @@ test('static: no inline style, eval or new Function in the bundles', () => {
     expect(bad, f).toEqual([]);
   }
 });
+
+test('layout: the phone drawer stays under the header with a long nav', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/components/AppShell/example.html');
+  await page.evaluate(() => {
+    const list = document.querySelector('.pb-shell__nav .pb-nav');
+    for (let i = 0; i < 25; i++) { const li = document.createElement('li'); li.innerHTML = '<a class="pb-nav__item" href="#">Item ' + i + '</a>'; list.append(li); }
+  });
+  await page.locator('[data-nav-toggle]').first().click();
+  const r = await page.evaluate(() => {
+    const sh = document.querySelector('.pb-shell'), nav = sh.querySelector('.pb-shell__nav'), head = sh.querySelector('.pb-shell__head').getBoundingClientRect(), n = nav.getBoundingClientRect();
+    return { top: n.top, head: head.bottom, bottom: n.bottom, vh: innerHeight, scrolls: nav.scrollHeight > nav.clientHeight };
+  });
+  expect(r.top).toBeCloseTo(r.head, 0);
+  expect(r.bottom).toBeCloseTo(r.vh, 0);
+  expect(r.scrolls).toBe(true);
+});
+
+test('layout: a lone link in a mixed button group keeps square sides', async ({ page }) => {
+  await page.goto('/components/ButtonGroup/example.html');
+  const g = page.locator('[data-test="mixed"]');
+  const radius = (sel) => g.locator(sel).evaluate((n) => getComputedStyle(n).borderTopLeftRadius + ' ' + getComputedStyle(n).borderTopRightRadius);
+  expect(await radius('a')).toBe('0px 0px');
+  expect(await radius('button >> nth=0')).not.toBe('0px 0px');
+});

@@ -8,3 +8,4 @@ The app shell is the frame every app uses: header, side navigation, main area an
 - Under 900px the nav becomes a drawer: `pbShell(el)` wires the toggle, Escape and outside clicks. `pb-shell--contained` keeps the shell inside a box for previews.
 - Breakpoints line up: under 900px the nav becomes a drawer and `pb-layout` stacks its aside under the content (inside a narrow container it stacks under 720px of its own width).
 - Page header: `.pb-pagehead` holds `h1.pb-pagehead__title`, an optional `.pb-pagehead__meta` line under it (mono, muted: owner, size, updated time, a badge) distinct from the prose `.pb-pagehead__desc`, and `.pb-pagehead__actions`.
+- Under 900px the nav is a fixed drawer from under the header to the bottom of the viewport; a long nav scrolls inside it.
