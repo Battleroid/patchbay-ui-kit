@@ -148,6 +148,8 @@
 .pb-seg > label:hover { background: var(--surface-sunk); }
 .pb-seg > label:has(input:checked) { background: var(--accent); color: var(--on-accent); }
 .pb-seg > label:has(input:focus-visible) { outline: var(--stroke-2) solid var(--ink); outline-offset: -4px; }
+/* The ink ring is 2.1:1 on an accent fill; a selected segment rings in on-accent (7:1). */
+.pb-seg > label:has(input:checked):has(input:focus-visible) { outline-color: var(--on-accent); }
 .pb-seg > label:has(input:disabled) { color: var(--ink-muted); background: var(--surface-sunk); cursor: not-allowed; }
 .pb-seg .pb-icon { width: 16px; height: 16px; }
 .pb-seg--sm > label { height: calc(var(--size-control-sm) - 2px); padding: 0 var(--space-2); font-size: var(--pb-text-12); }
