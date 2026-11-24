@@ -214,7 +214,9 @@
 .pb-lightbox__thumbs button[aria-current="true"] { border-color: var(--pop-mint); opacity: 1; }
 .pb-lightbox__thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
 [data-edge="hard"] .pb-lightbox__nav { border-radius: 0; }
-@media (max-width: 600px) { .pb-lightbox__stage img { max-width: 100%; } .pb-lightbox__nav { display: none; } .pb-lightbox__thumbs { justify-content: flex-start; } }
+/* Phones: the arrows stay (swiping is not discoverable) but move to the stage's lower corners, over the picture; touch targets are 44px. */
+@media (max-width: 640px) { .pb-lightbox__stage img { max-width: 100%; } .pb-lightbox__nav { top: auto; inset-block-end: var(--space-3); margin-top: 0; } .pb-lightbox__thumbs { justify-content: flex-start; } }
+@media (pointer: coarse) { .pb-lightbox .pb-player__btn { min-inline-size: 44px; min-block-size: 44px; } }
 
 /* ---------- QR code ---------- */
 .pb-qr { display: inline-grid; justify-items: center; gap: var(--space-3); padding: var(--space-4); background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); }
