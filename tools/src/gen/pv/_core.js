@@ -59,12 +59,12 @@ function pbKey(c){var A=pbApple,M={mod:A?'⌘':'Ctrl',cmd:'⌘',meta:A?'⌘':'Me
 /* <span class="pb-kbd" data-kbd="mod+K"> shows the hint for the platform. */
 function pbKbd(el){el.textContent=pbKey(el.getAttribute('data-kbd'));}
 /* pbAnnounce(text, {assertive}) speaks a short message through a shared live region (polite, or assertive for errors). pbInit creates both regions;
-   one created late, or moved into an open modal dialog (the page behind a modal is inert), gets a moment to register before the text lands. */
+   a region attached less than 150 ms ago (created late, or moved into an open modal dialog, since the page behind a modal is inert) waits out the rest before the text lands. */
 var pbLive={};
 function pbLiveRegion(k,host){host=host||document.body;var r=pbLive[k],fresh=false;if(!r){r=pbLive[k]=document.createElement('div');r.className='pb-sr';r.setAttribute('aria-live',k);r.setAttribute('aria-atomic','true');r.setAttribute('data-pb-live',k);}
-  if(r.parentNode!==host){host.appendChild(r);fresh=true;}return fresh;}
+  if(r.parentNode!==host){host.appendChild(r);r.__at=Date.now();fresh=true;}return fresh;}
 function pbAnnounce(msg,o){o=o||{};var k=o.assertive?'assertive':'polite',m=null;try{m=[].slice.call(document.querySelectorAll('dialog:modal')).pop()||null;}catch(e){}
-  var fresh=pbLiveRegion(k,m),r=pbLive[k];clearTimeout(r.__t);r.textContent='';r.__t=setTimeout(function(){r.textContent=String(msg==null?'':msg);},fresh?150:40);}
+  pbLiveRegion(k,m);var r=pbLive[k],wait=Math.max(40,150-(Date.now()-(r.__at||0)));clearTimeout(r.__t);r.textContent='';r.__t=setTimeout(function(){r.textContent=String(msg==null?'':msg);},wait);}
 /* pbFocusNear(el): call it before el leaves the page. If focus is inside el, it moves to the next focusable thing after el, else the one before, else el's container. */
 var PB_FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])';
 function pbFocusNear(el){var a=document.activeElement;if(!el||!a||!el.contains(a))return null;
