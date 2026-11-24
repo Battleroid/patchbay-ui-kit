@@ -55,13 +55,13 @@
   .pb-shell:not([data-nav-open]) .pb-shell__nav { visibility: hidden; transition: transform 160ms, visibility 0s 160ms; }
   .pb-shell[data-nav-open] > .pb-shell__scrim { display: block; position: fixed; z-index: 59; inset: var(--pb-head-h, 56px) 0 0 0; background: color-mix(in srgb, var(--night) 45%, transparent); }
   .pb-shell--contained[data-nav-open] > .pb-shell__scrim { position: absolute; }
-}
-@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
-  .pb-shell:not([data-nav-open]) .pb-shell__nav { transition: none; }
   .pb-shell--contained { overflow: hidden; }
   .pb-shell--contained .pb-shell__nav { position: absolute; top: var(--pb-head-h); bottom: 0; height: auto; }
   .pb-shell__main { padding: var(--space-4) var(--space-4) var(--space-8); }
   .pb-shell__foot { padding: var(--space-4); }
+}
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .pb-shell:not([data-nav-open]) .pb-shell__nav { transition: none; }
 }
 
 /* ---------- Nav list ---------- */
