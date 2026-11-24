@@ -41,7 +41,7 @@ function pbPlayer(fig){
   vol.addEventListener('input',function(){setVol(vol.value/100);});
   bSpeed.addEventListener('click',function(){if(menu.matches(':popover-open'))return menu.hidePopover();menu.showPopover();var r=bSpeed.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(r.right-menu.offsetWidth,innerWidth-menu.offsetWidth-8))+'px';menu.style.top=Math.max(8,r.top-menu.offsetHeight-6)+'px';(menu.querySelector('[aria-checked="true"]')||menu.firstChild).focus();});
   menu.addEventListener('click',function(e){var b=e.target.closest('[data-rate]');if(b){v.playbackRate=+b.dataset.rate;menu.hidePopover();bSpeed.focus();}});
-  menu.addEventListener('keydown',function(e){var it=[].slice.call(menu.children),i=it.indexOf(document.activeElement);if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();it[(i+(e.key==='ArrowDown'?1:-1)+it.length)%it.length].focus();}});
+  pbListKeys(menu,{selector:'[data-rate]'});
   if(bCC){var tracks=function(){return [].filter.call(v.textTracks,function(t){return t.kind==='captions'||t.kind==='subtitles'})};
     function ccSync(){var t=tracks();bCC.hidden=!t.length;bCC.setAttribute('aria-pressed',t.some(function(x){return x.mode==='showing'}));}
     v.textTracks.addEventListener('addtrack',ccSync);v.textTracks.addEventListener('change',ccSync);ccSync();
