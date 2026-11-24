@@ -49,8 +49,8 @@
   .pb-shell { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "main" "foot"; }
   .pb-shell__navbtn { display: inline-flex; }
   /* Icon-only on small screens: the label stays for assistive tech (font-size 0), the hint goes. */
-  .pb-shell__search { flex: none; width: 44px; height: 44px; padding: 0; gap: 0; margin-inline-start: auto; font-size: 0; justify-content: center; }
-  .pb-shell__search .pb-kbd { display: none; }
+  .pb-shell .pb-shell__search { flex: none; width: 44px; height: 44px; padding: 0; gap: 0; margin-inline-start: auto; font-size: 0; justify-content: center; }
+  .pb-shell .pb-shell__search .pb-kbd { display: none; }
   .pb-shell__nav { position: fixed; z-index: var(--pb-z-modal); top: var(--pb-head-h, 56px); inset-inline-start: 0; bottom: 0; align-self: stretch; width: min(300px, 86vw); height: auto; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-105%); transition: transform var(--pb-dur-2); box-shadow: var(--pb-shadow-lg); background: var(--surface); }
   .pb-shell[data-nav-open] .pb-shell__nav { transform: none; }
   /* Closed, the drawer is out of the tab order too (not only off screen); visibility waits for the slide-out. */

@@ -192,6 +192,7 @@ button[aria-busy="true"] { cursor: progress; pointer-events: none; opacity: 0.75
 .pb-table :is(td, th):has(> .pb-check) { position: relative; }
 .pb-table :is(td, th) > .pb-check { position: static; }
 .pb-table :is(td, th) > .pb-check::after { content: ""; position: absolute; inset: 0; cursor: pointer; }
-/* NotifySettings: the event column stays put while the channels scroll. */
-.pb-notify .pb-table :is(td, th):first-child { position: sticky; inset-inline-start: 0; z-index: var(--pb-z-raised); background: var(--surface); box-shadow: inset -1px 0 0 var(--line); }
-.pb-notify .pb-notify__all td:first-child, .pb-notify tfoot td:first-child { background: var(--bg); }
+/* NotifySettings: the event column stays put while the channels scroll (the divider shows only on a phone). */
+.pb-notify .pb-table :is(td, th):first-child { position: sticky; inset-inline-start: 0; z-index: var(--pb-z-raised); background: var(--surface); }
+.pb-notify .pb-table .pb-notify__all td:first-child, .pb-notify .pb-table tfoot td:first-child { background: var(--bg); }
+@media (max-width: 480px) { .pb-notify .pb-table :is(td, th):first-child { box-shadow: inset -1px 0 0 var(--line); } }

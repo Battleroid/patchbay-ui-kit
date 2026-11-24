@@ -67,3 +67,71 @@ test('dir=rtl: a nav count moves from the inline end to the inline start', async
   const rtl = await pos();
   expect(rtl.start).toBeLessThan(rtl.end);
 });
+
+test('reduced motion stops spinners, pulses, stripes and the skeleton; normal motion keeps them', async ({ browser }) => {
+  const probe = async (reducedMotion) => {
+    const ctx = await browser.newContext({ reducedMotion });
+    const page = await ctx.newPage();
+    await page.goto('/demo.html');
+    const r = await page.evaluate(() => {
+      const make = (html) => { const d = document.createElement('div'); d.className = 'pb'; d.innerHTML = html; document.body.append(d); return d.firstElementChild; };
+      const out = {};
+      const items = {
+        spin: '<span class="pb-icon pb-icon--spin"></span>',
+        spinner: '<span class="pb-spinner"></span>',
+        skel: '<div class="pb-skel"></div>',
+        progress: '<progress class="pb-progressbar"></progress>',
+        live: '<div class="pb-log"><span class="pb-log__live"></span></div>',
+      };
+      for (const [k, h] of Object.entries(items)) {
+        const el = make(h);
+        out[k] = k === 'live' ? getComputedStyle(el.firstElementChild, '::before').animationName : getComputedStyle(el).animationName;
+      }
+      return out;
+    });
+    await ctx.close();
+    return r;
+  };
+  const reduce = await probe('reduce');
+  for (const [k, v] of Object.entries(reduce)) expect(v, `${k} under reduce`).toBe('none');
+  const normal = await probe('no-preference');
+  for (const k of ['spin', 'spinner', 'progress', 'live']) expect(normal[k], `${k} normally`).not.toBe('none');
+});
+
+test('the active option in a listbox is more than a faint tint', async ({ page }) => {
+  await open(page);
+  const c = await page.evaluate(() => {
+    const l = document.createElement('div'); l.className = 'pb pb-listbox'; l.innerHTML = '<div class="pb-option" data-active>One</div>'; document.body.append(l);
+    return getComputedStyle(l.firstElementChild).boxShadow;
+  });
+  expect(c).toContain('3px');
+});
+
+test('a Card marked aria-current shows a tint and a check, not only a ring', async ({ page }) => {
+  await open(page);
+  const r = await page.evaluate(() => {
+    const d = document.createElement('div'); d.className = 'pb pb-card pb-card--outline'; d.setAttribute('aria-current', 'true'); document.body.append(d);
+    return { bg: getComputedStyle(d).backgroundColor, check: getComputedStyle(d, '::after').content };
+  });
+  expect(r.bg).not.toBe('rgba(0, 0, 0, 0)');
+  expect(r.check).not.toBe('none');
+});
+
+test('EventCalendar agenda chips keep their text on a narrow container', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await open(page);
+  const w = await page.evaluate(() => {
+    const el = document.querySelector('.pb-evcal__agenda .pb-evcal__ev');
+    return el ? el.getBoundingClientRect().width : null;
+  });
+  if (w !== null) expect(w).toBeGreaterThan(40);
+});
+
+test('an ImageViewer video tile always shows its play badge', async ({ page }) => {
+  await open(page);
+  const c = await page.evaluate(() => {
+    const a = document.querySelector('.pb-gallery a[data-kind="video"]');
+    return a ? getComputedStyle(a, '::before').content : null;
+  });
+  if (c !== null) expect(c).not.toBe('none');
+});
