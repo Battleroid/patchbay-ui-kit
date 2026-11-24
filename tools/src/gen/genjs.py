@@ -1,6 +1,8 @@
+import os as _os
+ROOT=(_os.environ.get('PB_WORK') or _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace(_os.sep,'/')
 # Writes patchbay.js (classic script) and patchbay.mjs (ES module): pv/_core.js, the shared behaviors and the pbHook list
 # from pv/_hooks.js, in scripts.json order. Same body; the classic file adds the data-pb-auto runner, the module adds exports.
-import sys; sys.path.insert(0,'/home/claude/gen')
+import sys; sys.path.insert(0,ROOT+'/gen')
 import pbscripts as S
 HEAD='''/* Patchbay behaviors. Load after the markup and call pbInit() (or pbInit(el) for markup added later; it binds each element once),
    or add data-pb-auto to this script tag to run pbInit() on DOMContentLoaded. pbInit(root, {only, skip}) limits it by hook name (pbInit.hooks).
@@ -15,6 +17,6 @@ EXPORTS=['pbInit','pbConfirm','pbToast','pbInbox','pbTheme','pbPlace','pbCalenda
 body=S.bundle(); S.check('patchbay.js',body)
 miss=[e for e in EXPORTS if e not in S.defined(body)]
 if miss: S.ERR.append('patchbay.mjs exports undefined '+', '.join(miss))
-open('/home/claude/gen/patchbay.js','w').write(HEAD+body+AUTO)
-open('/home/claude/gen/patchbay.mjs','w').write(MHEAD+body+'export { '+', '.join(EXPORTS)+' };\nexport default pbInit;\n')
+open(ROOT+'/gen/patchbay.js','w').write(HEAD+body+AUTO)
+open(ROOT+'/gen/patchbay.mjs','w').write(MHEAD+body+'export { '+', '.join(EXPORTS)+' };\nexport default pbInit;\n')
 if S.ERR: raise SystemExit('\n'.join(S.ERR))
