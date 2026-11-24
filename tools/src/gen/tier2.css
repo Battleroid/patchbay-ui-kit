@@ -178,6 +178,12 @@
 .pb-gallery a { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-sunk); border-radius: var(--pb-r-md); }
 .pb-gallery img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--pb-dur-2); }
 .pb-gallery a:hover img { transform: scale(1.03); }
+/* A video tile always shows a play badge: a scrim disc with the play glyph on it. */
+.pb-gallery a[data-kind="video"]::before, .pb-gallery a[data-kind="video"]::after { content: ""; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; pointer-events: none; }
+.pb-gallery a[data-kind="video"]::before { background: var(--scrim); border-radius: 50%; }
+.pb-gallery a[data-kind="video"]::after { background: var(--on-scrim); -webkit-mask: var(--pb-ic-play) center / 20px no-repeat; mask: var(--pb-ic-play) center / 20px no-repeat; }
+[data-edge="hard"] .pb-gallery a[data-kind="video"]::before { border-radius: 0; }
+:dir(rtl) .pb-gallery a[data-kind="video"]::before, :dir(rtl) .pb-gallery a[data-kind="video"]::after { margin: -20px -20px 0 0; }
 .pb-gallery a:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
 [data-edge="hard"] .pb-gallery a { box-shadow: inset 0 0 0 1px var(--ink); }
 .pb-lightbox { width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh; margin: 0; padding: 0; color: var(--on-night); background: var(--night); border: 0; border-radius: 0; }

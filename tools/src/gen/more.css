@@ -254,7 +254,8 @@
 .pb-evcal__agenda .pb-evcal__ev { height: auto; padding: 8px 10px; font-size: var(--pb-text-13); line-height: 18px; }
 .pb-evcal__legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font: 400 var(--pb-text-12)/16px var(--font-mono); color: var(--ink-muted); }
 .pb-evcal__legend i { display: inline-block; width: 10px; height: 10px; margin-inline-end: 6px; vertical-align: -1px; background: var(--c); border-radius: 2px; }
-@container pbcal (max-width: 620px) { .pb-evcal__day { min-height: 64px; } .pb-evcal__ev span, .pb-evcal__ev::after { display: none; } .pb-evcal__ev { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: var(--c, var(--accent)); justify-self: start; } .pb-evcal__ev b { display: none; } .pb-evcal__day { grid-template-columns: repeat(auto-fill, 8px); grid-auto-rows: min-content; } .pb-evcal__n { grid-column: 1 / -1; } .pb-evcal__more { grid-column: 1 / -1; } }
+/* Only the month grid collapses events to dots; the agenda keeps full chips. */
+@container pbcal (max-width: 620px) { .pb-evcal__day { min-height: 64px; } .pb-evcal__grid .pb-evcal__ev span, .pb-evcal__grid .pb-evcal__ev::after { display: none; } .pb-evcal__grid .pb-evcal__ev { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: var(--c, var(--accent)); justify-self: start; } .pb-evcal__grid .pb-evcal__ev b { display: none; } .pb-evcal__day { grid-template-columns: repeat(auto-fill, 8px); grid-auto-rows: min-content; } .pb-evcal__n { grid-column: 1 / -1; } .pb-evcal__more { grid-column: 1 / -1; } }
 .pb-evcal { container: pbcal / inline-size; }
 
 /* ---------- Markdown editor ---------- */
