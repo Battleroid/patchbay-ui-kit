@@ -1,5 +1,6 @@
 /* ---------- Media player ---------- */
 .pb-player {
+  container: pbplayer / inline-size;
   --pb-seek-fill: var(--accent); --pb-seek-buf: var(--line-strong); --pb-seek-rest: var(--surface-sunk);
   position: relative; display: grid; margin: 0; color: var(--ink); background: var(--surface);
   border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); overflow: hidden;
@@ -90,5 +91,6 @@
 /* Inside a media card */
 .pb-media__frame--player { aspect-ratio: auto; display: block; background: var(--night); }
 .pb-media__frame--player .pb-player { border: 0; border-radius: 0; }
-@media (max-width: 480px) { .pb-player__volrange, .pb-player [data-pip], .pb-player [data-back], .pb-player [data-fwd] { display: none; } }
+/* Compact controls follow the player's own width, so a player in a narrow card gets them too. */
+@container pbplayer (max-width: 480px) { .pb-player__volrange, .pb-player [data-pip], .pb-player [data-back], .pb-player [data-fwd] { display: none; } }
 @media (prefers-reduced-motion: reduce) { .pb-player__spinner { animation: none; } .pb-player__bar { transition: none; } }
