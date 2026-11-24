@@ -1,2 +1,2 @@
 document.querySelectorAll('[data-session-demo]').forEach(function(b){var w=b.parentElement,st=w.querySelector('.pb-session'),d=st.cloneNode(true);d.removeAttribute('open');d.removeAttribute('style');d.id='';w.appendChild(d);pbInit(d);var n=w.querySelector('[data-session-out-note]');
-  b.addEventListener('click',function(){d.pbStart(20);});d.addEventListener('stay',function(){n.textContent='Session extended.';});d.addEventListener('expire',function(){n.textContent='Signed out.';});});
+  b.addEventListener('click',function(){d.pbStart(20);});d.addEventListener('pb:stay',function(){n.textContent='Session extended.';});d.addEventListener('pb:expire',function(){n.textContent='Signed out.';});});

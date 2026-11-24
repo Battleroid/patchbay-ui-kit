@@ -24,11 +24,11 @@ def frag(n):
     return b,js
 SECTIONS=[
  ('helpers','Theme and text',['ThemeSwitch','Density','TextUtils','Scrollbars','AppIcons']),
- ('actions','Actions',['Button','ButtonGroup','Segmented','Menu','Link','CommandPalette','ContextMenu','BulkActions','Shortcuts']),
- ('forms','Forms',['TextInput','InputTypes','Select','Combobox','TagInput','DatePicker','TimePicker','ColorPicker','CodeInput','CopyField','Checkbox','Radio','Switch','ChoiceCard','Range','DualRange','KeyValue','Fieldset','ErrorSummary','QueryFilter','MarkdownEditor','NotifySettings','CodeArea','DropZone']),
- ('indicators','Indicators',['Badge','Pill','Notice','Toast','Notifications','Progress','Loading','Tooltip','Popover','Avatar','SiteBanner','UploadQueue']),
+ ('actions','Actions',['Button','ButtonGroup','Segmented','Menu','Link','CommandPalette','ContextMenu','BulkActions','Shortcuts','ConfirmAction','ShareLink']),
+ ('forms','Forms',['TextInput','InputTypes','Select','Combobox','TagInput','DatePicker','TimePicker','ColorPicker','CodeInput','CopyField','Checkbox','Radio','Switch','ChoiceCard','Range','DualRange','KeyValue','Fieldset','ErrorSummary','QueryFilter','MarkdownEditor','NotifySettings','CodeArea','DropZone','AutoSubmit']),
+ ('indicators','Indicators',['Badge','Pill','Notice','Toast','Notifications','Progress','Loading','Tooltip','Popover','Avatar','SiteBanner','UploadQueue','BusyRegion','StorageRing']),
  ('data','Data',['Chart','ChartGround','Sparkline','StatTile','DataTable','DetailList','TreeView','Timeline','TableTools','Diagram','Flow','TimeRange','Heatmap','Gauge','BarChart','Histogram','JsonViewer','EventCalendar','VirtualList','QRCode']),
- ('layout','Layout',['Card','ListItem','Tabs','Disclosure','Breadcrumbs','Steps','Pagination','EmptyState','Resizable','Sortable','CommentThread','MobileNav','SessionTimeout','Dialog','ImageViewer','MediaPlayer','Media','MediaList','Prose','SkipLink']),
+ ('layout','Layout',['Card','ListItem','Tabs','Disclosure','Breadcrumbs','Steps','Pagination','EmptyState','Resizable','Sortable','CommentThread','MobileNav','SessionTimeout','Dialog','ImageViewer','MediaPlayer','Media','MediaList','Prose','SkipLink','MediaState','CompactVariants']),
  ('homelab','Homelab',['LogViewer','LogExplorer','ShareDialog','FilePreview','Terminal','DiffViewer','FileBrowser','CronBuilder','StorageBar','Rack']),
  ('pages','Pages',['SiteHeader','AppShell','Dashboard','SettingsPage','SignIn','ApiTokens','PrintReport','AlertEmail','StatusPage']),
 ]

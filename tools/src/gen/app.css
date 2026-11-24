@@ -1,1 +1,111 @@
-/* ---------- App patterns (busy regions, share link, storage ring, compact result and tiles) ---------- */
+/* ---------- App patterns: bulk grids, upload processing, busy regions, share link, storage ring, media state, compact variants ---------- */
+
+/* Bulk selection in grids and lists. Rows are [data-bulk-item]; a selected one carries data-selected. */
+.pb-bulkall { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; font: 400 14px/20px var(--font-serif); color: var(--ink-muted); }
+.pb-bulkgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-2); }
+.pb-bulkgrid > li { display: flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-2) var(--space-3); background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); }
+[data-bulk-item]:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+.pb-bulkgrid > li[data-selected], .pb-item[data-selected] { background: var(--accent-tint); border-color: var(--accent); }
+
+/* Upload queue: the server is processing a finished transfer. */
+@keyframes pb-upq-proc { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+.pb-upq__item[data-state="processing"] .pb-upq__bar span { width: 40%; animation: pb-upq-proc 1.2s ease-in-out infinite; }
+.pb-upq__item[data-state="processing"] > .pb-icon { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .pb-upq__item[data-state="processing"] .pb-upq__bar span { width: 100%; opacity: 0.6; animation: none; } }
+.pb-upq__foot { flex-wrap: wrap; }
+
+/* Busy regions: a region with aria-busy="true" dims its content, ignores the pointer and shows a spinner, all after 300 ms so a quick swap never flashes.
+   The kit's own loading parts (the inbox panel, a lazy tree item) keep their own look; data-busy="off" opts any region out. */
+@keyframes pb-busy-show { to { opacity: 1; } }
+@keyframes pb-busy-dim { to { opacity: 0.45; } }
+@keyframes pb-busy-spin { to { transform: rotate(360deg); } }
+@keyframes pb-busybar { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+:where([aria-busy="true"]) { position: relative; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"]) { pointer-events: none; cursor: progress; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"]) > * { animation: pb-busy-dim 150ms linear 300ms forwards; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"])::after {
+  content: ""; position: absolute; inset-block-start: calc(50% - 12px); inset-inline-start: calc(50% - 12px); width: 24px; height: 24px; box-sizing: border-box;
+  border: 3px solid var(--line-strong); border-block-start-color: var(--accent); border-radius: 50%; opacity: 0; pointer-events: none;
+  animation: pb-busy-show 1ms linear 300ms forwards, pb-busy-spin 0.8s linear infinite;
+}
+.pb-busybar { position: fixed; inset: 0 0 auto 0; z-index: 200; height: 3px; overflow: hidden; pointer-events: none; opacity: 0; animation: pb-busy-show 1ms linear 300ms forwards; }
+.pb-busybar[hidden] { display: none; }
+.pb-busybar > span { display: block; width: 40%; height: 100%; background: var(--accent); animation: pb-busybar 1.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  [aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"])::after { border-color: var(--accent) var(--line-strong) var(--line-strong) var(--line-strong); animation: pb-busy-show 1ms linear 300ms forwards; }
+  .pb-busybar > span { width: 100%; opacity: 0.6; animation: none; }
+}
+
+/* Media state: the stand-in for a preview still being made, and the hover or focus teaser over a poster. */
+.pb-proc { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--ink-muted); flex: none; }
+.pb-proc__skel { width: 36px; height: 36px; flex: none; border-radius: var(--pb-r-md); }
+.pb-proc__word { font: 400 12px/16px var(--font-mono); white-space: nowrap; }
+.pb-proc--tile { position: relative; display: grid; place-items: center; align-content: center; width: 100%; height: 100%; }
+.pb-proc--tile .pb-proc__fill { position: absolute; inset: 0; border-radius: 0; }
+.pb-proc--tile .pb-proc__word { position: relative; }
+.pb-proc--note { display: flex; margin: 0; }
+.pb-proc--note .pb-proc__skel { width: 16px; height: 16px; }
+.pb-proc[data-state="failed"] { color: var(--down); }
+.pb-proc[data-state="failed"] .pb-icon { width: 20px; height: 20px; }
+:where([data-teaser-frame]) { position: relative; }
+.pb-teaser__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: var(--ink); opacity: 0; transition: opacity 120ms ease-out; pointer-events: none; }
+.pb-teaser__video[data-state="on"] { opacity: 1; }
+.pb-teaser__progress { position: absolute; inset: auto 0 0 0; grid-column: auto; width: auto; height: 3px; border-radius: 0; background: transparent; opacity: 0; transition: opacity 120ms ease-out; pointer-events: none; }
+.pb-teaser__progress[data-state="on"] { opacity: 1; }
+.pb-teaser__progress > span { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pb-teaser__video, .pb-teaser__progress { transition: none; } }
+
+/* ShareLink: Copy link and a QR popover as one group. */
+[data-sharelink] { display: contents; }
+.pb-sharelink { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); max-width: 100%; }
+.pb-sharelink__url { min-width: 0; max-width: min(36ch, 100%); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.pb-qr--bare { padding: 0; border: 0; background: transparent; box-shadow: none; }
+
+/* StorageRing: a compact usage ring for app headers, with a breakdown popover. */
+.pb-ring { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: var(--pb-r-pill); background: transparent; color: var(--ink); cursor: pointer; }
+.pb-ring:hover { background: var(--surface-sunk); }
+.pb-ring:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+.pb-ring__svg { display: block; width: 22px; height: 22px; transform: rotate(-90deg); }
+.pb-ring__track, .pb-ring__arc { fill: none; stroke-width: 3; }
+.pb-ring__track { stroke: var(--line-strong); }
+.pb-ring__arc { stroke: var(--accent); }
+.pb-ring[data-level="warn"] .pb-ring__arc { stroke: var(--warn); }
+.pb-ring[data-level="down"] .pb-ring__arc { stroke: var(--down); }
+.pb-ring__pop { display: grid; gap: var(--space-2); min-width: 16rem; }
+.pb-ring__pop p { margin: 0; }
+.pb-ring__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); font: 400 14px/20px var(--font-serif); }
+.pb-ring__pop .pb-progressbar { width: 100%; }
+.pb-ring__line { font: 400 12px/16px var(--font-mono); color: var(--ink-muted); }
+.pb-ring__more { display: flex; justify-content: flex-end; font: 400 13px/18px var(--font-serif); }
+@media (forced-colors: active) { .pb-ring__arc { stroke: Highlight; } .pb-ring__track { stroke: GrayText; } }
+
+/* Compact variants: a Result inside a card or auth card, and a media tile for dense grids (replaces consumer type-size overrides). */
+.pb-result--compact { max-width: none; padding: var(--space-2) 0 0; justify-items: center; text-align: center; }
+.pb-result--compact .pb-result__code { font-size: 56px; line-height: 1; }
+.pb-result--compact .pb-result__title { font: 600 21px/26px var(--font-serif); }
+.pb-result--compact .pb-result__body { font: 400 15px/22px var(--font-serif); }
+.pb-result--compact .pb-result__actions { justify-content: center; }
+.pb-result__icon { display: grid; place-items: center; }
+.pb-result__glyph { width: 40px; height: 40px; }
+.pb-result[data-status="warn"] .pb-result__icon { color: var(--warn); }
+.pb-result[data-status="down"] .pb-result__icon { color: var(--down); }
+.pb-result[data-status="ok"] .pb-result__icon { color: var(--ok); }
+.pb-media--compact { height: 100%; align-content: start; }
+.pb-media--compact .pb-media__frame { aspect-ratio: 4 / 3; }
+.pb-media--compact .pb-media__frame--icon { place-items: center; }
+.pb-media--compact .pb-media__body { padding: var(--space-3); gap: var(--space-1); }
+.pb-media--compact .pb-media__title { font: 600 15px/20px var(--font-serif); letter-spacing: 0; }
+.pb-media--compact .pb-media__sub { font: 400 12px/16px var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pb-media__head { display: flex; align-items: center; gap: var(--space-1); min-width: 0; }
+.pb-media__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: inherit; text-decoration: none; font: 600 15px/20px var(--font-serif); }
+a.pb-media__name:hover { text-decoration: underline; }
+.pb-media__badges { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.pb-media__badges:empty { display: none; }
+
+/* Layout helpers the examples use. */
+.pb-demo-col { display: grid; gap: var(--space-3); justify-items: start; }
+.pb-demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); width: 100%; }
+.pb-demo-narrow { max-width: 420px; width: 100%; }
+.pb-keys__demo { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-3); border: var(--stroke-1) dashed var(--pb-border); border-radius: var(--pb-r-md); max-width: 420px; }
+.pb-keys__demo:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+.pb-keys__notes { margin: 0; padding-inline-start: var(--space-4); }
