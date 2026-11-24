@@ -15,8 +15,8 @@ def tokens_css(T,fontpath):
                 elif v.startswith('{'): L.append(f'  --{k["name"]}: {cv(v)};')
         L.append('}'); out.append('\n'.join(L))
     L=[':root {']
-    for fam in ('spacing','radius','stroke','size'):
-        for k in T[fam]['tokens']: L.append(f'  --{k["name"]}: {k["value"]};')
+    for fam in ('spacing','radius','stroke','size','text','motion','layer','focus'):
+        for k in T.get(fam,{}).get('tokens',[]): L.append(f'  --{k["name"]}: {k["value"]};')
     for k,v in T['type']['families'].items(): L.append(f'  --font-{k}: {v};')
     L.append('}'); out.append('\n'.join(L))
     for f in T['type']['fonts']:
