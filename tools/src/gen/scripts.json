@@ -1,6 +1,6 @@
 {
   "_comment": "Component scripts: pv/<Name>.js = pv/_core.js + libs + the pbHook lines whose behavior those libs define + init files + pbInit(). ALL means the whole patchbay.js bundle. genpv.py writes them; kit.py and export.py read this too.",
-  "bundle": ["_core.js", "_pickers.js", "_overlay.js", "_player.js", "_qr.js", "_ui.js", "_hl.js", "_viz2.js", "_ix.js", "_ts.js", "_dt.js", "_misc.js", "_forms.js"],
+  "bundle": ["_core.js", "_pickers.js", "_overlay.js", "_player.js", "_qr.js", "_ui.js", "_hl.js", "_viz2.js", "_ix.js", "_ts.js", "_dt.js", "_misc.js", "_forms.js", "_app.js"],
   "components": {
     "AlertEmail": [[], ["i_email.js"]],
     "ApiTokens": [["ALL"], ["i_tok.js"]],
