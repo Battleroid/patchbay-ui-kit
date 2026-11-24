@@ -11,7 +11,7 @@ MHEAD=HEAD.replace('Load after the markup and call pbInit()','ES module: import 
   'or add data-pb-auto to this script tag to run pbInit() on DOMContentLoaded. ','').replace('Also exposes','Also exports')
 AUTO='''(function(s){if(!s||!s.hasAttribute('data-pb-auto'))return;if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){pbInit();});else pbInit();})(document.currentScript);
 '''
-EXPORTS=['pbInit','pbConfirm','pbToast','pbInbox','pbTheme','pbPlace','pbCalendar','pbClock','pbQRSvg','pbQRCode','pbVirtual','pbAnsi','pbCronParse','pbSection','pbHook','pbEsc','pbStyled']
+EXPORTS=['pbInit','pbConfirm','pbToast','pbInbox','pbTheme','pbPlace','pbCalendar','pbClock','pbQRSvg','pbQRCode','pbVirtual','pbAnsi','pbCronParse','pbSection','pbHook','pbEsc','pbStyled','pbStrings','pbId']
 body=S.bundle(); S.check('patchbay.js',body)
 miss=[e for e in EXPORTS if e not in S.defined(body)]
 if miss: S.ERR.append('patchbay.mjs exports undefined '+', '.join(miss))

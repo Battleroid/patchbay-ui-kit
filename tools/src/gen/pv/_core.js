@@ -1,5 +1,10 @@
 /* Patchbay core: escaping, CSP-safe styling, delegated document listeners, placement, and the pbInit() hook registry. */
 function pbEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+/* Words the kit writes itself. Apps replace any of them: Object.assign(pbStrings, {dismiss: 'Schließen'}). Components add their own keys. */
+var pbStrings={dismiss:'Dismiss',close:'Close',cancel:'Cancel',confirm:'Confirm',copied:'Copied',copy:'Copy',unsaved:'Unsaved changes',saving:'Saving…',saved:'Saved',retry:'Retry',remove:'Remove',prevPage:'Previous page',nextPage:'Next page',loading:'Loading…'};
+/* A page-unique id with a readable prefix (replaces Math.random ids, so ids are stable within a page load). */
+var pbIdN=0;
+function pbId(p){var id;do{id=(p||'pb')+'-'+(++pbIdN).toString(36);}while(document.getElementById(id));return id;}
 /* Markup built as a string carries styles in data-style; pbStyled moves them into the CSSOM, which a strict style-src allows. */
 function pbStyled(c){if(!c||!c.querySelectorAll)return c;var l=[].slice.call(c.querySelectorAll('[data-style]'));if(c.hasAttribute&&c.hasAttribute('data-style'))l.unshift(c);
   l.forEach(function(n){n.style.cssText=n.getAttribute('data-style');n.removeAttribute('data-style');});return c;}
