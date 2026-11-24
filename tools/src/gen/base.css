@@ -158,6 +158,8 @@ a.pb-card:focus-visible, button.pb-card:focus-visible { outline: var(--stroke-2)
 .pb-field { display: grid; gap: 6px; }
 .pb-field__label { font: 600 11px/14px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
 .pb-field__help { display: flex; gap: var(--space-1); align-items: center; font: italic 400 14px/20px var(--font-serif); color: var(--ink-muted); }
+/* The error line pbValidate (or the server) adds under the control; the control's aria-describedby names it. */
+.pb-field__error { display: flex; gap: var(--space-1); align-items: center; font: 400 14px/20px var(--font-serif); color: var(--down); }
 .pb-input {
   display: flex; align-items: center; gap: var(--space-2); min-height: var(--size-control); padding: 0 var(--space-3);
   background: var(--surface); border: var(--stroke-1) solid var(--pb-border-control); border-radius: var(--pb-r-md);
@@ -213,6 +215,8 @@ a.pb-card:focus-visible, button.pb-card:focus-visible { outline: var(--stroke-2)
   position: absolute; inset: 0; width: 100%; height: 100%; border: 0; outline: 0; resize: none; overflow: hidden;
   background: transparent; color: transparent; caret-color: var(--ink);
 }
+.pb-code--copy { position: relative; }
+.pb-code--copy > .pb-code__copy { position: absolute; top: 4px; right: 4px; z-index: 1; }
 .pb-code__input::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); color: transparent; }
 .tok-k { color: var(--syn-keyword); }
 .tok-s { color: var(--syn-string); }

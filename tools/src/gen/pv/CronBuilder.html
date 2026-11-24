@@ -3,13 +3,13 @@
     <label><input type="radio" name="cpre" value="hourly">hourly</label><label><input type="radio" name="cpre" value="daily">daily</label><label><input type="radio" name="cpre" value="weekly">weekly</label><label><input type="radio" name="cpre" value="monthly">monthly</label><label><input type="radio" name="cpre" value="custom">custom</label>
   </div>
   <div class="pb-cron__fields">
-    <label class="pb-field"><span class="pb-input"><input aria-label="Minute" spellcheck="false"></span><span class="pb-field__label">minute</span></label>
-    <label class="pb-field"><span class="pb-input"><input aria-label="Hour" spellcheck="false"></span><span class="pb-field__label">hour</span></label>
-    <label class="pb-field"><span class="pb-input"><input aria-label="Day of month" spellcheck="false"></span><span class="pb-field__label">day</span></label>
-    <label class="pb-field"><span class="pb-input"><input aria-label="Month" spellcheck="false"></span><span class="pb-field__label">month</span></label>
-    <label class="pb-field"><span class="pb-input"><input aria-label="Weekday" spellcheck="false"></span><span class="pb-field__label">weekday</span></label>
+    <div class="pb-field"><span class="pb-input"><input aria-label="Minute" spellcheck="false" id="cronbuilder-minute"></span><label class="pb-field__label" for="cronbuilder-minute">minute</label></div>
+    <div class="pb-field"><span class="pb-input"><input aria-label="Hour" spellcheck="false" id="cronbuilder-hour"></span><label class="pb-field__label" for="cronbuilder-hour">hour</label></div>
+    <div class="pb-field"><span class="pb-input"><input aria-label="Day of month" spellcheck="false" id="cronbuilder-day"></span><label class="pb-field__label" for="cronbuilder-day">day</label></div>
+    <div class="pb-field"><span class="pb-input"><input aria-label="Month" spellcheck="false" id="cronbuilder-month"></span><label class="pb-field__label" for="cronbuilder-month">month</label></div>
+    <div class="pb-field"><span class="pb-input"><input aria-label="Weekday" spellcheck="false" id="cronbuilder-weekday"></span><label class="pb-field__label" for="cronbuilder-weekday">weekday</label></div>
   </div>
   <p class="pb-cron__human" aria-live="polite"></p>
-  <label class="pb-field"><span class="pb-field__label">Expression</span><span class="pb-input"><input data-cron-expr spellcheck="false" style="font-family:var(--font-mono)"></span><span class="pb-field__help">Five fields. Supports <span class="pb-kbd">*</span> <span class="pb-kbd">1-5</span> <span class="pb-kbd">*/15</span> <span class="pb-kbd">mon,wed</span> and <span class="pb-kbd">@daily</span>.</span></label>
+  <div class="pb-field"><label class="pb-field__label" for="cronbuilder-expression">Expression</label><span class="pb-input"><input data-cron-expr spellcheck="false" style="font-family:var(--font-mono)" id="cronbuilder-expression" aria-describedby="cronbuilder-expression-help"></span><span class="pb-field__help" id="cronbuilder-expression-help">Five fields. Supports <span class="pb-kbd">*</span> <span class="pb-kbd">1-5</span> <span class="pb-kbd">*/15</span> <span class="pb-kbd">mon,wed</span> and <span class="pb-kbd">@daily</span>.</span></div>
   <div><span class="pb-eyebrow">next runs · local time</span><ol class="pb-cron__next" style="margin-top:6px"></ol></div>
 </div>

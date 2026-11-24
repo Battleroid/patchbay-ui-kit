@@ -1,13 +1,13 @@
 <div style="display:grid;gap:20px">
   <div class="pb-form__row">
-    <label class="pb-field"><span class="pb-field__label">Backup at</span>
-      <span class="pb-input pb-timefield" data-step="15"><input type="text" inputmode="numeric" placeholder="hh:mm" value="03:00" aria-label="Backup at"><button type="button" class="pb-input__btn" data-clock aria-label="Open time picker"><span class="pb-icon pb-icon--clock"></span></button></span>
-      <span class="pb-field__help">24-hour, 15-minute steps.</span></label>
-    <label class="pb-field"><span class="pb-field__label">Quiet hours start</span>
-      <span class="pb-input pb-timefield" data-hour12 data-step="30" data-min="18:00" data-max="23:30"><input type="text" placeholder="h:mm am" value="10:30 PM" aria-label="Quiet hours start"><button type="button" class="pb-input__btn" data-clock aria-label="Open time picker"><span class="pb-icon pb-icon--clock"></span></button></span>
-      <span class="pb-field__help">12-hour, 6 PM to 11:30 PM only.</span></label>
+    <div class="pb-field"><label class="pb-field__label" for="timepicker-backup-at">Backup at</label>
+      <span class="pb-input pb-timefield" data-step="15"><input type="text" inputmode="numeric" placeholder="hh:mm" value="03:00" id="timepicker-backup-at" aria-describedby="timepicker-backup-at-help"><button type="button" class="pb-input__btn" data-clock aria-label="Open time picker"><span class="pb-icon pb-icon--clock"></span></button></span>
+      <span class="pb-field__help" id="timepicker-backup-at-help">24-hour, 15-minute steps.</span></div>
+    <div class="pb-field"><label class="pb-field__label" for="timepicker-quiet-hours-start">Quiet hours start</label>
+      <span class="pb-input pb-timefield" data-hour12 data-step="30" data-min="18:00" data-max="23:30"><input type="text" placeholder="h:mm am" value="10:30 PM" id="timepicker-quiet-hours-start" aria-describedby="timepicker-quiet-hours-start-help"><button type="button" class="pb-input__btn" data-clock aria-label="Open time picker"><span class="pb-icon pb-icon--clock"></span></button></span>
+      <span class="pb-field__help" id="timepicker-quiet-hours-start-help">12-hour, 6 PM to 11:30 PM only.</span></div>
   </div>
-  <div class="pb-field"><span class="pb-field__label">Link expires</span>
+  <div class="pb-field" role="group" aria-labelledby="tp-expires-l"><span class="pb-field__label" id="tp-expires-l">Link expires</span>
     <div class="pb-datetime">
       <span class="pb-input pb-datefield" data-today="2026-11-22" data-min="2026-11-22"><input type="text" inputmode="numeric" placeholder="yyyy-mm-dd" value="2026-11-29" aria-label="Expiry date"><button type="button" class="pb-input__btn" data-cal aria-label="Open calendar"><span class="pb-icon pb-icon--calendar"></span></button></span>
       <span class="pb-input pb-timefield"><input type="text" inputmode="numeric" placeholder="hh:mm" value="18:00" aria-label="Expiry time"><button type="button" class="pb-input__btn" data-clock aria-label="Open time picker"><span class="pb-icon pb-icon--clock"></span></button></span>

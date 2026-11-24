@@ -4,8 +4,8 @@
       <div class="pb-auth__brand"><span class="pb-brand"><span class="pb-brand__mark">sn</span>snap<span class="pb-brand__host">lab.home</span></span></div>
       <h1 class="pb-auth__title">Sign in</h1>
       <div class="pb-notice" data-status="down" role="alert" hidden data-signin-err><span class="pb-icon pb-icon--status-down"></span><p class="pb-notice__title">That password didn’t match</p><p class="pb-notice__body">4 tries left before a 15 minute lock.</p></div>
-      <label class="pb-field"><span class="pb-field__label">Username or email</span><span class="pb-input"><input autocomplete="username" value="casey"></span></label>
-      <label class="pb-field"><span class="pb-field__label">Password</span><span class="pb-input"><input type="password" autocomplete="current-password" value="hunter2"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></label>
+      <div class="pb-field"><label class="pb-field__label" for="signin-username-or-email">Username or email</label><span class="pb-input"><input autocomplete="username" value="casey" id="signin-username-or-email"></span></div>
+      <div class="pb-field"><label class="pb-field__label" for="signin-password">Password</label><span class="pb-input"><input type="password" autocomplete="current-password" value="hunter2" id="signin-password"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></div>
       <div class="pb-auth__row"><label class="pb-choice" style="font-size:14px"><input type="checkbox" class="pb-check" checked>Keep me signed in</label><a class="pb-link" href="#" style="font-size:14px">Forgot password?</a></div>
       <button class="pb-btn pb-btn--primary pb-btn--block" data-signin-go>Sign in</button>
       <div class="pb-auth__or">or</div>
@@ -61,8 +61,8 @@
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--logo" role="img" aria-label="snap"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg></div>
       <h1 class="pb-auth__title">Sign in to snap</h1><p class="pb-auth__sub">lab.home</p>
-      <label class="pb-field"><span class="pb-field__label">Username or email</span><span class="pb-input"><input autocomplete="username"></span></label>
-      <label class="pb-field"><span class="pb-field__label">Password</span><span class="pb-input"><input type="password" autocomplete="current-password"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></label>
+      <div class="pb-field"><label class="pb-field__label" for="signin-username-or-email-2">Username or email</label><span class="pb-input"><input autocomplete="username" id="signin-username-or-email-2"></span></div>
+      <div class="pb-field"><label class="pb-field__label" for="signin-password-2">Password</label><span class="pb-input"><input type="password" autocomplete="current-password" id="signin-password-2"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></div>
       <button class="pb-btn pb-btn--primary pb-btn--block">Sign in</button>
     </form>
   </div>
@@ -70,8 +70,8 @@
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--stack"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg><span class="pb-auth__name">snap</span><span class="pb-brand__host">lab.home</span></div>
       <h1 class="pb-auth__title">Welcome back</h1><p class="pb-auth__sub">Sign in to share files.</p>
-      <label class="pb-field"><span class="pb-field__label">Username or email</span><span class="pb-input"><input autocomplete="username"></span></label>
-      <label class="pb-field"><span class="pb-field__label">Password</span><span class="pb-input"><input type="password" autocomplete="current-password"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></label>
+      <div class="pb-field"><label class="pb-field__label" for="signin-username-or-email-3">Username or email</label><span class="pb-input"><input autocomplete="username" id="signin-username-or-email-3"></span></div>
+      <div class="pb-field"><label class="pb-field__label" for="signin-password-3">Password</label><span class="pb-input"><input type="password" autocomplete="current-password" id="signin-password-3"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></div>
       <button class="pb-btn pb-btn--primary pb-btn--block">Sign in</button>
     </form>
   </div>
@@ -79,8 +79,8 @@
     <form class="pb-auth__card" onsubmit="return false">
       <div class="pb-auth__brand pb-auth__brand--inline"><svg class="pb-logo" viewBox="0 0 48 48" aria-hidden="true"><rect class="pb-logo__bg" width="48" height="48" fill="var(--accent)"/><circle cx="24" cy="25" r="11" fill="none" stroke="var(--on-accent)" stroke-width="4"/><circle cx="32" cy="15" r="3.5" fill="var(--pop-yellow)"/></svg><span class="pb-auth__name">snap</span></div>
       <h1 class="pb-auth__title">Sign in</h1><p class="pb-auth__sub">Use your lab.home account.</p>
-      <label class="pb-field"><span class="pb-field__label">Username or email</span><span class="pb-input"><input autocomplete="username"></span></label>
-      <label class="pb-field"><span class="pb-field__label">Password</span><span class="pb-input"><input type="password" autocomplete="current-password"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></label>
+      <div class="pb-field"><label class="pb-field__label" for="signin-username-or-email-4">Username or email</label><span class="pb-input"><input autocomplete="username" id="signin-username-or-email-4"></span></div>
+      <div class="pb-field"><label class="pb-field__label" for="signin-password-4">Password</label><span class="pb-input"><input type="password" autocomplete="current-password" id="signin-password-4"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span></div>
       <button class="pb-btn pb-btn--primary pb-btn--block">Sign in</button>
     </form>
   </div>

@@ -62,7 +62,7 @@ function pbDateField(field){
   function open(b){anchor=b;cal.pbSet(ins[0].value,range?ins[1].value:null);cal.showPopover();place();cal.pbFocus();}
   btns.forEach(function(b){b.setAttribute('aria-haspopup','dialog');b.addEventListener('click',function(){cal.matches(':popover-open')?cal.hidePopover():open(b);});});
   ins.forEach(function(i){i.addEventListener('keydown',function(e){if(e.altKey&&e.key==='ArrowDown'){e.preventDefault();open(btns[0]);}});
-    i.addEventListener('change',function(){if(!pbParse(i.value)&&i.value)i.closest('.pb-field,.pb-daterange')?.setAttribute('data-invalid','');else i.closest('.pb-field,.pb-daterange')?.removeAttribute('data-invalid');});});
+    i.addEventListener('change',function(){var bad=!pbParse(i.value)&&i.value,f=i.closest('.pb-field,.pb-daterange');if(bad){f?.setAttribute('data-invalid','');i.setAttribute('aria-invalid','true');}else{f?.removeAttribute('data-invalid');i.removeAttribute('aria-invalid');}});});
   return cal;}
 function pbTParse(s){var m=/^\s*(\d{1,2}):(\d{2})\s*([ap]\.?m\.?)?\s*$/i.exec(s||'');if(!m)return null;var h=+m[1],mi=+m[2];
   if(m[3]){if(h<1||h>12)return null;h=h%12+(/^p/i.test(m[3])?12:0);}if(h>23||mi>59)return null;return h*60+mi;}
@@ -113,5 +113,5 @@ function pbTimeField(field){
   function open(){clk.pbSet(inp.value);clk.showPopover();place();clk.pbSet(inp.value);clk.pbFocus();}
   btn.setAttribute('aria-haspopup','dialog');btn.addEventListener('click',function(){clk.matches(':popover-open')?clk.hidePopover():open();});
   inp.addEventListener('keydown',function(e){if(e.altKey&&e.key==='ArrowDown'){e.preventDefault();open();}});
-  inp.addEventListener('change',function(){var t=pbTParse(inp.value),f=inp.closest('.pb-field');if(inp.value&&t==null)f?.setAttribute('data-invalid','');else{f?.removeAttribute('data-invalid');if(t!=null)inp.value=pbTFmt(t,h12);}});
+  inp.addEventListener('change',function(){var t=pbTParse(inp.value),f=inp.closest('.pb-field');if(inp.value&&t==null){f?.setAttribute('data-invalid','');inp.setAttribute('aria-invalid','true');}else{f?.removeAttribute('data-invalid');inp.removeAttribute('aria-invalid');if(t!=null)inp.value=pbTFmt(t,h12);}});
   return clk;}

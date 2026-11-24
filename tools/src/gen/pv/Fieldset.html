@@ -1,7 +1,7 @@
 <form class="pb-form" data-section>
   <fieldset class="pb-fieldset"><legend>Access</legend>
     <div class="pb-inline">
-      <label class="pb-field"><span class="pb-field__label">Role</span><span class="pb-select" style="min-width:0"><select><option>admin</option><option>member</option><option>viewer</option></select></span></label>
+      <div class="pb-field"><label class="pb-field__label" for="fieldset-role">Role</label><span class="pb-select" style="min-width:0"><select id="fieldset-role"><option>admin</option><option>member</option><option>viewer</option></select></span></div>
       <button class="pb-btn pb-btn--primary" disabled>Save role</button>
     </div>
     <span class="pb-field__help">Admins can manage users and shares.</span>
@@ -11,8 +11,8 @@
   <fieldset class="pb-fieldset"><legend>Limits</legend>
     <p class="pb-fieldset__desc">Per-user limits. Leave empty to use the site default.</p>
     <div class="pb-form__row">
-      <label class="pb-field"><span class="pb-field__label">Quota</span><span class="pb-input"><input placeholder="site default · no limit"></span><span class="pb-field__help">0 means no limit.</span></label>
-      <label class="pb-field"><span class="pb-field__label">Max file size</span><span class="pb-input"><input placeholder="site default · 1 GB"></span><span class="pb-field__help">Can only lower the site limit.</span></label>
+      <div class="pb-field"><label class="pb-field__label" for="fieldset-quota">Quota</label><span class="pb-input"><input placeholder="site default · no limit" id="fieldset-quota" aria-describedby="fieldset-quota-help"></span><span class="pb-field__help" id="fieldset-quota-help">0 means no limit.</span></div>
+      <div class="pb-field"><label class="pb-field__label" for="fieldset-max-file-size">Max file size</label><span class="pb-input"><input placeholder="site default · 1 GB" id="fieldset-max-file-size" aria-describedby="fieldset-max-file-size-help"></span><span class="pb-field__help" id="fieldset-max-file-size-help">Can only lower the site limit.</span></div>
     </div>
     <label class="pb-choice"><input type="checkbox" class="pb-check" checked><span>Email when 90% full</span></label>
     <div class="pb-fieldset__foot"><span class="pb-foot__status">No changes</span><button type="reset" class="pb-btn pb-btn--ghost" disabled>Discard</button><button class="pb-btn pb-btn--primary" disabled>Save limits</button></div>
