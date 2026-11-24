@@ -4,7 +4,7 @@
 .pb-bulkall { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; font: 400 var(--pb-text-14)/20px var(--font-serif); color: var(--ink-muted); }
 .pb-bulkgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-2); }
 .pb-bulkgrid > li { display: flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-2) var(--space-3); background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); }
-[data-bulk-item]:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+[data-bulk-item]:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
 .pb-bulkgrid > li[data-selected], .pb-item[data-selected] { background: var(--accent-tint); border-color: var(--accent); }
 
 /* Upload queue: the server is processing a finished transfer. */
@@ -18,7 +18,7 @@
 .pb-upq__item[data-state="processing"] .pb-upq__bar, .pb-upq__item[data-state="failed"] .pb-upq__bar { flex: 0 0 48px; min-width: 0; }
 /* A file input hidden visually stays in the tab order; its label button shows the focus ring. */
 .pb-btn:has(> input[type="file"].pb-sr) { position: relative; }
-.pb-btn:has(> input[type="file"]:focus-visible) { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+.pb-btn:has(> input[type="file"]:focus-visible) { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
 
 /* Busy regions: a region with aria-busy="true" dims its content, ignores the pointer and shows a spinner, all after 300 ms so a quick swap never flashes.
    The kit's own loading parts (the inbox panel, a lazy tree item) keep their own look; data-busy="off" opts any region out. */
@@ -70,7 +70,7 @@
 /* StorageRing: a compact usage ring for app headers, with a breakdown popover. */
 .pb-ring { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: var(--pb-r-pill); background: transparent; color: var(--ink); cursor: pointer; }
 .pb-ring:hover { background: var(--surface-sunk); }
-.pb-ring:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+.pb-ring:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
 .pb-ring__svg { display: block; width: 22px; height: 22px; transform: rotate(-90deg); }
 .pb-ring__track, .pb-ring__arc { fill: none; stroke-width: 3; }
 .pb-ring__track { stroke: var(--line-strong); }
@@ -113,11 +113,11 @@ a.pb-media__name:hover { text-decoration: underline; }
 .pb-demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); width: 100%; }
 .pb-demo-narrow { max-width: 420px; width: 100%; }
 .pb-keys__demo { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-3); border: var(--stroke-1) dashed var(--pb-border); border-radius: var(--pb-r-md); max-width: 420px; }
-.pb-keys__demo:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+.pb-keys__demo:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
 .pb-keys__notes { margin: 0; padding-inline-start: var(--space-4); }
 
 /* Event calendar: a date grid with one tab stop; failed runs carry colour and a ring; under 620 px a day is the target. */
-.pb-evcal__day:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: -2px; }
+.pb-evcal__day:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: -2px; }
 .pb-evcal__ev[data-status="down"] { box-shadow: inset 0 0 0 1px var(--down); }
 .pb-evcal__ev[data-status="down"]::after { content: none; }
 .pb-evcal__fail { margin-inline-start: auto; font: 600 var(--pb-text-11)/1 var(--font-mono); font-style: normal; color: var(--down); }

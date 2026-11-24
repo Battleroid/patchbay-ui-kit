@@ -96,7 +96,7 @@
 .pb-notif { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px var(--space-3); padding: var(--space-3) var(--space-4); cursor: pointer; }
 .pb-notif + .pb-notif { border-top: var(--stroke-1) solid var(--line); }
 .pb-notif:hover { background: var(--surface-sunk); }
-.pb-notif:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: -2px; }
+.pb-notif:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: -2px; }
 .pb-notif > .pb-icon { grid-row: 1 / 3; width: 18px; height: 18px; margin-top: 3px; color: var(--ink-muted); }
 .pb-notif[data-status="ok"] > .pb-icon { color: var(--ok); } .pb-notif[data-status="warn"] > .pb-icon { color: var(--warn); }
 .pb-notif[data-status="down"] > .pb-icon { color: var(--down); } .pb-notif[data-status="info"] > .pb-icon { color: var(--info); }
