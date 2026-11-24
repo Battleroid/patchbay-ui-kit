@@ -1,0 +1,191 @@
+/* ---------- App patterns: bulk grids, upload processing, busy regions, share link, storage ring, media state, compact variants ---------- */
+
+/* Bulk selection in grids and lists. Rows are [data-bulk-item]; a selected one carries data-selected. */
+.pb-bulkall { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; font: 400 var(--pb-text-14)/20px var(--font-serif); color: var(--ink-muted); }
+.pb-bulkgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-2); }
+.pb-bulkgrid > li { display: flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-2) var(--space-3); background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); }
+[data-bulk-item]:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
+.pb-bulkgrid > li[data-selected], .pb-item[data-selected] { background: var(--accent-tint); border-color: var(--accent); }
+
+/* Upload queue: the server is processing a finished transfer. */
+@keyframes pb-upq-proc { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+.pb-upq__item[data-state="processing"] .pb-upq__bar span { width: 40%; animation: pb-upq-proc 1.2s ease-in-out infinite; }
+.pb-upq__item[data-state="processing"] > .pb-icon { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .pb-upq__item[data-state="processing"] .pb-upq__bar span { width: 100%; opacity: 0.6; animation: none; } }
+.pb-upq__foot { flex-wrap: wrap; }
+.pb-upq__meta { flex-wrap: wrap; }
+.pb-upq__txt { min-width: 0; overflow-wrap: anywhere; }
+.pb-upq__item[data-state="processing"] .pb-upq__bar, .pb-upq__item[data-state="failed"] .pb-upq__bar { flex: 0 0 48px; min-width: 0; }
+/* A file input hidden visually stays in the tab order; its label button shows the focus ring. */
+.pb-btn:has(> input[type="file"].pb-sr) { position: relative; }
+.pb-btn:has(> input[type="file"]:focus-visible) { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
+
+/* Busy regions: a region with aria-busy="true" dims its content, ignores the pointer and shows a spinner, all after 300 ms so a quick swap never flashes.
+   The kit's own loading parts (the inbox panel, a lazy tree item) keep their own look; data-busy="off" opts any region out. */
+@keyframes pb-busy-show { to { opacity: 1; } }
+@keyframes pb-busy-dim { to { opacity: 0.45; } }
+@keyframes pb-busy-spin { to { transform: rotate(360deg); } }
+@keyframes pb-busybar { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+:where([aria-busy="true"]) { position: relative; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"]) { pointer-events: none; cursor: progress; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"]) > * { animation: pb-busy-dim 150ms linear 300ms forwards; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"])::after {
+  content: ""; position: absolute; inset-block-start: calc(50% - 12px); inset-inline-start: calc(50% - 12px); width: 24px; height: 24px; box-sizing: border-box;
+  border: 3px solid var(--line-strong); border-block-start-color: var(--accent); border-radius: 50%; opacity: 0; pointer-events: none;
+  animation: pb-busy-show 1ms linear 300ms forwards, pb-busy-spin 0.8s linear infinite;
+}
+.pb-busybar { position: fixed; inset: 0 0 auto 0; z-index: var(--pb-z-toast); height: 3px; overflow: hidden; pointer-events: none; opacity: 0; animation: pb-busy-show 1ms linear 300ms forwards; }
+.pb-busybar[hidden] { display: none; }
+.pb-busybar > span { display: block; width: 40%; height: 100%; background: var(--accent); animation: pb-busybar 1.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  [aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"])::after { border-color: var(--accent) var(--line-strong) var(--line-strong) var(--line-strong); animation: pb-busy-show 1ms linear 300ms forwards; }
+  .pb-busybar > span { width: 100%; opacity: 0.6; animation: none; }
+}
+
+/* Media state: the stand-in for a preview still being made, and the hover or focus teaser over a poster. */
+.pb-proc { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--ink-muted); flex: none; }
+.pb-proc__skel { width: 36px; height: 36px; flex: none; border-radius: var(--pb-r-md); }
+.pb-proc__word { font: 400 var(--pb-text-12)/16px var(--font-mono); white-space: nowrap; }
+.pb-proc--tile { position: relative; display: grid; place-items: center; align-content: center; width: 100%; height: 100%; }
+.pb-proc--tile .pb-proc__fill { position: absolute; inset: 0; border-radius: 0; }
+.pb-proc--tile .pb-proc__word { position: relative; }
+.pb-proc--note { display: flex; margin: 0; }
+.pb-proc--note .pb-proc__skel { width: 16px; height: 16px; }
+.pb-proc[data-state="failed"] { color: var(--down); }
+.pb-proc[data-state="failed"] .pb-icon { width: 20px; height: 20px; }
+:where([data-teaser-frame]) { position: relative; }
+.pb-teaser__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: var(--ink); opacity: 0; transition: opacity var(--pb-dur-2) var(--pb-ease); pointer-events: none; }
+.pb-teaser__video[data-state="on"] { opacity: 1; }
+.pb-teaser__progress { position: absolute; inset: auto 0 0 0; grid-column: auto; width: auto; height: 3px; border-radius: 0; background: transparent; opacity: 0; transition: opacity var(--pb-dur-2) var(--pb-ease); pointer-events: none; }
+.pb-teaser__progress[data-state="on"] { opacity: 1; }
+.pb-teaser__progress > span { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pb-teaser__video, .pb-teaser__progress { transition: none; } }
+
+/* ShareLink: Copy link and a QR popover as one group. */
+[data-sharelink] { display: contents; }
+.pb-sharelink { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); max-width: 100%; }
+.pb-sharelink__url { min-width: 0; max-width: min(36ch, 100%); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--pb-text-13); }
+.pb-qr--bare { padding: 0; border: 0; background: transparent; box-shadow: none; }
+
+/* StorageRing: a compact usage ring for app headers, with a breakdown popover. */
+.pb-ring { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: var(--pb-r-pill); background: transparent; color: var(--ink); cursor: pointer; }
+.pb-ring:hover { background: var(--surface-sunk); }
+.pb-ring:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
+.pb-ring__svg { display: block; width: 22px; height: 22px; transform: rotate(-90deg); }
+.pb-ring__track, .pb-ring__arc { fill: none; stroke-width: 3; }
+.pb-ring__track { stroke: var(--line-strong); }
+.pb-ring__arc { stroke: var(--accent); }
+.pb-ring[data-level="warn"] .pb-ring__arc { stroke: var(--warn); }
+.pb-ring[data-level="down"] .pb-ring__arc { stroke: var(--down); }
+.pb-ring__pop { display: grid; gap: var(--space-2); min-width: 16rem; }
+.pb-ring__pop p { margin: 0; }
+.pb-ring__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); font: 400 var(--pb-text-14)/20px var(--font-serif); }
+.pb-ring__pop .pb-progressbar { width: 100%; }
+.pb-ring__line { font: 400 var(--pb-text-12)/16px var(--font-mono); color: var(--ink-muted); }
+.pb-ring__more { display: flex; justify-content: flex-end; font: 400 var(--pb-text-13)/18px var(--font-serif); }
+@media (forced-colors: active) { .pb-ring__arc { stroke: Highlight; } .pb-ring__track { stroke: GrayText; } }
+
+/* Compact variants: a Result inside a card or auth card, and a media tile for dense grids (replaces consumer type-size overrides). */
+.pb-result--compact { max-width: none; padding: var(--space-2) 0 0; justify-items: center; text-align: center; }
+.pb-result--compact .pb-result__code { font-size: var(--pb-text-56); line-height: 1; }
+.pb-result--compact .pb-result__title { font: 600 var(--pb-text-19)/26px var(--font-serif); }
+.pb-result--compact .pb-result__body { font: 400 var(--pb-text-15)/22px var(--font-serif); }
+.pb-result--compact .pb-result__actions { justify-content: center; }
+.pb-result__icon { display: grid; place-items: center; }
+.pb-result__glyph { width: 40px; height: 40px; }
+.pb-result[data-status="warn"] .pb-result__icon { color: var(--warn); }
+.pb-result[data-status="down"] .pb-result__icon { color: var(--down); }
+.pb-result[data-status="ok"] .pb-result__icon { color: var(--ok); }
+.pb-media--compact { height: 100%; align-content: start; }
+.pb-media--compact .pb-media__frame { aspect-ratio: 4 / 3; }
+.pb-media--compact .pb-media__frame--icon { place-items: center; }
+.pb-media--compact .pb-media__body { padding: var(--space-3); gap: var(--space-1); }
+.pb-media--compact .pb-media__title { font: 600 var(--pb-text-15)/20px var(--font-serif); letter-spacing: 0; }
+.pb-media--compact .pb-media__sub { font: 400 var(--pb-text-12)/16px var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pb-media__head { display: flex; align-items: center; gap: var(--space-1); min-width: 0; }
+.pb-media__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: inherit; text-decoration: none; font: 600 var(--pb-text-15)/20px var(--font-serif); }
+a.pb-media__name:hover { text-decoration: underline; }
+.pb-media__badges { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.pb-media__badges:empty { display: none; }
+
+/* Layout helpers the examples use. */
+.pb-keys__notes { margin: 0; padding-inline-start: var(--space-4); }
+
+/* Event calendar: a date grid with one tab stop; failed runs carry colour and a ring; under 620 px a day is the target. */
+.pb-evcal__day:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: -2px; }
+.pb-evcal__ev[data-status="down"] { box-shadow: inset 0 0 0 1px var(--down); }
+.pb-evcal__ev[data-status="down"]::after { content: none; }
+.pb-evcal__fail { margin-inline-start: auto; font: 600 var(--pb-text-11)/1 var(--font-mono); font-style: normal; color: var(--down); }
+.pb-evcal__marks { display: none; gap: 4px; padding-inline: 2px; }
+.pb-evcal__marks i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--accent)); }
+.pb-evcal__marks i[data-status="down"] { background: var(--down); outline: 2px solid var(--down); outline-offset: 1px; }
+@container pbcal (max-width: 620px) {
+  .pb-evcal__grid .pb-evcal__ev, .pb-evcal__grid .pb-evcal__more { display: none; }
+  .pb-evcal__day { grid-template-columns: minmax(0, 1fr); min-height: 48px; cursor: pointer; gap: 4px; }
+  .pb-evcal__marks { display: flex; flex-wrap: wrap; }
+  .pb-evcal__agenda > li { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+}
+
+/* A busy button keeps its label ("Syncing…") and ignores clicks. */
+button[aria-busy="true"] { cursor: progress; pointer-events: none; opacity: 0.75; }
+.pb-mediagrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 220px)); gap: var(--space-3); width: 100%; }
+.pb-ring__pct { font: 500 var(--pb-text-12)/16px var(--font-mono); font-variant-numeric: tabular-nums; }
+.pb-ring:has(.pb-ring__pct) { width: auto; grid-auto-flow: column; gap: 6px; padding-inline: 8px; }
+
+/* ---------- Active option / menu item: accent tint plus an inset bar (3:1 or better), an outline in forced colours ---------- */
+.pb-option[data-active], .pb-menu__item:focus-visible, .pb-mega__item:focus-visible, .pb-sheet__item:focus-visible, .pb-qf__opt[data-active], .pb-vlist__row[data-active], .pb-cmd__item[data-active],
+.pb-select:not(.pb-select--multi) option:focus-visible { background: var(--accent-tint); box-shadow: inset 3px 0 0 var(--accent); }
+:dir(rtl) :is(.pb-option[data-active], .pb-menu__item:focus-visible, .pb-mega__item:focus-visible, .pb-sheet__item:focus-visible, .pb-qf__opt[data-active], .pb-vlist__row[data-active], .pb-cmd__item[data-active]) { box-shadow: inset -3px 0 0 var(--accent); }
+@media (forced-colors: active) {
+  .pb-option[data-active], .pb-menu__item:focus-visible, .pb-mega__item:focus-visible, .pb-sheet__item:focus-visible, .pb-qf__opt[data-active], .pb-vlist__row[data-active], .pb-cmd__item[data-active] { outline: 2px solid Highlight; outline-offset: -2px; }
+}
+
+/* ---------- Reduced motion: nothing keeps moving. Spinners stay as a static arc, pulses and stripes hold still. ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .pb-icon--spin, .pb-spinner, .pb-player__spinner, .pb-tree [aria-busy="true"] > .pb-tree__row .pb-tree__meta::before, .pb-spin-once .pb-icon { animation: none; }
+  .pb-log__live::before, .pb-refresh[data-on] .pb-refresh__dot, .pb-skel, .pb-term__cursor, .pb-dt__cell[data-saved] { animation: none; }
+  .pb-progressbar:indeterminate { animation: none; }
+}
+
+/* ---------- Card aria-current: tint + check. The ring means focus only. ---------- */
+.pb-card--outline[aria-current="true"] { box-shadow: none; border-color: var(--accent); background: var(--accent-tint); }
+[data-edge="hard"] .pb-card--outline[aria-current="true"] { box-shadow: none; }
+.pb-card--outline:hover[aria-current="true"], .pb-card--outline:focus-within[aria-current="true"] { box-shadow: 0 0 0 1px var(--accent); }
+[data-edge="hard"] .pb-card--outline:hover[aria-current="true"], [data-edge="hard"] .pb-card--outline:focus-within[aria-current="true"] { box-shadow: 4px 4px 0 var(--accent); }
+.pb-card[aria-current="true"] { position: relative; }
+.pb-card[aria-current="true"]::after {
+  content: ""; position: absolute; inset-block-start: var(--space-3); inset-inline-end: var(--space-3); width: 18px; height: 18px; background: var(--accent);
+  -webkit-mask: var(--pb-ic-check) center / contain no-repeat; mask: var(--pb-ic-check) center / contain no-repeat;
+}
+
+/* ---------- Opt out of the uppercase label style for a value that carries units or case ("90d", "GiB") ---------- */
+.pb-nocase { text-transform: none; letter-spacing: 0; }
+
+/* ---------- Scroll containment: a scrolled dialog, drawer or sheet does not scroll the page behind it ---------- */
+.pb-dialog, .pb-dialog__body, .pb-sheet, .pb-cmd__list, .pb-inbox { overscroll-behavior: contain; }
+
+/* ---------- Phone: split panes stack, dialog and sheet buttons are 44px, key-value rows stack ---------- */
+@media (max-width: 480px) {
+  .pb-split:not(.pb-split--vertical) { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
+  .pb-split:not(.pb-split--vertical) > .pb-split__handle { display: none; }
+  .pb-dialog__foot .pb-btn, .pb-sheet .pb-btn, .pb-sheet__item { min-height: 44px; }
+  .pb-kv__head { display: none; }
+  .pb-kv__row { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .pb-kv__row > :first-child { grid-column: 1 / -1; }
+}
+
+/* ---------- Touch and targets ---------- */
+:where(.pb) :is(button, [role="button"], a, summary, select, label, input:is([type="checkbox"], [type="radio"], [type="range"])) { touch-action: manipulation; }
+/* A small remove button keeps its look and gains a 24px hit area. */
+.pb-pill__x { position: relative; }
+.pb-pill__x::after { content: ""; position: absolute; inset: -4px; }
+.pb-qf__x { width: 24px; min-height: 24px; }
+.pb-logx__m .pb-qf__x { width: 24px; }
+/* Table checkboxes: the whole cell is the hit area. */
+.pb-table :is(td, th):has(> .pb-check) { position: relative; }
+.pb-table :is(td, th) > .pb-check { position: static; }
+.pb-table :is(td, th) > .pb-check::after { content: ""; position: absolute; inset: 0; cursor: pointer; }
+/* NotifySettings: the event column stays put while the channels scroll (the divider shows only on a phone). */
+.pb-notify .pb-table :is(td, th):first-child { position: sticky; inset-inline-start: 0; z-index: var(--pb-z-raised); background: var(--surface); }
+.pb-notify .pb-table .pb-notify__all td:first-child, .pb-notify .pb-table tfoot td:first-child { background: var(--bg); }
+@media (max-width: 480px) { .pb-notify .pb-table :is(td, th):first-child { box-shadow: inset -1px 0 0 var(--line); } }

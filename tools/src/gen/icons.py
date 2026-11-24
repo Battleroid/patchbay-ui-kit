@@ -1,16 +1,19 @@
+from pbroot import ROOT
 import os, json, urllib.parse
-OUT='/home/claude/icons'
+OUT=ROOT+'/icons'
 # each icon: list of elements; tuples (soft, hard) where they differ
 def frame(e): return '<circle cx="12" cy="12" r="9"/>' if e=='soft' else '<rect x="3" y="3" width="18" height="18"/>'
+# Status glyphs keep a round frame in both cuts (a square one reads as a checkbox).
+def sframe(e): return '<circle cx="12" cy="12" r="9"/>'
 def rr(x,y,w,h,r,e): return f'<rect x="{x}" y="{y}" width="{w}" height="{h}"' + (f' rx="{r}"' if e=='soft' else '') + '/>'
 P=lambda d: f'<path d="{d}"/>'
 I={
- 'status-ok':     lambda e: frame(e)+P('M8 12.5l2.75 2.75L16 9.5'),
+ 'status-ok':     lambda e: sframe(e)+P('M8 12.5l2.75 2.75L16 9.5'),
  'status-warn':   lambda e: P('M12 3.5L21.5 20h-19z')+P('M12 10v4')+P('M12 17h.01'),
- 'status-down':   lambda e: frame(e)+P('M9 9l6 6M15 9l-6 6'),
- 'status-info':   lambda e: frame(e)+P('M12 11v5')+P('M12 8h.01'),
- 'status-unknown':lambda e: frame(e)+P('M9.75 9.5a2.25 2.25 0 1 1 3.2 2.05c-.6.3-.95.85-.95 1.5V14')+P('M12 17h.01'),
- 'status-paused': lambda e: frame(e)+P('M10 9v6M14 9v6'),
+ 'status-down':   lambda e: sframe(e)+P('M9 9l6 6M15 9l-6 6'),
+ 'status-info':   lambda e: sframe(e)+P('M12 11v5')+P('M12 8h.01'),
+ 'status-unknown':lambda e: sframe(e)+P('M9.75 9.5a2.25 2.25 0 1 1 3.2 2.05c-.6.3-.95.85-.95 1.5V14')+P('M12 17h.01'),
+ 'status-paused': lambda e: sframe(e)+P('M10 9v6M14 9v6'),
  'status-maint':  lambda e: P('M14.5 4.5a4 4 0 0 0-4.9 5.3L4 15.4 8.6 20l5.6-5.6a4 4 0 0 0 5.3-4.9l-2.6 2.6-2.8-.6-.6-2.8z'),
  'link-external': lambda e: P('M14 4h6v6')+P('M20 4l-9 9')+(P('M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5') if e=='soft' else P('M18 14v6H4V6h6')),
  'link-internal': lambda e: P('M5 12h14')+P('M13 6l6 6-6 6'),
@@ -35,6 +38,13 @@ I={
  'refresh':       lambda e: P('M20 12a8 8 0 1 1-2.34-5.66')+P('M20 4v4h-4'),
  'settings':      lambda e: P('M4 7h10M18 7h2M4 17h4M12 17h8')+('<circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>' if e=='soft' else '<rect x="14" y="5" width="4" height="4"/><rect x="8" y="15" width="4" height="4"/>'),
  'chevron-right': lambda e: P('M9 6l6 6-6 6'),
+ 'chevron-left':  lambda e: P('M15 6l-6 6 6 6'),
+ 'chevron-up':    lambda e: P('M6 15l6-6 6 6'),
+ 'edit':          lambda e: P('M4 20h4L19 9l-4-4L4 16z')+P('M13.5 6.5l4 4'),
+ 'share':         lambda e: '<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/>'+P('M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6'),
+ 'mail':          lambda e: rr(3,5,18,14,2,e)+P('M3.5 7l8.5 6 8.5-6'),
+ 'log-out':       lambda e: P('M10 4H5v16h5')+P('M14 8l4 4-4 4')+P('M18 12H9'),
+ 'tag':           lambda e: P('M3 12V4h8l10 10-8 8z')+'<circle cx="7.5" cy="8.5" r="1"/>',
  'chevron-down':  lambda e: P('M6 9l6 6 6-6'),
  'clock':         lambda e: frame(e)+P('M12 7v5l3 2'),
  'trash':         lambda e: P('M4 7h16')+P('M10 11v6M14 11v6')+P('M6 7l1 13h10l1-13')+P('M9 7V4h6v3'),
@@ -99,6 +109,6 @@ for e,sel in (('soft',':root, [data-edge="soft"]'),('hard','[data-edge="hard"]')
         lines.append(f'  --pb-ic-{n}: url("data:image/svg+xml,{s}");')
     css.append(sel+' {\n'+'\n'.join(lines)+'\n}')
 css.append('\n'.join(f'.pb-icon--{n} {{ --pb-ic: var(--pb-ic-{n}); }}' for n in I))
-open('/home/claude/gen/icons.css','w').write('\n'.join(css)+'\n')
-json.dump(list(I),open('/home/claude/gen/icons.json','w'))
-print(len(I), os.path.getsize('/home/claude/gen/icons.css'))
+open(ROOT+'/gen/icons.css','w').write('\n'.join(css)+'\n')
+json.dump(list(I),open(ROOT+'/gen/icons.json','w'))
+print(len(I), os.path.getsize(ROOT+'/gen/icons.css'))

@@ -1,8 +1,14 @@
-<div style="display:grid;gap:12px;justify-items:start">
-  <button type="button" class="pb-btn" data-keys-open="keys"><span class="pb-icon pb-icon--keyboard"></span>Keyboard shortcuts<span class="pb-kbd" style="margin-left:6px">?</span></button>
-  <p class="pb-note" style="margin:0">Press <span class="pb-kbd">?</span> anywhere outside a text field.</p>
+<div class="pb-demo-commandpalette-1">
+  <button type="button" class="pb-btn" data-pb-open="#keys"><span class="pb-icon pb-icon--keyboard"></span>Keyboard shortcuts<span class="pb-kbd pb-demo-margin-left-6">?</span></button>
+  <p class="pb-note pb-demo-margin-0">Press <span class="pb-kbd">?</span> anywhere outside a text field.</p>
+  <div class="pb-keys__demo" data-keys-demo tabindex="0" aria-label="Shortcut demo">
+    <p class="pb-note">Click here, then try <span class="pb-kbd">/</span> to focus the field, <span class="pb-kbd">n</span> to add a note, or <span class="pb-kbd">g</span> then <span class="pb-kbd">c</span> to clear them. They are registered with pbShortcuts, so the sheet lists them too.</p>
+    <span class="pb-input"><input type="search" id="keys-demo-field" aria-label="Demo field" placeholder="Demo field"></span>
+    <button type="button" class="pb-btn pb-btn--sm" id="keys-demo-add">Add note</button>
+    <ul class="pb-keys__notes" aria-label="Notes" data-keys-notes></ul>
+  </div>
   <dialog class="pb-dialog pb-keys" id="keys" aria-labelledby="keys-t">
-    <header class="pb-dialog__head"><h2 class="pb-dialog__title" id="keys-t">Keyboard shortcuts</h2><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Close" onclick="this.closest('dialog').close()"><span class="pb-icon pb-icon--close"></span></button></header>
+    <header class="pb-dialog__head"><h2 class="pb-dialog__title" id="keys-t">Keyboard shortcuts</h2><button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Close" data-close><span class="pb-icon pb-icon--close"></span></button></header>
     <div class="pb-dialog__body">
       <span class="pb-input pb-keys__search"><span class="pb-icon pb-icon--search"></span><input type="search" placeholder="Find a shortcut" aria-label="Find a shortcut"></span>
       <div class="pb-keys__groups">

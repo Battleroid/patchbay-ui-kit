@@ -1,21 +1,21 @@
-<div style="display:grid;gap:16px">
-  <label class="pb-field"><span class="pb-field__label">Hostname</span>
-    <span class="pb-input"><input value="nas-01"></span>
-    <span class="pb-field__help">Lowercase, no dots.</span></label>
-  <label class="pb-field"><span class="pb-field__label">Upstream</span>
-    <span class="pb-input"><span class="pb-input__affix">https://</span><input placeholder="jellyfin.lan:8096"></span></label>
-  <label class="pb-field"><span class="pb-field__label">Quota</span>
-    <span class="pb-input" style="width:180px"><input type="number" value="500" min="1"><span class="pb-input__affix">GB</span></span></label>
-  <label class="pb-field"><span class="pb-field__label">Search</span>
-    <span class="pb-input"><span class="pb-icon pb-icon--search"></span><input placeholder="Filter services"><span class="pb-kbd">/</span></span></label>
-  <label class="pb-field" data-invalid><span class="pb-field__label">Port</span>
-    <span class="pb-input"><input value="80800"></span>
-    <span class="pb-field__help"><span class="pb-icon pb-icon--status-down pb-icon--16"></span>Port must be 1–65535.</span></label>
-  <label class="pb-field"><span class="pb-field__label">Description</span>
-    <span class="pb-input"><textarea maxlength="140" data-count="120" placeholder="What is this share for?">Photos from the rack rebuild.</textarea></span>
-    <span class="pb-field__meta"><span class="pb-field__help">Shown on the share page.</span><span class="pb-field__count" aria-live="polite"></span></span></label>
+<div class="pb-demo-display-grid-gap-16">
+  <div class="pb-field"><label class="pb-field__label" for="textinput-hostname">Hostname</label>
+    <span class="pb-input"><input value="nas-01" id="textinput-hostname" aria-describedby="textinput-hostname-help"></span>
+    <span class="pb-field__help" id="textinput-hostname-help">Lowercase, no dots.</span></div>
+  <div class="pb-field"><label class="pb-field__label" for="textinput-upstream">Upstream</label>
+    <span class="pb-input"><span class="pb-input__affix">https://</span><input placeholder="jellyfin.lan:8096" id="textinput-upstream"></span></div>
+  <div class="pb-field"><label class="pb-field__label" for="textinput-quota">Quota</label>
+    <span class="pb-input pb-demo-width-180"><input type="number" value="500" min="1" id="textinput-quota"><span class="pb-input__affix">GB</span></span></div>
+  <div class="pb-field"><label class="pb-field__label" for="textinput-search">Search</label>
+    <span class="pb-input"><span class="pb-icon pb-icon--search"></span><input placeholder="Filter services" id="textinput-search"><span class="pb-kbd">/</span></span></div>
+  <div class="pb-field" data-invalid><label class="pb-field__label" for="textinput-port">Port</label>
+    <span class="pb-input"><input value="80800" id="textinput-port" aria-describedby="textinput-port-error" aria-invalid="true"></span>
+    <span class="pb-field__error" id="textinput-port-error"><span class="pb-icon pb-icon--status-down pb-icon--16" aria-hidden="true"></span>Port must be 1–65535.</span></div>
+  <div class="pb-field"><label class="pb-field__label" for="textinput-description">Description</label>
+    <span class="pb-input"><textarea maxlength="140" data-count="120" placeholder="What is this share for?" id="textinput-description" aria-describedby="textinput-description-help">Photos from the rack rebuild.</textarea></span>
+    <span class="pb-field__meta"><span class="pb-field__help" id="textinput-description-help">Shown on the share page.</span><span class="pb-field__count" aria-live="polite"></span></span></div>
   <div class="pb-form__row" data-test="formrow">
-    <label class="pb-field"><span class="pb-field__label">Embed title</span><span class="pb-input"><input value="Rack rebuild"></span></label>
-    <label class="pb-field"><span class="pb-field__label">Embed colour</span><span class="pb-input"><input value="#1f3fd6"></span><span class="pb-field__help">Hex, shown as the stripe beside the link.</span></label>
+    <div class="pb-field"><label class="pb-field__label" for="textinput-embed-title">Embed title</label><span class="pb-input"><input value="Rack rebuild" id="textinput-embed-title"></span></div>
+    <div class="pb-field"><label class="pb-field__label" for="textinput-embed-colour">Embed colour</label><span class="pb-input"><input value="#1f3fd6" id="textinput-embed-colour" aria-describedby="textinput-embed-colour-help"></span><span class="pb-field__help" id="textinput-embed-colour-help">Hex, shown as the stripe beside the link.</span></div>
   </div>
 </div>

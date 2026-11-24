@@ -1,8 +1,8 @@
-<div style="display:grid;gap:20px">
-  <label class="pb-field" style="max-width:240px"><span class="pb-field__label">Expires on</span>
-    <span class="pb-input pb-datefield" data-today="2026-11-22" data-min="2026-11-22"><input type="text" inputmode="numeric" placeholder="yyyy-mm-dd" pattern="\d{4}-\d{2}-\d{2}" value="2026-11-29" aria-label="Expires on"><button type="button" class="pb-input__btn" data-cal aria-label="Open calendar"><span class="pb-icon pb-icon--calendar"></span></button></span>
-    <span class="pb-field__help">Links stop working after this day.</span></label>
-  <div class="pb-field"><span class="pb-field__label">Shared between</span>
+<div class="pb-demo-display-grid-gap-20">
+  <div class="pb-field pb-demo-max-width-240"><label class="pb-field__label" for="datepicker-expires-on">Expires on</label>
+    <span class="pb-input pb-datefield" data-today="2026-11-22" data-min="2026-11-22"><input type="text" inputmode="numeric" placeholder="yyyy-mm-dd" pattern="\d{4}-\d{2}-\d{2}" value="2026-11-29" id="datepicker-expires-on" aria-describedby="datepicker-expires-on-help"><button type="button" class="pb-input__btn" data-cal aria-label="Open calendar"><span class="pb-icon pb-icon--calendar"></span></button></span>
+    <span class="pb-field__help" id="datepicker-expires-on-help">Links stop working after this day.</span></div>
+  <div class="pb-field" role="group" aria-labelledby="dp-range-l"><span class="pb-field__label" id="dp-range-l">Shared between</span>
     <div class="pb-daterange" data-today="2026-11-22">
       <span class="pb-input"><span class="pb-input__affix">from</span><input type="text" inputmode="numeric" placeholder="yyyy-mm-dd" value="2026-11-13" aria-label="From"><button type="button" class="pb-input__btn" data-cal aria-label="Open calendar"><span class="pb-icon pb-icon--calendar"></span></button></span>
       <span class="pb-input"><span class="pb-input__affix">to</span><input type="text" inputmode="numeric" placeholder="yyyy-mm-dd" value="2026-11-22" aria-label="To"><button type="button" class="pb-input__btn" data-cal aria-label="Open calendar"><span class="pb-icon pb-icon--calendar"></span></button></span>

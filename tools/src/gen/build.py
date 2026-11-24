@@ -1,5 +1,6 @@
+from pbroot import ROOT
 import os,sys
-PV='/home/claude/gen/pv'; OUT='/home/claude/ds/project/components'
+PV=ROOT+'/gen/pv'; OUT=ROOT+'/ds/project/components'
 C={ # name: (group, height, subtitle, layout)
  'AppIcons':('Foundations',676,'Favicon, home screen and maskable icons, theme-color','rows'),
  'AlertEmail':('Pages',1772,'Alert email that survives mail clients, with dark mode','rows'),
@@ -98,7 +99,13 @@ C={ # name: (group, height, subtitle, layout)
  'ButtonGroup':('Actions',230,'Joined actions, split button, pager, toolbar','cols'),
  'Menu':('Actions',320,'Popover menu: items, keys, check, danger','cols'),
  'Tooltip':('Indicators',110,'Hover and focus hints','cols'),
- 'Notice':('Indicators',470,'Inline info, ok, warn, down messages','cols'),
+ 'Notice':('Indicators',560,'Inline info, ok, warn, down messages; pbNotice() builds them','cols'),
+ 'ConfirmAction':('Actions',420,'data-confirm on a button, link or form asks first, then acts','cols'),
+ 'AutoSubmit':('Forms',360,'A filter form that submits when a control changes','cols'),
+ 'BusyRegion':('Indicators',420,'aria-busy dims a region, shows a delayed spinner and a top bar','cols'),
+ 'MediaState':('Layout',620,'Processing stand-ins for previews, and a hover or focus teaser','cols'),
+ 'ShareLink':('Actions',360,'Copy link and a QR popover as one group','cols'),
+ 'StorageRing':('Indicators',360,'Compact usage ring with a breakdown popover','cols'),
  'Progress':('Indicators',330,'Native progress (determinate, indeterminate) and meter','cols'),
  'Tabs':('Layout',120,'Tab list and panels','cols'),
  'Disclosure':('Layout',330,'details/summary and exclusive accordion','cols'),
@@ -128,6 +135,6 @@ for n,(g,h,sub,lay) in C.items():
           f'<template id="pb-t">\n{body}\n</template>\n<script>\n{PAIR}\n{js}\n</script>\n')
     os.makedirs(f'{OUT}/{n}',exist_ok=True); open(f'{OUT}/{n}/preview.html','w').write(html)
     # local harness
-    os.makedirs('/home/claude/gen/h',exist_ok=True)
-    open(f'/home/claude/gen/h/{n}.html','w').write('<!doctype html><html data-theme="light"><head><meta charset="utf-8"><link rel="stylesheet" href="/home/claude/gen/tokens.css"><link rel="stylesheet" href="/home/claude/ds/project/components/bundle.css"><style>html,body{margin:0;background:var(--bg)}</style></head><body>'+html+'</body></html>')
+    os.makedirs(ROOT+'/gen/h',exist_ok=True)
+    open(f'{ROOT}/gen/h/{n}.html','w').write('<!doctype html><html data-theme="light"><head><meta charset="utf-8"><link rel="stylesheet" href="'+ROOT+'/gen/tokens.css"><link rel="stylesheet" href="'+ROOT+'/ds/project/components/bundle.css"><style>html,body{margin:0;background:var(--bg)}</style></head><body>'+html+'</body></html>')
 print('ok')

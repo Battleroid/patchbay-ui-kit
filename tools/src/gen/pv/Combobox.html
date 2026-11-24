@@ -1,7 +1,7 @@
-<div style="display:grid;gap:20px;padding-bottom:200px">
-  <label class="pb-field" style="max-width:360px"><span class="pb-field__label">Host</span>
+<div class="pb-demo-combobox-1">
+  <div class="pb-field pb-demo-max-width-360"><label class="pb-field__label" for="combobox-host">Host</label>
     <div class="pb-combo" data-combo>
-      <span class="pb-input"><span class="pb-icon pb-icon--server"></span><input role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="hostlist" placeholder="Search hosts" value="nas-01"><button type="button" class="pb-input__btn" data-combo-toggle tabindex="-1" aria-label="Show hosts"><span class="pb-icon pb-icon--chevron-down"></span></button></span>
+      <span class="pb-input"><span class="pb-icon pb-icon--server"></span><input role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="hostlist" placeholder="Search hosts" value="nas-01" id="combobox-host" aria-describedby="combobox-host-help"><button type="button" class="pb-input__btn" data-combo-toggle tabindex="-1" aria-label="Show hosts"><span class="pb-icon pb-icon--chevron-down"></span></button></span>
       <ul class="pb-listbox" role="listbox" id="hostlist" hidden>
         <li class="pb-listbox__group" role="presentation">servers</li>
         <li class="pb-option" role="option" data-value="nas-01"><span class="pb-icon pb-icon--database"></span>nas-01<span class="pb-option__meta">10.0.20.10</span></li>
@@ -13,5 +13,5 @@
         <li class="pb-option pb-option--empty" role="presentation" hidden>No hosts match.</li>
       </ul>
     </div>
-    <span class="pb-field__help">Type to filter. ↑↓ to move, Enter to pick.</span></label>
+    <span class="pb-field__help" id="combobox-host-help">Type to filter. ↑↓ to move, Enter to pick.</span></div>
 </div>

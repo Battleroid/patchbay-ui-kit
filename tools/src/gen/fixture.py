@@ -1,23 +1,14 @@
-# Writes tests/fixtures/csp.html and csp-esm.html: one instance of every pbInit component, from the pv/ example markup with
-# inline styles and handlers removed, under the strict CSP the kit promises. export.py calls write(out_dir).
+from pbroot import ROOT
+# Writes tests/fixtures/csp.html and csp-esm.html: one instance of every pbInit component, from the pv/ example markup exactly as shipped (it has no inline style, script or handler), under the strict CSP the kit promises. export.py calls write(out_dir).
 import json,os,re,sys
-sys.path.insert(0,'/home/claude/gen')
+sys.path.insert(0,ROOT+'/gen')
 import pbscripts as S
 CSP="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:"
-# Covers every hook in pv/_hooks.js (tests/csp.spec.mjs checks that each selector matches).
-COMPONENTS=('StorageBar DropZone DatePicker TimePicker Combobox TagInput CodeInput ColorPicker CopyField KeyValue DualRange Button Checkbox '
-  'TextInput InputTypes Range Tabs Fieldset Dialog Notifications DataTable MediaPlayer CodeArea AppShell SiteHeader TimeRange ShareDialog '
-  'FilePreview TableTools EventCalendar MarkdownEditor CommentThread NotifySettings MobileNav SessionTimeout ThemeSwitch Menu Popover TreeView '
-  'CommandPalette ContextMenu ImageViewer Avatar Pagination ErrorSummary TextUtils QRCode Resizable LogViewer LogExplorer DiffViewer '
-  'FileBrowser Terminal CronBuilder Rack Heatmap Gauge BarChart Histogram JsonViewer BulkActions QueryFilter Sortable Shortcuts UploadQueue '
-  'SiteBanner Toast VirtualList SettingsPage').split()
-VARS=re.compile(r'^\s*(--[a-z0-9-]+\s*:[^;]+;?\s*)+$')
+# Every pv/<Name>.html example, so each component runs under the CSP (tests/csp.spec.mjs also checks that each hook selector matches).
+COMPONENTS=sorted(os.path.basename(f)[:-5] for f in os.listdir(S.PV) if f.endswith('.html'))
 def clean(html):
-    def st(m):
-        v=m.group(2)
-        return ' data-vars="'+v+'"' if VARS.match(v) else ''
-    html=re.sub(r'\sstyle=(["\'])(.*?)\1',lambda m:st(m),html,flags=re.S)
-    html=re.sub(r'\son[a-z]+=("[^"]*"|\'[^\']*\')','',html)
+    # The email preview's srcdoc is a whole email document with the inline styles email clients need; an iframe inherits the page CSP, so the fixture leaves it out.
+    html=re.sub(r'\ssrcdoc="[^"]*"','',html)
     html=html.replace('{{SAMPLE}}','../../media/sample.mp4').replace('{{POSTER}}','../../media/poster.jpg')
     for i in range(1,7): html=html.replace('{{PHOTO%d}}'%i,'../../media/photo-%d.jpg'%i).replace('{{THUMB%d}}'%i,'../../media/thumb-%d.jpg'%i)
     return html
@@ -30,7 +21,8 @@ def page(title,scripts):
             if i in ids: raise SystemExit(f'fixture: id {i} in both {ids[i]} and {n}')
             ids[i]=n
         body+=f'<section class="fx" data-fixture="{n}" aria-label="{n}">\n{h}\n</section>\n'
-    if re.search(r'(?<![-\w])style\s*=|<style|<script(?! type="(?:application/json|text/plain)")',body): raise SystemExit('fixture: inline style or script left in the markup')
+    chk=body
+    if re.search(r'(?<![-\w])on[a-z]+\s*=|(?<![-\w])style\s*=|<style|<script(?! type="(?:application/json|text/plain)")',chk): raise SystemExit('fixture: inline style or script left in the markup')
     return f'''<!DOCTYPE html>
 <html lang="en" data-edge="soft" data-theme-default="light">
 <head><meta charset="utf-8">
@@ -39,6 +31,7 @@ def page(title,scripts):
 <title>{title}</title>
 <script src="../../pb-theme-boot.js"></script>
 <link rel="stylesheet" href="../../patchbay.css">
+<link rel="stylesheet" href="../../demo.css">
 <link rel="stylesheet" href="fixture.css">
 </head>
 <body class="pb">

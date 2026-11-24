@@ -1,1 +1,1 @@
-document.querySelectorAll('.pb-cmd').forEach(function(d){pbInit(d);d.addEventListener('command',function(e){var o=d.parentElement.querySelector('[data-cmd-out]');if(o)o.textContent='Ran: '+e.detail;});});
+document.querySelectorAll('.pb-cmd').forEach(function(d){pbInit(d);d.addEventListener('pb:command',function(e){var o=d.parentElement.querySelector('[data-cmd-out]');if(o)o.textContent='Ran: '+e.detail.command;});});

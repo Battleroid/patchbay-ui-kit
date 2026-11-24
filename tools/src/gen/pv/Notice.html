@@ -1,6 +1,10 @@
-<div style="display:grid;gap:12px">
+<div class="pb-demo-display-grid-gap-12">
   <div class="pb-notice" role="status"><span class="pb-icon pb-icon--status-info"></span><p class="pb-notice__title">Maintenance tonight</p><p class="pb-notice__body">Pool scrub runs 02:00–06:00. Expect slow file loads.</p></div>
   <div class="pb-notice" data-status="ok" role="status"><span class="pb-icon pb-icon--status-ok"></span><p class="pb-notice__title">Backup finished</p><button class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Dismiss"><span class="pb-icon pb-icon--close"></span></button></div>
-  <div class="pb-notice" data-status="warn" role="status"><span class="pb-icon pb-icon--status-warn"></span><p class="pb-notice__title">Certificate expires in 9 days</p><p class="pb-notice__body">Renewal failed twice. DNS challenge timed out.</p><div class="pb-notice__actions"><button class="pb-btn pb-btn--sm">Retry now</button><a class="pb-link" href="#" style="font-size:15px">View log</a></div></div>
+  <div class="pb-notice" data-status="warn" role="status"><span class="pb-icon pb-icon--status-warn"></span><p class="pb-notice__title">Certificate expires in 9 days</p><p class="pb-notice__body">Renewal failed twice. DNS challenge timed out.</p><div class="pb-notice__actions"><button class="pb-btn pb-btn--sm">Retry now</button><a class="pb-link pb-demo-font-size-15" href="#">View log</a></div></div>
   <div class="pb-notice" data-status="down" role="alert"><span class="pb-icon pb-icon--status-down"></span><p class="pb-notice__title">pi-dns is unreachable</p><p class="pb-notice__body">Clients fall back to 1.1.1.1.</p></div>
+</div>
+<div class="pb-demo-col" data-notice-demo>
+  <div class="pb-toolbar"><button type="button" class="pb-btn pb-btn--sm" data-notice-fail>Fail a save</button><button type="button" class="pb-btn pb-btn--sm" data-notice-ok>Save</button><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-notice-html>Show unsafe text</button></div>
+  <div data-notice-target tabindex="-1"</div>
 </div>

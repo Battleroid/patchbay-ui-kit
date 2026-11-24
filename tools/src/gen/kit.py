@@ -1,11 +1,13 @@
+from pbroot import ROOT
 import json,re,os,html
-T=json.load(open('/home/claude/ds/project/tokens.json'))
+T=json.load(open(ROOT+'/ds/project/tokens.json'))
 ICONS=json.load(open('icons.json'))
-PV='pv'; C='/home/claude/ds/project/components'
+PV='pv'; C=ROOT+'/ds/project/components'
 # tokens css with relative fonts
-import sys; sys.path.insert(0,'/home/claude/gen'); from tokcss_lib import tokens_css
+import sys; sys.path.insert(0,ROOT+'/gen'); from tokcss_lib import tokens_css
 tok=[tokens_css(T,lambda f:'fonts/'+os.path.basename(f))]
 bundle=open(f'{C}/bundle.css').read()
+demo_css=open('demo.css',encoding='utf-8').read()
 colors={k['name']:k for k in T['color']['tokens']}
 def resolve(v,t='light'):
     while True:
@@ -23,15 +25,15 @@ def frag(n):
     return b,js
 SECTIONS=[
  ('helpers','Theme and text',['ThemeSwitch','Density','TextUtils','Scrollbars','AppIcons']),
- ('actions','Actions',['Button','ButtonGroup','Segmented','Menu','Link','CommandPalette','ContextMenu','BulkActions','Shortcuts']),
- ('forms','Forms',['TextInput','InputTypes','Select','Combobox','TagInput','DatePicker','TimePicker','ColorPicker','CodeInput','CopyField','Checkbox','Radio','Switch','ChoiceCard','Range','DualRange','KeyValue','Fieldset','ErrorSummary','QueryFilter','MarkdownEditor','NotifySettings','CodeArea','DropZone']),
- ('indicators','Indicators',['Badge','Pill','Notice','Toast','Notifications','Progress','Loading','Tooltip','Popover','Avatar','SiteBanner','UploadQueue']),
+ ('actions','Actions',['Button','ButtonGroup','Segmented','Menu','Link','CommandPalette','ContextMenu','BulkActions','Shortcuts','ConfirmAction','ShareLink']),
+ ('forms','Forms',['TextInput','InputTypes','Select','Combobox','TagInput','DatePicker','TimePicker','ColorPicker','CodeInput','CopyField','Checkbox','Radio','Switch','ChoiceCard','Range','DualRange','KeyValue','Fieldset','ErrorSummary','QueryFilter','MarkdownEditor','NotifySettings','CodeArea','DropZone','AutoSubmit']),
+ ('indicators','Indicators',['Badge','Pill','Notice','Toast','Notifications','Progress','Loading','Tooltip','Popover','Avatar','SiteBanner','UploadQueue','BusyRegion','StorageRing']),
  ('data','Data',['Chart','ChartGround','Sparkline','StatTile','DataTable','DetailList','TreeView','Timeline','TableTools','Diagram','Flow','TimeRange','Heatmap','Gauge','BarChart','Histogram','JsonViewer','EventCalendar','VirtualList','QRCode']),
- ('layout','Layout',['Card','ListItem','Tabs','Disclosure','Breadcrumbs','Steps','Pagination','EmptyState','Resizable','Sortable','CommentThread','MobileNav','SessionTimeout','Dialog','ImageViewer','MediaPlayer','Media','MediaList','Prose','SkipLink']),
+ ('layout','Layout',['Card','ListItem','Tabs','Disclosure','Breadcrumbs','Steps','Pagination','EmptyState','Resizable','Sortable','CommentThread','MobileNav','SessionTimeout','Dialog','ImageViewer','MediaPlayer','Media','MediaList','Prose','SkipLink','MediaState']),
  ('homelab','Homelab',['LogViewer','LogExplorer','ShareDialog','FilePreview','Terminal','DiffViewer','FileBrowser','CronBuilder','StorageBar','Rack']),
  ('pages','Pages',['SiteHeader','AppShell','Dashboard','SettingsPage','SignIn','ApiTokens','PrintReport','AlertEmail','StatusPage']),
 ]
-NAMES={'ButtonGroup':'Button group','TextInput':'Text input','InputTypes':'Input types','CodeArea':'Code area','DropZone':'Drop zone','DataTable':'Data table','StatusPage':'Status page','ChartGround':'Chart grounds','DatePicker':'Date picker','MediaPlayer':'Media player','StatTile':'Stat tile','ThemeSwitch':'Theme switch','TextUtils':'Text helpers','CommandPalette':'Command palette','ContextMenu':'Context menu','ErrorSummary':'Error summary','SiteBanner':'Site banner','DetailList':'Detail list','TreeView':'Tree view','QRCode':'QR code','ListItem':'List item','EmptyState':'Empty and result states','ImageViewer':'Image viewer','SkipLink':'Skip link','AppShell':'App shell','Resizable':'Resizable panels','BulkActions':'Bulk actions','QueryFilter':'Query filter','UploadQueue':'Upload queue','JsonViewer':'JSON viewer','VirtualList':'Virtual list','LogViewer':'Log viewer','LogExplorer':'Log explorer','TimeRange':'Time range and charts','MediaList':'Media list','SiteHeader':'Site header','ShareDialog':'Share dialog','FilePreview':'File preview','TableTools':'Table tools','EventCalendar':'Event calendar','MarkdownEditor':'Markdown editor','CommentThread':'Comment thread','NotifySettings':'Notification settings','MobileNav':'Phone navigation','SessionTimeout':'Session timeout','AppIcons':'App icons','AlertEmail':'Alert email','DiffViewer':'Diff viewer','FileBrowser':'File browser','CronBuilder':'Cron builder','StorageBar':'Storage bar','BarChart':'Bar chart','SettingsPage':'Settings page','SignIn':'Sign-in and two-factor','ApiTokens':'API tokens','PrintReport':'Print and reports','Gauge':'Gauges and donuts','Heatmap':'Calendar heatmap'}
+NAMES={'ButtonGroup':'Button group','TextInput':'Text input','InputTypes':'Input types','CodeArea':'Code area','DropZone':'Drop zone','DataTable':'Data table','StatusPage':'Status page','ChartGround':'Chart grounds','DatePicker':'Date picker','MediaPlayer':'Media player','StatTile':'Stat tile','ThemeSwitch':'Theme switch','TextUtils':'Text helpers','CommandPalette':'Command palette','ContextMenu':'Context menu','ErrorSummary':'Error summary','SiteBanner':'Site banner','DetailList':'Detail list','TreeView':'Tree view','QRCode':'QR code','ListItem':'List item','EmptyState':'Empty and result states','ImageViewer':'Image viewer','SkipLink':'Skip link','AppShell':'App shell','Resizable':'Resizable panels','BulkActions':'Bulk actions','QueryFilter':'Query filter','UploadQueue':'Upload queue','JsonViewer':'JSON viewer','VirtualList':'Virtual list','LogViewer':'Log viewer','LogExplorer':'Log explorer','TimeRange':'Time range and charts','MediaList':'Media list','SiteHeader':'Site header','ShareDialog':'Share dialog','FilePreview':'File preview','TableTools':'Table tools','EventCalendar':'Event calendar','MarkdownEditor':'Markdown editor','CommentThread':'Comment thread','NotifySettings':'Notification settings','MobileNav':'Phone navigation','SessionTimeout':'Session timeout','AppIcons':'App icons','AlertEmail':'Alert email','DiffViewer':'Diff viewer','FileBrowser':'File browser','CronBuilder':'Cron builder','StorageBar':'Storage bar','BarChart':'Bar chart','SettingsPage':'Settings page','SignIn':'Sign-in and two-factor','ApiTokens':'API tokens','PrintReport':'Print and reports','Gauge':'Gauges and donuts','Heatmap':'Calendar heatmap','ConfirmAction':'Confirm action','AutoSubmit':'Auto-submit','BusyRegion':'Busy region','MediaState':'Media state','ShareLink':'Share link','StorageRing':'Storage ring','TagInput':'Tag input','TimePicker':'Time picker','ColorPicker':'Color picker','CodeInput':'Code input','CopyField':'Copy field','ChoiceCard':'Choice card','DualRange':'Dual range','KeyValue':'Key-value list'}
 scripts=[]
 import pbscripts as S
 AGO="document.querySelectorAll('time[data-ago]').forEach(function(t){t.setAttribute('datetime',new Date(Date.now()-t.dataset.ago*1000).toISOString());});"
@@ -104,6 +106,7 @@ page=f'''<!DOCTYPE html>
    LAYOUT: name and switch, sticky section links, then name-left / demo-right specimens */
 {chr(10).join(tok)}
 {bundle}
+{demo_css}
 *{{box-sizing:border-box;min-width:0}}
 html{{scroll-padding-top:72px;background:var(--bg)}}
 body{{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip}}
@@ -163,8 +166,12 @@ body{{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip}}
   .spec__meta{{position:static}}
   .nav__edge{{display:none}}
 }}
+@media (min-width:641px) and (max-width:900px){{
+  .nav__in{{flex-wrap:wrap;overflow:visible;gap:0 4px}}
+  .nav a{{height:40px}}
+}}
 @media (max-width:640px){{
-  .spec__demo [style*="grid-template-columns:1fr 1fr"],.spec__demo [style*="repeat(3,1fr)"],.hero__stats{{grid-template-columns:minmax(0,1fr)!important}}
+  .spec__demo .pb-demo-card-2,.spec__demo .pb-demo-chart-1,.spec__demo .pb-demo-dashboard-1,.spec__demo .pb-demo-media-1,.hero__stats{{grid-template-columns:minmax(0,1fr)!important}}
   .spec__demo .pb-media{{grid-column:auto!important}}
   .ty{{grid-template-columns:minmax(0,1fr);gap:4px}}
   .pb-media__frame--file{{grid-template-columns:auto 1fr}}
@@ -218,8 +225,8 @@ pbInit();
 </body>
 </html>'''
 # wrap diagram for narrow scroll
-page=page.replace('<div class="pb-diagram"','<div class="dscroll"><div class="pb-diagram"',1)
+page=page.replace('<div class="pb-diagram pb-demo-height-290"','<div class="dscroll"><div class="pb-diagram pb-demo-height-290"',1)
 i=page.index('<div class="dscroll">'); j=page.index('</div></section>',i)
 page=page[:j]+'</div>'+page[j:]
-open('/home/claude/kit/index.html','w').write(page)
+open(ROOT+'/kit/index.html','w').write(page)
 print(len(page))

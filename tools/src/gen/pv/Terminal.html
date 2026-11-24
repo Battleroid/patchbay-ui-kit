@@ -1,4 +1,4 @@
-<div style="display:grid;gap:16px">
+<div class="pb-demo-display-grid-gap-16">
 <div class="pb-term" data-term>
   <div class="pb-term__head"><span class="pb-term__cmd">docker compose pull &amp;&amp; docker compose up -d</span><span class="pb-term__meta">12.4 s</span><span class="pb-term__exit"><span class="pb-icon pb-icon--check"></span>exit 0</span>
     <button type="button" class="pb-btn pb-btn--sm" data-term-copy><span class="pb-icon pb-icon--copy"></span><span>Copy</span></button></div>
@@ -13,7 +13,7 @@
  \e[32m✔\e[0m Container radarr    \e[2mRunning\e[0m                          0.0s
 </pre>
 </div>
-<div class="pb-term" data-term style="--term-h:170px">
+<div class="pb-term" data-term data-vars="--term-h:170px">
   <div class="pb-term__head"><span class="pb-term__cmd">zpool scrub -w tank</span><span class="pb-term__meta">2 m 40 s</span><span class="pb-term__exit" data-status="down"><span class="pb-icon pb-icon--close"></span>exit 1</span>
     <button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Wrap lines" aria-pressed="false" data-term-wrap><span class="pb-icon pb-icon--wrap"></span></button>
     <button type="button" class="pb-btn pb-btn--sm" data-term-copy><span class="pb-icon pb-icon--copy"></span><span>Copy</span></button></div>
@@ -31,8 +31,8 @@ config:
 	    sdc     \e[32mONLINE\e[0m       0     0     0
 </pre>
 </div>
-<div class="pb-term" data-term data-term-live style="--term-h:120px">
-  <div class="pb-term__head"><span class="pb-term__cmd">restic backup /tank/photos</span><span class="pb-term__exit" data-status="busy"><span class="pb-spinner pb-spinner--sm" style="--c:var(--on-night)"></span>running</span></div>
+<div class="pb-term" data-term data-term-live data-vars="--term-h:120px">
+  <div class="pb-term__head"><span class="pb-term__cmd">restic backup /tank/photos</span><span class="pb-term__exit" data-status="busy"><span class="pb-spinner pb-spinner--sm" data-vars="--c:var(--on-night)"></span>running</span></div>
 <pre class="pb-term__body">
 \e[34mrepository\e[0m 7f3c2a71 opened (version 2)
 using parent snapshot \e[36m4cd39fa2\e[0m

@@ -5,7 +5,7 @@ def tokens_css(T,fontpath):
     th=[x['id'] for x in T['color']['themes']]; out=[]
     for i,t in enumerate(th):
         sel=(':root, ' if i==0 else '')+f'[data-theme="{t}"]'; L=[sel+' {']
-        for fam in (T['color']['tokens'],T['shadow']['tokens']):
+        for fam in (T['color']['tokens'],T['shadow']['tokens'],T.get('focus',{}).get('tokens',[])):
             for k in fam:
                 v=k['value']
                 if isinstance(v,dict):
@@ -14,9 +14,12 @@ def tokens_css(T,fontpath):
                 elif i==0: L.append(f'  --{k["name"]}: {cv(v)};')
                 elif v.startswith('{'): L.append(f'  --{k["name"]}: {cv(v)};')
         L.append('}'); out.append('\n'.join(L))
+        if i==len(th)-1 and i>0:
+            # No data-theme (no JS, or the boot script absent): follow the system setting.
+            out.append('@media (prefers-color-scheme: dark) {\n:root:not([data-theme]) {\n'+'\n'.join(L[1:-1])+'\n}\n}')
     L=[':root {']
-    for fam in ('spacing','radius','stroke','size'):
-        for k in T[fam]['tokens']: L.append(f'  --{k["name"]}: {k["value"]};')
+    for fam in ('spacing','radius','stroke','size','text','motion','layer'):
+        for k in T.get(fam,{}).get('tokens',[]): L.append(f'  --{k["name"]}: {k["value"]};')
     for k,v in T['type']['families'].items(): L.append(f'  --font-{k}: {v};')
     L.append('}'); out.append('\n'.join(L))
     for f in T['type']['fonts']:

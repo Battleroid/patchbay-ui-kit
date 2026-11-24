@@ -1,9 +1,9 @@
-<div style="display:grid;gap:20px">
-  <label class="pb-field"><span style="display:flex;justify-content:space-between"><span class="pb-field__label">Fan speed</span><output class="pb-output">60%</output></span>
-    <input type="range" class="pb-range" min="0" max="100" value="60" step="5"></label>
-  <label class="pb-field"><span style="display:flex;justify-content:space-between"><span class="pb-field__label">Snapshots kept</span><output class="pb-output">14</output></span>
-    <input type="range" class="pb-range" min="1" max="30" value="14" list="kept">
+<div class="pb-demo-display-grid-gap-20">
+  <div class="pb-field"><span class="pb-demo-display-flex-justify-content-space-between"><label class="pb-field__label" for="range-fan-speed">Fan speed</label><output class="pb-output">60%</output></span>
+    <input type="range" class="pb-range" min="0" max="100" value="60" step="5" id="range-fan-speed"></div>
+  <div class="pb-field"><span class="pb-demo-display-flex-justify-content-space-between"><label class="pb-field__label" for="range-snapshots-kept">Snapshots kept</label><output class="pb-output">14</output></span>
+    <input type="range" class="pb-range" min="1" max="30" value="14" list="kept" id="range-snapshots-kept">
     <datalist id="kept"><option value="1"></option><option value="7"></option><option value="14"></option><option value="30"></option></datalist>
-    <span class="pb-range-ticks"><span>1</span><span>7</span><span>14</span><span>30</span></span></label>
-  <label class="pb-field"><span class="pb-field__label">Locked</span><input type="range" class="pb-range" value="30" disabled></label>
+    <span class="pb-range-ticks"><span>1</span><span>7</span><span>14</span><span>30</span></span></div>
+  <div class="pb-field"><label class="pb-field__label" for="range-locked">Locked</label><input type="range" class="pb-range" value="30" disabled id="range-locked"></div>
 </div>

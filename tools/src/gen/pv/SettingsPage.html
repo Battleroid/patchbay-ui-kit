@@ -1,4 +1,4 @@
-<div data-tpl="settings" style="height:820px;overflow:auto;padding:4px 16px 24px 4px">
+<div data-tpl="settings" class="pb-demo-settingspage-1">
 <header class="pb-pagehead"><nav class="pb-crumbs" aria-label="Breadcrumb"><ol><li><a href="#"><span class="pb-icon pb-icon--home"></span>Overview</a></li><li><span aria-current="page">Settings</span></li></ol></nav><h1 class="pb-pagehead__title">Settings</h1><p class="pb-pagehead__desc">Applies to everyone using snap on lab.home.</p></header>
 <div class="pb-settings">
   <ul class="pb-settings__nav" data-section-nav aria-label="Settings sections">
@@ -11,8 +11,8 @@
   <div class="pb-settings__main">
     <section id="set-general"><h2>General</h2>
       <form class="pb-form" data-section><fieldset class="pb-fieldset"><legend>Instance</legend>
-        <div class="pb-form__row"><label class="pb-field"><span class="pb-field__label">Name</span><span class="pb-input"><input value="snap"></span></label><label class="pb-field"><span class="pb-field__label">Public URL</span><span class="pb-input"><input value="https://snap.lab.home"></span></label></div>
-        <label class="pb-field"><span class="pb-field__label">Time zone</span><span class="pb-select"><select><option>America/New_York</option><option>UTC</option><option>Europe/Berlin</option></select></span><span class="pb-field__help">Used for schedules and timestamps in emails.</span></label>
+        <div class="pb-form__row"><div class="pb-field"><label class="pb-field__label" for="settingspage-name">Name</label><span class="pb-input"><input value="snap" id="settingspage-name"></span></div><div class="pb-field"><label class="pb-field__label" for="settingspage-public-url">Public URL</label><span class="pb-input"><input value="https://snap.lab.home" id="settingspage-public-url"></span></div></div>
+        <div class="pb-field"><label class="pb-field__label" for="settingspage-time-zone">Time zone</label><span class="pb-select"><select id="settingspage-time-zone" aria-describedby="settingspage-time-zone-help"><option>America/New_York</option><option>UTC</option><option>Europe/Berlin</option></select></span><span class="pb-field__help" id="settingspage-time-zone-help">Used for schedules and timestamps in emails.</span></div>
         <div class="pb-fieldset__foot"><span class="pb-foot__status"></span><button type="reset" class="pb-btn pb-btn--ghost" disabled>Discard</button><button class="pb-btn pb-btn--primary" disabled>Save</button></div>
       </fieldset></form></section>
     <section id="set-storage"><h2>Storage</h2><p>Where uploads land and how long they stay.</p>

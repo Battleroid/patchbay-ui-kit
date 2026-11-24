@@ -3,4 +3,6 @@ test-results/
 playwright-report/
 tools/dist/
 tools/.work/
+tools/.test-results/
+tools/patchbay.zip
 __pycache__/
