@@ -418,7 +418,7 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 
 /* ---------- Right-to-left ---------- */
 /* Direction-bearing glyphs mirror in RTL. `scale` composes with the rotate() the open state uses, so a caret turns the same way. */
-:dir(rtl) :is(.pb-icon--chevron-right, .pb-icon--link-internal, .pb-icon--skip-back, .pb-icon--skip-forward, .pb-dropset__chev),
+:dir(rtl) :is(.pb-icon--chevron-right, .pb-icon--chevron-left, .pb-icon--log-out, .pb-icon--link-internal, .pb-icon--skip-back, .pb-icon--skip-forward, .pb-dropset__chev),
 :dir(rtl) .pb-details > summary::before, :dir(rtl) .pb-json details > summary::before, :dir(rtl) .pb-nav__item[aria-expanded]::after, :dir(rtl) .pb-crumbs li + li::before { scale: -1 1; }
 
 /* ---------- Reduced motion ---------- */
