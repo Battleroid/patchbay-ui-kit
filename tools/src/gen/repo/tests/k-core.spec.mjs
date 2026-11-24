@@ -246,6 +246,30 @@ test.describe('opener', () => {
   });
 });
 
+test('palette: items from the JSON block and from data-cmd-src', async ({ page }) => {
+  await page.route('**/cmd-src.json', (r) => r.fulfill({ json: { sections: [{ label: 'admin', items: [{ label: 'Audit log', action: 'audit', keywords: 'history' }] }] } }));
+  await page.goto('/components/CommandPalette/example.html');
+  await page.evaluate(() => document.getElementById('cmdk').setAttribute('data-cmd-src', 'cmd-src.json'));
+  await page.locator('[data-pb-open="#cmdk"]').click();
+  const input = page.getByRole('combobox', { name: 'Search commands' });
+  await input.fill('alerts');
+  await expect(page.locator('#cmdk .pb-cmd__item:visible .pb-cmd__label')).toHaveText(['Notification settings']);
+  await input.fill('history');
+  await expect(page.locator('#cmdk .pb-cmd__item:visible .pb-cmd__label')).toHaveText(['Audit log']);
+  await expect(page.locator('#cmdk .pb-cmd__group:visible')).toHaveText(['admin']);
+});
+
+test('toasts: a live region attached in the same task as the first toast still waits before speaking', async ({ page }) => {
+  await page.goto('/components/Toast/example.html');
+  const r = await page.evaluate(() => new Promise((res) => {
+    document.querySelectorAll('[data-pb-live]').forEach((x) => x.remove());
+    pbToast({ title: 'Welcome back' });
+    const polite = document.querySelector('[data-pb-live="polite"]');
+    setTimeout(() => { const early = polite.textContent; setTimeout(() => res([early, polite.textContent]), 250); }, 80);
+  }));
+  expect(r).toEqual(['', 'Welcome back']);
+});
+
 test.describe('tabs', () => {
   test('data-tab-hash restores the tab from the fragment and writes it back; data-hides hides while selected', async ({ page }) => {
     await page.goto('/components/Tabs/example.html#hp2');
