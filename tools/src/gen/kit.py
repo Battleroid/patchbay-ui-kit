@@ -165,6 +165,8 @@ body{{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip}}
   .spec{{grid-template-columns:minmax(0,1fr);gap:16px}}
   .spec__meta{{position:static}}
   .nav__edge{{display:none}}
+}}
+@media (min-width:641px) and (max-width:900px){{
   .nav__in{{flex-wrap:wrap;overflow:visible;gap:0 4px}}
   .nav a{{height:40px}}
 }}
