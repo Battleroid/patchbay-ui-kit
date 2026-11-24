@@ -94,7 +94,7 @@ for f in ('LICENSE','CHANGELOG.md'): shutil.copy(f'{ROOT}/gen/repo/{f}',f'{O}/{f
 shutil.copytree(ROOT+'/gen/repo/.github',f'{O}/.github')
 shutil.copytree(ROOT+'/gen/repo/tests',f'{O}/tests')
 import fixture; fixture.write(f'{O}/tests/fixtures')
-for f in ('package.json','playwright.config.mjs','.gitignore'): shutil.copy(f'{ROOT}/gen/repo/{f}',f'{O}/{f}')
+for f in ('package.json','playwright.config.mjs','.gitignore','.gitattributes'): shutil.copy(f'{ROOT}/gen/repo/{f}',f'{O}/{f}')
 T=f'{O}/tools'; os.makedirs(f'{T}/src/gen/pv'); os.makedirs(f'{T}/src/gen/init')
 skip=('itest','shots','kitshot')
 for f in os.listdir(ROOT+'/gen'):
