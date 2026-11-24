@@ -34,3 +34,10 @@ function pbInit(root,opts){root=root||document;opts=opts||{};
       try{h.fn(el);}catch(err){console.error('[patchbay] '+h.name,err);}});});
   return root;}
 pbInit.hooks=[];
+/* One opener for every dialog-backed part (dialog, sheet, shortcut sheet, palette): <button data-pb-open="#id">.
+   Opens the <dialog> modally, then fires a non-bubbling pb:show on it (detail.opener) for parts that set up on open. */
+function pbOpener(b){var sel=b.getAttribute('data-pb-open')||'';if(sel&&sel.charAt(0)!=='#'&&sel.charAt(0)!=='.'&&sel.charAt(0)!=='[')sel='#'+sel;
+  var t=sel&&document.querySelector(sel);if(t&&t.id)b.setAttribute('aria-controls',t.id);if(t&&t.tagName==='DIALOG')b.setAttribute('aria-haspopup','dialog');
+  b.addEventListener('click',function(e){var d=sel&&document.querySelector(sel);if(!d)return;e.preventDefault();
+    if(d.tagName==='DIALOG'){if(!d.open)d.showModal();}else if(d.showPopover&&d.hasAttribute('popover')){d.showPopover();}
+    d.dispatchEvent(new CustomEvent('pb:show',{detail:{opener:b}}));});}

@@ -22,6 +22,7 @@ pbHook('range','.pb-range:not(.pb-range2 *)',pbRange);
 pbHook('tabs','.pb-tabs',pbTabs);
 pbHook('section','[data-section]',pbSection);
 pbHook('dialog','[data-open]',pbDialogOpen);
+pbHook('open','[data-pb-open]',pbOpener);
 pbHook('inbox','[data-inbox]',pbInbox);
 pbHook('table','.pb-table',pbTableBasic);
 pbHook('player','[data-player]',pbPlayer);
