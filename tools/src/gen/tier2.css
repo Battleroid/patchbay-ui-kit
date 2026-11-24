@@ -39,7 +39,7 @@
 .pb-steps { --n: 4; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; counter-reset: pb-step; }
 .pb-step { position: relative; display: grid; justify-items: start; align-content: start; gap: 6px; padding-right: var(--space-3); counter-increment: pb-step; }
 .pb-step::before {
-  content: counter(pb-step); position: relative; z-index: 1; display: grid; place-items: center; width: 28px; height: 28px;
+  content: counter(pb-step); position: relative; z-index: var(--pb-z-raised); display: grid; place-items: center; width: 28px; height: 28px;
   font: 600 var(--pb-text-12)/1 var(--font-mono); color: var(--ink-muted); background: var(--surface); border: var(--stroke-2) solid var(--line-strong); border-radius: var(--pb-r-pill);
 }
 .pb-step::after { content: ""; position: absolute; top: 13px; left: 34px; right: 6px; height: 2px; background: var(--line); }
@@ -195,7 +195,7 @@
 .pb-lightbox[data-zoom] .pb-lightbox__stage img { max-width: none; max-height: none; }
 .pb-lightbox:not([data-zoom]) .pb-lightbox__stage img { cursor: zoom-in; }
 .pb-lightbox__nav {
-  position: absolute; top: 50%; z-index: 1; display: grid; place-items: center; width: 44px; height: 44px; margin-top: -22px; padding: 0;
+  position: absolute; top: 50%; z-index: var(--pb-z-raised); display: grid; place-items: center; width: 44px; height: 44px; margin-top: -22px; padding: 0;
   color: var(--on-night); background: rgba(23, 21, 15, 0.6); border: var(--stroke-1) solid rgba(250, 248, 243, 0.25); border-radius: var(--pb-r-pill); cursor: pointer;
 }
 .pb-lightbox__nav:hover { background: rgba(250, 248, 243, 0.14); }

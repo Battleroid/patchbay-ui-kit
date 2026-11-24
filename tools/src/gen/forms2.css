@@ -1,7 +1,7 @@
 /* ---------- Listbox (combobox, tag suggestions) ---------- */
 .pb-combo { position: relative; }
 .pb-listbox {
-  position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 4px); max-height: 264px; overflow-y: auto; margin: 0; padding: 4px; list-style: none;
+  position: absolute; z-index: var(--pb-z-dropdown); left: 0; right: 0; top: calc(100% + 4px); max-height: 264px; overflow-y: auto; margin: 0; padding: 4px; list-style: none;
   background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); box-shadow: var(--pb-shadow-lg);
 }
 .pb-listbox[hidden] { display: none; }
@@ -103,7 +103,7 @@
 .pb-range2 .pb-range::-webkit-slider-runnable-track { background: none; box-shadow: none; }
 .pb-range2 .pb-range::-moz-range-track { background: none; box-shadow: none; }
 .pb-range2 .pb-range::-moz-range-progress { background: none; }
-.pb-range2 .pb-range::-webkit-slider-thumb { pointer-events: auto; position: relative; z-index: 1; }
+.pb-range2 .pb-range::-webkit-slider-thumb { pointer-events: auto; position: relative; z-index: var(--pb-z-raised); }
 .pb-range2 .pb-range::-moz-range-thumb { pointer-events: auto; }
 
 /* ---------- Choice cards ---------- */

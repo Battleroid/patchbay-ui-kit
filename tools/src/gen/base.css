@@ -216,7 +216,7 @@ a.pb-card:focus-visible, button.pb-card:focus-visible { outline: var(--stroke-2)
   background: transparent; color: transparent; caret-color: var(--ink);
 }
 .pb-code--copy { position: relative; }
-.pb-code--copy > .pb-code__copy { position: absolute; top: 4px; right: 4px; z-index: 1; }
+.pb-code--copy > .pb-code__copy { position: absolute; top: 4px; right: 4px; z-index: var(--pb-z-raised); }
 .pb-code__input::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); color: transparent; }
 .tok-k { color: var(--syn-keyword); }
 .tok-s { color: var(--syn-string); }

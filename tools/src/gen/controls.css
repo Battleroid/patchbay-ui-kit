@@ -162,11 +162,11 @@
 .pb-btngroup > .pb-btn:not(.pb-btn ~ .pb-btn) { border-radius: var(--pb-r-md) 0 0 var(--pb-r-md); }
 .pb-btngroup > .pb-btn:not(:has(~ .pb-btn)) { border-radius: 0 var(--pb-r-md) var(--pb-r-md) 0; }
 .pb-btngroup > .pb-btn:not(.pb-btn ~ .pb-btn):not(:has(~ .pb-btn)) { border-radius: var(--pb-r-md); }
-.pb-btngroup > .pb-btn:hover, .pb-btngroup > .pb-btn:focus-visible { z-index: 1; }
+.pb-btngroup > .pb-btn:hover, .pb-btngroup > .pb-btn:focus-visible { z-index: var(--pb-z-raised); }
 .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--accent-hover); }
 [data-edge="hard"] .pb-btngroup > .pb-btn--primary + .pb-btn--primary { border-left-color: var(--ink); }
 [data-edge="hard"] .pb-btngroup > .pb-btn:active { transform: none; }
-.pb-btngroup > .pb-btn[aria-current="page"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); z-index: 1; }
+.pb-btngroup > .pb-btn[aria-current="page"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); z-index: var(--pb-z-raised); }
 [data-edge="hard"] .pb-btngroup > .pb-btn[aria-current="page"] { border-color: var(--ink); }
 .pb-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
 .pb-toolbar__spacer { flex: 1; }
@@ -198,7 +198,7 @@
 .pb-tip::after {
   content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%);
   padding: 4px 8px; font: 400 var(--pb-text-12)/16px var(--font-mono); white-space: nowrap; color: var(--bg); background: var(--ink);
-  border-radius: var(--pb-r-sm); pointer-events: none; opacity: 0; transition: opacity var(--pb-dur-2); z-index: 10;
+  border-radius: var(--pb-r-sm); pointer-events: none; opacity: 0; transition: opacity var(--pb-dur-2); z-index: var(--pb-z-dropdown);
 }
 .pb-tip:hover::after, .pb-tip:focus-visible::after, .pb-tip[data-tip-open]::after { opacity: 1; }
 /* With script the tip is a role=tooltip popover (pbTip); the ::after above stays the no-script look and the "Copied" flash (data-tip-open). */
@@ -362,7 +362,7 @@
 }
 .pb-table { width: 100%; border-collapse: collapse; font: 400 var(--pb-text-15)/20px var(--font-serif); color: var(--ink); }
 .pb-table th {
-  position: sticky; top: 0; z-index: 1; height: 36px; padding: 0 var(--space-3); text-align: left; white-space: nowrap;
+  position: sticky; top: 0; z-index: var(--pb-z-raised); height: 36px; padding: 0 var(--space-3); text-align: left; white-space: nowrap;
   font: 600 var(--pb-text-11)/14px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted);
   background: var(--surface); border-bottom: var(--stroke-1) solid var(--pb-border);
 }
