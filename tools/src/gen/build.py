@@ -106,7 +106,6 @@ C={ # name: (group, height, subtitle, layout)
  'MediaState':('Layout',620,'Processing stand-ins for previews, and a hover or focus teaser','cols'),
  'ShareLink':('Actions',360,'Copy link and a QR popover as one group','cols'),
  'StorageRing':('Indicators',360,'Compact usage ring with a breakdown popover','cols'),
- 'CompactVariants':('Layout',720,'A compact Result and a compact media tile','cols'),
  'Progress':('Indicators',330,'Native progress (determinate, indeterminate) and meter','cols'),
  'Tabs':('Layout',120,'Tab list and panels','cols'),
  'Disclosure':('Layout',330,'details/summary and exclusive accordion','cols'),

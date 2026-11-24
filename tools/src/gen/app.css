@@ -13,6 +13,12 @@
 .pb-upq__item[data-state="processing"] > .pb-icon { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .pb-upq__item[data-state="processing"] .pb-upq__bar span { width: 100%; opacity: 0.6; animation: none; } }
 .pb-upq__foot { flex-wrap: wrap; }
+.pb-upq__meta { flex-wrap: wrap; }
+.pb-upq__txt { min-width: 0; overflow-wrap: anywhere; }
+.pb-upq__item[data-state="processing"] .pb-upq__bar, .pb-upq__item[data-state="failed"] .pb-upq__bar { flex: 0 0 48px; min-width: 0; }
+/* A file input hidden visually stays in the tab order; its label button shows the focus ring. */
+.pb-btn:has(> input[type="file"].pb-sr) { position: relative; }
+.pb-btn:has(> input[type="file"]:focus-visible) { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
 
 /* Busy regions: a region with aria-busy="true" dims its content, ignores the pointer and shows a spinner, all after 300 ms so a quick swap never flashes.
    The kit's own loading parts (the inbox panel, a lazy tree item) keep their own look; data-busy="off" opts any region out. */
@@ -21,9 +27,9 @@
 @keyframes pb-busy-spin { to { transform: rotate(360deg); } }
 @keyframes pb-busybar { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
 :where([aria-busy="true"]) { position: relative; }
-[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"]) { pointer-events: none; cursor: progress; }
-[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"]) > * { animation: pb-busy-dim 150ms linear 300ms forwards; }
-[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"])::after {
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"]) { pointer-events: none; cursor: progress; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"]) > * { animation: pb-busy-dim 150ms linear 300ms forwards; }
+[aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"])::after {
   content: ""; position: absolute; inset-block-start: calc(50% - 12px); inset-inline-start: calc(50% - 12px); width: 24px; height: 24px; box-sizing: border-box;
   border: 3px solid var(--line-strong); border-block-start-color: var(--accent); border-radius: 50%; opacity: 0; pointer-events: none;
   animation: pb-busy-show 1ms linear 300ms forwards, pb-busy-spin 0.8s linear infinite;
@@ -32,7 +38,7 @@
 .pb-busybar[hidden] { display: none; }
 .pb-busybar > span { display: block; width: 40%; height: 100%; background: var(--accent); animation: pb-busybar 1.2s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  [aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"])::after { border-color: var(--accent) var(--line-strong) var(--line-strong) var(--line-strong); animation: pb-busy-show 1ms linear 300ms forwards; }
+  [aria-busy="true"]:not(.pb-inbox, [role="treeitem"], [data-busy="off"], button, [role="button"])::after { border-color: var(--accent) var(--line-strong) var(--line-strong) var(--line-strong); animation: pb-busy-show 1ms linear 300ms forwards; }
   .pb-busybar > span { width: 100%; opacity: 0.6; animation: none; }
 }
 
@@ -109,3 +115,26 @@ a.pb-media__name:hover { text-decoration: underline; }
 .pb-keys__demo { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-3); border: var(--stroke-1) dashed var(--pb-border); border-radius: var(--pb-r-md); max-width: 420px; }
 .pb-keys__demo:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
 .pb-keys__notes { margin: 0; padding-inline-start: var(--space-4); }
+
+/* Event calendar: a date grid with one tab stop; failed runs carry colour and a ring; under 620 px a day is the target. */
+.pb-evcal__day:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: -2px; }
+.pb-evcal__ev[data-status="down"] { box-shadow: inset 0 0 0 1px var(--down); }
+.pb-evcal__ev[data-status="down"]::after { content: none; }
+.pb-evcal__fail { margin-inline-start: auto; font: 600 11px/1 var(--font-mono); font-style: normal; color: var(--down); }
+.pb-evcal__marks { display: none; gap: 4px; padding-inline: 2px; }
+.pb-evcal__marks i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--accent)); }
+.pb-evcal__marks i[data-status="down"] { background: var(--down); outline: 2px solid var(--down); outline-offset: 1px; }
+@container pbcal (max-width: 620px) {
+  .pb-evcal__grid .pb-evcal__ev, .pb-evcal__grid .pb-evcal__more { display: none; }
+  .pb-evcal__day { grid-template-columns: minmax(0, 1fr); min-height: 48px; cursor: pointer; gap: 4px; }
+  .pb-evcal__marks { display: flex; flex-wrap: wrap; }
+  .pb-evcal__agenda > li { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+}
+
+/* A busy button keeps its label ("Syncing…") and ignores clicks. */
+button[aria-busy="true"] { cursor: progress; pointer-events: none; opacity: 0.75; }
+.pb-mediagrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 220px)); gap: var(--space-3); width: 100%; }
+.pb-demo-head { display: flex; align-items: center; gap: var(--space-2); width: 100%; min-height: 48px; padding: 0 var(--space-3); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); background: var(--surface); }
+.pb-demo-head__brand { font: 600 17px/24px var(--font-serif); }
+.pb-ring__pct { font: 500 12px/16px var(--font-mono); font-variant-numeric: tabular-nums; }
+.pb-ring:has(.pb-ring__pct) { width: auto; grid-auto-flow: column; gap: 6px; padding-inline: 8px; }
