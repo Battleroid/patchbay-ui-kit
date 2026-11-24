@@ -102,7 +102,7 @@ function pbSection(f){var form=f.elements?f:(f.querySelector('form')||f.closest(
  function restore(){var v=JSON.parse(snap);ctrls().forEach(function(c,i){if(i>=v.length)return;if(c.type==='checkbox'||c.type==='radio')c.checked=v[i];else if(c.tagName==='SELECT')[].forEach.call(c.options,function(o,k){o.selected=!!v[i][k]});else if(c.type!=='file')c.value=v[i];});}
  function set(state,msg){var on=state==='dirty'||state==='error';btns().forEach(function(b){b.disabled=!on});if(!st)return;st.textContent=msg;
    if(state==='clean')st.removeAttribute('data-state');else st.dataset.state=state;
-   var ic={saved:'status-ok',error:'status-down',busy:'refresh'}[state];if(ic){var i=document.createElement('span');i.className='pb-icon pb-icon--'+ic+(state==='busy'?' pb-spin':'');st.prepend(i);}}
+   var ic={saved:'status-ok',error:'status-down',busy:'refresh'}[state];if(ic){var i=document.createElement('span');i.className='pb-icon pb-icon--'+ic+(state==='busy'?' pb-icon--spin':'');st.prepend(i);}}
  function check(){if(ser()===snap)set('clean',clean);else set('dirty','Unsaved changes');}
  snap=ser();if(form.querySelector('[data-invalid]'))set('dirty','Unsaved changes');else{var s0=st&&st.dataset.state;btns().forEach(function(b){b.disabled=s0!=='error'&&s0!=='dirty';});}
  form.addEventListener('input',check);form.addEventListener('change',check);

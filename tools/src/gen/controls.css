@@ -308,10 +308,10 @@
 .pb-meterbar::-moz-meter-bar { background: var(--ok); }
 .pb-meterbar:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--warn); }
 .pb-meterbar:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--down); }
-.pb-gauge { display: grid; grid-template-columns: 1fr auto; gap: 6px var(--space-3); align-items: baseline; }
-.pb-gauge > :is(progress, meter) { grid-column: 1 / -1; }
-.pb-gauge__label { font: 400 15px/20px var(--font-serif); }
-.pb-gauge__value { font: 500 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); }
+.pb-progressrow { display: grid; grid-template-columns: 1fr auto; gap: 6px var(--space-3); align-items: baseline; }
+.pb-progressrow > :is(progress, meter) { grid-column: 1 / -1; }
+.pb-progressrow__label { font: 400 15px/20px var(--font-serif); }
+.pb-progressrow__value { font: 500 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); }
 
 /* ---------- Notice ---------- */
 .pb-notice {

@@ -1,10 +1,10 @@
 <div style="display:grid;gap:28px">
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px;justify-items:center">
-  <figure class="pb-dial" data-dial data-value="34" data-max="100" data-warn="80" data-down="95" data-unit="%"><figcaption>CPU<small>pve-01 · 32 threads</small></figcaption></figure>
-  <figure class="pb-dial" data-dial data-value="87.5" data-max="128" data-warn="96" data-down="120" data-unit="GB" data-live><figcaption>Memory<small>pve-02</small></figcaption></figure>
-  <figure class="pb-dial" data-dial data-value="61" data-min="20" data-max="70" data-warn="50" data-down="60" data-unit="°C"><figcaption>NVMe temp<small>nas-01 · nvme0</small></figcaption></figure>
+  <figure class="pb-dial" data-gauge data-value="34" data-max="100" data-warn="80" data-down="95" data-unit="%"><figcaption>CPU<small>pve-01 · 32 threads</small></figcaption></figure>
+  <figure class="pb-dial" data-gauge data-value="87.5" data-max="128" data-warn="96" data-down="120" data-unit="GB" data-live><figcaption>Memory<small>pve-02</small></figcaption></figure>
+  <figure class="pb-dial" data-gauge data-value="61" data-min="20" data-max="70" data-warn="50" data-down="60" data-unit="°C"><figcaption>NVMe temp<small>nas-01 · nvme0</small></figcaption></figure>
 </div>
-<figure class="pb-donut" data-donut data-total="6.2 TB" data-total-label="used">
+<figure class="pb-donut" data-gauge-donut data-total="6.2 TB" data-total-label="used">
   <div class="pb-donut__hole"></div>
   <ul class="pb-donut__legend">
     <li data-value="3.1" data-vars="--c:var(--chart-1)"><i></i><span>media</span><span>3.1 TB</span><span data-pct></span></li>
@@ -12,7 +12,7 @@
     <li data-value="1.4" data-vars="--c:var(--pop-yellow)"><i></i><span>backups</span><span>1.4 TB</span><span data-pct></span></li>
   </ul>
 </figure>
-<figure class="pb-donut" data-donut data-total-label="clients">
+<figure class="pb-donut" data-gauge-donut data-total-label="clients">
   <div class="pb-donut__hole"></div>
   <ul class="pb-donut__legend">
     <li data-value="23" data-vars="--c:var(--chart-1)"><i></i><span>wired</span><span>23</span><span data-pct></span></li>
