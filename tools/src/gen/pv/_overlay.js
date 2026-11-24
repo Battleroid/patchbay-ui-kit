@@ -11,7 +11,7 @@ function pbConfirm(o){o=o||{};return new Promise(function(res){var d=document.cr
   d.setAttribute('aria-labelledby',tid);if(b){d.setAttribute('aria-describedby',b.id);if(b.node)d.querySelector('#'+b.id).appendChild(b.node);}
   (o.container||document.body).appendChild(d);var ok=d.querySelector('[value=ok]'),inp=d.querySelector('input');
   if(inp)inp.addEventListener('input',function(){ok.disabled=inp.value!==o.typeToConfirm;});
-  d.addEventListener('close',function(){res(d.returnValue==='ok');d.remove();});d.showModal();(inp||d.querySelector('[value=cancel]')).focus();});}
+  pbScrollLock();d.addEventListener('close',function(){res(d.returnValue==='ok');d.remove();});d.showModal();(inp||d.querySelector('[value=cancel]')).focus();});}
 /* pbToast(opts) → the toast element, with .update(opts) and .close(). opts: title; body (text) | bodyHTML (trusted markup) | a Node; status ok|warn|down|info|busy
    or variant success|warning|error|info; action {label, onClick(toast), close} and/or actions [...]; timeout in ms (0 keeps it); ink; container; max.
    At most max (default 3) show at once; later ones wait, hidden, in order, and show as others close. Errors (status down, variant error) and busy toasts
@@ -28,14 +28,14 @@ function pbToast(o){o=o||{};var box=pbToastRegion(o.container||document.body),t=
     pbAnnounce([o.title,bd&&bd.textContent].filter(function(x){return x&&String(x).trim();}).join('. '),{assertive:st==='down'});}
   function draw(p){p=norm(p||{});if('body' in p&&!('bodyHTML' in p))delete o.bodyHTML;if('bodyHTML' in p&&!('body' in p))delete o.body;if('status' in p)delete o.variant;Object.assign(o,p);
     var st=o.status||'info',ic={ok:'status-ok',warn:'status-warn',down:'status-down',info:'status-info',busy:'refresh'}[st]||'status-info',b=pbBody(o,'p','pb-toast__body'),
-      ms=st==='busy'?0:o.timeout!=null?o.timeout:st==='down'?0:5000;
+      act=o.actions&&o.actions.length,ms=st==='busy'?0:o.timeout!=null?(act&&o.timeout?Math.max(o.timeout,10000):o.timeout):st==='down'?0:act?10000:5000;
     t.dataset.status=st;t.className='pb-toast'+(o.ink?' pb-toast--ink':'');
     t.innerHTML='<span class="pb-icon pb-icon--'+ic+(st==='busy'?' pb-icon--spin':'')+'" aria-hidden="true"></span><p class="pb-toast__title">'+pbEsc(o.title)+'</p>'+(b?b.html:'')+
       (o.actions&&o.actions.length?'<div class="pb-toast__actions">'+o.actions.map(function(a,i){return '<button type="button" class="pb-btn pb-btn--sm '+(i?'pb-btn--ghost':'')+'" data-i="'+i+'">'+pbEsc(a.label)+'</button>'}).join('')+'</div>':'')+
       '<button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" data-x aria-label="'+pbEsc(pbStrings.dismiss)+'"><span class="pb-icon pb-icon--close"></span></button>'+
       (ms?'<span class="pb-toast__timer" data-style="--t:'+ms+'ms"></span>':''),pbStyled(t);
     if(b&&b.node)t.querySelector('#'+b.id).appendChild(b.node);
-    var tm=t.querySelector('.pb-toast__timer');if(tm)tm.addEventListener('animationend',close);say();}
+    var tm=t.querySelector('.pb-toast__timer');if(tm){tm.addEventListener('animationend',close);if(box.hasAttribute('data-focus'))tm.style.animationPlayState='paused';}say();}
   t.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||!t.contains(b)||b.closest('.pb-toast')!==t)return;if(b.hasAttribute('data-x'))return close();if(b.dataset.i==null)return;var a=o.actions[+b.dataset.i];if(a&&a.onClick)a.onClick(t);if(!a||a.close!==false)close();});
   t.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   t.__pbShow=function(){t.hidden=false;t.removeAttribute('data-queued');say();};
@@ -66,3 +66,16 @@ function pbInbox(w,opts){if(w.__pbInbox){Object.assign(w.__pbInbox,opts||{});w.p
   panel.addEventListener('keydown',function(e){var n=e.target.closest('.pb-notif');if(!n)return;if(e.key==='Enter'){n.click();}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();var s=e.key==='ArrowDown'?n.nextElementSibling:n.previousElementSibling;if(s)s.focus();}});
   w.pbSync=sync;w.pbUnread=function(n){O.unread=n;sync();};if(!panel.hasAttribute('popover'))opened();
   sync();return w;}
+/* Every <dialog>: named by its .pb-dialog__title (aria-labelledby) and described by its .pb-dialog__sub, or by the body's first paragraph when
+   the body holds no form controls, unless it already has a name or description. While any modal dialog is open the page behind does not
+   scroll (the scroll bar's width is kept as padding, so nothing shifts). */
+function pbDialog(d){var t=d.querySelector('.pb-dialog__title');if(t&&!d.hasAttribute('aria-labelledby')&&!d.hasAttribute('aria-label')){if(!t.id)t.id=pbId('pb-dlg-title');d.setAttribute('aria-labelledby',t.id);}
+  if(!d.hasAttribute('aria-describedby')){var sub=d.querySelector('.pb-dialog__sub'),body=d.querySelector('.pb-dialog__body'),p=body&&body.firstElementChild;
+    var x=sub||(p&&p.tagName==='P'&&!body.querySelector('input,select,textarea')?p:null);if(x){if(!x.id)x.id=pbId('pb-dlg-desc');d.setAttribute('aria-describedby',x.id);}}
+  pbScrollLock();}
+var pbLockOn=false;
+function pbScrollLock(){if(pbLockOn)return;pbLockOn=true;var h=document.documentElement,locked=false,pr='';
+  function up(){var m=false;try{m=!!document.querySelector('dialog:modal');}catch(e){}if(m===locked)return;locked=m;
+    if(m){pr=h.style.paddingRight;var w=innerWidth-h.clientWidth;h.style.overflow='hidden';if(w>0)h.style.paddingRight=w+'px';h.setAttribute('data-pb-modal','');}
+    else{h.style.overflow='';h.style.paddingRight=pr;h.removeAttribute('data-pb-modal');}}
+  new MutationObserver(up).observe(document.body,{attributes:true,attributeFilter:['open'],subtree:true});document.addEventListener('close',up,true);up();}
