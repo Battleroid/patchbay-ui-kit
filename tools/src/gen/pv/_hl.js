@@ -54,7 +54,7 @@ function pbDiff(el){var A=(el.querySelector('[data-diff-old]')||{}).textContent|
 function pbFiles(el){var list=el.querySelector('.pb-files__list'),foot=el.querySelector('[data-files-count]'),anchor=null,sortKey='name',dir=1;
   function rows(){return Array.from(list.querySelectorAll('.pb-files__row')).filter(function(r){return !r.hidden});}
   function sel(){return rows().filter(function(r){return r.getAttribute('aria-selected')==='true'});}
-  function emit(){var s=sel();if(foot)foot.textContent=s.length?s.length+' of '+rows().length+' selected':rows().length+' items';el.dispatchEvent(new CustomEvent('select',{detail:s}));}
+  function emit(){var s=sel();if(foot)foot.textContent=s.length?s.length+' of '+rows().length+' selected':rows().length+' items';pbEmit(el,'pb:select',s);}
   function set(r,on){r.setAttribute('aria-selected',on?'true':'false');}
   /* Sort state: data-sort-dir for the arrow, and the button's name says it (aria-sort belongs to table column headers). */
   function hdr(){el.querySelectorAll('.pb-files__head [data-sort]').forEach(function(x){var t=x.dataset.label||(x.dataset.label=x.textContent.trim());if(x.dataset.sort===sortKey){x.dataset.sortDir=dir>0?'ascending':'descending';x.setAttribute('aria-label',t+', sorted '+x.dataset.sortDir);}else{delete x.dataset.sortDir;x.setAttribute('aria-label',t+', sort');}});}
@@ -63,10 +63,10 @@ function pbFiles(el){var list=el.querySelector('.pb-files__list'),foot=el.queryS
   list.setAttribute('role','listbox');list.setAttribute('aria-multiselectable','true');
   hdr();rows().forEach(function(r,i){r.setAttribute('role','option');r.tabIndex=i?-1:0;if(!r.hasAttribute('aria-selected'))set(r,false);});
   list.addEventListener('click',function(e){var r=e.target.closest('.pb-files__row');if(r)pick(r,e);});
-  list.addEventListener('dblclick',function(e){var r=e.target.closest('.pb-files__row');if(r)el.dispatchEvent(new CustomEvent('open',{detail:r}));});
+  list.addEventListener('dblclick',function(e){var r=e.target.closest('.pb-files__row');if(r)pbEmit(el,'pb:open',r);});
   list.addEventListener('keydown',function(e){var R=rows(),r=e.target.closest('.pb-files__row');if(!r)return;var i=R.indexOf(r),grid=el.classList.contains('pb-files--grid'),cols=grid?Math.max(1,Math.round(list.clientWidth/R[0].offsetWidth)):1,n=null;
     if(e.key==='ArrowDown')n=i+cols;else if(e.key==='ArrowUp')n=i-cols;else if(grid&&e.key==='ArrowRight')n=i+1;else if(grid&&e.key==='ArrowLeft')n=i-1;else if(e.key==='Home')n=0;else if(e.key==='End')n=R.length-1;
-    else if(e.key===' '){e.preventDefault();pick(r,{ctrlKey:true});return;}else if(e.key==='Enter'){el.dispatchEvent(new CustomEvent('open',{detail:r}));return;}
+    else if(e.key===' '){e.preventDefault();pick(r,{ctrlKey:true});return;}else if(e.key==='Enter'){pbEmit(el,'pb:open',r);return;}
     else if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='a'){e.preventDefault();R.forEach(function(x){set(x,true)});emit();return;}
     else if(e.key==='Escape'){R.forEach(function(x){set(x,false)});emit();return;}
     if(n==null)return;e.preventDefault();n=Math.max(0,Math.min(R.length-1,n));if(e.shiftKey)pick(R[n],{shiftKey:true});else focus(R[n]);});
@@ -77,7 +77,7 @@ function pbFiles(el){var list=el.querySelector('.pb-files__list'),foot=el.queryS
   var dc=0;el.addEventListener('dragenter',function(e){if(e.dataTransfer&&Array.from(e.dataTransfer.types).indexOf('Files')>=0){dc++;el.setAttribute('data-dragover','');}});
   el.addEventListener('dragover',function(e){if(el.hasAttribute('data-dragover'))e.preventDefault();});
   el.addEventListener('dragleave',function(){if(--dc<=0){dc=0;el.removeAttribute('data-dragover');}});
-  el.addEventListener('drop',function(e){e.preventDefault();dc=0;el.removeAttribute('data-dragover');el.dispatchEvent(new CustomEvent('drop-files',{detail:e.dataTransfer.files}));});
+  el.addEventListener('drop',function(e){e.preventDefault();dc=0;el.removeAttribute('data-dragover');pbEmit(el,'pb:drop-files',e.dataTransfer.files);});
   el.pbSelected=sel;emit();}
 
 /* Terminal: ANSI SGR (\e[…m, or the escape character) to spans. */
@@ -116,7 +116,7 @@ function pbCron(el){var f=el.querySelectorAll('.pb-cron__fields input'),ex=el.qu
   function rel(d){var m=Math.round((d-Date.now())/6e4);return m<60?'in '+m+' min':m<1440?'in '+Math.round(m/60)+' h':'in '+Math.round(m/1440)+' d';}
   function run(expr,from){try{var c=pbCronParse(expr);el.removeAttribute('data-invalid');hu.innerHTML=pbCronHuman(c),pbStyled(hu);nx.innerHTML=pbCronNext(c,new Date(),n).map(function(d){return '<li><span>'+fmt(d)+'</span><span>'+rel(d)+'</span></li>'}).join(''),pbStyled(nx);
       if(from!=='fields'){var p=c.src;f.forEach(function(i,k){i.value=p[k];i.removeAttribute('aria-invalid')});}if(from!=='expr'&&ex)ex.value=c.src.join(' ');
-      var hit=null;for(var k in P)if(P[k]===c.src.join(' '))hit=k;pre.forEach(function(i){i.checked=i.value===(hit||'custom')});el.dispatchEvent(new CustomEvent('change',{detail:c.src.join(' ')}));}
+      var hit=null;for(var k in P)if(P[k]===c.src.join(' '))hit=k;pre.forEach(function(i){i.checked=i.value===(hit||'custom')});pbEmit(el,'pb:change',c.src.join(' '));}
     catch(e){el.setAttribute('data-invalid','');hu.textContent=typeof e==='string'?e:'Not a valid schedule.';nx.innerHTML='',pbStyled(nx);}}
   f.forEach(function(i){i.addEventListener('input',function(){run(Array.from(f).map(function(x){return x.value.trim()||'*'}).join(' '),'fields');});});
   if(ex)ex.addEventListener('input',function(){run(ex.value,'expr');});
@@ -132,7 +132,7 @@ function pbStorage(el){var bar=el.querySelector('.pb-storage__bar'),segs=bar.que
 function pbRack(el){el.querySelectorAll('.pb-rack__dev').forEach(function(d){var sp=+(d.dataset.span||1);d.style.setProperty('--span',sp);d.style.setProperty('--at',(+el.dataset.units||12)-(+d.dataset.u)-sp+2);});var devs=el.querySelectorAll('.pb-rack__dev:not([data-kind="blank"])'),rail=el.querySelectorAll('.pb-rack__rail'),u=+el.dataset.units||12;
   el.querySelector('.pb-rack__slots').style.setProperty('--units',u);el.style.setProperty('--units',u);
   rail.forEach(function(r){var h='';for(var i=u;i>=1;i--)h+='<span>'+i+'</span>';r.innerHTML=h,pbStyled(r);r.setAttribute('aria-hidden','true');});
-  devs.forEach(function(d){d.setAttribute('aria-pressed','false');d.addEventListener('click',function(){var on=d.getAttribute('aria-pressed')!=='true';devs.forEach(function(x){x.setAttribute('aria-pressed','false')});d.setAttribute('aria-pressed',on);el.dispatchEvent(new CustomEvent('select',{detail:on?d:null}));});});}
+  devs.forEach(function(d){d.setAttribute('aria-pressed','false');d.addEventListener('click',function(){var on=d.getAttribute('aria-pressed')!=='true';devs.forEach(function(x){x.setAttribute('aria-pressed','false')});d.setAttribute('aria-pressed',on);pbEmit(el,'pb:select',on?d:null);});});}
 /* Log explorer: Loki-style stream labels. JSON {lines:[{t, labels:{...}, line}], matchers:[{k,op,v}]}. el.pbAppend(line) streams more. */
 function pbLogX(el){var D=JSON.parse((el.querySelector('script[type="application/json"]')||{}).textContent||'{}'),lines=(D.lines||[]).slice(),M=(D.matchers||[]).slice(),uid=0,open={},lvOn={debug:true,info:true,warn:true,error:true},max=+(el.dataset.max||2000);
   lines.forEach(function(l){l.id=uid++;});
