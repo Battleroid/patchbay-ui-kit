@@ -1,4 +1,4 @@
-<div class="pb-tablewrap" data-bulk>
+<div class="pb-tablewrap" data-bulk data-bulk-total="248">
   <div class="pb-tablescroll">
   <table class="pb-table">
     <thead><tr><th class="pb-cell-check"><input type="checkbox" class="pb-check" aria-label="Select all" data-all></th><th>Container</th><th>Image</th><th>Status</th><th class="pb-num">CPU</th></tr></thead>
@@ -13,10 +13,35 @@
   <div class="pb-bulkbar" role="region" aria-label="Bulk actions">
     <span class="pb-bulkbar__count" data-bulk-count aria-live="polite"></span>
     <span class="pb-bulkbar__sep"></span>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-bulk-matching hidden></button>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-bulk-matching-off hidden></button>
+    <span class="pb-bulkbar__sep"></span>
     <button type="button" class="pb-btn pb-btn--sm" data-bulk-action="restart"><span class="pb-icon pb-icon--refresh"></span>Restart</button>
     <button type="button" class="pb-btn pb-btn--sm" data-bulk-action="stop"><span class="pb-icon pb-icon--power"></span>Stop</button>
     <button type="button" class="pb-btn pb-btn--sm pb-btn--danger" data-bulk-action="remove"><span class="pb-icon pb-icon--trash"></span>Remove</button>
     <button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" data-bulk-clear aria-label="Clear selection" title="Clear (Esc)"><span class="pb-icon pb-icon--close"></span></button>
   </div>
+  <input type="hidden" name="select" value="all-matching" data-bulk-matching-field disabled>
 </div>
-<p class="pb-note" data-bulk-out style="margin:8px 0 0">Select rows to show the bar; Esc clears.</p>
+<p class="pb-note" data-bulk-out style="margin:8px 0 0">Select rows to show the bar. Shift+click or Shift+Space selects a range; check the header box to offer all 248 matching. Esc clears.</p>
+<div class="pb-tablewrap" data-bulk data-bulk-total="40">
+  <label class="pb-bulkall"><input type="checkbox" class="pb-check" aria-label="Select all photos" data-all> Select all</label>
+  <ul class="pb-bulkgrid" aria-label="Photos">
+    <li data-bulk-item tabindex="0"><input type="checkbox" class="pb-check" data-row aria-label="Select rack-front.jpg"><span class="pb-table__name">rack-front.jpg</span></li>
+    <li data-bulk-item tabindex="0"><input type="checkbox" class="pb-check" data-row aria-label="Select rack-back.jpg"><span class="pb-table__name">rack-back.jpg</span></li>
+    <li data-bulk-item tabindex="0"><input type="checkbox" class="pb-check" data-row aria-label="Select patch-panel.jpg"><span class="pb-table__name">patch-panel.jpg</span></li>
+    <li data-bulk-item tabindex="0"><input type="checkbox" class="pb-check" data-row aria-label="Select cable-tray.jpg"><span class="pb-table__name">cable-tray.jpg</span></li>
+    <li data-bulk-item tabindex="0"><input type="checkbox" class="pb-check" data-row aria-label="Select ups.jpg"><span class="pb-table__name">ups.jpg</span></li>
+    <li data-bulk-item tabindex="0"><input type="checkbox" class="pb-check" data-row aria-label="Select switch.jpg"><span class="pb-table__name">switch.jpg</span></li>
+  </ul>
+  <div class="pb-bulkbar" role="region" aria-label="Photo actions">
+    <span class="pb-bulkbar__count" data-bulk-count aria-live="polite"></span>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-bulk-matching hidden></button>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-bulk-matching-off hidden></button>
+    <span class="pb-bulkbar__sep"></span>
+    <button type="button" class="pb-btn pb-btn--sm" data-bulk-action="download"><span class="pb-icon pb-icon--download"></span>Download</button>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" data-bulk-clear aria-label="Clear selection" title="Clear (Esc)"><span class="pb-icon pb-icon--close"></span></button>
+  </div>
+  <input type="hidden" name="select" value="all-matching" data-bulk-matching-field disabled>
+</div>
+<p class="pb-note" data-bulk-out>Tiles take focus: Space toggles one, Shift+Space the range.</p>

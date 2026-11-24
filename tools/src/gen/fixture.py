@@ -10,7 +10,7 @@ COMPONENTS=('StorageBar DropZone DatePicker TimePicker Combobox TagInput CodeInp
   'FilePreview TableTools EventCalendar MarkdownEditor CommentThread NotifySettings MobileNav SessionTimeout ThemeSwitch Menu Popover TreeView '
   'CommandPalette ContextMenu ImageViewer Avatar Pagination ErrorSummary TextUtils QRCode Resizable LogViewer LogExplorer DiffViewer '
   'FileBrowser Terminal CronBuilder Rack Heatmap Gauge BarChart Histogram JsonViewer BulkActions QueryFilter Sortable Shortcuts UploadQueue '
-  'SiteBanner Toast VirtualList SettingsPage').split()
+  'SiteBanner Toast VirtualList SettingsPage ConfirmAction AutoSubmit MediaState ShareLink StorageRing BusyRegion').split()
 VARS=re.compile(r'^\s*(--[a-z0-9-]+\s*:[^;]+;?\s*)+$')
 def clean(html):
     def st(m):

@@ -1,0 +1,14 @@
+<div class="pb-toolbar">
+  <button type="button" class="pb-ring" data-ring data-value="62" aria-label="Storage {n}% used" popovertarget="ring-pop"></button>
+  <button type="button" class="pb-ring" data-ring data-used="9.2" data-total="10" aria-label="Storage {n}% used" popovertarget="ring-pop-2"></button>
+  <div class="pb-popover pb-ring__pop" id="ring-pop" popover role="dialog" aria-label="Storage">
+    <p class="pb-ring__head"><b>6.2 GB</b> of 10 GB used</p>
+    <progress class="pb-progressbar" max="100" value="62" aria-label="Storage used">62%</progress>
+    <p class="pb-ring__line pb-mono">photos 3.1 GB · videos 2.8 GB · files 0.3 GB</p>
+    <p class="pb-ring__more"><a class="pb-link" href="#storage">Manage storage</a></p>
+  </div>
+  <div class="pb-popover pb-ring__pop" id="ring-pop-2" popover role="dialog" aria-label="Storage nearly full">
+    <p class="pb-ring__head"><b>9.2 GB</b> of 10 GB used</p>
+    <p class="pb-ring__line pb-mono">Over 80%: free some space or upgrade.</p>
+  </div>
+</div>
