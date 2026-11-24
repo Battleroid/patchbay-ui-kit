@@ -1,9 +1,10 @@
+from pbroot import ROOT
 import json,re,os,html
-T=json.load(open('/home/claude/ds/project/tokens.json'))
+T=json.load(open(ROOT+'/ds/project/tokens.json'))
 ICONS=json.load(open('icons.json'))
-PV='pv'; C='/home/claude/ds/project/components'
+PV='pv'; C=ROOT+'/ds/project/components'
 # tokens css with relative fonts
-import sys; sys.path.insert(0,'/home/claude/gen'); from tokcss_lib import tokens_css
+import sys; sys.path.insert(0,ROOT+'/gen'); from tokcss_lib import tokens_css
 tok=[tokens_css(T,lambda f:'fonts/'+os.path.basename(f))]
 bundle=open(f'{C}/bundle.css').read()
 colors={k['name']:k for k in T['color']['tokens']}
@@ -221,5 +222,5 @@ pbInit();
 page=page.replace('<div class="pb-diagram"','<div class="dscroll"><div class="pb-diagram"',1)
 i=page.index('<div class="dscroll">'); j=page.index('</div></section>',i)
 page=page[:j]+'</div>'+page[j:]
-open('/home/claude/kit/index.html','w').write(page)
+open(ROOT+'/kit/index.html','w').write(page)
 print(len(page))

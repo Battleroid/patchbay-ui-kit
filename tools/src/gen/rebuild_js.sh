@@ -1,5 +1,6 @@
 set -e
-cd /home/claude/gen
-python3 /home/claude/gen/genjs.py
-python3 /home/claude/gen/genpv.py
-python3 assemble.py && bash /home/claude/gen/fixh.sh && python3 kit.py >/dev/null
+cd "$(dirname "$0")"
+PY="${PB_PY:-python3}"
+$PY genjs.py
+$PY genpv.py
+$PY assemble.py && bash fixh.sh && $PY kit.py >/dev/null

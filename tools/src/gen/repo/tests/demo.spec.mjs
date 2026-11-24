@@ -1,8 +1,11 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+// Every theme x edge combination: axe and the screenshots both run in all four.
 const themes = [
   { theme: 'light', edge: 'soft' },
+  { theme: 'light', edge: 'hard' },
+  { theme: 'dark', edge: 'soft' },
   { theme: 'dark', edge: 'hard' },
 ];
 
