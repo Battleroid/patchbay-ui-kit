@@ -167,3 +167,31 @@ button[aria-busy="true"] { cursor: progress; pointer-events: none; opacity: 0.75
 
 /* ---------- Opt out of the uppercase label style for a value that carries units or case ("90d", "GiB") ---------- */
 .pb-nocase { text-transform: none; letter-spacing: 0; }
+
+/* ---------- Scroll containment: a scrolled dialog, drawer or sheet does not scroll the page behind it ---------- */
+.pb-dialog, .pb-dialog__body, .pb-sheet, .pb-cmd__list, .pb-inbox { overscroll-behavior: contain; }
+
+/* ---------- Phone: split panes stack, dialog and sheet buttons are 44px, key-value rows stack ---------- */
+@media (max-width: 480px) {
+  .pb-split:not(.pb-split--vertical) { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
+  .pb-split:not(.pb-split--vertical) > .pb-split__handle { display: none; }
+  .pb-dialog__foot .pb-btn, .pb-sheet .pb-btn, .pb-sheet__item { min-height: 44px; }
+  .pb-kv__head { display: none; }
+  .pb-kv__row { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .pb-kv__row > :first-child { grid-column: 1 / -1; }
+}
+
+/* ---------- Touch and targets ---------- */
+:where(.pb) :is(button, [role="button"], a, summary, select, label, input:is([type="checkbox"], [type="radio"], [type="range"])) { touch-action: manipulation; }
+/* A small remove button keeps its look and gains a 24px hit area. */
+.pb-pill__x { position: relative; }
+.pb-pill__x::after { content: ""; position: absolute; inset: -4px; }
+.pb-qf__x { width: 24px; min-height: 24px; }
+.pb-logx__m .pb-qf__x { width: 24px; }
+/* Table checkboxes: the whole cell is the hit area. */
+.pb-table :is(td, th):has(> .pb-check) { position: relative; }
+.pb-table :is(td, th) > .pb-check { position: static; }
+.pb-table :is(td, th) > .pb-check::after { content: ""; position: absolute; inset: 0; cursor: pointer; }
+/* NotifySettings: the event column stays put while the channels scroll. */
+.pb-notify .pb-table :is(td, th):first-child { position: sticky; inset-inline-start: 0; z-index: var(--pb-z-raised); background: var(--surface); box-shadow: inset -1px 0 0 var(--line); }
+.pb-notify .pb-notify__all td:first-child, .pb-notify tfoot td:first-child { background: var(--bg); }

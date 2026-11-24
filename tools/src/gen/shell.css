@@ -48,7 +48,9 @@
 @media (max-width: 900px) {
   .pb-shell { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "main" "foot"; }
   .pb-shell__navbtn { display: inline-flex; }
-  .pb-shell__search { display: none; }
+  /* Icon-only on small screens: the label stays for assistive tech (font-size 0), the hint goes. */
+  .pb-shell__search { flex: none; width: 44px; height: 44px; padding: 0; gap: 0; margin-inline-start: auto; font-size: 0; justify-content: center; }
+  .pb-shell__search .pb-kbd { display: none; }
   .pb-shell__nav { position: fixed; z-index: var(--pb-z-modal); top: var(--pb-head-h, 56px); inset-inline-start: 0; bottom: 0; align-self: stretch; width: min(300px, 86vw); height: auto; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-105%); transition: transform var(--pb-dur-2); box-shadow: var(--pb-shadow-lg); background: var(--surface); }
   .pb-shell[data-nav-open] .pb-shell__nav { transform: none; }
   /* Closed, the drawer is out of the tab order too (not only off screen); visibility waits for the slide-out. */
@@ -198,7 +200,12 @@ button.pb-item { width: 100%; font: inherit; text-align: start; background: none
 .pb-item__meta { font: 400 var(--pb-text-12)/16px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); white-space: nowrap; text-align: end; }
 .pb-list--compact .pb-item { padding: var(--space-2) var(--space-3); }
 .pb-list--compact .pb-item__lead { width: 28px; height: 28px; }
-@media (max-width: 480px) { .pb-item__meta { display: none; } }
+/* On a phone the meta (role, latency, expiry) drops under the text instead of disappearing. */
+@media (max-width: 480px) {
+  .pb-item { grid-template-columns: auto minmax(0, 1fr); }
+  .pb-item > .pb-item__end, .pb-item > .pb-item__meta { grid-column: 2; justify-self: start; }
+  .pb-item__meta { white-space: normal; text-align: start; }
+}
 
 /* ---------- Theme switch ---------- */
 .pb-themeswitch .pb-icon { width: 16px; height: 16px; }
