@@ -12,7 +12,7 @@
   color: var(--ink); background: var(--surface); border: var(--stroke-1) solid var(--pb-border-control); border-radius: var(--pb-r-pill);
   box-shadow: var(--pb-shadow-md); cursor: pointer;
 }
-.pb-player__big .pb-icon { width: 28px; height: 28px; margin-left: 3px; }
+.pb-player__big .pb-icon { width: 28px; height: 28px; margin-inline-start: 3px; }
 .pb-player[data-playing] .pb-player__big, .pb-player[data-started] .pb-player__big { display: none; }
 .pb-player__spinner {
   position: absolute; inset: 0; margin: auto; width: 40px; height: 40px; border-radius: 50%; display: none;
@@ -69,7 +69,7 @@
 /* Overlay and fullscreen: controls float on the picture and hide while playing. */
 :is(.pb-player--overlay, .pb-player:fullscreen) { --pb-seek-fill: var(--pop-mint); --pb-seek-buf: color-mix(in srgb, var(--on-night) 45%, transparent); --pb-seek-rest: color-mix(in srgb, var(--on-night) 20%, transparent); background: var(--night); }
 :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__bar {
-  position: absolute; left: 0; right: 0; bottom: 0; color: var(--on-night); background: color-mix(in srgb, var(--night) 78%, transparent); border-top: 0; transition: opacity var(--pb-dur-3);
+  position: absolute; inset-inline-start: 0; inset-inline-end: 0; bottom: 0; color: var(--on-night); background: color-mix(in srgb, var(--night) 78%, transparent); border-top: 0; transition: opacity var(--pb-dur-3);
 }
 :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__btn:hover { background: color-mix(in srgb, var(--on-night) 14%, transparent); }
 :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__time, :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__time b { color: var(--on-night); }

@@ -8,8 +8,8 @@
 .pb-cal--inline { box-shadow: var(--pb-shadow-md); }
 .pb-cal__head { display: flex; align-items: center; gap: var(--space-1); margin-bottom: var(--space-2); }
 .pb-cal__title {
-  flex: 1; display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 var(--space-2); margin-right: auto;
-  font: 600 var(--pb-text-15)/20px var(--font-serif); color: var(--ink); background: none; border: 0; border-radius: var(--pb-r-sm); cursor: pointer; text-align: left;
+  flex: 1; display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 var(--space-2); margin-inline-end: auto;
+  font: 600 var(--pb-text-15)/20px var(--font-serif); color: var(--ink); background: none; border: 0; border-radius: var(--pb-r-sm); cursor: pointer; text-align: start;
 }
 .pb-cal__title:hover { background: var(--surface-sunk); }
 .pb-cal__title .pb-icon { width: 14px; height: 14px; color: var(--ink-muted); }
