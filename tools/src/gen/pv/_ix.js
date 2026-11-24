@@ -5,9 +5,6 @@ Object.assign(pbStrings,Object.assign({bulkSelected:'{n} selected',bulkAllMatchi
   pauseAll:'Pause all',resumeAll:'Resume all',keysTitle:'Keyboard shortcuts',keysFind:'Find a shortcut',keysNone:'No shortcut matches.',keysGeneral:'shortcuts',keysThen:'then',sortReorder:'Reorder {name}',sortGrabbed:'{name} grabbed. Position {i} of {n}. Use arrow keys to move, Space to drop, Escape to cancel.',sortDropped:'{name} dropped at position {i} of {n}.',sortCanceled:'Reorder canceled.',sortMoved:'{name}, position {i} of {n}.'},pbStrings));
 /* Fills {name} placeholders in a pbStrings entry: pbFmt(pbStrings.bulkSelected, {n: 3}). */
 function pbFmt(s,o){return String(s).replace(/\{(\w+)\}/g,function(_,k){return o&&o[k]!=null?o[k]:'';});}
-/* Apple platforms use ⌘ where others use Ctrl: pbModLabel() is the label for the "mod" key. */
-function pbIsMac(){var p=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||'';return /Mac|iPhone|iPad|iPod/i.test(p);}
-function pbModLabel(){return pbIsMac()?'⌘':'Ctrl+';}
 /* One beforeunload listener for every guard. pbGuardUnload(owner, test): test() returns true while leaving would lose work. An entry drops out
    once owner has left the DOM; the call returns a function that removes it sooner. */
 var pbGuards=[],pbGuardOn=false;

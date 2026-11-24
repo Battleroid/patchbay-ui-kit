@@ -413,6 +413,9 @@ button.pb-pill:hover { background: var(--surface-sunk); }
   .pb-icon--spin { animation-duration: 2.4s; }
   .pb-btn, .pb-drop { transition: none; }
   .pb-btn:active { transform: none; }
+  .pb-progressbar:indeterminate { animation: none; }
+  .pb-check::before, .pb-radio::before, .pb-switch::before, .pb-details > summary::before { transition: none; }
+  .pb-card--outline { transition: none; }
 }
 
 /* ---------- Icon set (generated) ---------- */

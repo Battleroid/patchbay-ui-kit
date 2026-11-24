@@ -50,7 +50,7 @@ use=f'''# Patchbay
 - **Script helpers:** `pbToast({{title, body, bodyHTML, …}})` and `pbConfirm({{title, body, bodyHTML, typeToConfirm, …}})` treat `body` as text and escape it; `bodyHTML` is the explicit opt-in for markup you trust; a DOM Node as `body` is appended. `pbEsc(s)` escapes `& < > " '`.
 - Start every app from `components/AppShell` (header, nav, page header, footer, skip link).
 - Before building a part, read `components/<Name>/README.md` for its markup and rules, and copy the markup from `components/<Name>/example.html`.
-- Each component's README names its markup hooks (`data-cal`, `data-clock`, `data-combo`, `data-tags`, `data-otp`, `data-copy`, `data-kv`, …). `components/<Name>/example.html` files are self-contained: each carries its own copy of the script it needs, built from the same sources as `patchbay.js`, plus example-only glue (fake saves, sample data).
+- Each component's README names its markup hooks (`data-cal`, `data-clock`, `data-combo`, `data-tags`, `data-codeinput`, `data-copy`, `data-kv`, …). `components/<Name>/example.html` files are self-contained: each carries its own copy of the script it needs, built from the same sources as `patchbay.js`, plus example-only glue (fake saves, sample data).
 - Form sections keep their Save/Discard buttons inside the panel (see `components/Fieldset`).
 - Tokens: `tokens.json` is the source; every value is also a CSS custom property (`var(--accent)`, `var(--space-4)`, `var(--radius-md)`). Use tokens, never raw hex or px.
 - Icons: `<span class="pb-icon pb-icon--NAME"></span>` (paints in `currentColor`). Raw SVGs are in `icons/soft` and `icons/hard`.

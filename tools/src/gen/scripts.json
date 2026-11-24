@@ -80,6 +80,7 @@
     "StorageBar": [["_hl.js"], []],
     "TableTools": [["_ui.js", "_dt.js"], ["i_dt.js"]],
     "Tabs": [["_forms.js"], []],
+    "Tooltip": [["_core.js"], []],
     "TagInput": [["_forms.js"], []],
     "Terminal": [["_hl.js"], ["i_term.js"]],
     "TextInput": [["_forms.js"], []],
