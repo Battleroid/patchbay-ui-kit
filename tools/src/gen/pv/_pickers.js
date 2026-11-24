@@ -6,8 +6,9 @@ function pbParse(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');if(!m)return n
 function pbCalendar(o){
   o=o||{};var range=!!o.range,ws=o.weekStart||0,min=pbParse(o.min),max=pbParse(o.max),today=o.today?pbParse(o.today):new Date();today.setHours(0,0,0,0);
   var from=pbParse(o.from||o.value),to=pbParse(o.to),hover=null,mode='days',focus=from||today,view=new Date(focus.getFullYear(),focus.getMonth(),1);
-  var el=document.createElement('div');el.className='pb-cal';el.setAttribute('role','dialog');el.setAttribute('aria-label',range?'Choose dates':'Choose a date');
-  var MON=['January','February','March','April','May','June','July','August','September','October','November','December'],DOW=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  var el=document.createElement('div');el.className='pb-cal';el.setAttribute('role','dialog');el.setAttribute('aria-label',range?pbStrings.chooseDates:pbStrings.chooseDate);
+  var L=pbLocale(),en=!L||/^en\b/i.test(L),MON=[],MSH=[],DOW=[];for(var mi=0;mi<12;mi++){var md=new Date(2026,mi,1);MON.push(md.toLocaleDateString(L,{month:'long'}));MSH.push(md.toLocaleDateString(L,{month:'short'}));}
+  for(var di=0;di<7;di++){var dw=new Date(2026,1,1+di).toLocaleDateString(L,{weekday:'short'});DOW.push(en?dw.slice(0,2):dw);}
   function same(a,b){return !!(a&&b&&a.getTime()===b.getTime());}
   function off(d){return (min&&d<min)||(max&&d>max);}
   function emit(){if(o.onChange)o.onChange(range?{from:from&&pbISO(from),to:to&&pbISO(to)}:(from&&pbISO(from)));}
@@ -17,22 +18,22 @@ function pbCalendar(o){
   function preset(days,month){var t=new Date(today);if(month){from=new Date(t.getFullYear(),t.getMonth(),1);to=new Date(t);}else{to=new Date(t);from=new Date(t);from.setDate(from.getDate()-days+1);}
     view=new Date(from.getFullYear(),from.getMonth(),1);focus=to;emit();render();if(o.onDone)o.onDone();}
   function render(){
-    var h='<div class="pb-cal__head"><button type="button" class="pb-cal__nav" data-nav="-1" aria-label="'+(mode==='days'?'Previous month':'Previous year')+'"><span class="pb-icon pb-icon--chevron-right pb-icon--flip"></span></button>'+
-      '<button type="button" class="pb-cal__title" data-mode aria-label="'+(mode==='days'?'Choose month':'Back to days')+'">'+(mode==='days'?MON[view.getMonth()]+' '+view.getFullYear():view.getFullYear())+'<span class="pb-icon pb-icon--chevron-down"></span></button>'+
-      '<button type="button" class="pb-cal__nav" data-nav="1" aria-label="'+(mode==='days'?'Next month':'Next year')+'"><span class="pb-icon pb-icon--chevron-right"></span></button></div>';
-    if(range&&o.presets!==false)h='<div class="pb-cal__presets"><button type="button" class="pb-pill" data-p="1">today</button><button type="button" class="pb-pill" data-p="7">7d</button><button type="button" class="pb-pill" data-p="30">30d</button><button type="button" class="pb-pill" data-p="m">month</button></div>'+h;
+    var h='<div class="pb-cal__head"><button type="button" class="pb-cal__nav" data-nav="-1" aria-label="'+pbEsc(mode==='days'?pbStrings.prevMonth:pbStrings.prevYear)+'"><span class="pb-icon pb-icon--chevron-right pb-icon--flip"></span></button>'+
+      '<button type="button" class="pb-cal__title" data-mode aria-label="'+pbEsc(mode==='days'?pbStrings.chooseMonth:pbStrings.backToDays)+'">'+(mode==='days'?MON[view.getMonth()]+' '+view.getFullYear():view.getFullYear())+'<span class="pb-icon pb-icon--chevron-down"></span></button>'+
+      '<button type="button" class="pb-cal__nav" data-nav="1" aria-label="'+pbEsc(mode==='days'?pbStrings.nextMonth:pbStrings.nextYear)+'"><span class="pb-icon pb-icon--chevron-right"></span></button></div>';
+    if(range&&o.presets!==false)h='<div class="pb-cal__presets"><button type="button" class="pb-pill" data-p="1">'+pbEsc(pbStrings.presetToday)+'</button><button type="button" class="pb-pill" data-p="7">7d</button><button type="button" class="pb-pill" data-p="30">30d</button><button type="button" class="pb-pill" data-p="m">'+pbEsc(pbStrings.presetMonth)+'</button></div>'+h;
     if(mode==='days'){h+='<div class="pb-cal__grid">';for(var i=0;i<7;i++)h+='<span class="pb-cal__dow" aria-hidden="true">'+DOW[(i+ws)%7]+'</span>';
       var start=new Date(view);start.setDate(1-((view.getDay()-ws+7)%7));var end=to||(range&&from&&hover&&hover>from?hover:null);
       for(var k=0;k<42;k++){var d=new Date(start);d.setDate(start.getDate()+k);var a=' data-d="'+pbISO(d)+'" tabindex="'+(same(d,focus)?0:-1)+'"';
         if(d.getMonth()!==view.getMonth())a+=' data-outside';if(same(d,today))a+=' aria-current="date"';
         var sel=same(d,from)||same(d,to);a+=' aria-pressed="'+sel+'"';if(range&&from&&end){if(d>from&&d<end)a+=' data-in-range';if(same(d,from))a+=' data-start';if(same(d,end))a+=' data-end';}else if(sel)a+=' data-start data-end';
-        if(off(d))a+=' disabled';a+=' aria-label="'+d.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'"';
+        if(off(d))a+=' disabled';a+=' aria-label="'+pbEsc(d.toLocaleDateString(L,{weekday:'long',year:'numeric',month:'long',day:'numeric'}))+'"';
         h+='<button type="button" class="pb-cal__day"'+a+'>'+d.getDate()+'</button>';}
       h+='</div>';}
     else{h+='<div class="pb-cal__months">';MON.forEach(function(m,i){var cur=today.getFullYear()===view.getFullYear()&&today.getMonth()===i,s=from&&from.getFullYear()===view.getFullYear()&&from.getMonth()===i;
-      h+='<button type="button" class="pb-cal__month" data-m="'+i+'"'+(cur?' aria-current="true"':'')+' aria-pressed="'+!!s+'">'+m.slice(0,3)+'</button>';});h+='</div>';}
-    var sum=range?(from&&to?(Math.round((to-from)/864e5)+1)+' days':from?'pick an end date':'pick a start date'):'';
-    h+='<div class="pb-cal__foot"><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-clear>Clear</button><span class="pb-cal__summary">'+sum+'</span><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-today>Today</button></div>';
+      h+='<button type="button" class="pb-cal__month" data-m="'+i+'"'+(cur?' aria-current="true"':'')+' aria-pressed="'+!!s+'">'+pbEsc(MSH[i])+'</button>';});h+='</div>';}
+    var sum=range?(from&&to?pbT('nDays',{n:pbNum(Math.round((to-from)/864e5)+1)}):from?pbStrings.pickEnd:pbStrings.pickStart):'';
+    h+='<div class="pb-cal__foot"><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-clear>'+pbEsc(pbStrings.clear)+'</button><span class="pb-cal__summary">'+pbEsc(sum)+'</span><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-today>'+pbEsc(pbStrings.today)+'</button></div>';
     el.innerHTML=h;}
   el.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
     if(b.dataset.d){pick(pbParse(b.dataset.d));el.querySelector('[data-d="'+b.dataset.d+'"]')?.focus();}
@@ -69,22 +70,22 @@ function pbTParse(s){var m=/^\s*(\d{1,2}):(\d{2})\s*([ap]\.?m\.?)?\s*$/i.exec(s|
 function pbTFmt(t,h12){var h=Math.floor(t/60),m=String(t%60).padStart(2,'0');return h12?((h%12)||12)+':'+m+' '+(h<12?'AM':'PM'):String(h).padStart(2,'0')+':'+m;}
 function pbClock(o){
   o=o||{};var h12=!!o.hour12,step=o.step||5,min=pbTParse(o.min),max=pbTParse(o.max),val=pbTParse(o.value),now=function(){var d=new Date();return d.getHours()*60+d.getMinutes();};
-  var el=document.createElement('div');el.className='pb-time';el.setAttribute('role','dialog');el.setAttribute('aria-label','Choose a time');
+  var el=document.createElement('div');el.className='pb-time';el.setAttribute('role','dialog');el.setAttribute('aria-label',pbStrings.chooseTime);
   function ok(t){return (min==null||t>=min)&&(max==null||t<=max);}
   function emit(){if(o.onChange)o.onChange(val==null?'':pbTFmt(val,h12));}
   function render(){var cur=now(),H=val==null?null:Math.floor(val/60),M=val==null?null:val%60,hs=[],ms=[],h='<div class="pb-time__cols">';
     if(h12){for(var i=1;i<=12;i++)hs.push(i);}else{for(var j=0;j<24;j++)hs.push(j);}
     for(var k=0;k<60;k+=step)ms.push(k);
     var ap=H==null?(Math.floor(cur/60)<12?0:12):(H<12?0:12);
-    h+='<div class="pb-time__colwrap"><span class="pb-time__label">hour</span><div class="pb-time__col" data-col="h">';
+    h+='<div class="pb-time__colwrap"><span class="pb-time__label">'+pbEsc(pbStrings.hour)+'</span><div class="pb-time__col" data-col="h">';
     hs.forEach(function(x){var hh=h12?(x%12)+ap:x,can=false;for(var q=0;q<60;q+=step)if(ok(hh*60+q))can=true;
       h+='<button type="button" class="pb-time__opt" data-h="'+hh+'" aria-pressed="'+(H===hh)+'"'+(Math.floor(cur/60)===hh?' aria-current="true"':'')+(can?'':' disabled')+' tabindex="-1">'+(h12?x:String(x).padStart(2,'0'))+'</button>';});
-    h+='</div></div><div class="pb-time__colwrap"><span class="pb-time__label">min</span><div class="pb-time__col" data-col="m">';
+    h+='</div></div><div class="pb-time__colwrap"><span class="pb-time__label">'+pbEsc(pbStrings.min)+'</span><div class="pb-time__col" data-col="m">';
     ms.forEach(function(x){var base=H==null?Math.floor(cur/60):H;h+='<button type="button" class="pb-time__opt" data-m="'+x+'" aria-pressed="'+(M===x)+'"'+(ok(base*60+x)?'':' disabled')+' tabindex="-1">'+String(x).padStart(2,'0')+'</button>';});
     h+='</div></div>';
     if(h12){h+='<div class="pb-time__colwrap"><span class="pb-time__label">&nbsp;</span><div class="pb-time__col pb-time__col--short" data-col="p">';
       ['AM','PM'].forEach(function(x,i){var can=false;for(var q=i*720;q<i*720+720;q+=step)if(ok(q))can=true;h+='<button type="button" class="pb-time__opt" data-p="'+(i*12)+'" aria-pressed="'+(H!=null&&ap===i*12)+'"'+(can?'':' disabled')+' tabindex="-1">'+x+'</button>';});h+='</div></div>';}
-    h+='</div><div class="pb-cal__foot"><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-clear>Clear</button><span class="pb-cal__summary">'+(val==null?'':pbTFmt(val,h12))+'</span><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-now>Now</button></div>';
+    h+='</div><div class="pb-cal__foot"><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-clear>'+pbEsc(pbStrings.clear)+'</button><span class="pb-cal__summary">'+(val==null?'':pbTFmt(val,h12))+'</span><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-now>'+pbEsc(pbStrings.now)+'</button></div>';
     el.innerHTML=h;
     function center(){el.querySelectorAll('.pb-time__col').forEach(function(c){var t=c.querySelector('[aria-pressed="true"]')||c.querySelector('[aria-current="true"]')||c.querySelector('.pb-time__opt:not(:disabled)');if(t){t.tabIndex=0;c.scrollTop=t.offsetTop-c.clientHeight/2+t.offsetHeight/2;}});}
     center();requestAnimationFrame(center);}

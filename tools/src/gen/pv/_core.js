@@ -3,7 +3,28 @@ function pbEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g
 /* Words the kit writes itself. Apps replace any of them: Object.assign(pbStrings, {dismiss: 'Schließen'}). Components add their own keys. */
 var pbStrings={dismiss:'Dismiss',close:'Close',cancel:'Cancel',confirm:'Confirm',copied:'Copied',copy:'Copy',unsaved:'Unsaved changes',saving:'Saving…',saved:'Saved',retry:'Retry',remove:'Remove',prevPage:'Previous page',nextPage:'Next page',loading:'Loading…',
   notifications:'Notifications',copyFallback:'Press {key}',noChanges:'No changes',savedNow:'Saved just now',saveFailed:'Could not save',strength:['','weak','fair','good','strong'],
-  page:'Page {n}',justNow:'just now',showMore:'Show more',showLess:'Show less',areYouSure:'Are you sure?',typeToConfirm:'Type {text} to confirm',unread:'{n} unread'};
+  page:'Page {n}',justNow:'just now',showMore:'Show more',showLess:'Show less',areYouSure:'Are you sure?',typeToConfirm:'Type {text} to confirm',unread:'{n} unread',
+  rangeOf:'{from}–{to} of {total}',openMenu:'Open menu',closeMenu:'Close menu',user:'user',removeItem:'Remove {item}',removeRow:'Remove row',chooseColor:'Choose a color',customColor:'Custom color',kitColors:'kit colors',custom:'custom',
+  imageViewer:'Image viewer',zoom:'Zoom',download:'Download',previous:'Previous',next:'Next',imageN:'Image {n}',itemN:'Item {n}',
+  play:'Play',pause:'Pause',back10:'Back 10 seconds',fwd10:'Forward 10 seconds',seek:'Seek',mute:'Mute',unmute:'Unmute',volume:'Volume',speed:'Playback speed',speedNormal:'Normal',
+  captions:'Captions',pip:'Picture in picture',fullscreen:'Fullscreen',exitFullscreen:'Exit fullscreen',audioPlayer:'Audio player',videoPlayer:'Video player',timeOf:'{a} of {b}',
+  chooseDate:'Choose a date',chooseDates:'Choose dates',chooseTime:'Choose a time',prevMonth:'Previous month',nextMonth:'Next month',prevYear:'Previous year',nextYear:'Next year',
+  chooseMonth:'Choose month',backToDays:'Back to days',clear:'Clear',today:'Today',now:'Now',hour:'hour',min:'min',nDays:'{n} days',pickStart:'pick a start date',pickEnd:'pick an end date',
+  presetToday:'today',presetMonth:'month',qr:'QR code',qrFor:'QR code for {text}',qrTooLong:'Too long for a QR code',
+  noLines:'No lines match.',nNew:'{n} new',resume:'Resume',live:'live',paused:'paused',nLines:'{n} lines',nOfLines:'{n} of {total} lines',terminalOutput:'Terminal output',copyLine:'Copy line',copyLogQL:'Copy LogQL',
+  nSelected:'{n} of {total} selected',nItems:'{n} items',sortBy:'{label}, sort',sortedBy:'{label}, sorted {dir}',unchangedLine:'{n} unchanged line',unchangedLines:'{n} unchanged lines',
+  cronFields:'Use five fields: minute hour day month weekday.',cronBadField:'The {field} field “{value}” is not valid.',cronInvalid:'Not a valid schedule.',
+  sharingOff:'Sharing is off',inviteHint:'Enter a username or an email address.',hasAccess:'{who} already has access.',accessFor:'Access for {who}',canView:'can view',canEdit:'can edit',
+  stopSharingQ:'Stop sharing?',stopSharing:'Stop sharing',stopSharingBody:'The link stops working and everyone below loses access. The files stay.',
+  fileDetails:'File details',nothingSelected:'Nothing selected',selectToPreview:'Select a file to preview it.',noPreview:'No preview for this type. Download it to open.',
+  details:'Details',detailsFor:'Details for {name}',editCell:'Edit {label}',resizeColumn:'Resize {label} column',editHint:'Double-click or Enter to edit',nRows:'{n} rows',nOfRows:'{n} of {total} rows',noRowsMatch:'No rows match “{q}”.',
+  timeRange:'Time range: {label}',autoRefresh:'Auto-refresh: {state}',everyN:'every {n}',off:'Off',trHint:'Use now-6h, now, or 2026-11-22 03:00.',trUnreadable:'Couldn’t read {field}. Try now-6h or 2026-11-22 03:00.',trOrder:'From must be before To.',from:'From',to:'To',
+  total:'total',less:'less',more:'more',ok:'ok',warning:'warning',failed:'failed',noData:'no data',activity:'Activity',heatHelp:'Use arrow keys to read days.',heatSumStatus:'{down} failed, {warn} warnings in {n} days',heatSum:'{total} {unit} in {n} days',
+  gaugeDown:'critical · above {v}',gaugeWarn:'high · above {v}',requests:'requests',nKey:'{n} key',nKeys:'{n} keys',nItem:'{n} item',nItemsJson:'{n} items'};
+/* pbT('key', {n: 3}) fills a pbStrings template; an unknown key comes back as is. pbLocale() is pbStrings.locale, else <html lang>, for Intl. */
+function pbT(k,v){var s=pbStrings[k];if(s==null)return k;return String(s).replace(/\{(\w+)\}/g,function(m,n){return v&&v[n]!=null?v[n]:m;});}
+function pbLocale(){return pbStrings.locale||document.documentElement.lang||undefined;}
+function pbNum(n,o){try{return new Intl.NumberFormat(pbLocale(),o).format(n);}catch(e){return String(n);}}
 /* A page-unique id with a readable prefix (replaces Math.random ids, so ids are stable within a page load). */
 var pbIdN=0;
 function pbId(p){var id;do{id=(p||'pb')+'-'+(++pbIdN).toString(36);}while(document.getElementById(id));return id;}
