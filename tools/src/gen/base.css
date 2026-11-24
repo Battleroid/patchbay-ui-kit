@@ -12,7 +12,7 @@
   --pb-shadow-sm: var(--shadow-soft-sm);
   --pb-shadow-md: var(--shadow-soft-md);
   --pb-shadow-lg: var(--shadow-soft-lg);
-  --pb-drop: drop-shadow(0 2px 6px rgba(23, 21, 15, 0.10));
+  --pb-drop: drop-shadow(0 2px 6px var(--shadow-drop-ink));
   --pb-press: translateY(1px);
 }
 [data-edge="hard"] {

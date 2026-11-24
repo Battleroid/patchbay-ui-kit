@@ -173,9 +173,9 @@
 .pb-fpreview__body--video { padding: var(--space-3); background: var(--night); }
 .pb-fpreview__body--video .pb-player { width: 100%; }
 .pb-fpreview__pdf { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-5, 20px); }
-.pb-fpreview__page { width: 200px; aspect-ratio: 8.5 / 11; padding: 18px 16px; background: #fff; box-shadow: var(--pb-shadow-md); display: grid; align-content: start; gap: 6px; }
-.pb-fpreview__page i { display: block; height: 5px; background: #d9d4c8; border-radius: 1px; }
-.pb-fpreview__page i:first-child { height: 9px; width: 60%; background: #17150f; margin-bottom: 6px; }
+.pb-fpreview__page { width: 200px; aspect-ratio: 8.5 / 11; padding: 18px 16px; background: var(--paper); box-shadow: var(--pb-shadow-md); display: grid; align-content: start; gap: 6px; }
+.pb-fpreview__page i { display: block; height: 5px; background: var(--paper-line); border-radius: 1px; }
+.pb-fpreview__page i:first-child { height: 9px; width: 60%; background: var(--paper-ink); margin-bottom: 6px; }
 .pb-fpreview__empty { padding: var(--space-6); text-align: center; font: italic 400 var(--pb-text-15)/22px var(--font-serif); color: var(--ink-muted); }
 .pb-fpreview__meta { min-height: 0; overflow: auto; padding: var(--space-3) var(--space-4); border-top: 1px solid var(--line); }
 .pb-fpreview__meta[hidden] { display: none; }
@@ -371,7 +371,7 @@
   .pb-switch, .pb-check, .pb-radio { forced-color-adjust: auto; appearance: auto; }
   .pb-bars__seg, .pb-storage__bar > span, .pb-heat__cell, .pb-donut__seg, .pb-dial__fill, .pb-ts__line, .pb-evcal__ev, .pb-logx__bars i, .pb-meter span, .pb-progressbar, .pb-uptime span { forced-color-adjust: none; }
   .pb-chart svg, .pb-ts__plot svg, .pb-dial svg, .pb-donut svg, .pb-qr__code svg { forced-color-adjust: none; }
-  .pb-qr__code { background: #fff; }
+  .pb-qr__code { background: var(--paper); }
   .pb-dot, .pb-rack__led, .pb-log__live::before, .pb-refresh__dot { forced-color-adjust: none; border: 1px solid CanvasText; }
   .pb-skel { background: GrayText; }
   .pb-term, .pb-player, .pb-lightbox, .pb-tile--ink, .pb-chart--ink, .pb-bulkbar { forced-color-adjust: auto; }
@@ -427,11 +427,11 @@
 .pb-mitem__thumb { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--night); border-radius: var(--pb-r-md); }
 .pb-mitem__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--pb-dur-3); }
 .pb-mitem__thumb:hover img { transform: scale(1.03); }
-.pb-mitem__play { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: rgba(0,0,0,0.28); transition: opacity var(--pb-dur-2); }
-.pb-mitem__play .pb-icon { width: 36px; height: 36px; padding: 9px; color: #fff; background: rgba(0,0,0,0.55); border-radius: 50%; box-sizing: content-box; }
+.pb-mitem__play { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: var(--scrim-soft); transition: opacity var(--pb-dur-2); }
+.pb-mitem__play .pb-icon { width: 36px; height: 36px; padding: 9px; color: var(--on-scrim); background: var(--scrim); border-radius: 50%; box-sizing: content-box; }
 .pb-mitem__thumb:hover .pb-mitem__play, .pb-mitem__thumb:focus-visible .pb-mitem__play { opacity: 1; }
-.pb-mitem__dur { position: absolute; right: 6px; bottom: 6px; padding: 1px 5px; font: 500 var(--pb-text-11)/16px var(--font-mono); color: #fff; background: rgba(0,0,0,0.72); border-radius: 3px; }
-.pb-mitem__seen { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,0.3); }
+.pb-mitem__dur { position: absolute; right: 6px; bottom: 6px; padding: 1px 5px; font: 500 var(--pb-text-11)/16px var(--font-mono); color: var(--on-scrim); background: var(--scrim-strong); border-radius: 3px; }
+.pb-mitem__seen { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--on-scrim-track); }
 .pb-mitem__seen > span { display: block; width: var(--value); height: 100%; background: var(--pop-red, var(--down)); }
 .pb-mitem__state { position: absolute; left: 6px; top: 6px; }
 .pb-mitem__body { display: grid; gap: 4px; min-width: 0; }
