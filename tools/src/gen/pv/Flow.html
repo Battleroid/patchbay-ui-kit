@@ -1,10 +1,10 @@
-<div style="overflow-x:auto"><div class="pb-diagram" data-flow style="height:270px;min-width:600px">
+<div class="pb-demo-overflow-x-auto"><div class="pb-diagram pb-demo-height-270-min-width-600" data-flow>
   <svg></svg>
-  <div class="pb-node" data-id="cl" style="left:0;top:40px"><span class="pb-icon pb-icon--cloud"></span><span><span class="pb-node__name">Client</span><span class="pb-node__host">browser</span></span></div>
-  <div class="pb-node" data-role="edge" data-id="px" style="left:28%;top:40px;transform:translateX(-50%)"><span class="pb-icon pb-icon--lock"></span><span><span class="pb-node__name">Caddy</span><span class="pb-node__host">:443 → :80</span></span></div>
-  <div class="pb-node" data-role="core" data-id="app" style="left:62%;top:40px;transform:translateX(-50%)"><span class="pb-icon pb-icon--server"></span><span><span class="pb-node__name">Nextcloud</span><span class="pb-node__host">pve-01</span></span></div>
-  <div class="pb-node" data-id="db" style="right:0;top:40px"><span class="pb-icon pb-icon--database"></span><span><span class="pb-node__name">Postgres</span><span class="pb-node__host">:5432</span></span></div>
-  <div class="pb-node" data-id="bk" style="left:62%;top:190px;transform:translateX(-50%)"><span class="pb-icon pb-icon--refresh"></span><span><span class="pb-node__name">restic</span><span class="pb-node__host">nightly 03:00</span></span></div>
-  <div class="pb-node" data-id="b2" data-status="down" style="right:0;top:190px"><span class="pb-icon pb-icon--cloud"></span><span><span class="pb-node__name">Offsite</span><span class="pb-node__host">b2 bucket</span></span><span class="pb-dot" data-status="down"></span></div>
+  <div class="pb-node pb-demo-left-0-top-40" data-id="cl"><span class="pb-icon pb-icon--cloud"></span><span><span class="pb-node__name">Client</span><span class="pb-node__host">browser</span></span></div>
+  <div class="pb-node pb-demo-flow-1" data-role="edge" data-id="px"><span class="pb-icon pb-icon--lock"></span><span><span class="pb-node__name">Caddy</span><span class="pb-node__host">:443 → :80</span></span></div>
+  <div class="pb-node pb-demo-flow-2" data-role="core" data-id="app"><span class="pb-icon pb-icon--server"></span><span><span class="pb-node__name">Nextcloud</span><span class="pb-node__host">pve-01</span></span></div>
+  <div class="pb-node pb-demo-right-0-top-40" data-id="db"><span class="pb-icon pb-icon--database"></span><span><span class="pb-node__name">Postgres</span><span class="pb-node__host">:5432</span></span></div>
+  <div class="pb-node pb-demo-flow-3" data-id="bk"><span class="pb-icon pb-icon--refresh"></span><span><span class="pb-node__name">restic</span><span class="pb-node__host">nightly 03:00</span></span></div>
+  <div class="pb-node pb-demo-right-0-top-190" data-id="b2" data-status="down"><span class="pb-icon pb-icon--cloud"></span><span><span class="pb-node__name">Offsite</span><span class="pb-node__host">b2 bucket</span></span><span class="pb-dot" data-status="down"></span></div>
 </div></div>
-<div class="pb-legend" style="margin-top:12px"><span><i style="--c:var(--accent)"></i>request path</span><span><i class="pb-dashed" style="--c:var(--ink-muted)"></i>scheduled</span><span><i class="pb-dashed" style="--c:var(--down)"></i>failing</span></div>
+<div class="pb-legend pb-demo-margin-top-12"><span><i data-vars="--c:var(--accent)"></i>request path</span><span><i class="pb-dashed" data-vars="--c:var(--ink-muted)"></i>scheduled</span><span><i class="pb-dashed" data-vars="--c:var(--down)"></i>failing</span></div>

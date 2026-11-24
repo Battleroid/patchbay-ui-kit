@@ -1,10 +1,10 @@
-<div style="display:grid;gap:24px">
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+<div class="pb-demo-display-grid-gap-24">
+  <div class="pb-demo-chart-1">
     <div class="pb-stat"><span class="pb-eyebrow">uptime · 30d</span><span class="pb-stat__value">99.98<small>%</small></span><span class="pb-stat__delta" data-tone="good">↑ 0.04 vs prev</span></div>
-    <div class="pb-stat"><span class="pb-eyebrow">tank used</span><span class="pb-stat__value">6.2<small>TB</small></span><div class="pb-meter" data-status="warn" style="--value:78%"><span></span></div></div>
+    <div class="pb-stat"><span class="pb-eyebrow">tank used</span><span class="pb-stat__value">6.2<small>TB</small></span><div class="pb-meter" data-status="warn" data-vars="--value:78%"><span></span></div></div>
     <div class="pb-stat"><span class="pb-eyebrow">cpu temp</span><span class="pb-stat__value">42<small>°C</small></span><span class="pb-stat__delta" data-tone="bad">↑ 6 vs avg</span></div>
   </div>
-  <div class="pb-chart" data-kind="line"><div class="pb-eyebrow" style="margin-bottom:8px">wan · 24h · mbps</div><svg viewBox="0 0 400 150"></svg>
-    <div class="pb-legend" style="margin-top:8px"><span><i style="--c:var(--chart-1)"></i>down</span><span><i style="--c:var(--chart-2)"></i>up</span><span><i class="pb-dashed" style="--c:var(--chart-3)"></i>last week</span></div></div>
-  <div class="pb-chart" data-kind="bar"><div class="pb-eyebrow" style="margin-bottom:8px">disk used · tb</div><svg viewBox="0 0 400 130"></svg></div>
+  <div class="pb-chart" data-kind="line"><div class="pb-eyebrow pb-demo-margin-bottom-8">wan · 24h · mbps</div><svg viewBox="0 0 400 150"></svg>
+    <div class="pb-legend pb-demo-margin-top-8"><span><i data-vars="--c:var(--chart-1)"></i>down</span><span><i data-vars="--c:var(--chart-2)"></i>up</span><span><i class="pb-dashed" data-vars="--c:var(--chart-3)"></i>last week</span></div></div>
+  <div class="pb-chart" data-kind="bar"><div class="pb-eyebrow pb-demo-margin-bottom-8">disk used · tb</div><svg viewBox="0 0 400 130"></svg></div>
 </div>

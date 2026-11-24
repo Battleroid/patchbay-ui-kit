@@ -287,7 +287,7 @@ test('layout: the phone drawer stays under the header with a long nav', async ({
   await page.goto('/components/AppShell/example.html');
   await page.evaluate(() => {
     // A full-page shell at the top of the page, as in an app (the example is a contained preview with page padding).
-    document.body.style.padding = '0'; const shell = document.querySelector('.pb-shell'); shell.classList.remove('pb-shell--contained'); shell.removeAttribute('style'); shell.parentElement.removeAttribute('style');
+    document.body.style.padding = '0'; const shell = document.querySelector('.pb-shell'); shell.classList.remove('pb-shell--contained'); for (const el of [shell, shell.parentElement]) el.classList.remove(...[...el.classList].filter((c) => c.startsWith('pb-demo-')));
     const list = document.querySelector('.pb-shell__nav .pb-nav');
     for (let i = 0; i < 25; i++) { const li = document.createElement('li'); li.innerHTML = '<a class="pb-nav__item" href="#">Item ' + i + '</a>'; list.append(li); }
   });

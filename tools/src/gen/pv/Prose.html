@@ -1,5 +1,5 @@
 <article class="pb-prose">
-  <h2 style="margin-top:0">Restoring a snapshot</h2>
+  <h2 class="pb-demo-margin-top-0">Restoring a snapshot</h2>
   <p>Snapshots run nightly at <code>03:00</code> and are pruned after thirty days. Pick one from the <a href="#">snapshot list</a>, then mount it read-only before copying anything back. See <a href="https://restic.net">restic.net</a> for flags.</p>
   <pre><code><span class="tok-f">restic</span> mount <span class="tok-k">--repo</span> <span class="tok-s">/mnt/backup</span> /mnt/restore</code></pre>
   <blockquote>Never restore over a running database. Stop the container first.</blockquote>
