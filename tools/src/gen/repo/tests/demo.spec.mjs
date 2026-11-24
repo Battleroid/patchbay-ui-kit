@@ -24,10 +24,18 @@ for (const t of themes) {
   test(`accessibility: ${t.theme} ${t.edge}`, async ({ page }) => {
     await open(page, t);
     const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+      .disableRules(['target-size'])
       .exclude('iframe')
       .analyze();
-    const serious = results.violations.filter((v) => ['serious', 'critical'].includes(v.impact));
+    // Target size (WCAG 2.2, 2.5.8) runs on its own: DualRange is two native range inputs laid over one track on purpose, so
+    // axe sees two overlapping 100%-wide targets. Its real targets are the two thumbs, which sit apart; everything else is checked.
+    const targets = await new AxeBuilder({ page })
+      .withRules(['target-size'])
+      .exclude('iframe')
+      .exclude('.pb-range2 .pb-range')
+      .analyze();
+    const serious = [...results.violations, ...targets.violations].filter((v) => ['serious', 'critical'].includes(v.impact));
     const report = serious.map((v) => `${v.id} (${v.impact}): ${v.nodes.length} × ${v.help}\n  ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join('\n  ')}`).join('\n');
     expect(serious, report).toEqual([]);
   });
@@ -45,6 +53,19 @@ for (const t of themes) {
     }
   });
 }
+
+test('accessibility at phone width: light soft', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await open(page, themes[0]);
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+    .exclude('iframe')
+    .exclude('.pb-range2 .pb-range') // two range inputs over one track; see the target-size note above
+    .analyze();
+  const serious = results.violations.filter((v) => ['serious', 'critical'].includes(v.impact));
+  const report = serious.map((v) => `${v.id} (${v.impact}): ${v.nodes.length} × ${v.help}\n  ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join('\n  ')}`).join('\n');
+  expect(serious, report).toEqual([]);
+});
 
 test('phone width has no sideways scroll', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });

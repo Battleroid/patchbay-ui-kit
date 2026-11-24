@@ -109,11 +109,6 @@ a.pb-media__name:hover { text-decoration: underline; }
 .pb-media__badges:empty { display: none; }
 
 /* Layout helpers the examples use. */
-.pb-demo-col { display: grid; gap: var(--space-3); justify-items: start; }
-.pb-demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); width: 100%; }
-.pb-demo-narrow { max-width: 420px; width: 100%; }
-.pb-keys__demo { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-3); border: var(--stroke-1) dashed var(--pb-border); border-radius: var(--pb-r-md); max-width: 420px; }
-.pb-keys__demo:focus-visible { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
 .pb-keys__notes { margin: 0; padding-inline-start: var(--space-4); }
 
 /* Event calendar: a date grid with one tab stop; failed runs carry colour and a ring; under 620 px a day is the target. */
@@ -134,8 +129,6 @@ a.pb-media__name:hover { text-decoration: underline; }
 /* A busy button keeps its label ("Syncing…") and ignores clicks. */
 button[aria-busy="true"] { cursor: progress; pointer-events: none; opacity: 0.75; }
 .pb-mediagrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 220px)); gap: var(--space-3); width: 100%; }
-.pb-demo-head { display: flex; align-items: center; gap: var(--space-2); width: 100%; min-height: 48px; padding: 0 var(--space-3); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); background: var(--surface); }
-.pb-demo-head__brand { font: 600 var(--pb-text-17)/24px var(--font-serif); }
 .pb-ring__pct { font: 500 var(--pb-text-12)/16px var(--font-mono); font-variant-numeric: tabular-nums; }
 .pb-ring:has(.pb-ring__pct) { width: auto; grid-auto-flow: column; gap: 6px; padding-inline: 8px; }
 

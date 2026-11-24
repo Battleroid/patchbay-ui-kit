@@ -108,7 +108,7 @@
 /* ---------- JSON / YAML viewer ---------- */
 .pb-json { background: var(--code-bg); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); overflow: hidden; }
 .pb-json > .pb-toolbar { padding: var(--space-2) var(--space-3); background: var(--surface); border-bottom: var(--stroke-1) solid var(--pb-border); flex-wrap: wrap; }
-.pb-json__body { max-height: var(--json-h, 340px); overflow: auto; padding: var(--space-3) var(--space-3) var(--space-3) var(--space-2); font: 400 var(--pb-text-13)/21px var(--font-mono); color: var(--ink); }
+.pb-json__body { max-height: var(--json-h, 340px); overflow: auto; padding: var(--space-3) var(--space-3) var(--space-3) var(--space-2); font: 400 var(--pb-text-13)/24px var(--font-mono); color: var(--ink); }
 .pb-json details { margin: 0; }
 .pb-json details > summary { list-style: none; cursor: pointer; border-radius: 3px; }
 .pb-json details > summary::-webkit-details-marker { display: none; }
@@ -152,7 +152,7 @@
 .pb-qf__box { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: var(--size-control); padding: 4px var(--space-2); background: var(--surface); border: var(--stroke-1) solid var(--pb-border-control); border-radius: var(--pb-r-md); box-shadow: var(--shadow-inset); cursor: text; }
 .pb-qf__box:focus-within { outline: var(--pb-focus-width) solid var(--pb-focus-color); outline-offset: var(--pb-focus-offset); }
 .pb-qf__box > .pb-icon { width: 16px; height: 16px; margin: 0 2px 0 4px; color: var(--ink-muted); }
-.pb-qf__box input { flex: 1; min-width: 12ch; height: 26px; padding: 0; border: 0; outline: 0; background: transparent; font: 400 var(--pb-text-13)/21px var(--font-mono); color: var(--ink); }
+.pb-qf__box input { flex: 1; min-width: 12ch; height: 26px; padding: 0; border: 0; outline: 0; background: transparent; font: 400 var(--pb-text-13)/24px var(--font-mono); color: var(--ink); }
 .pb-qf__chip { display: inline-flex; align-items: stretch; height: 24px; font: 500 var(--pb-text-12)/22px var(--font-mono); border: var(--stroke-1) solid var(--pb-border-control); border-radius: var(--pb-r-pill); overflow: hidden; background: var(--surface); }
 [data-edge="hard"] .pb-qf__chip { border-radius: 0; }
 .pb-qf__chip > button:first-child { display: inline-flex; padding: 0; font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }

@@ -81,7 +81,7 @@
 /* Ghost + danger: red text, no fill, a down tint on hover (it must not fall back to the accent ghost look). */
 .pb-btn--ghost.pb-btn--danger { background: transparent; border-color: transparent; color: var(--down); }
 .pb-btn--ghost.pb-btn--danger:hover { background: var(--down-tint); border-color: transparent; }
-.pb-btn--sm { height: var(--size-control-sm); padding: 0 var(--space-2); font-size: var(--pb-text-12); }
+.pb-btn--sm { height: var(--size-control-sm); min-inline-size: var(--size-control-sm); padding: 0 var(--space-2); font-size: var(--pb-text-12); }
 .pb-btn--icon { width: var(--size-control); padding: 0; }
 .pb-btn--icon.pb-btn--sm { width: var(--size-control-sm); }
 .pb-btn:disabled, .pb-btn[aria-disabled="true"] {
