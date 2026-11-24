@@ -1,7 +1,7 @@
 /* ---------- Log viewer ---------- */
 .pb-log { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; background: var(--code-bg); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); overflow: hidden; min-height: 0; }
 .pb-log > .pb-toolbar { padding: var(--space-2) var(--space-3); background: var(--surface); border-bottom: var(--stroke-1) solid var(--pb-border); flex-wrap: wrap; }
-.pb-log__body { position: relative; overflow: auto; height: var(--log-h, 320px); padding: var(--space-2) 0; font: 400 var(--pb-text-12-5)/20px var(--font-mono); color: var(--ink); overscroll-behavior: contain; }
+.pb-log__body { position: relative; overflow: auto; height: var(--log-h, 320px); padding: var(--space-2) 0; font: 400 var(--pb-text-13)/20px var(--font-mono); color: var(--ink); overscroll-behavior: contain; }
 .pb-log__line { display: grid; grid-template-columns: auto 5ch minmax(0, 1fr); gap: var(--space-3); padding: 0 var(--space-3); white-space: pre; }
 .pb-log__line:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
 .pb-log--wrap .pb-log__line { white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -32,7 +32,7 @@
 .pb-diff__stat ins { color: var(--ok); text-decoration: none; }
 .pb-diff__stat del { color: var(--down); text-decoration: none; margin-inline-start: 6px; }
 .pb-diff__scroll { overflow: auto; background: var(--code-bg); }
-.pb-diff__table { width: 100%; border-collapse: collapse; font: 400 var(--pb-text-12-5)/20px var(--font-mono); color: var(--ink); table-layout: auto; }
+.pb-diff__table { width: 100%; border-collapse: collapse; font: 400 var(--pb-text-13)/20px var(--font-mono); color: var(--ink); table-layout: auto; }
 .pb-diff__table td { padding: 0 var(--space-2); vertical-align: top; white-space: pre; }
 .pb-diff--wrap .pb-diff__table td.pb-diff__code { white-space: pre-wrap; overflow-wrap: anywhere; }
 .pb-diff__no { width: 1%; min-width: 4ch; text-align: end; color: var(--ink-muted); user-select: none; font-variant-numeric: tabular-nums; }
@@ -101,7 +101,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 [data-edge="hard"] .pb-term__exit { border-radius: 0; }
 .pb-term .pb-btn { color: var(--on-night); background: transparent; border-color: var(--ink-line); box-shadow: none; }
 .pb-term .pb-btn:hover { background: var(--ink-band); }
-.pb-term__body { margin: 0; padding: var(--space-3) var(--space-4); max-height: var(--term-h, 280px); overflow: auto; font: 400 var(--pb-text-12-5)/20px var(--font-mono); white-space: pre; tab-size: 4; }
+.pb-term__body { margin: 0; padding: var(--space-3) var(--space-4); max-height: var(--term-h, 280px); overflow: auto; font: 400 var(--pb-text-13)/20px var(--font-mono); white-space: pre; tab-size: 4; }
 .pb-term--wrap .pb-term__body { white-space: pre-wrap; overflow-wrap: anywhere; }
 .pb-term__body .pb-term__prompt { color: var(--on-ink-muted); }
 .ansi-b { font-weight: 700; } .ansi-dim { color: var(--on-ink-muted); } .ansi-i { font-style: italic; } .ansi-u { text-decoration: underline; }
@@ -196,7 +196,7 @@ tr[data-t="hunk"] td { padding: 2px var(--space-3); color: var(--ink-muted); bac
 .pb-logx__m[data-neg] { border-color: var(--down); }
 .pb-logx__m[data-neg] .pb-logx__op { color: var(--down); }
 .pb-logx__m .pb-qf__x { width: 20px; }
-.pb-logx__add { flex: 1; min-width: 16ch; height: 24px; padding: 0 4px; font: 400 var(--pb-text-12-5)/20px var(--font-mono); color: var(--ink); background: transparent; border: 0; outline: 0; }
+.pb-logx__add { flex: 1; min-width: 16ch; height: 24px; padding: 0 4px; font: 400 var(--pb-text-13)/20px var(--font-mono); color: var(--ink); background: transparent; border: 0; outline: 0; }
 .pb-logx__add[aria-invalid="true"] { color: var(--down); }
 .pb-logx__linefilter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
 .pb-logx__linefilter .pb-input { flex: 1; min-width: 160px; }

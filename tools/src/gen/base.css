@@ -30,6 +30,9 @@
   --pb-press: translate(2px, 2px);
 }
 
+/* Breakpoints (CSS cannot read a variable in a media query, so these three literals are the whole set):
+   480px phone, 640px large phone and small tablet, 900px tablet. Components that live in columns use container queries instead. */
+
 /* ---------- Base ---------- */
 [data-theme="dark"] .pb, .pb[data-theme="dark"], [data-theme="dark"].pb { color-scheme: dark; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme]) .pb { color-scheme: dark; } }

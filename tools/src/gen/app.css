@@ -88,7 +88,7 @@
 /* Compact variants: a Result inside a card or auth card, and a media tile for dense grids (replaces consumer type-size overrides). */
 .pb-result--compact { max-width: none; padding: var(--space-2) 0 0; justify-items: center; text-align: center; }
 .pb-result--compact .pb-result__code { font-size: var(--pb-text-56); line-height: 1; }
-.pb-result--compact .pb-result__title { font: 600 var(--pb-text-21)/26px var(--font-serif); }
+.pb-result--compact .pb-result__title { font: 600 var(--pb-text-19)/26px var(--font-serif); }
 .pb-result--compact .pb-result__body { font: 400 var(--pb-text-15)/22px var(--font-serif); }
 .pb-result--compact .pb-result__actions { justify-content: center; }
 .pb-result__icon { display: grid; place-items: center; }

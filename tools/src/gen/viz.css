@@ -15,7 +15,7 @@
 .pb-chart.pb-chart--ink .pb-band-label { fill: var(--on-ink-muted); }
 .pb-chart .pb-band { fill: var(--accent-tint); }
 .pb-chart .pb-band--warn { fill: var(--warn-tint); }
-.pb-chart .pb-band-label { font: 600 var(--pb-text-10) var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-muted); }
+.pb-chart .pb-band-label { font: 600 var(--pb-text-11) var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ink-muted); }
 .pb-chart .pb-threshold { stroke: var(--down); stroke-width: 1.5; stroke-dasharray: 6 4; }
 .pb-chart .pb-threshold-label { font: 500 var(--pb-text-11) var(--font-mono); fill: var(--down); paint-order: stroke; stroke: var(--bg); stroke-width: 4px; }
 .pb-chart--panel .pb-threshold-label { stroke: var(--surface-sunk); }
