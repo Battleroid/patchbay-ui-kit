@@ -16,6 +16,7 @@ EXPORTS=['pbInit','pbConfirm','pbToast','pbInbox','pbTheme','pbPlace','pbCalenda
   # Documented functions apps call directly (A13), and the shared helpers.
   'pbChartHover','pbCronHuman','pbCronNext','pbMarkdown','pbScrollRegion','pbRelTime','pbPopovers','pbCodeHL','pbCodeArea','pbQR','pbPlayer','pbVars',
   'pbListKeys','pbAnnounce','pbKey','pbMark','pbEmit','pbFocusNear','pbStrength','pbTip',
+  'pbGridKeys','pbScroller','pbFieldError','pbDiagramText','pbT','pbNum','pbLocale','pbParts',
   # App patterns (k-app).
   'pbNotice','pbNoticeInto','pbBusy','pbShortcuts','pbGuardUnload','pbProcessing','pbShareLink','pbFmt']
 body=S.bundle(); S.check('patchbay.js',body)

@@ -131,7 +131,6 @@ function pbOpener(b){var sel=b.getAttribute('data-pb-open')||'';if(sel&&sel.char
    contain:paint never clip it) shows on hover and keyboard focus after a short delay, sits above the trigger and flips below at the edge,
    stays while the pointer moves onto it, and Esc dismisses it (WCAG 1.4.13). The trigger gets aria-describedby unless the tip only repeats
    its aria-label. data-tip-open (set by the copy buttons for "Copied") keeps the CSS tip showing instead. */
-var pbTipDelay=300;
 function pbTip(t){var tip=document.createElement('span'),tm=0,gone=false;tip.className='pb-tooltip';tip.id=pbId('pb-tip');tip.setAttribute('role','tooltip');tip.setAttribute('popover','manual');
   var scope=t.closest('dialog')||t.closest('[data-theme],[data-edge]');(scope&&scope!==document.documentElement?scope:document.body).appendChild(tip);t.setAttribute('data-tip-js','');
   function text(){return t.getAttribute('data-tip')||'';}
@@ -140,7 +139,7 @@ function pbTip(t){var tip=document.createElement('span'),tm=0,gone=false;tip.cla
     if(x&&x!==(t.getAttribute('aria-label')||'').trim())d.push(tip.id);d.length?t.setAttribute('aria-describedby',d.join(' ')):t.removeAttribute('aria-describedby');}
   function place(){pbPlace(t,tip,{side:'top',align:'center',gap:8});}
   function hide(){clearTimeout(tm);if(open())tip.hidePopover();}
-  function show(){clearTimeout(tm);if(gone||!text()||t.hasAttribute('data-tip-open'))return;tm=setTimeout(function(){if(!t.isConnected)return;sync();if(!open())try{tip.showPopover();}catch(e){return;}place();},pbTipDelay);}
+  function show(){clearTimeout(tm);if(gone||!text()||t.hasAttribute('data-tip-open'))return;tm=setTimeout(function(){if(!t.isConnected)return;sync();if(!open())try{tip.showPopover();}catch(e){return;}place();},pbTip.delay!=null?pbTip.delay:300);}
   function keep(){return t.matches(':hover')||tip.matches(':hover')||t.matches(':focus-visible');}
   function later(){clearTimeout(tm);tm=setTimeout(function(){if(!keep())hide();},120);}
   t.addEventListener('pointerenter',function(e){if(e.pointerType!=='touch')show();});t.addEventListener('pointerleave',later);
@@ -155,17 +154,17 @@ function pbTip(t){var tip=document.createElement('span'),tm=0,gone=false;tip.cla
 /* Toasts and announcements need their live regions in the page before the first message: pbInit puts them there. */
 function pbToastRegion(c){c=c||document.body;pbLiveRegion('polite');pbLiveRegion('assertive');var box=c.querySelector(':scope > .pb-toasts:not(.pb-toasts--inline)');
   if(!box){box=document.createElement('div');box.className='pb-toasts';box.setAttribute('role','region');box.setAttribute('aria-label',pbStrings.notifications);c.appendChild(box);}
-  if(!box.__pbWired){box.__pbWired=true;box.setAttribute('aria-keyshortcuts',pbToastKey);
+  function hk(){return (typeof pbToast==='function'&&pbToast.hotkey)||'F8';}
+  if(!box.__pbWired){box.__pbWired=true;box.setAttribute('aria-keyshortcuts',hk());
     /* Timers pause while focus is anywhere in the stack, not only on one toast. */
     function hold(on){box.toggleAttribute('data-focus',on);box.querySelectorAll('.pb-toast__timer').forEach(function(t){t.style.animationPlayState=on?'paused':'';});}
     box.addEventListener('focusin',function(){hold(true);});box.addEventListener('focusout',function(e){if(!box.contains(e.relatedTarget))hold(false);});
-    /* F8 (pbToastKey) jumps to the newest toast and, pressed again, back to where you were. */
-    document.addEventListener('keydown',function(e){if(e.key!==pbToastKey||e.defaultPrevented||!box.isConnected)return;
+    /* F8 (pbToast.hotkey) jumps to the newest toast and, pressed again, back to where you were. */
+    document.addEventListener('keydown',function(e){if(e.key!==hk()||e.defaultPrevented||!box.isConnected)return;
       if(box.contains(document.activeElement)){e.preventDefault();var b=box.__pbBack;box.__pbBack=null;if(b&&b.isConnected)b.focus();return;}
       var l=[].slice.call(box.querySelectorAll(':scope > .pb-toast:not([hidden]):not([data-leaving])')),t=l[l.length-1];if(!t)return;var f=t.querySelector('button');if(!f)return;
       e.preventDefault();box.__pbBack=document.activeElement;f.focus();});}
   return box;}
-var pbToastKey='F8';
 /* pbGridKeys(box, {rows(), targets(row), key(target)}): one tab stop for a grid (a table, a calendar). ←/→ move through a row's targets
    (cells, or the widgets in them), ↑/↓ to the same column in the next row, Home/End to the row's ends, Ctrl+Home/End to the grid's,
    PageUp/PageDown by ten rows. A target may keep the arrows for itself with data-keys="arrows" (a resize handle): there Shift+←/→ moves on.

@@ -353,7 +353,8 @@
 .pb-tablescroll[data-stack] { container-type: inline-size; }
 @container (max-width: 560px) {
   .pb-tablescroll[data-stack] .pb-table, .pb-tablescroll[data-stack] .pb-table > tbody, .pb-tablescroll[data-stack] .pb-table > tbody > tr { display: block; width: auto; }
-  .pb-tablescroll[data-stack] .pb-table > thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  /* The header row goes (each cell names its column instead), with its sort buttons and select-all. */
+  .pb-tablescroll[data-stack] .pb-table > thead { display: none; }
   .pb-tablescroll[data-stack] .pb-table > tbody > tr { padding: var(--space-2) 0; border-bottom: var(--stroke-1) solid var(--line); }
   .pb-tablescroll[data-stack] .pb-table > tbody > tr > td { display: block; width: auto; min-width: 0; max-width: none; height: auto; padding: 4px var(--space-3); border: 0; white-space: normal; text-align: start; }
   .pb-tablescroll[data-stack] .pb-table > tbody > tr > td[data-label]::before { content: attr(data-label); display: block; font: 600 11px/16px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
