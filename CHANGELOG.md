@@ -22,7 +22,7 @@
 ### Fixed
 - Passes axe WCAG 2.2 AA (target size included) in all four theme × edge combos at 1280 and at 375 px. Focus indicators on menus, options and accent-filled items are ≥ 3:1; targets are ≥ 24 px (small buttons 28 px); reduced motion stops every spinner, pulse and stripe.
 - TableTools column resize works (mouse and ←/→); the EventCalendar grid moves with the keys and gives phone users 48 px day cells; the first toast is announced; context menus no longer double-bind on a second `pbInit`; FilePreview no longer scrolls the page at load; the site header's Esc no longer steals focus; reduced-motion rules the build dropped are back.
-- Phone layouts: stacked tables (`.pb-tablescroll[data-stack]`), split panes and KeyValue stack, ListItem meta wraps, the shell search collapses to an icon, NotifySettings keeps its first column.
+- Phone layouts: stacked tables (`.pb-tablescroll[data-stack]`), split panes and KeyValue stack, ListItem meta wraps, the shell search collapses to an icon, NotifySettings keeps its first column, and the image viewer keeps its arrows (44 px touch targets).
 
 ### Docs, examples and tooling
 - Every component README has Markup, States, Keys, Events and Do and don't. Examples carry no inline styles, handlers or scripts (demo-only styling is in `demo.css`), so the example markup is what runs under the fixture's CSP; the fixture covers all 116 components.
