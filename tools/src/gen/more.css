@@ -184,7 +184,9 @@
 
 /* ---------- Table tools: density, columns, resize, expand, inline edit, sticky column ---------- */
 .pb-dt .pb-table th { position: sticky; top: 0; }
-.pb-dt .pb-table th, .pb-dt .pb-table td { max-width: var(--w, none); }
+/* A set column width (--w, from the resize handle) is the width, not only a cap. */
+.pb-dt .pb-table th, .pb-dt .pb-table td { width: var(--w, auto); min-width: var(--w, 0); max-width: var(--w, none); }
+.pb-dt[data-resizing] { user-select: none; cursor: col-resize; }
 .pb-dt .pb-table td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pb-dt .pb-table td.pb-dt__wrap { white-space: normal; }
 .pb-dt[data-density="compact"] .pb-table th { height: 30px; }
@@ -203,6 +205,7 @@
 .pb-dt .pb-table tbody tr:hover > td.pb-dt__sticky { background: var(--surface-sunk); }
 .pb-dt__th { position: relative; }
 .pb-dt__resize { position: absolute; top: 6px; bottom: 6px; right: -3px; z-index: 4; width: 7px; padding: 0; background: none; border: 0; cursor: col-resize; touch-action: none; }
+.pb-dt__resize::before { content: ""; position: absolute; inset: -6px -9px; }
 .pb-dt__resize::after { content: ""; position: absolute; top: 0; bottom: 0; left: 3px; width: 1px; background: var(--line); }
 .pb-dt__resize:hover::after, .pb-dt__resize:focus-visible::after, .pb-dt__resize[data-active]::after { width: 2px; left: 2px; background: var(--accent); }
 .pb-dt__resize:focus-visible { outline: none; }
