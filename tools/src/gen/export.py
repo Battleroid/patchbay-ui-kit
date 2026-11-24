@@ -32,11 +32,19 @@ for n in sorted(os.listdir(C)):
 shutil.copy(ROOT+'/kit/index.html',f'{O}/demo.html')
 os.makedirs(f'{O}/media',exist_ok=True)
 for f in ['sample.mp4','poster.jpg']+[f'{a}-{i}.jpg' for a in ('photo','thumb') for i in range(1,7)]: shutil.copy(f'{ROOT}/media/{f}',f'{O}/media/{f}')
+# The README's header image, light and dark (drawn by tools/readme-header.mjs from a build; see tools/README.md).
+if os.path.isdir(f'{ROOT}/media/readme'): shutil.copytree(f'{ROOT}/media/readme',f'{O}/media/readme')
 comps=sorted(os.listdir(f'{O}/components'))
 import pbscripts as S
+EXPORTS=re.findall(r"'(pb\w+)'",re.search(r"EXPORTS=\[(.*?)\]",open(ROOT+'/gen/genjs.py').read(),re.S).group(1))
 use=f'''# Patchbay
 
-**Demo:** [battleroid.github.io/patchbay-ui-kit](https://battleroid.github.io/patchbay-ui-kit/) (or open `demo.html` locally).
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="media/readme/header-dark.png">
+  <img src="media/readme/header-light.png" alt="Patchbay: a dashboard and an app shell built with the kit, beside a short description of the kit and its demo">
+</picture>
+
+**The demo** is `demo.html` in this repository: every component on one page, in every state, with switches for the light and dark themes and the soft and hard edges. Clone the repository and open `demo.html` in a browser; nothing needs building or installing. Each component also has a page of its own, `components/<Name>/example.html`, beside its README.
 
 ## Setup
 
@@ -44,7 +52,7 @@ use=f'''# Patchbay
 - **Theme without a flash:** put `<script src="pb-theme-boot.js"></script>` in `<head>` before the stylesheet (a plain blocking script, not `defer` or a module). It applies the saved choice (`localStorage` `pb-theme`: `light`, `dark` or `system`), else `<html data-theme-default="light">`, else the system setting, as `data-theme` and `data-theme-choice` on `<html>`.
 - **Root:** `class="pb"` on the app root (the body margin is reset there), `data-edge="soft"` or `data-edge="hard"` on `<html>`.
 - **Behaviors, classic script:** `<script src="patchbay.js" data-pb-auto></script>` at the end of `<body>` runs `pbInit()` on DOMContentLoaded. Without `data-pb-auto` nothing runs until you call `pbInit()`.
-- **Behaviors, ES module:** `import pbInit, {{ pbToast, pbConfirm }} from './patchbay.mjs'; pbInit();`. Exports: `pbInit` (also the default), `pbConfirm`, `pbToast`, `pbInbox`, `pbTheme`, `pbPlace`, `pbCalendar`, `pbClock`, `pbQRSvg`, `pbQRCode`, `pbVirtual`, `pbAnsi`, `pbCronParse`, `pbSection`, `pbHook`, `pbEsc`, `pbStyled`.
+- **Behaviors, ES module:** `import pbInit, {{ pbToast, pbConfirm }} from './patchbay.mjs'; pbInit();`. Exports: `pbInit` (also the default), {", ".join("`"+e+"`" for e in EXPORTS if e!="pbInit")}.
 - **`pbInit(root = document, {{only, skip}} = {{}})`** binds every hook under `root` (and `root` itself) once per element, so it is safe to call again after an htmx swap or for markup you insert: `pbInit(el)`. `only` and `skip` take hook names; `data-pb-skip="name other"` on an ancestor skips those hooks below it. One element that throws logs `[patchbay] name` and the rest still bind. `pbInit.hooks` lists the names in order: {", ".join("`"+h[0]+"`" for h in S.hooks())}. Register your own with `pbHook(name, selector, fn)` before calling `pbInit()`.
 - **Strict CSP, no inline style needed:** the kit runs under `default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'` (add `media-src 'self' blob:` for the media player and its captions). It never uses `eval`, `new Function`, inline handlers or `style` attributes. Markup it builds as a string carries styles in `data-style`, which `pbStyled(container)` moves into the CSSOM right after insertion; call it after inserting your own strings too. In your markup, set custom properties with `data-vars="--w:42%;--c:var(--chart-2)"` (names `--a-z0-9`, values without `;`, `url(` or `expression`), and use the attribute forms for layout: `.pb-dash > [data-span="1..12"]`, `.pb-steps[data-n]`, `.pb-tabbar[data-n]`, `.pb-qr[data-size=sm|md|lg]`, `.pb-auth--inline`, `.pb-progress[data-value]`. `tests/fixtures/csp.html` is every component under that policy.
 - **Script helpers:** `pbToast({{title, body, bodyHTML, …}})` and `pbConfirm({{title, body, bodyHTML, typeToConfirm, …}})` treat `body` as text and escape it; `bodyHTML` is the explicit opt-in for markup you trust; a DOM Node as `body` is appended. `pbEsc(s)` escapes `& < > " '`.
@@ -54,7 +62,7 @@ use=f'''# Patchbay
 - Form sections keep their Save/Discard buttons inside the panel (see `components/Fieldset`).
 - Tokens: `tokens.json` is the source; every value is also a CSS custom property (`var(--accent)`, `var(--space-4)`, `var(--radius-md)`). Use tokens, never raw hex or px.
 - Icons: `<span class="pb-icon pb-icon--NAME"></span>` (paints in `currentColor`). Raw SVGs are in `icons/soft` and `icons/hard`.
-- `demo.html` shows every component on one page; `index.html` opens it, so GitHub Pages serves the demo at the site root.
+- `demo.html` shows every component on one page (`index.html` redirects to it). The README's header image is drawn from a build by `npm run readme:header` (see `tools/README.md`).
 - Density: `data-density="compact"` on `<html>` or a container for dense views.
 - App icons and a web manifest are in `app-icons/`; the alert email template is `email/alert.html`.
 - `tools/build.sh` rebuilds everything from `tools/src` (see `tools/README.md`). `npm test` runs the accessibility, layout and screenshot checks against `demo.html`.
@@ -102,7 +110,7 @@ for n in os.listdir(f'{D}/components'):
 os.makedirs(f'{T}/src/kit'); shutil.copytree(ROOT+'/kit/fonts',f'{T}/src/kit/fonts'); shutil.copytree(ROOT+'/kit/media',f'{T}/src/kit/media')
 shutil.copytree(ROOT+'/media',f'{T}/src/media'); shutil.copytree(ROOT+'/appicons',f'{T}/src/appicons'); shutil.copytree(ROOT+'/email',f'{T}/src/email')
 shutil.copytree(ROOT+'/gen/repo',f'{T}/src/gen/repo')
-for f in ('build.sh','README.md'): shutil.copy(f'{ROOT}/gen/repo/tools/{f}',f'{T}/{f}')
+for f in ('build.sh','README.md','readme-header.mjs'): shutil.copy(f'{ROOT}/gen/repo/tools/{f}',f'{T}/{f}')
 os.chmod(f'{T}/build.sh',0o755)
 if shutil.which('zip'): subprocess.run(['zip','-qr','patchbay.zip','patchbay','-x','patchbay/tools/*','patchbay/.github/*','patchbay/tests/*'],cwd=ROOT+'/export',check=True)
 else: print('note: zip not found, skipping patchbay.zip')

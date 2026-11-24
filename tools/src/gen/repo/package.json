@@ -5,7 +5,8 @@
   "scripts": {
     "test": "playwright test",
     "test:update": "playwright test --update-snapshots",
-    "build": "bash tools/build.sh"
+    "build": "bash tools/build.sh",
+    "readme:header": "node tools/readme-header.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
