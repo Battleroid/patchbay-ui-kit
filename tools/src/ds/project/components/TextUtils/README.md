@@ -6,4 +6,4 @@ Text helpers show times, long names, hashes and paths in the space they have.
 - Never truncate the only copy of an error or an identifier someone has to type; give a copy button.
 - `.pb-midtrunc` takes the surrounding font; add `pb-midtrunc--mono` for hosts, paths and IDs.
 - Middle truncation: copying any part of a `[data-midtrunc]` value copies the whole value, not the two halves.
-- Relative time: `time.pb-reltime` is focusable and shows the exact time as a tooltip (`pbTip`) instead of a `title`.
+- Relative time: `time.pb-reltime` is focusable and shows the exact time as a tooltip (`pbTip`) instead of a `title`; inside a link, button, tab, option or menu item it is not a tab stop of its own (the tooltip still shows on hover).

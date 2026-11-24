@@ -82,14 +82,14 @@ function pbCommand(dlg){var inp=dlg.querySelector('input'),list=dlg.querySelecto
   var js=dlg.querySelector('script[type="application/json"]');all().forEach(prep);if(js){try{add(JSON.parse(js.textContent));}catch(e){console.error('[patchbay] palette JSON',e);}}render();}
 /* Context menu: [data-contextmenu=id] opens the menu at the pointer, or under the focused row with the Menu key or Shift+F10. The zone's rows
    (data-rows="selector", default its child li) are one tab stop with ↑/↓, Home/End; the row a menu opened for gets data-ctx-row, and choosing
-   an item fires a bubbling pb:select {item, row} on the zone. Escape, Tab or a choice closes it and focus goes back to that row. One menu can
+   an item fires a bubbling pb:command {command, label, item, row} on the zone (command is the item's data-cmd, else its label). Escape, Tab or a choice closes it and focus goes back to that row. One menu can
    serve several zones. */
 function pbContext(zone){var m=document.getElementById(zone.dataset.contextmenu);if(!m)return;
   function close(){if(m.matches(':popover-open'))m.hidePopover();}
   function back(){var r=m.__pbRow;(r&&r.isConnected&&r.tabIndex>=-1&&r!==m.__pbZone?r:m.__pbZone).focus();}
   if(!m.__pbCtx){m.__pbCtx=true;m.setAttribute('popover','manual');pbListKeys(m,{selector:'[role^=menuitem],.pb-menu__item',typeahead:true});
     m.addEventListener('toggle',function(e){if(e.newState==='closed'&&m.__pbZone){m.__pbZone.removeAttribute('data-ctx-open');if(m.__pbRow)m.__pbRow.removeAttribute('data-ctx-row');}});
-    m.addEventListener('click',function(e){var it=e.target.closest('.pb-menu__item');if(!it)return;var z=m.__pbZone,r=m.__pbRow;m.hidePopover();back();if(z)pbEmit(z,'pb:select',{item:it,row:r||null});});
+    m.addEventListener('click',function(e){var it=e.target.closest('.pb-menu__item');if(!it)return;var z=m.__pbZone,r=m.__pbRow,lb=it.textContent.trim();m.hidePopover();back();if(z)pbEmit(z,'pb:command',{command:it.dataset.cmd||lb,label:lb,item:it,row:r||null});});
     m.addEventListener('keydown',function(e){if(e.key==='Tab'){e.preventDefault();close();back();}});}
   var sel=zone.dataset.rows||':scope > li',rows=function(){return [].slice.call(zone.querySelectorAll(sel));},keys=null;
   if(rows().length){if(zone.getAttribute('tabindex')==='0')zone.removeAttribute('tabindex');keys=pbListKeys(zone,{items:rows,roving:true,wrap:false});}
@@ -171,12 +171,12 @@ function pbRelUp(t){var rtf=pbRelUp.f||(pbRelUp.f=new Intl.RelativeTimeFormat(pb
   var d=new Date(t.getAttribute('datetime')),diff=d-Date.now(),a=Math.abs(diff);
   for(var i=0;i<U.length;i++){if(a>=U[i][1]||U[i][0]==='second'){t.textContent=a<45e3?pbStrings.justNow:rtf.format(Math.round(diff/U[i][1]),U[i][0]);break;}}
   /* The exact time is a tooltip (pbTip) on a focusable time, not a title only mice can reach. */
-  if(!t.hasAttribute('data-tip')){t.setAttribute('data-tip',t.title||d.toLocaleString(pbLocale(),{dateStyle:'medium',timeStyle:'short'}));t.removeAttribute('title');t.classList.add('pb-tip');if(!t.hasAttribute('tabindex'))t.tabIndex=0;pbInit(t,{only:'tip'});}}
+  if(!t.hasAttribute('data-tip')){t.setAttribute('data-tip',t.title||d.toLocaleString(pbLocale(),{dateStyle:'medium',timeStyle:'short'}));t.removeAttribute('title');t.classList.add('pb-tip');if(!t.hasAttribute('tabindex')&&!t.closest('a,button,label,summary,[role=option],[role^=menuitem],[role=tab]'))t.tabIndex=0;pbInit(t,{only:'tip'});}}
 function pbRelTimeEl(t){pbRelUp(t);pbRelSet.add(t);if(!pbRelTimer)pbRelTimer=setInterval(function(){pbRelSet.forEach(function(x){if(!x.isConnected)pbRelSet.delete(x);else pbRelUp(x);});},30000);}
 function pbRelTime(root){pbInit(root||document,{only:['reltime']});}
 /* Middle truncation: two spans show "start…end"; copying any part of it copies the whole value. */
 function pbMidTrunc(el){var t=el.dataset.text||el.textContent,k=+(el.dataset.keep||8);el.title=t;el.innerHTML='';var a=document.createElement('span'),b=document.createElement('span');a.textContent=t.slice(0,-k);b.textContent=t.slice(-k);el.append(a,b);
-  el.addEventListener('copy',function(e){var s=getSelection();if(!s||s.isCollapsed||!e.clipboardData)return;e.clipboardData.setData('text/plain',el.dataset.text||t);e.preventDefault();});}
+  el.addEventListener('copy',function(e){var s=getSelection();if(!s||s.isCollapsed||!e.clipboardData||!el.contains(s.anchorNode)||!el.contains(s.focusNode))return;e.clipboardData.setData('text/plain',el.dataset.text||t);e.preventDefault();});}
 function pbClampToggle(b){var el=document.getElementById(b.getAttribute('aria-controls')),cls=[].filter.call(el.classList,function(c){return /^pb-clamp-/.test(c)})[0];if(!cls)return;
   function fits(){return el.scrollHeight<=el.clientHeight+1;}if(fits()){b.hidden=true;return;}
   b.addEventListener('click',function(){var o=el.classList.toggle(cls);b.textContent=o?pbStrings.showMore:pbStrings.showLess;b.setAttribute('aria-expanded',!o);});}
