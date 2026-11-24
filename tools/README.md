@@ -34,3 +34,7 @@ The specs live in `tests/`. `tests/serve.mjs` is a small Node static server (cor
 - `src/ds/project/components/<Name>/README.md` are the component docs.
 
 To add a component: write `pv/<Name>.html`, its behavior in a `pv/_*.js` lib and a `pbHook` line in `pv/_hooks.js` (and an init file for example-only glue), add it to `scripts.json`, `C` in `build.py`, `SECTIONS` in `kit.py` and, if it has a hook, `COMPONENTS` in `fixture.py`; then write its README. Keep script-built markup free of `style="…"`: use `data-style` and call `pbStyled()` after inserting it.
+
+## README header image
+
+`tools/readme-header.mjs` (`npm run readme:header`) draws the README's header, `header-light.png` and `header-dark.png`, from a build with the kit itself: a short description of the kit and of `demo.html`, and screenshots of the Dashboard and AppShell examples. It writes them to `tools/src/media/readme/`, which the build copies to `media/readme/`. Rebuild, run it after a visual change, rebuild again and commit the images: `node tools/readme-header.mjs tools/dist` reads a `tools/dist` build instead of the repo root.
