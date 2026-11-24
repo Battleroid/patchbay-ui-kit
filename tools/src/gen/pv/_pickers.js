@@ -63,7 +63,7 @@ function pbDateField(field){
   function open(b){anchor=b;cal.pbSet(ins[0].value,range?ins[1].value:null);cal.showPopover();place();cal.pbFocus();}
   btns.forEach(function(b){b.setAttribute('aria-haspopup','dialog');b.addEventListener('click',function(){cal.matches(':popover-open')?cal.hidePopover():open(b);});});
   ins.forEach(function(i){i.addEventListener('keydown',function(e){if(e.altKey&&e.key==='ArrowDown'){e.preventDefault();open(btns[0]);}});
-    i.addEventListener('change',function(){var bad=!pbParse(i.value)&&i.value,f=i.closest('.pb-field,.pb-daterange');if(bad){f?.setAttribute('data-invalid','');i.setAttribute('aria-invalid','true');}else{f?.removeAttribute('data-invalid');i.removeAttribute('aria-invalid');}});});
+    i.addEventListener('change',function(){var bad=!pbParse(i.value)&&i.value,f=i.closest('.pb-field,.pb-daterange');pbFieldError(i,bad?pbStrings.dateInvalid:null);if(!bad&&f)f.removeAttribute('data-invalid');});});
   return cal;}
 function pbTParse(s){var m=/^\s*(\d{1,2}):(\d{2})\s*([ap]\.?m\.?)?\s*$/i.exec(s||'');if(!m)return null;var h=+m[1],mi=+m[2];
   if(m[3]){if(h<1||h>12)return null;h=h%12+(/^p/i.test(m[3])?12:0);}if(h>23||mi>59)return null;return h*60+mi;}
@@ -77,17 +77,17 @@ function pbClock(o){
     if(h12){for(var i=1;i<=12;i++)hs.push(i);}else{for(var j=0;j<24;j++)hs.push(j);}
     for(var k=0;k<60;k+=step)ms.push(k);
     var ap=H==null?(Math.floor(cur/60)<12?0:12):(H<12?0:12);
-    h+='<div class="pb-time__colwrap"><span class="pb-time__label">'+pbEsc(pbStrings.hour)+'</span><div class="pb-time__col" data-col="h">';
+    h+='<div class="pb-time__colwrap"><span class="pb-time__label">'+pbEsc(pbStrings.hour)+'</span><div class="pb-time__col" data-col="h" role="listbox" aria-label="'+pbEsc(pbStrings.hourName)+'">';
     hs.forEach(function(x){var hh=h12?(x%12)+ap:x,can=false;for(var q=0;q<60;q+=step)if(ok(hh*60+q))can=true;
-      h+='<button type="button" class="pb-time__opt" data-h="'+hh+'" aria-pressed="'+(H===hh)+'"'+(Math.floor(cur/60)===hh?' aria-current="true"':'')+(can?'':' disabled')+' tabindex="-1">'+(h12?x:String(x).padStart(2,'0'))+'</button>';});
-    h+='</div></div><div class="pb-time__colwrap"><span class="pb-time__label">'+pbEsc(pbStrings.min)+'</span><div class="pb-time__col" data-col="m">';
-    ms.forEach(function(x){var base=H==null?Math.floor(cur/60):H;h+='<button type="button" class="pb-time__opt" data-m="'+x+'" aria-pressed="'+(M===x)+'"'+(ok(base*60+x)?'':' disabled')+' tabindex="-1">'+String(x).padStart(2,'0')+'</button>';});
+      h+='<button type="button" class="pb-time__opt" data-h="'+hh+'" role="option" aria-selected="'+(H===hh)+'"'+(Math.floor(cur/60)===hh?' aria-current="true"':'')+(can?'':' disabled')+' tabindex="-1">'+(h12?x:String(x).padStart(2,'0'))+'</button>';});
+    h+='</div></div><div class="pb-time__colwrap"><span class="pb-time__label">'+pbEsc(pbStrings.min)+'</span><div class="pb-time__col" data-col="m" role="listbox" aria-label="'+pbEsc(pbStrings.minuteName)+'">';
+    ms.forEach(function(x){var base=H==null?Math.floor(cur/60):H;h+='<button type="button" class="pb-time__opt" data-m="'+x+'" role="option" aria-selected="'+(M===x)+'"'+(ok(base*60+x)?'':' disabled')+' tabindex="-1">'+String(x).padStart(2,'0')+'</button>';});
     h+='</div></div>';
-    if(h12){h+='<div class="pb-time__colwrap"><span class="pb-time__label">&nbsp;</span><div class="pb-time__col pb-time__col--short" data-col="p">';
-      ['AM','PM'].forEach(function(x,i){var can=false;for(var q=i*720;q<i*720+720;q+=step)if(ok(q))can=true;h+='<button type="button" class="pb-time__opt" data-p="'+(i*12)+'" aria-pressed="'+(H!=null&&ap===i*12)+'"'+(can?'':' disabled')+' tabindex="-1">'+x+'</button>';});h+='</div></div>';}
+    if(h12){h+='<div class="pb-time__colwrap"><span class="pb-time__label">&nbsp;</span><div class="pb-time__col pb-time__col--short" data-col="p" role="listbox" aria-label="'+pbEsc(pbStrings.ampm)+'">';
+      ['AM','PM'].forEach(function(x,i){var can=false;for(var q=i*720;q<i*720+720;q+=step)if(ok(q))can=true;h+='<button type="button" class="pb-time__opt" data-p="'+(i*12)+'" role="option" aria-selected="'+(H!=null&&ap===i*12)+'"'+(can?'':' disabled')+' tabindex="-1">'+x+'</button>';});h+='</div></div>';}
     h+='</div><div class="pb-cal__foot"><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-clear>'+pbEsc(pbStrings.clear)+'</button><span class="pb-cal__summary">'+(val==null?'':pbTFmt(val,h12))+'</span><button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-now>'+pbEsc(pbStrings.now)+'</button></div>';
     el.innerHTML=h;
-    function center(){el.querySelectorAll('.pb-time__col').forEach(function(c){var t=c.querySelector('[aria-pressed="true"]')||c.querySelector('[aria-current="true"]')||c.querySelector('.pb-time__opt:not(:disabled)');if(t){t.tabIndex=0;c.scrollTop=t.offsetTop-c.clientHeight/2+t.offsetHeight/2;}});}
+    function center(){el.querySelectorAll('.pb-time__col').forEach(function(c){var t=c.querySelector('[aria-selected="true"]')||c.querySelector('[aria-current="true"]')||c.querySelector('.pb-time__opt:not(:disabled)');if(t){t.tabIndex=0;c.scrollTop=t.offsetTop-c.clientHeight/2+t.offsetHeight/2;}});}
     center();requestAnimationFrame(center);}
   function set(H,M){var t=H*60+M;if(!ok(t)){var best=null;for(var q=0;q<60;q+=step)if(ok(H*60+q)){best=H*60+q;break;}if(best==null)return;t=best;}val=t;emit();render();}
   el.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.disabled)return;var H=val==null?Math.floor(now()/60):Math.floor(val/60),M=val==null?0:val%60;
@@ -114,5 +114,5 @@ function pbTimeField(field){
   function open(){clk.pbSet(inp.value);clk.showPopover();place();clk.pbSet(inp.value);clk.pbFocus();}
   btn.setAttribute('aria-haspopup','dialog');btn.addEventListener('click',function(){clk.matches(':popover-open')?clk.hidePopover():open();});
   inp.addEventListener('keydown',function(e){if(e.altKey&&e.key==='ArrowDown'){e.preventDefault();open();}});
-  inp.addEventListener('change',function(){var t=pbTParse(inp.value),f=inp.closest('.pb-field');if(inp.value&&t==null){f?.setAttribute('data-invalid','');inp.setAttribute('aria-invalid','true');}else{f?.removeAttribute('data-invalid');inp.removeAttribute('aria-invalid');if(t!=null)inp.value=pbTFmt(t,h12);}});
+  inp.addEventListener('change',function(){var t=pbTParse(inp.value),f=inp.closest('.pb-field');if(inp.value&&t==null)pbFieldError(inp,pbStrings.timeInvalid);else{pbFieldError(inp,null);if(t!=null)inp.value=pbTFmt(t,h12);}});
   return clk;}
