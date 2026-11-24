@@ -162,7 +162,7 @@ function pbLogX(el){var D=JSON.parse((el.querySelector('script[type="application
     c.querySelector('.pb-qf__x').addEventListener('click',function(){M.splice(i,1);render();add.focus();});box.insertBefore(c,add);});}
   function browser(){if(!br||br.hidden)return;var K={};lines.forEach(function(l){for(var k in l.labels){(K[k]=K[k]||{})[l.labels[k]]=(K[k][l.labels[k]]||0)+1;}});
     br.innerHTML=Object.keys(K).sort().map(function(k){var vs=vals(k),ng=negs(k);return '<div class="pb-logx__bk"><span title="'+pbEsc(k)+'">'+pbEsc(k)+'</span><div class="pb-logx__vals">'+Object.keys(K[k]).sort(function(a,b){return K[k][b]-K[k][a]}).slice(0,24).map(function(v){return '<button type="button" class="pb-logx__val" data-k="'+pbEsc(k)+'" data-v="'+pbEsc(v)+'" aria-pressed="'+(vs.indexOf(v)>=0)+'"'+(ng.indexOf(v)>=0?' data-neg':'')+' title="Alt-click to exclude">'+pbEsc(v)+'<small>'+K[k][v]+'</small></button>'}).join('')+'</div></div>'}).join(''),pbStyled(br);}
-  function render(){var ae=document.activeElement,fl=body.contains(ae)&&ae.closest('.pb-log__line'),fid=fl&&fl.dataset.id,fb=fl&&ae!==fl?[].indexOf.call(fl.querySelectorAll('button'),ae):-1,
+  function render(){var ae=document.activeElement,fl=body.contains(ae)?ae.closest('.pb-log__line'):null,fid=fl?fl.dataset.id:null,fb=fl&&ae!==fl?[].indexOf.call(fl.querySelectorAll('button'),ae):-1,
       stick=body.scrollHeight-body.scrollTop-body.clientHeight<24,S=lines.filter(function(l){return stream(l)&&lineOk(l)}),V=S.filter(function(l){return lvOn[lvl(l)]});
     chips();browser();if(code)code.textContent=logql();
     // common labels
