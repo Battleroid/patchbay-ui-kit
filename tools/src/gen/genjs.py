@@ -1,5 +1,4 @@
-import os as _os
-ROOT=(_os.environ.get('PB_WORK') or _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace(_os.sep,'/')
+from pbroot import ROOT
 # Writes patchbay.js (classic script) and patchbay.mjs (ES module): pv/_core.js, the shared behaviors and the pbHook list
 # from pv/_hooks.js, in scripts.json order. Same body; the classic file adds the data-pb-auto runner, the module adds exports.
 import sys; sys.path.insert(0,ROOT+'/gen')

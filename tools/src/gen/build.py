@@ -1,5 +1,4 @@
-import os as _os
-ROOT=(_os.environ.get('PB_WORK') or _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace(_os.sep,'/')
+from pbroot import ROOT
 import os,sys
 PV=ROOT+'/gen/pv'; OUT=ROOT+'/ds/project/components'
 C={ # name: (group, height, subtitle, layout)

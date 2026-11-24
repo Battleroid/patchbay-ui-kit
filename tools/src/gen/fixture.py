@@ -1,5 +1,4 @@
-import os as _os
-ROOT=(_os.environ.get('PB_WORK') or _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace(_os.sep,'/')
+from pbroot import ROOT
 # Writes tests/fixtures/csp.html and csp-esm.html: one instance of every pbInit component, from the pv/ example markup with
 # inline styles and handlers removed, under the strict CSP the kit promises. export.py calls write(out_dir).
 import json,os,re,sys

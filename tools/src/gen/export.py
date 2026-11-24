@@ -1,5 +1,4 @@
-import os as _os
-ROOT=(_os.environ.get('PB_WORK') or _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace(_os.sep,'/')
+from pbroot import ROOT
 import json,re,os,shutil,subprocess
 O=ROOT+'/export/patchbay'; shutil.rmtree(ROOT+'/export',ignore_errors=True)
 for d in ('fonts','icons/soft','icons/hard','components'): os.makedirs(f'{O}/{d}')

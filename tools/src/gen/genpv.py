@@ -1,5 +1,4 @@
-import os as _os
-ROOT=(_os.environ.get('PB_WORK') or _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))).replace(_os.sep,'/')
+from pbroot import ROOT
 # Writes pv/<Name>.js for every component in scripts.json (see pbscripts.py). Run after genjs.py.
 import sys,os; sys.path.insert(0,ROOT+'/gen')
 import pbscripts as S

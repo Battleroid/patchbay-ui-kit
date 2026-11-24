@@ -14,6 +14,8 @@ for c in python3 python py; do
 done
 [ -n "$PB_PY" ] || { echo "build.sh: no working Python 3 found (tried python3, python, py)" >&2; exit 1; }
 export PB_PY
+# Read and write UTF-8 whatever the OS locale is (Windows defaults to cp1252).
+export PYTHONUTF8=1
 
 # Generators take their root from their own location (or PB_WORK), so build in a scratch copy and leave tools/src untouched.
 WORK="$HERE/.work"
