@@ -32,7 +32,7 @@
 }
 .pb-player__range::-webkit-slider-thumb {
   -webkit-appearance: none; width: 12px; height: 12px; margin-top: -4px; border: 0; border-radius: var(--pb-r-pill);
-  background: var(--pb-seek-fill); box-shadow: 0 0 0 2px var(--surface); transition: transform 80ms;
+  background: var(--pb-seek-fill); box-shadow: 0 0 0 2px var(--surface); transition: transform var(--pb-dur-1);
 }
 .pb-player__range::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: var(--pb-r-pill); background: var(--pb-seek-fill); box-shadow: 0 0 0 2px var(--surface); }
 .pb-player__range:hover::-webkit-slider-thumb, .pb-player__range:focus-visible::-webkit-slider-thumb { transform: scale(1.25); }
@@ -69,7 +69,7 @@
 /* Overlay and fullscreen: controls float on the picture and hide while playing. */
 :is(.pb-player--overlay, .pb-player:fullscreen) { --pb-seek-fill: var(--pop-mint); --pb-seek-buf: rgba(250, 248, 243, 0.45); --pb-seek-rest: rgba(250, 248, 243, 0.2); background: var(--night); }
 :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__bar {
-  position: absolute; left: 0; right: 0; bottom: 0; color: var(--on-night); background: rgba(23, 21, 15, 0.78); border-top: 0; transition: opacity 200ms;
+  position: absolute; left: 0; right: 0; bottom: 0; color: var(--on-night); background: rgba(23, 21, 15, 0.78); border-top: 0; transition: opacity var(--pb-dur-3);
 }
 :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__btn:hover { background: rgba(250, 248, 243, 0.14); }
 :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__time, :is(.pb-player--overlay, .pb-player:fullscreen) .pb-player__time b { color: var(--on-night); }

@@ -54,9 +54,9 @@
 .pb-proc[data-state="failed"] { color: var(--down); }
 .pb-proc[data-state="failed"] .pb-icon { width: 20px; height: 20px; }
 :where([data-teaser-frame]) { position: relative; }
-.pb-teaser__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: var(--ink); opacity: 0; transition: opacity 120ms ease-out; pointer-events: none; }
+.pb-teaser__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: var(--ink); opacity: 0; transition: opacity var(--pb-dur-2) var(--pb-ease); pointer-events: none; }
 .pb-teaser__video[data-state="on"] { opacity: 1; }
-.pb-teaser__progress { position: absolute; inset: auto 0 0 0; grid-column: auto; width: auto; height: 3px; border-radius: 0; background: transparent; opacity: 0; transition: opacity 120ms ease-out; pointer-events: none; }
+.pb-teaser__progress { position: absolute; inset: auto 0 0 0; grid-column: auto; width: auto; height: 3px; border-radius: 0; background: transparent; opacity: 0; transition: opacity var(--pb-dur-2) var(--pb-ease); pointer-events: none; }
 .pb-teaser__progress[data-state="on"] { opacity: 1; }
 .pb-teaser__progress > span { transition: none; }
 @media (prefers-reduced-motion: reduce) { .pb-teaser__video, .pb-teaser__progress { transition: none; } }

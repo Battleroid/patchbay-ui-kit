@@ -1,7 +1,7 @@
 /* ---------- Dialog system ---------- */
 .pb-dialog { overflow: visible; }
-.pb-dialog[open] { animation: pb-pop 140ms ease-out; }
-.pb-dialog::backdrop { animation: pb-fade 140ms ease-out; }
+.pb-dialog[open] { animation: pb-pop var(--pb-dur-2) var(--pb-ease); }
+.pb-dialog::backdrop { animation: pb-fade var(--pb-dur-2) var(--pb-ease); }
 @keyframes pb-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
 @keyframes pb-fade { from { opacity: 0; } }
 .pb-dialog--sm { width: min(400px, calc(100vw - 32px)); }
@@ -26,7 +26,7 @@
   margin: 0 0 0 auto; height: 100dvh; max-height: 100dvh; width: min(460px, 100vw); max-width: 100vw;
   border-width: 0 0 0 var(--stroke-1); border-radius: var(--pb-r-lg) 0 0 var(--pb-r-lg);
 }
-.pb-dialog--drawer[open] { max-height: 100dvh; animation: pb-slide 180ms ease-out; }
+.pb-dialog--drawer[open] { max-height: 100dvh; animation: pb-slide var(--pb-dur-3) var(--pb-ease); }
 .pb-dialog--drawer .pb-dialog__foot { border-radius: 0 0 0 calc(var(--pb-r-lg) - var(--stroke-1)); }
 @keyframes pb-slide { from { transform: translateX(32px); opacity: 0; } }
 [data-edge="hard"] .pb-dialog--drawer { box-shadow: -6px 0 0 var(--ink); }
@@ -48,11 +48,11 @@
   position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px var(--space-3); align-items: start;
   padding: var(--space-3) var(--space-2) var(--space-3) var(--space-4); color: var(--ink); pointer-events: auto;
   background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-md); box-shadow: var(--pb-shadow-lg); overflow: hidden;
-  animation: pb-toast-in 180ms ease-out;
+  animation: pb-toast-in var(--pb-dur-3) var(--pb-ease);
 }
 @keyframes pb-toast-in { from { opacity: 0; transform: translateY(12px); } }
 .pb-toast[hidden] { display: none; }
-.pb-toast[data-leaving] { opacity: 0; transform: translateX(24px); transition: opacity 160ms, transform 160ms; }
+.pb-toast[data-leaving] { opacity: 0; transform: translateX(24px); transition: opacity var(--pb-dur-2), transform var(--pb-dur-2); }
 .pb-toast > .pb-icon { grid-row: 1 / 3; width: 20px; height: 20px; margin-top: 2px; color: var(--info); }
 .pb-toast[data-status="ok"] > .pb-icon { color: var(--ok); }
 .pb-toast[data-status="warn"] > .pb-icon { color: var(--warn); }

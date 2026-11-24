@@ -114,7 +114,7 @@ fieldset.pb-choices { min-width: 0; border: 0; margin: 0; padding: 0; }
 .pb-choicecard {
   position: relative; display: grid; gap: 4px; align-content: start; padding: var(--space-4) var(--space-4) var(--space-4); padding-right: 44px;
   background: var(--surface); border: var(--stroke-1) solid var(--pb-border-control); border-radius: var(--pb-r-lg); cursor: pointer;
-  transition: border-color 120ms, box-shadow 120ms;
+  transition: border-color var(--pb-dur-2), box-shadow var(--pb-dur-2);
 }
 .pb-choicecard > input { position: absolute; top: var(--space-4); right: var(--space-4); }
 .pb-choicecard:hover { border-color: var(--accent); }

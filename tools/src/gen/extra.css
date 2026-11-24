@@ -40,7 +40,7 @@
 .pb-dial[data-status] figcaption .pb-status { justify-content: center; }
 .pb-donut { display: grid; grid-template-columns: 148px minmax(0, 1fr); align-items: center; gap: var(--space-5, 20px); margin: 0; }
 .pb-donut svg { display: block; width: 148px; height: 148px; transform: rotate(-90deg); }
-.pb-donut__seg { fill: none; stroke-width: 18; transition: opacity 120ms, stroke-width 120ms; }
+.pb-donut__seg { fill: none; stroke-width: 18; transition: opacity var(--pb-dur-2), stroke-width var(--pb-dur-2); }
 .pb-donut[data-hover] .pb-donut__seg:not([data-hover]) { opacity: 0.3; }
 .pb-donut__seg[data-hover] { stroke-width: 22; }
 .pb-donut__hole { position: relative; display: grid; place-items: center; }
@@ -112,7 +112,7 @@
 .pb-json details { margin: 0; }
 .pb-json details > summary { list-style: none; cursor: pointer; border-radius: 3px; }
 .pb-json details > summary::-webkit-details-marker { display: none; }
-.pb-json details > summary::before { content: ""; display: inline-block; width: 14px; height: 14px; margin-right: 2px; vertical-align: -2px; background: var(--ink-muted); -webkit-mask: var(--pb-ic-chevron-right) center/12px no-repeat; mask: var(--pb-ic-chevron-right) center/12px no-repeat; transition: transform 120ms; }
+.pb-json details > summary::before { content: ""; display: inline-block; width: 14px; height: 14px; margin-right: 2px; vertical-align: -2px; background: var(--ink-muted); -webkit-mask: var(--pb-ic-chevron-right) center/12px no-repeat; mask: var(--pb-ic-chevron-right) center/12px no-repeat; transition: transform var(--pb-dur-2); }
 .pb-json details[open] > summary::before { transform: rotate(90deg); }
 .pb-json summary:hover, .pb-json__leaf:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .pb-json summary:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 0; }
@@ -144,7 +144,7 @@
 .pb-bulkbar .pb-btn:hover { background: var(--ink-band); }
 .pb-bulkbar .pb-btn--danger { color: var(--term-red); border-color: color-mix(in srgb, var(--term-red) 50%, transparent); }
 .pb-bulkbar .pb-btn--ghost { border-color: transparent; }
-@media (prefers-reduced-motion: no-preference) { .pb-bulkbar:not([hidden]) { animation: pb-rise 160ms ease-out; } }
+@media (prefers-reduced-motion: no-preference) { .pb-bulkbar:not([hidden]) { animation: pb-rise var(--pb-dur-2) var(--pb-ease); } }
 @keyframes pb-rise { from { transform: translateY(8px); opacity: 0; } }
 
 /* ---------- Query filter ---------- */
@@ -213,7 +213,7 @@
 .pb-upq__title { flex: 1; min-width: 0; font: 600 var(--pb-text-15)/20px var(--font-serif); color: var(--ink); }
 .pb-upq__title small { display: block; font: 400 var(--pb-text-12)/16px var(--font-mono); color: var(--ink-muted); }
 .pb-upq__total { height: 3px; background: var(--surface-sunk); }
-.pb-upq__total span { display: block; height: 100%; width: var(--p, 0%); background: var(--accent); transition: width 200ms; }
+.pb-upq__total span { display: block; height: 100%; width: var(--p, 0%); background: var(--accent); transition: width var(--pb-dur-3); }
 .pb-upq[data-collapsed] .pb-upq__list, .pb-upq[data-collapsed] .pb-upq__foot { display: none; }
 .pb-upq[data-collapsed] [data-upq-toggle] .pb-icon { transform: rotate(180deg); }
 .pb-upq__list { max-height: 280px; overflow: auto; margin: 0; padding: 0; list-style: none; }
@@ -223,7 +223,7 @@
 .pb-upq__name { font: 400 var(--pb-text-14)/20px var(--font-serif); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pb-upq__meta { grid-column: 2; display: flex; align-items: center; gap: var(--space-2); font: 400 var(--pb-text-11)/16px var(--font-mono); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .pb-upq__bar { flex: 1; height: 4px; min-width: 60px; background: var(--surface-sunk); border-radius: 2px; overflow: hidden; }
-.pb-upq__bar span { display: block; height: 100%; width: var(--p, 0%); background: var(--accent); border-radius: inherit; transition: width 200ms; }
+.pb-upq__bar span { display: block; height: 100%; width: var(--p, 0%); background: var(--accent); border-radius: inherit; transition: width var(--pb-dur-3); }
 .pb-upq__acts { grid-row: 1 / span 2; grid-column: 3; display: flex; gap: 2px; }
 .pb-upq__item[data-state="done"] > .pb-icon { color: var(--ok); }
 .pb-upq__item[data-state="done"] .pb-upq__bar { display: none; }

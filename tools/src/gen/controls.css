@@ -6,24 +6,24 @@
 .pb-check, .pb-radio, .pb-switch {
   appearance: none; -webkit-appearance: none; flex: none; margin: 0; display: inline-grid; place-content: center;
   background: var(--surface); border: var(--stroke-1) solid var(--pb-border-control); box-shadow: var(--shadow-inset); cursor: pointer;
-  transition: background-color 120ms, border-color 120ms;
+  transition: background-color var(--pb-dur-2), border-color var(--pb-dur-2);
 }
 .pb-check { width: 18px; height: 18px; border-radius: var(--pb-r-sm); }
 .pb-check::before {
-  content: ""; width: 14px; height: 14px; background: var(--on-accent); transform: scale(0); transition: transform 80ms;
+  content: ""; width: 14px; height: 14px; background: var(--on-accent); transform: scale(0); transition: transform var(--pb-dur-1);
   -webkit-mask: var(--pb-ic-check) center / contain no-repeat; mask: var(--pb-ic-check) center / contain no-repeat;
 }
 .pb-check:checked, .pb-check:indeterminate { background: var(--accent); border-color: var(--accent); box-shadow: none; }
 .pb-check:checked::before { transform: scale(1); }
 .pb-check:indeterminate::before { transform: scale(1); -webkit-mask-image: var(--pb-ic-minus); mask-image: var(--pb-ic-minus); }
 .pb-radio { width: 18px; height: 18px; border-radius: 50%; }
-.pb-radio::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); transform: scale(0); transition: transform 80ms; }
+.pb-radio::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); transform: scale(0); transition: transform var(--pb-dur-1); }
 .pb-radio:checked { border-color: var(--accent); border-width: var(--stroke-2); }
 .pb-radio:checked::before { transform: scale(1); }
 .pb-switch { position: relative; display: inline-block; width: 36px; height: 20px; border-radius: var(--pb-r-pill); background: var(--surface-sunk); }
 .pb-switch::before {
   content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: var(--pb-r-pill);
-  background: var(--ink-muted); transition: transform 120ms, background-color 120ms;
+  background: var(--ink-muted); transition: transform var(--pb-dur-2), background-color var(--pb-dur-2);
 }
 .pb-switch:checked { background: var(--accent); border-color: var(--accent); box-shadow: none; }
 .pb-switch:checked::before { transform: translateX(16px); background: var(--on-accent); }
@@ -198,7 +198,7 @@
 .pb-tip::after {
   content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%);
   padding: 4px 8px; font: 400 var(--pb-text-12)/16px var(--font-mono); white-space: nowrap; color: var(--bg); background: var(--ink);
-  border-radius: var(--pb-r-sm); pointer-events: none; opacity: 0; transition: opacity 120ms; z-index: 10;
+  border-radius: var(--pb-r-sm); pointer-events: none; opacity: 0; transition: opacity var(--pb-dur-2); z-index: 10;
 }
 .pb-tip:hover::after, .pb-tip:focus-visible::after, .pb-tip[data-tip-open]::after { opacity: 1; }
 /* With script the tip is a role=tooltip popover (pbTip); the ::after above stays the no-script look and the "Copied" flash (data-tip-open). */
@@ -235,7 +235,7 @@
 }
 .pb-details > summary::-webkit-details-marker { display: none; }
 .pb-details > summary::before {
-  content: ""; flex: none; width: 16px; height: 16px; background: var(--ink-muted); transition: transform 120ms;
+  content: ""; flex: none; width: 16px; height: 16px; background: var(--ink-muted); transition: transform var(--pb-dur-2);
   -webkit-mask: var(--pb-ic-chevron-right) center / contain no-repeat; mask: var(--pb-ic-chevron-right) center / contain no-repeat;
 }
 .pb-details[open] > summary::before { transform: rotate(90deg); }
@@ -307,7 +307,7 @@
 .pb-progressbar:indeterminate::-moz-progress-bar { background: transparent; }
 @keyframes pb-stripes { to { background-position: 22.63px 0; } }
 @media (prefers-reduced-motion: reduce) { .pb-progressbar:indeterminate { animation-duration: 3s; } }
-.pb-progressbar::-webkit-progress-value { transition: inline-size 200ms linear; }
+.pb-progressbar::-webkit-progress-value { transition: inline-size var(--pb-dur-3) linear; }
 .pb-demo-row { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
 .pb-meterbar::-webkit-meter-bar { height: 8px; background: var(--surface-sunk); border: 0; border-radius: var(--pb-r-pill); }
 .pb-meterbar::-webkit-meter-optimum-value { background: var(--ok); }
