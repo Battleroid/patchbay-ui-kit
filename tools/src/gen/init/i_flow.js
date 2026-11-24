@@ -8,6 +8,6 @@ function flowDraw(d){var s=d.querySelector('svg'),o=d.getBoundingClientRect(),id
   else{p='M'+a.cx+' '+(a.b+2)+' V'+(c.t-3);lx=a.cx+8;ly=(a.b+c.t)/2+4;}
   h+='<path class="'+cls+'" d="'+p+'" marker-end="url(#'+id+'-'+e[2]+')"'+(e[4]?' marker-start="url(#'+id+'-'+e[2]+')"':'')+'/>';
   h+='<text class="pb-edge-label" x="'+lx+'" y="'+ly+'" text-anchor="'+(Math.abs(a.cy-c.cy)<4?'middle':'start')+'">'+e[3]+'</text>';});
- s.innerHTML=h;}
+ s.innerHTML=h;pbDiagramText(d,E,function(e){return e[2]==='accent'?'active':e[2]==='down'?'down':'async';});}
 function flowAll(){document.querySelectorAll('[data-flow]').forEach(flowDraw);}
 flowAll();addEventListener('resize',flowAll);if(document.fonts)document.fonts.ready.then(flowAll);
