@@ -32,6 +32,7 @@
 
 /* ---------- Base ---------- */
 [data-theme="dark"] .pb, .pb[data-theme="dark"], [data-theme="dark"].pb { color-scheme: dark; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme]) .pb { color-scheme: dark; } }
 .pb { font-family: var(--font-serif); font-size: var(--pb-text-17); line-height: 27px; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; }
 .pb *, .pb *::before, .pb *::after { box-sizing: border-box; }
 .pb [hidden] { display: none !important; }

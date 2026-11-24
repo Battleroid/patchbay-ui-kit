@@ -14,6 +14,9 @@ def tokens_css(T,fontpath):
                 elif i==0: L.append(f'  --{k["name"]}: {cv(v)};')
                 elif v.startswith('{'): L.append(f'  --{k["name"]}: {cv(v)};')
         L.append('}'); out.append('\n'.join(L))
+        if i==len(th)-1 and i>0:
+            # No data-theme (no JS, or the boot script absent): follow the system setting.
+            out.append('@media (prefers-color-scheme: dark) {\n:root:not([data-theme]) {\n'+'\n'.join(L[1:-1])+'\n}\n}')
     L=[':root {']
     for fam in ('spacing','radius','stroke','size','text','motion','layer'):
         for k in T.get(fam,{}).get('tokens',[]): L.append(f'  --{k["name"]}: {k["value"]};')
