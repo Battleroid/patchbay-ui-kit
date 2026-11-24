@@ -130,7 +130,8 @@ test.describe('list keys', () => {
   test('context menu: arrows, Home/End and typeahead, and no double keys after a second pbInit', async ({ page }) => {
     await page.goto('/components/ContextMenu/example.html');
     await page.evaluate(() => { pbInit(); pbInit(document); });
-    const zone = page.locator('[data-contextmenu]').first();
+    // The zone's rows are the tab stop now, and the menu opens for the focused row (Escape returns to it).
+    const zone = page.locator('[data-contextmenu] > li').first();
     await zone.focus();
     await page.keyboard.press('Shift+F10');
     const items = page.locator('#ctx-1 .pb-menu__item');
@@ -320,5 +321,207 @@ test.describe('plug-ins', () => {
     await expect(meter).toHaveAttribute('data-level', '4');
     await input.fill('nope');
     await expect(meter.locator(':scope > :last-child')).toHaveText('blocked');
+  });
+});
+
+test.describe('k-core follow-up', () => {
+  const tabStops = (loc) => loc.evaluate((b) => [...b.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')].filter((x) => x.tabIndex >= 0 && !x.disabled && x.getClientRects().length).length);
+
+  test('log explorer: the lines are one tab stop; Enter reaches the tags; Pause holds new lines', async ({ page }) => {
+    await page.goto('/components/LogExplorer/example.html');
+    const body = page.locator('.pb-logx .pb-log__body');
+    expect(await tabStops(body)).toBe(1);
+    const lines = body.locator('.pb-log__line');
+    await body.locator('.pb-log__line[tabindex="0"]').focus();
+    await page.keyboard.press('Home');
+    await expectFocus(page, lines.first());
+    await page.keyboard.press('ArrowDown');
+    await expectFocus(page, lines.nth(1));
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('Enter');
+    expect(await page.evaluate(() => document.activeElement.classList.contains('pb-logx__toggle'))).toBe(true);
+    await page.keyboard.press('ArrowRight');
+    expect(await page.evaluate(() => document.activeElement.classList.contains('pb-log__tag'))).toBe(true);
+    await page.keyboard.press('Escape');
+    await expectFocus(page, lines.first());
+    // The tab stop stays on the line you left, through redraws, while focus is elsewhere.
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    const kept = await page.evaluate(() => document.activeElement.dataset.id);
+    await page.locator('[data-logx-line]').focus();
+    await page.evaluate(() => document.querySelector('[data-logx]').pbAppend({ t: Date.now(), labels: { app: 'jellyfin', host: 'nas-01', level: 'info' }, line: 'redraw' }));
+    expect(await body.locator('.pb-log__line[tabindex="0"]').getAttribute('data-id')).toBe(kept);
+    // Pause: appended lines wait until Resume.
+    const pause = page.locator('[data-logx-pause]');
+    await pause.click();
+    await expect(pause).toHaveAttribute('aria-pressed', 'true');
+    await page.evaluate(() => document.querySelector('[data-logx]').pbAppend({ t: Date.now(), labels: { app: 'jellyfin', host: 'nas-01', namespace: 'media', container: 'jellyfin-1', level: 'info' }, line: 'held line' }));
+    await expect(body.locator('.pb-log__line', { hasText: 'held line' })).toHaveCount(0);
+    await pause.click();
+    await expect(body.locator('.pb-log__line', { hasText: 'held line' })).toHaveCount(1);
+  });
+
+  test('bar chart and histogram: one tab stop, arrows move between bars', async ({ page }) => {
+    await page.goto('/components/BarChart/example.html');
+    const cols = page.locator('.pb-bars__cols').first();
+    expect(await tabStops(cols)).toBe(1);
+    const bars = cols.locator('.pb-bars__col');
+    await bars.first().focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(bars.nth(1)).toBeFocused();
+    await page.keyboard.press('End');
+    await expect(bars.last()).toBeFocused();
+    await page.goto('/components/Histogram/example.html');
+    expect(await tabStops(page.locator('.pb-bars__cols').first())).toBe(1);
+  });
+
+  test('table tools: one tab stop for the grid, arrows between cells, Enter edits; the resize handle resizes', async ({ page }) => {
+    await page.goto('/components/TableTools/example.html');
+    const scroll = page.locator('[data-dt] .pb-tablescroll').first();
+    expect(await tabStops(scroll)).toBe(1);
+    await scroll.locator('[tabindex="0"]').focus();
+    await page.keyboard.press('ArrowDown');
+    expect(await page.evaluate(() => document.activeElement.closest('td,th').tagName)).toBe('TD');
+    const edit = scroll.locator('.pb-dt__cell--edit').first();
+    await edit.focus();
+    await page.keyboard.press('Enter');
+    await expect(scroll.locator('.pb-dt__editor')).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(scroll.locator('.pb-dt__cell--edit').first()).toBeFocused();
+    expect(await tabStops(scroll)).toBe(1);
+    // Resize: a separator with a value; arrows change the column's real width.
+    const handle = scroll.locator('.pb-dt__resize').nth(1);
+    await expect(handle).toHaveAttribute('role', 'separator');
+    await expect(handle).toHaveAttribute('aria-orientation', 'vertical');
+    const k = await handle.getAttribute('data-k');
+    const w0 = (await scroll.locator(`th[data-k="${k}"]`).boundingBox()).width;
+    await handle.focus();
+    await pressTimes(page, 'ArrowRight', 3);
+    await expect.poll(async () => (await scroll.locator(`th[data-k="${k}"]`).boundingBox()).width).toBeGreaterThan(w0 + 30);
+    expect(+(await scroll.locator(`th[data-k="${k}"] .pb-dt__resize`).getAttribute('aria-valuenow'))).toBeGreaterThan(w0 + 30);
+    const hit = await scroll.locator(`th[data-k="${k}"] .pb-dt__resize`).evaluate((h) => { const s = getComputedStyle(h, '::before'); return h.getBoundingClientRect().width - parseFloat(s.left) - parseFloat(s.right); });
+    expect(hit).toBeGreaterThanOrEqual(24);
+  });
+
+  test('scroll regions: an overflowing box is reachable and marked, and tables can stack as cards', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 800 });
+    await page.goto('/components/Heatmap/example.html');
+    const box = await page.evaluate(async () => {
+      const d = document.createElement('div'); d.setAttribute('data-scroll', ''); d.setAttribute('data-scroll-label', 'Wide text');
+      d.style.cssText = 'width:200px;overflow-x:auto;white-space:nowrap'; d.textContent = 'x'.repeat(400); document.body.append(d); pbInit(d);
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const a = [d.tabIndex, d.getAttribute('role'), d.getAttribute('aria-label'), d.hasAttribute('data-more-end'), d.hasAttribute('data-more-start')];
+      d.scrollLeft = d.scrollWidth; d.dispatchEvent(new Event('scroll'));
+      return a.concat([d.hasAttribute('data-more-start'), d.hasAttribute('data-more-end')]);
+    });
+    expect(box).toEqual([0, 'region', 'Wide text', true, false, true, false]);
+    await page.goto('/components/ApiTokens/example.html');
+    const stack = page.locator('.pb-tablescroll[data-stack]').first();
+    const td = stack.locator('tbody td[data-label]').first();
+    expect(await td.evaluate((c) => getComputedStyle(c).display)).toBe('block');
+    expect(await stack.evaluate((s) => s.scrollWidth <= s.clientWidth + 1)).toBe(true);
+  });
+
+  test('charts: the keyboard read-out is announced; sparklines hidden; diagram links listed; dots named', async ({ page }) => {
+    await page.goto('/components/Chart/example.html');
+    const svg = page.locator('svg.pb-hoverable').first();
+    await svg.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('[data-pb-live="polite"]')).toHaveText(/\S/);
+    await page.goto('/components/Sparkline/example.html');
+    expect(await page.locator('svg.pb-spark:not([aria-hidden="true"])').count()).toBe(0);
+    await page.goto('/components/Diagram/example.html');
+    await expect(page.locator('.pb-diagram .pb-sr li')).toHaveCount(4);
+    await expect(page.locator('.pb-diagram svg').first()).toHaveAttribute('aria-hidden', 'true');
+    await expect(page.locator('.pb-diagram .pb-dot[data-status="down"]').first()).toHaveAccessibleName('down');
+  });
+
+  test('dialog: named by its title, page scroll locked while modal', async ({ page }) => {
+    await page.goto('/components/Dialog/example.html');
+    await page.getByRole('button', { name: 'Form', exact: true }).click();
+    await expect(page.locator('#dlg-form')).toHaveAccessibleName('New share');
+    await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe('hidden');
+    await page.keyboard.press('Escape');
+    await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe('');
+  });
+
+  test('value controls: range names and values, dual range units, progress names, time listboxes', async ({ page }) => {
+    await page.goto('/components/Range/example.html');
+    const r = page.locator('#range-fan-speed');
+    await expect(r).toHaveAccessibleName('Fan speed');
+    await expect(r).toHaveAttribute('aria-valuetext', '60%');
+    await expect(page.locator('output').first()).toHaveAttribute('aria-hidden', 'true');
+    const at = await page.evaluate(() => { const r = document.querySelector('#range-snapshots-kept'), t = [...document.querySelectorAll('.pb-range-ticks span')].find((s) => s.textContent === '14'), a = r.getBoundingClientRect(), b = t.getBoundingClientRect(); return (b.left + b.width / 2 - a.left) / a.width; });
+    expect(at).toBeGreaterThan(0.4);
+    expect(at).toBeLessThan(0.5);
+    await page.goto('/components/DualRange/example.html');
+    await expect(page.locator('.pb-range2 input').first()).toHaveAttribute('aria-valuetext', /KB|MB|GB/);
+    await page.goto('/components/Progress/example.html');
+    await expect(page.locator('progress').first()).toHaveAccessibleName('Scrub · tank');
+    await page.goto('/components/TimePicker/example.html');
+    await page.locator('[data-clock]').first().click();
+    const clock = page.locator('.pb-time:popover-open');
+    await expect(clock.getByRole('listbox', { name: 'Hour' })).toBeVisible();
+    await expect(clock.getByRole('listbox', { name: 'Minute' })).toBeVisible();
+    await expect(clock.getByRole('option').first()).toBeAttached();
+  });
+
+  test('toasts with an action last at least 10 s, and F8 moves focus into the stack and back', async ({ page }) => {
+    await page.goto('/components/Toast/example.html');
+    const b = page.getByRole('button', { name: 'Saved' });
+    await b.focus();
+    await page.evaluate(() => pbToast({ title: '3 files deleted', action: { label: 'Undo' }, timeout: 3000 }));
+    const t = page.locator('body > .pb-toasts .pb-toast').last();
+    expect(await t.locator('.pb-toast__timer').evaluate((x) => x.style.getPropertyValue('--t'))).toBe('10000ms');
+    await page.keyboard.press('F8');
+    await expect(t.getByRole('button', { name: 'Undo' })).toBeFocused();
+    expect(await t.locator('.pb-toast__timer').evaluate((x) => x.style.animationPlayState)).toBe('paused');
+    await page.keyboard.press('F8');
+    await expect(b).toBeFocused();
+    await expect(page.locator('body > .pb-toasts')).toHaveAttribute('aria-keyshortcuts', 'F8');
+  });
+
+  test('context menu: rows are one tab stop, the menu remembers its row and reports it, Tab closes it', async ({ page }) => {
+    await page.goto('/components/ContextMenu/example.html');
+    const zone = page.locator('[data-contextmenu]').first();
+    const rows = zone.locator(':scope > li');
+    expect(await tabStops(zone)).toBe(1);
+    await rows.first().focus();
+    await page.keyboard.press('ArrowDown');
+    await expectFocus(page, rows.nth(1));
+    await page.evaluate(() => document.querySelector('[data-contextmenu]').addEventListener('pb:command', (e) => { window.__ctx = [e.detail.command, e.detail.row.querySelector('.pb-item__title').textContent]; }));
+    await page.keyboard.press('Shift+F10');
+    await expect(rows.nth(1)).toHaveAttribute('data-ctx-row', '');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    expect(await page.evaluate(() => window.__ctx)).toEqual(['Share…', 'wiring.pdf']);
+    await expectFocus(page, rows.nth(1));
+    await page.keyboard.press('Shift+F10');
+    await page.keyboard.press('Tab');
+    expect(await page.evaluate(() => document.getElementById('ctx-1').matches(':popover-open'))).toBe(false);
+    await expectFocus(page, rows.nth(1));
+  });
+
+  test('submit and validation: code input posts its code, tags check a pattern, the date field explains bad input', async ({ page }) => {
+    await page.goto('/components/CodeInput/example.html');
+    await page.locator('[data-codeinput] input').first().click();
+    await page.keyboard.type('123456');
+    await expect(page.locator('[data-codeinput] input[type=hidden][name="code"]')).toHaveValue('123456');
+    await page.goto('/components/TagInput/example.html');
+    const tags = page.locator('[data-tags][data-pattern]');
+    const input = tags.locator('input:not([type=hidden])');
+    await input.fill('not-a-cidr');
+    await page.keyboard.press('Enter');
+    await expect(tags.locator('.pb-tag[data-invalid]')).toHaveCount(1);
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(input).toHaveAccessibleDescription(/10\.0\.20\.0\/24/);
+    await tags.locator('.pb-tag[data-invalid] button').click();
+    await expect(input).not.toHaveAttribute('aria-invalid', /./);
+    await page.goto('/components/DatePicker/example.html');
+    const d = page.locator('#datepicker-expires-on');
+    await d.fill('2026-13-45');
+    await d.press('Tab');
+    await expect(d).toHaveAttribute('aria-invalid', 'true');
+    await expect(d).toHaveAccessibleDescription(/yyyy-mm-dd/);
   });
 });

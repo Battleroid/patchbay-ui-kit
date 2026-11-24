@@ -183,10 +183,10 @@ a.pb-card:focus-visible, button.pb-card:focus-visible { outline: var(--stroke-2)
   margin: 0 calc(-1 * var(--space-3)) 0 0; padding: 0 var(--space-3) 0 var(--space-2);
   border-right: 0; border-left: var(--stroke-1) solid var(--pb-border); border-radius: 0 var(--pb-r-md) var(--pb-r-md) 0;
 }
-.pb-field[data-invalid] .pb-input { border-color: var(--down); box-shadow: inset 0 0 0 1px var(--down); }
-.pb-field[data-invalid] .pb-field__help { color: var(--down); font-style: normal; }
-.pb-field[data-disabled] .pb-input { background: var(--surface-sunk); border-color: var(--line); box-shadow: none; }
-.pb-field[data-disabled] input { color: var(--ink-muted); cursor: not-allowed; }
+.pb-field[data-invalid] .pb-input, .pb-field:has([aria-invalid="true"]) .pb-input { border-color: var(--down); box-shadow: inset 0 0 0 1px var(--down); }
+.pb-field[data-invalid] .pb-field__help, .pb-field:has([aria-invalid="true"]) .pb-field__help { color: var(--down); font-style: normal; }
+.pb-field[data-disabled] .pb-input, .pb-input:has(> input:disabled, > textarea:disabled, > select:disabled) { background: var(--surface-sunk); border-color: var(--line); box-shadow: none; }
+.pb-field[data-disabled] input, .pb-input > :disabled { color: var(--ink-muted); cursor: not-allowed; }
 
 /* ---------- Code area ---------- */
 .pb-code {

@@ -344,6 +344,22 @@
 .pb-tablewrap { background: var(--surface); border: var(--stroke-1) solid var(--pb-border); border-radius: var(--pb-r-lg); box-shadow: var(--pb-shadow-md); overflow: hidden; }
 .pb-tablewrap > .pb-toolbar { padding: var(--space-3) var(--space-4); border-bottom: var(--stroke-1) solid var(--line); }
 .pb-tablescroll { overflow: auto; }
+.pb-tablescroll:focus-visible { outline: var(--stroke-2) solid var(--accent); outline-offset: 2px; }
+/* Edge fade where a scrolling box hides more content (pbScroller sets data-more-start / data-more-end). */
+.pb-scrollfade[data-more-end]:not([data-more-start]) { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+.pb-scrollfade[data-more-start]:not([data-more-end]) { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent); }
+.pb-scrollfade[data-more-start][data-more-end] { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); }
+/* Stacked cards: .pb-tablescroll[data-stack] lays each row out as a card, every cell under its column name, once the box is under 560 px wide. */
+.pb-tablescroll[data-stack] { container-type: inline-size; }
+@container (max-width: 560px) {
+  .pb-tablescroll[data-stack] .pb-table, .pb-tablescroll[data-stack] .pb-table > tbody, .pb-tablescroll[data-stack] .pb-table > tbody > tr { display: block; width: auto; }
+  /* The header row goes (each cell names its column instead), with its sort buttons and select-all. */
+  .pb-tablescroll[data-stack] .pb-table > thead { display: none; }
+  .pb-tablescroll[data-stack] .pb-table > tbody > tr { padding: var(--space-2) 0; border-bottom: var(--stroke-1) solid var(--line); }
+  .pb-tablescroll[data-stack] .pb-table > tbody > tr > td { display: block; width: auto; min-width: 0; max-width: none; height: auto; padding: 4px var(--space-3); border: 0; white-space: normal; text-align: start; }
+  .pb-tablescroll[data-stack] .pb-table > tbody > tr > td[data-label]::before { content: attr(data-label); display: block; font: 600 11px/16px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+  .pb-tablescroll[data-stack] .pb-table .pb-dt__sticky { position: static; box-shadow: none; }
+}
 .pb-table { width: 100%; border-collapse: collapse; font: 400 15px/20px var(--font-serif); color: var(--ink); }
 .pb-table th {
   position: sticky; top: 0; z-index: 1; height: 36px; padding: 0 var(--space-3); text-align: left; white-space: nowrap;

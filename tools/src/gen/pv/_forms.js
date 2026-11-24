@@ -21,9 +21,11 @@ function pbCombo(c){var inp=c.querySelector('input'),lb=c.querySelector('.pb-lis
 function pbTags(box){var inp=box.querySelector('input:not([type=hidden])'),sep=box.dataset.sep||',',hid=box.querySelector('input[type=hidden],[data-tags-input]');
  if(!hid&&box.dataset.name){hid=document.createElement('input');hid.type='hidden';hid.name=box.dataset.name;box.appendChild(hid);}
  function vals(){return [].map.call(box.querySelectorAll('.pb-tag'),function(t){return t.firstChild.textContent;});}
- function sync(fire){if(hid)hid.value=vals().join(sep);if(fire)box.dispatchEvent(new Event('change',{bubbles:true}));}
+ /* data-pattern (a regular expression each tag must match) marks a tag that fails it, and the field shows the error until it is removed. */
+ var pat=box.dataset.pattern?new RegExp('^(?:'+box.dataset.pattern+')$'):null;
+ function sync(fire){if(hid)hid.value=vals().join(sep);if(pat){var bad=box.querySelectorAll('.pb-tag[data-invalid]').length,msg=bad?box.dataset.patternError||pbStrings.tagInvalid:'';inp.setCustomValidity(msg);pbFieldError(inp,msg||null);}if(fire)box.dispatchEvent(new Event('change',{bubbles:true}));}
  function add(v,quiet){v=String(v).trim().replace(/,$/,'');if(!v)return;if(vals().indexOf(v)>=0)return;
-  var t=document.createElement('span');t.className='pb-tag';t.textContent=v;var b=document.createElement('button');b.type='button';b.setAttribute('aria-label',pbT('removeItem',{item:v}));b.innerHTML='<span class="pb-icon pb-icon--close"></span>';t.appendChild(b);box.insertBefore(t,inp);sync(!quiet);}
+  var t=document.createElement('span');t.className='pb-tag';t.textContent=v;var b=document.createElement('button');b.type='button';b.setAttribute('aria-label',pbT('removeItem',{item:v}));b.innerHTML='<span class="pb-icon pb-icon--close"></span>';t.appendChild(b);if(pat&&!pat.test(v)){t.setAttribute('data-invalid','');var sr=document.createElement('span');sr.className='pb-sr';sr.textContent=', '+pbStrings.invalid;t.insertBefore(sr,b);}box.insertBefore(t,inp);sync(!quiet);}
  box.addEventListener('click',function(e){var b=e.target.closest('.pb-tag button');if(b){b.parentNode.remove();sync(true);inp.focus();}else if(e.target===box)inp.focus();});
  inp.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===','||e.key==='Tab'&&inp.value){if(inp.value.trim()){e.preventDefault();add(inp.value);inp.value='';}}
   else if(e.key==='Backspace'&&!inp.value){var l=box.querySelectorAll('.pb-tag');if(l.length){l[l.length-1].remove();sync(true);}}});
@@ -35,8 +37,10 @@ function pbTags(box){var inp=box.querySelector('input:not([type=hidden])'),sep=b
  function flush(){if(inp.value.trim()){add(inp.value);inp.value='';}}
  inp.addEventListener('blur',flush);var fm=box.closest('form');if(fm)fm.addEventListener('submit',flush,true);
  if(hid&&hid.value&&!box.querySelector('.pb-tag'))hid.value.split(sep).forEach(function(x){add(x,true);});sync(false);}
-function pbOtp(g){var ins=[].slice.call(g.querySelectorAll('input'));
- function done(){var v=ins.map(function(i){return i.value}).join('');var f=g.closest('.pb-field');if(v.length===ins.length){f&&f.setAttribute('data-valid','');pbEmit(g,'pb:complete',v);}else f&&f.removeAttribute('data-valid');}
+/* Code input: one box per digit. data-name="code" adds a hidden input of that name holding the whole code, so a plain form submit sends it. */
+function pbOtp(g){var ins=[].slice.call(g.querySelectorAll('input:not([type=hidden])')),hid=g.querySelector('input[type=hidden]');
+ if(!hid&&g.dataset.name){hid=document.createElement('input');hid.type='hidden';hid.name=g.dataset.name;g.appendChild(hid);}
+ function done(){var v=ins.map(function(i){return i.value}).join('');if(hid)hid.value=v;var f=g.closest('.pb-field');if(v.length===ins.length){f&&f.setAttribute('data-valid','');pbEmit(g,'pb:complete',v);}else f&&f.removeAttribute('data-valid');}
  ins.forEach(function(inp,i){inp.addEventListener('input',function(){inp.value=inp.value.replace(/\D/g,'').slice(-1);if(inp.value&&ins[i+1])ins[i+1].focus();done();});
   inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!inp.value&&ins[i-1]){ins[i-1].value='';ins[i-1].focus();e.preventDefault();done();}
    else if(e.key==='ArrowLeft'&&ins[i-1])ins[i-1].focus();else if(e.key==='ArrowRight'&&ins[i+1])ins[i+1].focus();});
@@ -79,11 +83,12 @@ function pbSize(p){var b=Math.pow(10,p/100*8);return b<1e3?Math.round(b)+' KB':b
 function pbDualRange(w){var r=w.querySelectorAll('input'),out=w.closest('.pb-field').querySelector('[data-out]'),u=w.dataset.unit;
  function fmt(v){return u==='hour'?String(v).padStart(2,'0')+':00':pbSize(+v);}
  function up(e){var a=+r[0].value,b=+r[1].value;if(a>b){if(e&&e.target===r[0])r[0].value=b;else r[1].value=a;}a=+r[0].value;b=+r[1].value;var mx=+r[0].max;
-  w.style.setProperty('--lo',a/mx*100+'%');w.style.setProperty('--hi',b/mx*100+'%');r[0].style.zIndex=a>mx-2?2:1;out.textContent=fmt(a)+' – '+fmt(b);}
+  w.style.setProperty('--lo',a/mx*100+'%');w.style.setProperty('--hi',b/mx*100+'%');r[0].style.zIndex=a>mx-2?2:1;out.textContent=fmt(a)+' – '+fmt(b);out.setAttribute('aria-hidden','true');r[0].setAttribute('aria-valuetext',fmt(a));r[1].setAttribute('aria-valuetext',fmt(b));}
  r.forEach(function(x){x.addEventListener('input',up)});up();}
 function pbToggle(b){b.addEventListener('click',function(){b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')})}
 function pbCounter(t){var c=t.closest('.pb-field').querySelector('.pb-field__count');if(!c)return;var max=+t.dataset.count;function up(){var n=t.value.length;c.textContent=n+' / '+max;n>max?c.setAttribute('data-over',''):c.removeAttribute('data-over');}t.addEventListener('input',up);up();}
-function pbStepper(b){b.addEventListener('click',function(){var i=b.parentNode.querySelector('input');if(!i)return;b.hasAttribute('data-inc')?i.stepUp():i.stepDown();
+/* Number stepper −/+ buttons: pointer only; the field stays one tab stop (↑/↓ already step it). */
+function pbStepper(b){b.tabIndex=-1;b.addEventListener('click',function(){var i=b.parentNode.querySelector('input');if(!i)return;b.hasAttribute('data-inc')?i.stepUp():i.stepDown();
   i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));});}
 function pbColorText(c){c.addEventListener('input',function(){if(c.nextElementSibling)c.nextElementSibling.value=c.value;});}
 /* Password strength: .pb-strength in the same .pb-field as the input. The built-in score counts length and mixed character kinds. Plug in your own:
@@ -94,7 +99,11 @@ function pbStrength(m){var f=m.closest('.pb-field'),i=f&&f.querySelector('input'
   lv=Math.max(0,Math.min(4,Math.round(+lv)||0));var d={value:v,input:i,level:lv,label:lab==null?pbStrings.strength[lv]:lab};pbEmit(m,'pb:strength',d);
   m.dataset.level=d.level;if(m.lastElementChild)m.lastElementChild.textContent=d.label;}
  i.addEventListener('input',up);m.pbUpdate=up;up();}
-function pbRange(r){var o=r.closest('.pb-field').querySelector('output');function up(){var p=(r.value-r.min)/((r.max||100)-(r.min||0))*100;r.style.setProperty('--pct',p+'%');if(o)o.textContent=r.value+(o.textContent.indexOf('%')>-1?'%':'');}r.addEventListener('input',up);up();}
+/* Range: the label names the slider; the <output> beside it is a visual echo (aria-hidden) and the slider says the same through aria-valuetext.
+   .pb-range-ticks spans (their text, or data-v) sit at their value under the thumb, not spread evenly. */
+function pbRange(r){var f=r.closest('.pb-field'),o=f&&f.querySelector('output'),pct=o&&o.textContent.indexOf('%')>-1,mn=+(r.min||0),mx=+(r.max||100),tk=f&&f.querySelector('.pb-range-ticks');if(o)o.setAttribute('aria-hidden','true');
+ if(tk){tk.style.position='relative';tk.style.display='block';tk.style.height='14px';[].forEach.call(tk.children,function(t){var v=+(t.dataset.v||t.textContent);if(isNaN(v))return;var p=(v-mn)/((mx-mn)||1);t.style.position='absolute';t.style.top='0';t.style.left='calc(7px + (100% - 14px) * '+p+')';t.style.transform='translateX(-50%)';});}
+ function up(){var p=(r.value-mn)/((mx-mn)||1)*100,txt=r.value+(pct?'%':'');r.style.setProperty('--pct',p+'%');if(o)o.textContent=txt;r.setAttribute('aria-valuetext',r.dataset.unit?txt+' '+r.dataset.unit:txt);}r.addEventListener('input',up);up();}
 /* Tabs: .pb-tabs > .pb-tab[aria-controls] with roving tabindex, arrows, Home/End; fires pb:tabchange {tab, panel}.
    data-tab-hash (on .pb-tabs or on a tab) keeps the selected tab's panel id in the URL fragment and opens that tab on load and on hashchange.
    data-hides="<selector>" on a tab hides those elements while the tab is selected. */
@@ -109,7 +118,7 @@ function pbTabs(l){var tabs=[].slice.call(l.querySelectorAll('.pb-tab[aria-contr
  tabs.forEach(function(t,i){t.addEventListener('click',function(){pick(t);});
   t.addEventListener('keydown',function(e){var v=l.getAttribute('aria-orientation')==='vertical',n={ArrowRight:v?0:1,ArrowLeft:v?0:-1,ArrowDown:v?1:0,ArrowUp:v?-1:0}[e.key],j=null;
    if(n)j=(i+n+tabs.length)%tabs.length;else if(e.key==='Home')j=0;else if(e.key==='End')j=tabs.length-1;if(j==null)return;e.preventDefault();pick(tabs[j],true);});});
- hides(cur);if(tabs.some(hashed)){fromHash();window.addEventListener('hashchange',fromHash);}}
+ pbScroller(l);hides(cur);if(tabs.some(hashed)){fromHash();window.addEventListener('hashchange',fromHash);}}
 /* Form section save state. Snapshot on bind; input that differs → dirty (Discard and Save enabled), back to the snapshot or reset → clean; submit → busy.
    The host settles it: form.dispatchEvent(new CustomEvent('pb:saved')) or new CustomEvent('pb:error',{detail:{message}}). A server-rendered
    .pb-foot__status[data-state=saved|error] stays until the next input; a section holding [data-invalid] starts dirty. */

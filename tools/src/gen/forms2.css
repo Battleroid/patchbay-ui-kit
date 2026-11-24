@@ -34,6 +34,8 @@
 .pb-tag button { display: grid; place-items: center; width: 20px; height: 20px; padding: 0; border: 0; background: none; color: var(--ink-muted); border-radius: var(--pb-r-sm); cursor: pointer; }
 .pb-tag button:hover { color: var(--ink); background: var(--surface); }
 .pb-tag button .pb-icon { width: 12px; height: 12px; }
+/* A tag that fails data-pattern. */
+.pb-tag[data-invalid] { color: var(--down); border-style: dashed; border-color: var(--down); }
 /* The remove button draws at 20 px; its hit area is 24 px (WCAG 2.5.8). */
 .pb-tag button { position: relative; }
 .pb-tag button::after { content: ""; position: absolute; inset: -2px; }
