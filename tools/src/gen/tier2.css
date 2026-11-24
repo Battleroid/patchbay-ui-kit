@@ -37,7 +37,7 @@
 
 /* ---------- Steps ---------- */
 .pb-steps { --n: 4; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; counter-reset: pb-step; }
-.pb-step { position: relative; display: grid; justify-items: start; gap: 6px; padding-right: var(--space-3); counter-increment: pb-step; }
+.pb-step { position: relative; display: grid; justify-items: start; align-content: start; gap: 6px; padding-right: var(--space-3); counter-increment: pb-step; }
 .pb-step::before {
   content: counter(pb-step); position: relative; z-index: 1; display: grid; place-items: center; width: 28px; height: 28px;
   font: 600 12px/1 var(--font-mono); color: var(--ink-muted); background: var(--surface); border: var(--stroke-2) solid var(--line-strong); border-radius: var(--pb-r-pill);
