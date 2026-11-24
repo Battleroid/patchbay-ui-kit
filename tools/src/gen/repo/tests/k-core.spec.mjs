@@ -344,6 +344,13 @@ test.describe('k-core follow-up', () => {
     expect(await page.evaluate(() => document.activeElement.classList.contains('pb-log__tag'))).toBe(true);
     await page.keyboard.press('Escape');
     await expectFocus(page, lines.first());
+    // The tab stop stays on the line you left, through redraws, while focus is elsewhere.
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    const kept = await page.evaluate(() => document.activeElement.dataset.id);
+    await page.locator('[data-logx-line]').focus();
+    await page.evaluate(() => document.querySelector('[data-logx]').pbAppend({ t: Date.now(), labels: { app: 'jellyfin', host: 'nas-01', level: 'info' }, line: 'redraw' }));
+    expect(await body.locator('.pb-log__line[tabindex="0"]').getAttribute('data-id')).toBe(kept);
     // Pause: appended lines wait until Resume.
     const pause = page.locator('[data-logx-pause]');
     await pause.click();
@@ -399,11 +406,15 @@ test.describe('k-core follow-up', () => {
   test('scroll regions: an overflowing box is reachable and marked, and tables can stack as cards', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 800 });
     await page.goto('/components/Heatmap/example.html');
-    const heat = page.locator('.pb-heat__scroll').first();
-    if (await heat.evaluate((d) => d.scrollWidth > d.clientWidth)) {
-      expect(await heat.evaluate((d) => d.hasAttribute('data-more-start') || d.hasAttribute('data-more-end'))).toBe(true);
-      expect(await heat.evaluate((d) => d.tabIndex >= 0 || !!d.querySelector('[tabindex="0"]'))).toBe(true);
-    }
+    const box = await page.evaluate(async () => {
+      const d = document.createElement('div'); d.setAttribute('data-scroll', ''); d.setAttribute('data-scroll-label', 'Wide text');
+      d.style.cssText = 'width:200px;overflow-x:auto;white-space:nowrap'; d.textContent = 'x'.repeat(400); document.body.append(d); pbInit(d);
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const a = [d.tabIndex, d.getAttribute('role'), d.getAttribute('aria-label'), d.hasAttribute('data-more-end'), d.hasAttribute('data-more-start')];
+      d.scrollLeft = d.scrollWidth; d.dispatchEvent(new Event('scroll'));
+      return a.concat([d.hasAttribute('data-more-start'), d.hasAttribute('data-more-end')]);
+    });
+    expect(box).toEqual([0, 'region', 'Wide text', true, false, true, false]);
     await page.goto('/components/ApiTokens/example.html');
     const stack = page.locator('.pb-tablescroll[data-stack]').first();
     const td = stack.locator('tbody td[data-label]').first();
@@ -478,7 +489,7 @@ test.describe('k-core follow-up', () => {
     await rows.first().focus();
     await page.keyboard.press('ArrowDown');
     await expectFocus(page, rows.nth(1));
-    await page.evaluate(() => document.querySelector('[data-contextmenu]').addEventListener('pb:select', (e) => { window.__ctx = [e.detail.item.textContent.trim(), e.detail.row.querySelector('.pb-item__title').textContent]; }));
+    await page.evaluate(() => document.querySelector('[data-contextmenu]').addEventListener('pb:command', (e) => { window.__ctx = [e.detail.command, e.detail.row.querySelector('.pb-item__title').textContent]; }));
     await page.keyboard.press('Shift+F10');
     await expect(rows.nth(1)).toHaveAttribute('data-ctx-row', '');
     await page.keyboard.press('ArrowDown');
