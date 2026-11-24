@@ -1,4 +1,5 @@
-/* Event calendar: .pb-evcal[data-evcal] with JSON {month:"YYYY-MM", today:"YYYY-MM-DD", kinds:{key:{label,c}}, events:[{date, time, title, kind, status, repeat:"daily"|"weekly:N"|"monthly:D"}]}. Fires select with the event. */
+Object.assign(pbStrings,Object.assign({threadHint:'{mod}↵ to post',sending:'Sending…',notifyTestSent:'Test sent to {channel}',notifyTestFailed:'Could not send the test to {channel}',sessionLeft:'Signing out in {t}',saveFailed:'Could not save'},pbStrings));
+/* Event calendar: .pb-evcal[data-evcal] with JSON {month:"YYYY-MM", today:"YYYY-MM-DD", kinds:{key:{label,c}}, events:[{date, time, title, kind, status, repeat:"daily"|"weekly:N"|"monthly:D"}]}. Fires pb:select with the event. */
 function pbEventCal(el){var D=JSON.parse((el.querySelector('script[type="application/json"]')||{}).textContent||'{}'),K=D.kinds||{},E=D.events||[],today=D.today?new Date(D.today+'T12:00:00'):new Date(),cur=D.month?new Date(D.month+'-01T12:00:00'):new Date(today.getFullYear(),today.getMonth(),1,12),view=el.dataset.view||'month',max=+(el.dataset.max||3);
   var grid=el.querySelector('.pb-evcal__body'),title=el.querySelector('.pb-evcal__title');
   function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -16,7 +17,7 @@ function pbEventCal(el){var D=JSON.parse((el.querySelector('script[type="applica
     grid.innerHTML=h2+'</div>',pbStyled(grid);}
   el.addEventListener('click',function(e){var b=e.target.closest('[data-evcal-nav]');if(b){var v=b.dataset.evcalNav;if(v==='today')cur=new Date(today.getFullYear(),today.getMonth(),1,12);else cur=new Date(cur.getFullYear(),cur.getMonth()+(v==='next'?1:-1),1,12);render();return;}
     var mo=e.target.closest('[data-more]');if(mo){view='agenda';render();return;}
-    var ev=e.target.closest('.pb-evcal__ev');if(ev){var d=new Date(ev.dataset.date+'T12:00:00'),x=on(d).filter(function(z){return z.title===ev.dataset.title})[0];el.dispatchEvent(new CustomEvent('select',{detail:{date:ev.dataset.date,event:x}}));}});
+    var ev=e.target.closest('.pb-evcal__ev');if(ev){var d=new Date(ev.dataset.date+'T12:00:00'),x=on(d).filter(function(z){return z.title===ev.dataset.title})[0];el.dispatchEvent(new CustomEvent('pb:select',{bubbles:true,detail:{date:ev.dataset.date,event:x}}));}});
   el.querySelectorAll('[data-evcal-view] input').forEach(function(i){i.addEventListener('change',function(){if(i.checked){view=i.value;render();}});});
   var lg=el.querySelector('.pb-evcal__legend');if(lg)lg.innerHTML=Object.keys(K).map(function(k){return '<span><i data-style="--c:'+K[k].c+'"></i>'+pbEsc(K[k].label)+'</span>'}).join(''),pbStyled(lg);
   el.pbGo=function(ym){cur=new Date(ym+'-01T12:00:00');render();};render();}
@@ -48,48 +49,67 @@ function pbMdEditor(el){var ta=el.querySelector('textarea'),pv=el.querySelector(
   el.querySelectorAll('[data-md-view] input').forEach(function(i){if(i.checked)el.dataset.view=i.value;i.addEventListener('change',function(){if(i.checked){el.dataset.view=i.value;up();}});});
   el.pbValue=function(){return ta.value;};el.pbHtml=function(){return pbMarkdown(ta.value);};up();}
 
-/* Comment thread: ol.pb-thread[data-thread] plus a .pb-composer[data-composer] after it. Fires post {text, parent}. */
+/* Comment thread: ol.pb-thread[data-thread] plus a .pb-composer[data-composer] after it. Fires pb:post {text, parent}. */
 function pbThread(th){var comp=th.parentElement.querySelector('[data-composer]'),me=th.dataset.me||'you';
   function node(text,reply){var li=document.createElement('li');li.className='pb-comment';li.innerHTML='<span class="pb-avatar" data-avatar data-name="'+pbEsc(me)+'"></span><div class="pb-comment__head"><b>'+pbEsc(me)+'</b><time class="pb-reltime" datetime="'+new Date().toISOString()+'">just now</time></div><div class="pb-comment__body">'+pbMarkdown(text)+'</div><div class="pb-comment__acts">'+(reply?'':'<button type="button" data-reply>Reply</button>')+'<button type="button" data-resolve>Resolve</button></div>',pbStyled(li);if(typeof pbAvatar==='function')pbAvatar(li.querySelector('[data-avatar]'));return li;}
-  function composer(onPost,ph,cancel){var f=document.createElement('div');f.className='pb-composer';f.innerHTML='<span class="pb-avatar pb-avatar--sm" data-avatar data-name="'+pbEsc(me)+'"></span><div class="pb-composer__box"><textarea placeholder="'+pbEsc(ph||'Reply')+'" aria-label="'+pbEsc(ph||'Reply')+'"></textarea><div class="pb-composer__acts"><span class="pb-note">⌘↵ to post</span>'+(cancel?'<button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-cancel>Cancel</button>':'')+'<button type="button" class="pb-btn pb-btn--primary pb-btn--sm" data-post disabled>Post</button></div></div>',pbStyled(f);wire(f,onPost);if(typeof pbAvatar==='function')pbAvatar(f.querySelector('[data-avatar]'));return f;}
+  function composer(onPost,ph,cancel){var f=document.createElement('div');f.className='pb-composer';f.innerHTML='<span class="pb-avatar pb-avatar--sm" data-avatar data-name="'+pbEsc(me)+'"></span><div class="pb-composer__box"><textarea placeholder="'+pbEsc(ph||'Reply')+'" aria-label="'+pbEsc(ph||'Reply')+'"></textarea><div class="pb-composer__acts"><span class="pb-note">'+pbEsc(pbFmt(pbStrings.threadHint,{mod:pbModLabel()}))+'</span>'+(cancel?'<button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-cancel>Cancel</button>':'')+'<button type="button" class="pb-btn pb-btn--primary pb-btn--sm" data-post disabled>Post</button></div></div>',pbStyled(f);wire(f,onPost);if(typeof pbAvatar==='function')pbAvatar(f.querySelector('[data-avatar]'));return f;}
   function wire(f,onPost){var t=f.querySelector('textarea'),b=f.querySelector('[data-post]');t.addEventListener('input',function(){b.disabled=!t.value.trim();});
     function go(){var v=t.value.trim();if(!v)return;onPost(v);t.value='';b.disabled=true;}b.addEventListener('click',go);t.addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();go();}if(e.key==='Escape'){var c=f.querySelector('[data-cancel]');if(c)c.click();}});var c=f.querySelector('[data-cancel]');if(c)c.addEventListener('click',function(){f.remove();});}
-  if(comp)wire(comp,function(v){var n=node(v);th.appendChild(n);th.dispatchEvent(new CustomEvent('post',{detail:{text:v,parent:null}}));n.scrollIntoView({block:'nearest'});});
+  if(comp)wire(comp,function(v){var n=node(v);th.appendChild(n);th.dispatchEvent(new CustomEvent('pb:post',{bubbles:true,detail:{text:v,parent:null}}));n.scrollIntoView({block:'nearest'});});
   th.addEventListener('click',function(e){var r=e.target.closest('[data-reply]');if(r){var c=r.closest('.pb-comment');var ex=c.querySelector(':scope > .pb-composer');if(ex){ex.querySelector('textarea').focus();return;}var ul=c.querySelector(':scope > .pb-comment__replies');
-      var f=composer(function(v){if(!ul){ul=document.createElement('ol');ul.className='pb-comment__replies';c.insertBefore(ul,f);}ul.appendChild(node(v,true));f.remove();th.dispatchEvent(new CustomEvent('post',{detail:{text:v,parent:c}}));},'Reply to '+c.querySelector('.pb-comment__head b').textContent,true);f.style.gridColumn='2';c.appendChild(f);f.querySelector('textarea').focus();return;}
+      var f=composer(function(v){if(!ul){ul=document.createElement('ol');ul.className='pb-comment__replies';c.insertBefore(ul,f);}ul.appendChild(node(v,true));f.remove();th.dispatchEvent(new CustomEvent('pb:post',{bubbles:true,detail:{text:v,parent:c}}));},'Reply to '+c.querySelector('.pb-comment__head b').textContent,true);f.style.gridColumn='2';c.appendChild(f);f.querySelector('textarea').focus();return;}
     var s=e.target.closest('[data-resolve]');if(s){var cm=s.closest('.pb-comment'),res=!cm.hasAttribute('data-resolved');cm.toggleAttribute('data-resolved',res);s.textContent=res?'Reopen':'Resolve';var h=cm.querySelector('.pb-comment__head'),chip=h.querySelector('.pb-comment__chip');if(res&&!chip)h.insertAdjacentHTML('beforeend','<span class="pb-comment__chip">resolved</span>'),pbStyled(h);else if(!res&&chip)chip.remove();}});}
 
-/* Notification grid: table in .pb-notify[data-notify]; header checkboxes [data-col] toggle a channel; [data-test] buttons fire test. */
-function pbNotify(el){var t=el.querySelector('table');
+/* Notification grid: table in .pb-notify[data-notify]; header checkboxes [data-col] toggle a channel; [data-test="channel"] buttons ask the app to send a test.
+   Fires pb:change {name, checked} (or {column, checked}) and pb:test {channel}. The button waits ("Sending…") until the app settles it with pb:saved or
+   pb:error ({message}) on the grid; the grid announces the result. Nothing is sent or faked here. */
+function pbNotify(el){var t=el.querySelector('table'),live=el.querySelector('[data-notify-status]');
+  if(!live){live=document.createElement('p');live.className='pb-sr';live.setAttribute('role','status');live.setAttribute('data-notify-status','');el.appendChild(live);}
   function col(i){return Array.from(t.querySelectorAll('tbody tr:not(.pb-notify__all)')).map(function(r){return r.cells[i].querySelector('input')}).filter(Boolean);}
   function sync(){t.querySelectorAll('[data-col]').forEach(function(h){var c=col(+h.dataset.col),n=c.filter(function(x){return x.checked}).length;h.checked=n===c.length;h.indeterminate=n>0&&n<c.length;});}
-  t.addEventListener('change',function(e){var h=e.target.closest('[data-col]');if(h)col(+h.dataset.col).forEach(function(x){x.checked=h.checked});sync();el.dispatchEvent(new CustomEvent('change'));});
-  el.querySelectorAll('[data-test]').forEach(function(b){b.addEventListener('click',function(){var l=b.textContent;b.disabled=true;b.textContent='Sending…';setTimeout(function(){b.disabled=false;b.textContent=l;el.dispatchEvent(new CustomEvent('test',{detail:b.dataset.test}));if(typeof pbToast==='function')pbToast({title:'Test sent to '+b.dataset.test,status:'ok',container:el.closest('section')||document.body});},700);});});sync();}
+  t.addEventListener('change',function(e){var h=e.target.closest('[data-col]');if(h)col(+h.dataset.col).forEach(function(x){x.checked=h.checked});sync();
+    el.dispatchEvent(new CustomEvent('pb:change',{bubbles:true,detail:h?{column:+h.dataset.col,checked:h.checked}:{name:e.target.name||e.target.getAttribute('aria-label'),checked:e.target.checked}}));});
+  var waiting=null;
+  function settle(ok,e){if(!waiting)return;var w=waiting;waiting=null;w.b.removeAttribute('aria-disabled');w.b.textContent=w.label;
+    live.textContent=ok?pbFmt(pbStrings.notifyTestSent,{channel:w.channel}):((e.detail&&e.detail.message)||pbFmt(pbStrings.notifyTestFailed,{channel:w.channel}));}
+  el.addEventListener('pb:saved',function(e){settle(true,e);});el.addEventListener('pb:error',function(e){settle(false,e);});
+  el.querySelectorAll('[data-test]').forEach(function(b){b.addEventListener('click',function(){if(waiting)return;waiting={b:b,label:b.textContent,channel:b.dataset.test};b.setAttribute('aria-disabled','true');b.textContent=pbStrings.sending;live.textContent=pbStrings.sending;
+    el.dispatchEvent(new CustomEvent('pb:test',{bubbles:true,detail:{channel:b.dataset.test,button:b}}));});});sync();}
 
-/* Action sheet: dialog.pb-sheet; open with sheet.pbOpen(); items close it and fire choose with data-value. */
-function pbSheet(d){d.addEventListener('click',function(e){if(e.target===d){d.close('cancel');return;}var it=e.target.closest('.pb-sheet__item');if(it){d.close(it.dataset.value||'');d.dispatchEvent(new CustomEvent('choose',{detail:it.dataset.value||''}));}});
-  d.pbOpen=function(){d.showModal();var f=d.querySelector('.pb-sheet__item');if(f)f.focus();};document.querySelectorAll('[data-sheet-open="'+d.id+'"]').forEach(function(b){b.addEventListener('click',d.pbOpen);});}
+/* Action sheet: dialog.pb-sheet; open it with a [data-pb-open="#id"] button or sheet.pbOpen(). The first item takes focus on pb:show; an item closes it and fires pb:choose with its data-value. */
+function pbSheet(d){d.addEventListener('click',function(e){if(e.target===d){d.close('cancel');return;}var it=e.target.closest('.pb-sheet__item');if(it){d.close(it.dataset.value||'');d.dispatchEvent(new CustomEvent('pb:choose',{bubbles:true,detail:it.dataset.value||''}));}});
+  d.addEventListener('pb:show',function(){var f=d.querySelector('.pb-sheet__item');if(f)f.focus();});
+  d.pbOpen=function(){if(d.open)return;d.showModal();d.dispatchEvent(new CustomEvent('pb:show',{detail:{opener:null}}));};}
 
-/* Session expiring: dialog.pb-session; dlg.pbStart(seconds). Fires stay or expire. */
+/* Session expiring: dialog.pb-session; dlg.pbStart(seconds). Fires pb:stay or pb:expire. */
 function pbSession(dlg){var c=dlg.querySelector('.pb-session__count'),bar=dlg.querySelector('.pb-session__bar span'),live=dlg.querySelector('[data-session-live]'),iv=0,left=0,total=0;
   function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
-  function tick(){left--;c.textContent=fmt(Math.max(0,left));bar.style.setProperty('--p',(left/total*100)+'%');dlg.toggleAttribute('data-urgent',left<=30);if(live&&(left%30===0||left===10))live.textContent='Signing out in '+fmt(left);if(left<=0){clearInterval(iv);dlg.close('expire');dlg.dispatchEvent(new CustomEvent('expire'));}}
+  function tick(){left--;c.textContent=fmt(Math.max(0,left));bar.style.setProperty('--p',(left/total*100)+'%');dlg.toggleAttribute('data-urgent',left<=30);if(live&&(left%30===0||left===10))live.textContent=pbFmt(pbStrings.sessionLeft,{t:fmt(left)});if(left<=0){clearInterval(iv);dlg.close('expire');dlg.dispatchEvent(new CustomEvent('pb:expire',{bubbles:true}));}}
   dlg.pbStart=function(s){total=left=s||120;c.textContent=fmt(left);bar.style.setProperty('--p','100%');dlg.removeAttribute('data-urgent');clearInterval(iv);iv=setInterval(tick,1000);if(!dlg.open)dlg.showModal();dlg.querySelector('[data-session-stay]').focus();};
-  dlg.querySelector('[data-session-stay]').addEventListener('click',function(){clearInterval(iv);dlg.close('stay');dlg.dispatchEvent(new CustomEvent('stay'));});
-  var so=dlg.querySelector('[data-session-out]');if(so)so.addEventListener('click',function(){clearInterval(iv);dlg.close('out');dlg.dispatchEvent(new CustomEvent('expire'));});
+  dlg.querySelector('[data-session-stay]').addEventListener('click',function(){clearInterval(iv);dlg.close('stay');dlg.dispatchEvent(new CustomEvent('pb:stay',{bubbles:true}));});
+  var so=dlg.querySelector('[data-session-out]');if(so)so.addEventListener('click',function(){clearInterval(iv);dlg.close('out');dlg.dispatchEvent(new CustomEvent('pb:expire',{bubbles:true,detail:{manual:true}}));});
   dlg.addEventListener('cancel',function(e){e.preventDefault();});}
-/* Drop zone settings: .pb-dropset[data-dropset]. The bar summarises every control with data-sum ("expires {v}") or data-sum-on / data-sum-off. Fires change with the settings. */
+/* Drop zone settings: .pb-dropset[data-dropset]. The bar summarises every control with data-sum ("expires {v}") or data-sum-on / data-sum-off. Fires pb:change with the settings.
+   "Save as default" fires pb:default {settings} and shows "Saving…" until the app settles it with pb:saved or pb:error ({message}) on the element; only a pb:saved
+   makes the current settings the baseline that Reset returns to. */
 function pbDropSet(el){var bar=el.querySelector('.pb-dropset__bar'),panel=el.querySelector('.pb-dropset__panel'),sum=el.querySelector('[data-dropset-summary]'),init=[];
   function ctl(){return Array.from(panel.querySelectorAll('input,select'));}
-  ctl().forEach(function(c){init.push(c.type==='checkbox'||c.type==='radio'?c.checked:c.value);});
+  function snap(){return ctl().map(function(c){return c.type==='checkbox'||c.type==='radio'?c.checked:c.value});}
+  init=snap();
   function read(){var parts=[],o={};ctl().forEach(function(c){var k=c.name||c.getAttribute('aria-label');
       if(c.type==='radio'){if(c.checked){o[k]=c.value;parts.push(c.dataset.sum.replace('{v}',c.value));}}
       else if(c.type==='checkbox'){o[k]=c.checked;var t=c.checked?c.dataset.sumOn:c.dataset.sumOff;if(t)parts.push(t);var r=c.dataset.dropsetReveal&&el.querySelector('#'+c.dataset.dropsetReveal);if(r)r.hidden=!c.checked;var en=c.dataset.dropsetEnable&&el.querySelector('#'+c.dataset.dropsetEnable);if(en){en.toggleAttribute('data-off',!c.checked);en.querySelectorAll('input,select').forEach(function(i){i.disabled=!c.checked;});}}
       else if(c.dataset.sum){o[k]=c.value;parts.push(c.dataset.sum.replace('{v}',c.options?c.options[c.selectedIndex].text.split(' · ')[0]:c.value));}});
     sum.textContent=parts.filter(Boolean).join(' · ');return o;}
   bar.addEventListener('click',function(){var o=bar.getAttribute('aria-expanded')!=='true';bar.setAttribute('aria-expanded',o);panel.hidden=!o;if(o){var f=panel.querySelector('input:checked,input,select');if(f)f.focus();}});
-  panel.addEventListener('change',function(){el.dispatchEvent(new CustomEvent('change',{detail:read()}));});
+  panel.addEventListener('change',function(){el.dispatchEvent(new CustomEvent('pb:change',{bubbles:true,detail:read()}));});
   panel.addEventListener('keydown',function(e){if(e.key==='Escape'){bar.setAttribute('aria-expanded','false');panel.hidden=true;bar.focus();}});
   var rs=el.querySelector('[data-dropset-reset]');if(rs)rs.addEventListener('click',function(){ctl().forEach(function(c,i){if(c.type==='checkbox'||c.type==='radio')c.checked=init[i];else c.value=init[i];});read();});
-  var df=el.querySelector('[data-dropset-default]');if(df)df.addEventListener('click',function(){ctl().forEach(function(c){init.push(0);});init=ctl().map(function(c){return c.type==='checkbox'||c.type==='radio'?c.checked:c.value});var t=df.textContent;df.textContent='Saved';df.disabled=true;setTimeout(function(){df.textContent=t;df.disabled=false;},1400);el.dispatchEvent(new CustomEvent('default',{detail:read()}));});
+  var df=el.querySelector('[data-dropset-default]'),pend=null,tm=0;
+  function settle(ok,e){if(!pend)return;var p=pend;pend=null;clearTimeout(tm);df.disabled=false;
+    if(ok){init=p.snap;df.textContent=pbStrings.saved;tm=setTimeout(function(){df.textContent=p.label;},1400);}
+    else{df.textContent=p.label;df.setAttribute('data-error','');df.title=(e.detail&&e.detail.message)||pbStrings.saveFailed;}}
+  if(df){el.addEventListener('pb:saved',function(e){settle(true,e);});el.addEventListener('pb:error',function(e){settle(false,e);});
+    df.addEventListener('click',function(){if(pend)return;clearTimeout(tm);df.removeAttribute('data-error');df.removeAttribute('title');pend={snap:snap(),label:df.dataset.label||(df.dataset.label=df.textContent)};df.textContent=pbStrings.saving;df.disabled=true;
+      el.dispatchEvent(new CustomEvent('pb:default',{bubbles:true,detail:read()}));});}
   read();}
