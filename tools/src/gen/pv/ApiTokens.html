@@ -15,7 +15,7 @@
 <dialog class="pb-dialog" data-tok-dialog aria-labelledby="tok-t"><form method="dialog" class="pb-form">
   <div class="pb-dialog__head"><div><h3 class="pb-dialog__title" id="tok-t">New API token</h3><p class="pb-dialog__sub">The token is shown once, right after you create it.</p></div></div>
   <div class="pb-dialog__body" style="display:grid;gap:16px">
-    <label class="pb-field"><span class="pb-field__label">Name</span><span class="pb-input"><input required placeholder="what will use it" data-tok-name></span><span class="pb-field__help">So you can tell tokens apart later.</span></label>
+    <div class="pb-field"><label class="pb-field__label" for="apitokens-name">Name</label><span class="pb-input"><input required placeholder="what will use it" data-tok-name id="apitokens-name" aria-describedby="apitokens-name-help"></span><span class="pb-field__help" id="apitokens-name-help">So you can tell tokens apart later.</span></div>
     <fieldset class="pb-fieldset" style="padding:12px 16px 16px"><legend>Access</legend><ul class="pb-access" data-tok-access>
       <li data-res="shares"><span class="pb-access__name">shares</span><span class="pb-access__desc">List shares and their stats; write creates and revokes links.</span><div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="shares access"><label><input type="radio" name="acc-shares" value="none">none</label><label><input type="radio" name="acc-shares" value="read" checked>read</label><label><input type="radio" name="acc-shares" value="write">write</label></div></li>
       <li data-res="files"><span class="pb-access__name">files</span><span class="pb-access__desc">Read downloads files; write uploads and deletes.</span><div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="files access"><label><input type="radio" name="acc-files" value="none" checked>none</label><label><input type="radio" name="acc-files" value="read">read</label><label><input type="radio" name="acc-files" value="write">write</label></div></li>
@@ -23,7 +23,7 @@
       <li data-res="backups"><span class="pb-access__name">backups</span><span class="pb-access__desc">Read shows runs; write starts and cancels them.</span><div class="pb-seg pb-seg--sm" role="radiogroup" aria-label="backups access"><label><input type="radio" name="acc-backups" value="none" checked>none</label><label><input type="radio" name="acc-backups" value="read">read</label><label><input type="radio" name="acc-backups" value="write">write</label></div></li>
     </ul>
       <label class="pb-choice pb-access__admin"><input type="checkbox" class="pb-check" data-tok-admin><span>Full admin access<span class="pb-choice__hint">Overrides the choices above. Only for tools you fully trust.</span></span></label></fieldset>
-    <label class="pb-field"><span class="pb-field__label">Expires</span><span class="pb-select"><select data-tok-exp><option>in 30 days</option><option>in 90 days</option><option>in 1 year</option><option>never</option></select></span></label>
+    <div class="pb-field"><label class="pb-field__label" for="apitokens-expires">Expires</label><span class="pb-select"><select data-tok-exp id="apitokens-expires"><option>in 30 days</option><option>in 90 days</option><option>in 1 year</option><option>never</option></select></span></div>
   </div>
   <div class="pb-dialog__foot"><button class="pb-btn pb-btn--ghost" value="cancel" formnovalidate>Cancel</button><button class="pb-btn pb-btn--primary" value="ok">Create token</button></div>
 </form></dialog>

@@ -34,6 +34,7 @@
 .pb-shell__search .pb-kbd { margin-left: auto; }
 .pb-shell__tools { display: flex; align-items: center; gap: var(--space-2); margin-left: auto; }
 .pb-shell__navbtn { display: none; }
+.pb-shell__scrim { display: none; }
 .pb-shell__nav { grid-area: nav; position: sticky; top: var(--pb-head-h); align-self: start; height: calc(100dvh - var(--pb-head-h)); overflow-y: auto; padding: var(--space-4) var(--space-3); border-right: var(--stroke-1) solid var(--line); background: var(--bg); }
 [data-edge="hard"] .pb-shell__nav { border-right-color: var(--ink); }
 .pb-shell__main { grid-area: main; min-width: 0; padding: var(--space-6) var(--space-8) var(--space-12); }
@@ -50,10 +51,17 @@
   .pb-shell__search { display: none; }
   .pb-shell__nav { position: fixed; z-index: 60; top: var(--pb-head-h, 56px); left: 0; bottom: 0; align-self: stretch; width: min(300px, 86vw); height: auto; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-105%); transition: transform 160ms; box-shadow: var(--pb-shadow-lg); background: var(--surface); }
   .pb-shell[data-nav-open] .pb-shell__nav { transform: none; }
+  /* Closed, the drawer is out of the tab order too (not only off screen); visibility waits for the slide-out. */
+  .pb-shell:not([data-nav-open]) .pb-shell__nav { visibility: hidden; transition: transform 160ms, visibility 0s 160ms; }
+  .pb-shell[data-nav-open] > .pb-shell__scrim { display: block; position: fixed; z-index: 59; inset: var(--pb-head-h, 56px) 0 0 0; background: color-mix(in srgb, var(--night) 45%, transparent); }
+  .pb-shell--contained[data-nav-open] > .pb-shell__scrim { position: absolute; }
   .pb-shell--contained { overflow: hidden; }
   .pb-shell--contained .pb-shell__nav { position: absolute; top: var(--pb-head-h); bottom: 0; height: auto; }
   .pb-shell__main { padding: var(--space-4) var(--space-4) var(--space-8); }
   .pb-shell__foot { padding: var(--space-4); }
+}
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .pb-shell:not([data-nav-open]) .pb-shell__nav { transition: none; }
 }
 
 /* ---------- Nav list ---------- */

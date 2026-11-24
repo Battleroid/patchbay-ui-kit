@@ -201,6 +201,14 @@
   border-radius: var(--pb-r-sm); pointer-events: none; opacity: 0; transition: opacity 120ms; z-index: 10;
 }
 .pb-tip:hover::after, .pb-tip:focus-visible::after, .pb-tip[data-tip-open]::after { opacity: 1; }
+/* With script the tip is a role=tooltip popover (pbTip); the ::after above stays the no-script look and the "Copied" flash (data-tip-open). */
+.pb-tip[data-tip-js]:not([data-tip-open])::after { content: none; }
+.pb-tooltip {
+  position: fixed; inset: auto; margin: 0; padding: 4px 8px; max-width: min(280px, calc(100vw - 16px)); overflow: visible;
+  font: 400 12px/16px var(--font-mono); color: var(--bg); background: var(--ink); border: 0; border-radius: var(--pb-r-sm);
+}
+.pb-tooltip:not(:popover-open) { display: none; }
+@media (forced-colors: active) { .pb-tooltip { border: 1px solid CanvasText; } }
 
 /* ---------- Dialog ---------- */
 .pb-dialog {
@@ -308,10 +316,10 @@
 .pb-meterbar::-moz-meter-bar { background: var(--ok); }
 .pb-meterbar:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--warn); }
 .pb-meterbar:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--down); }
-.pb-gauge { display: grid; grid-template-columns: 1fr auto; gap: 6px var(--space-3); align-items: baseline; }
-.pb-gauge > :is(progress, meter) { grid-column: 1 / -1; }
-.pb-gauge__label { font: 400 15px/20px var(--font-serif); }
-.pb-gauge__value { font: 500 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); }
+.pb-progressrow { display: grid; grid-template-columns: 1fr auto; gap: 6px var(--space-3); align-items: baseline; }
+.pb-progressrow > :is(progress, meter) { grid-column: 1 / -1; }
+.pb-progressrow__label { font: 400 15px/20px var(--font-serif); }
+.pb-progressrow__value { font: 500 13px/16px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); }
 
 /* ---------- Notice ---------- */
 .pb-notice {

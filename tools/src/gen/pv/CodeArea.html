@@ -1,8 +1,9 @@
-<div class="pb-code">
+<div style="display:grid;gap:16px">
+<div class="pb-code" data-lang="yaml">
   <div class="pb-code__bar"><span>compose.yaml</span><span class="pb-code__lang">yaml</span>
-    <button class="pb-btn pb-btn--ghost pb-btn--sm"><span class="pb-icon pb-icon--copy"></span>Copy</button></div>
+    <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-copy-target="#ca-compose"><span class="pb-icon pb-icon--copy"></span><span>Copy</span></button></div>
   <div class="pb-code__body"><pre class="pb-code__gutter"></pre>
-    <div class="pb-code__edit"><pre class="pb-code__hl" aria-hidden="true"></pre><textarea class="pb-code__input" spellcheck="false" aria-label="compose.yaml"># media stack
+    <div class="pb-code__edit"><pre class="pb-code__hl" aria-hidden="true"></pre><textarea class="pb-code__input" id="ca-compose" spellcheck="false" aria-label="compose.yaml"># media stack
 services:
   jellyfin:
     image: "jellyfin/jellyfin:10.10"
@@ -12,4 +13,13 @@ services:
     read_only: true
     volumes:
       - /tank/media:/media:ro</textarea></div></div>
+</div>
+<div class="pb-code" data-lang="yaml">
+  <div class="pb-code__bar"><span>healthcheck.yaml</span><span class="pb-code__lang">yaml · read-only</span></div>
+  <div class="pb-code__body"><pre class="pb-code__gutter">1
+2
+3</pre><pre class="pb-code__hl">healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost:8096/health"]
+  interval: 30s</pre></div>
+</div>
 </div>

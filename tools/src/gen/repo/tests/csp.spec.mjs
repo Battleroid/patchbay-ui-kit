@@ -123,7 +123,7 @@ for (const p of pages) {
     await expect.poll(() => audio.locator('audio').evaluate((m) => m.paused)).toBe(true);
 
     // Lightbox: open, zoom, next.
-    const gal = sec('ImageViewer').locator('[data-lightbox]').first();
+    const gal = sec('ImageViewer').locator('[data-imageviewer]').first();
     await gal.locator('a[href]').first().click();
     const lb = page.locator('dialog.pb-lightbox[open]');
     await expect(lb).toHaveCount(1);
@@ -138,7 +138,7 @@ for (const p of pages) {
     await page.keyboard.press('Escape');
 
     // Code input: type and paste.
-    const otp = sec('CodeInput').locator('[data-otp]').first();
+    const otp = sec('CodeInput').locator('[data-codeinput]').first();
     await otp.locator('input').first().click();
     await page.keyboard.type('12');
     await otp.locator('input').nth(2).evaluate((i) => { const dt = new DataTransfer(); dt.setData('text', '3456'); i.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true })); });
@@ -168,7 +168,7 @@ for (const p of pages) {
       colorfields: document.querySelectorAll('[data-colorfield]').length, colorpops: document.querySelectorAll('.pb-colorpop').length,
       datefields: document.querySelectorAll('.pb-datefield,.pb-daterange').length, cals: document.querySelectorAll('.pb-cal[popover]').length,
       players: document.querySelectorAll('[data-player]').length, bars: document.querySelectorAll('[data-player] .pb-player__bar').length,
-      galleries: document.querySelectorAll('[data-lightbox]').length, lightboxes: document.querySelectorAll('dialog.pb-lightbox').length,
+      galleries: document.querySelectorAll('[data-imageviewer]').length, lightboxes: document.querySelectorAll('dialog.pb-lightbox').length,
       qrs: document.querySelectorAll('[data-qr]').length, qrsvgs: document.querySelectorAll('[data-qr] .pb-qr__code > svg').length,
       mids: [...document.querySelectorAll('[data-midtrunc]')].every((m) => m.children.length === 2),
       hl: [...document.querySelectorAll('.pb-code .pb-code__hl')].length,
@@ -183,7 +183,7 @@ for (const p of pages) {
     await page.locator('.pb-datefield [data-cal]').first().click();
     await expect(page.locator('.pb-cal:popover-open')).toHaveCount(1);
     await page.keyboard.press('Escape');
-    const otp = page.locator('[data-otp]').first();
+    const otp = page.locator('[data-codeinput]').first();
     await otp.locator('input').first().fill('');
     await otp.locator('input').first().click();
     await page.keyboard.type('7');
@@ -410,7 +410,7 @@ test('tabs: roving tabindex and arrow keys select tabs', async ({ page }) => {
 });
 test('lightbox: members are read when it opens', async ({ page }) => {
   await page.goto('/components/ImageViewer/example.html');
-  const gal = page.locator('[data-lightbox]').first();
+  const gal = page.locator('[data-imageviewer]').first();
   await gal.evaluate((g) => { const li = g.querySelectorAll('li'); g.append(li[0]); li[1].remove(); });
   await gal.locator('a[href]').last().click();
   const lb = page.locator('dialog.pb-lightbox[open]');
@@ -421,18 +421,18 @@ test('lightbox: members are read when it opens', async ({ page }) => {
 test('lightbox: closing does not steal focus moved elsewhere', async ({ page }) => {
   await page.goto('/components/ImageViewer/example.html');
   await page.evaluate(() => { const b = document.createElement('button'); b.id = 'elsewhere'; b.textContent = 'x'; document.body.append(b); });
-  await page.locator('[data-lightbox] a[href]').first().click();
+  await page.locator('[data-imageviewer] a[href]').first().click();
   await page.evaluate(() => { document.querySelector('dialog.pb-lightbox').close(); document.getElementById('elsewhere').focus(); });
   await page.waitForTimeout(50);
   await expect(page.locator('#elsewhere')).toBeFocused();
-  await page.locator('[data-lightbox] a[href]').nth(1).click();
+  await page.locator('[data-imageviewer] a[href]').nth(1).click();
   await page.keyboard.press('Escape');
-  await expect(page.locator('[data-lightbox] a[href]').nth(1)).toBeFocused();
+  await expect(page.locator('[data-imageviewer] a[href]').nth(1)).toBeFocused();
 });
 test('lightbox: modifier clicks keep the link behavior', async ({ page }) => {
   await page.goto('/components/ImageViewer/example.html');
   const r = await page.evaluate(() => {
-    const a = document.querySelector('[data-lightbox] a[href]'); const ev = new MouseEvent('click', { bubbles: true, cancelable: true, ctrlKey: true });
+    const a = document.querySelector('[data-imageviewer] a[href]'); const ev = new MouseEvent('click', { bubbles: true, cancelable: true, ctrlKey: true });
     a.dispatchEvent(ev); return [ev.defaultPrevented, !!document.querySelector('dialog.pb-lightbox[open]')];
   });
   expect(r).toEqual([false, false]);

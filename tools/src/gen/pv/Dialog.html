@@ -2,9 +2,9 @@
   <div class="pb-toolbar">
     <button class="pb-btn" data-demo="confirm">Confirm</button>
     <button class="pb-btn pb-btn--danger" data-demo="type"><span class="pb-icon pb-icon--trash"></span>Type to confirm</button>
-    <button class="pb-btn" data-open="dlg-form">Form</button>
+    <button class="pb-btn" data-pb-open="#dlg-form">Form</button>
     <button class="pb-btn" data-pb-open="#dlg-long">Long</button>
-    <button class="pb-btn" data-open="dlg-drawer"><span class="pb-icon pb-icon--menu"></span>Drawer</button>
+    <button class="pb-btn" data-pb-open="#dlg-drawer"><span class="pb-icon pb-icon--menu"></span>Drawer</button>
   </div>
   <dialog class="pb-dialog pb-dialog--sm" open style="position:static;margin:0;animation:none">
     <div class="pb-dialog__head"><span class="pb-dialog__icon" data-status="down"><span class="pb-icon pb-icon--status-down"></span></span><div><h3 class="pb-dialog__title">Delete snapshot?</h3><p class="pb-dialog__sub">tank/media@2026-11-21</p></div></div>
@@ -14,14 +14,14 @@
   <dialog class="pb-dialog" open style="position:static;margin:0;animation:none">
     <div class="pb-dialog__head"><div><h3 class="pb-dialog__title">New share</h3><p class="pb-dialog__sub">Anyone with the link can download.</p></div><button class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" aria-label="Close"><span class="pb-icon pb-icon--close"></span></button></div>
     <div class="pb-dialog__body"><div class="pb-form">
-      <label class="pb-field"><span class="pb-field__label">Title</span><span class="pb-input"><input value="Rack rebuild"></span></label>
-      <label class="pb-field"><span class="pb-field__label">Expires</span><span class="pb-select" style="min-width:0"><select><option>in 7 days</option><option>in 30 days</option><option>never</option></select></span></label>
+      <div class="pb-field"><label class="pb-field__label" for="dialog-title">Title</label><span class="pb-input"><input value="Rack rebuild" id="dialog-title"></span></div>
+      <div class="pb-field"><label class="pb-field__label" for="dialog-expires">Expires</label><span class="pb-select" style="min-width:0"><select id="dialog-expires"><option>in 7 days</option><option>in 30 days</option><option>never</option></select></span></div>
     </div></div>
     <div class="pb-dialog__foot"><span class="pb-foot__status">6 files · 18.2 MB</span><button class="pb-btn pb-btn--ghost">Cancel</button><button class="pb-btn pb-btn--primary">Create link</button></div>
   </dialog>
   <dialog class="pb-dialog" id="dlg-form"><form method="dialog">
     <div class="pb-dialog__head"><div><h3 class="pb-dialog__title">New share</h3><p class="pb-dialog__sub">Anyone with the link can download.</p></div><button class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" value="cancel" aria-label="Close"><span class="pb-icon pb-icon--close"></span></button></div>
-    <div class="pb-dialog__body"><div class="pb-form"><label class="pb-field"><span class="pb-field__label">Title</span><span class="pb-input"><input value="Rack rebuild" autofocus></span></label>
+    <div class="pb-dialog__body"><div class="pb-form"><div class="pb-field"><label class="pb-field__label" for="dialog-title-2">Title</label><span class="pb-input"><input value="Rack rebuild" autofocus id="dialog-title-2"></span></div>
       <label class="pb-choice"><input type="checkbox" class="pb-check" checked><span>Require password</span></label></div></div>
     <div class="pb-dialog__foot"><button class="pb-btn pb-btn--ghost" value="cancel">Cancel</button><button class="pb-btn pb-btn--primary" value="ok">Create link</button></div></form></dialog>
   <dialog class="pb-dialog pb-dialog--lg pb-dialog--scroll" id="dlg-long"><form method="dialog">
@@ -31,8 +31,8 @@
   <dialog class="pb-dialog pb-dialog--drawer" id="dlg-drawer"><form method="dialog">
     <div class="pb-dialog__head"><div><h3 class="pb-dialog__title">Jellyfin</h3><p class="pb-dialog__sub">media.lab.home</p></div><button class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" value="cancel" aria-label="Close"><span class="pb-icon pb-icon--close"></span></button></div>
     <div class="pb-dialog__body"><div class="pb-form">
-      <label class="pb-field"><span class="pb-field__label">Upstream</span><span class="pb-input"><span class="pb-input__affix">http://</span><input value="pve-01:8096" autofocus></span></label>
+      <div class="pb-field"><label class="pb-field__label" for="dialog-upstream">Upstream</label><span class="pb-input"><span class="pb-input__affix">http://</span><input value="pve-01:8096" autofocus id="dialog-upstream"></span></div>
       <label class="pb-choice" style="justify-content:space-between"><span>Expose to internet</span><input type="checkbox" role="switch" class="pb-switch" checked></label>
-      <label class="pb-field"><span class="pb-field__label">Notes</span><span class="pb-input"><textarea>Transcoding on the iGPU.</textarea></span></label></div></div>
+      <div class="pb-field"><label class="pb-field__label" for="dialog-notes">Notes</label><span class="pb-input"><textarea id="dialog-notes">Transcoding on the iGPU.</textarea></span></div></div></div>
     <div class="pb-dialog__foot"><button class="pb-btn pb-btn--ghost" value="cancel">Cancel</button><button class="pb-btn pb-btn--primary" value="ok">Save</button></div></form></dialog>
 </div>

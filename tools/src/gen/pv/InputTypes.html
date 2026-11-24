@@ -1,20 +1,20 @@
 <div style="display:grid;gap:14px">
-  <label class="pb-field"><span class="pb-field__label">Password</span>
-    <span class="pb-input"><span class="pb-icon pb-icon--key"></span><input type="password" value="correct-horse"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span>
-    <span class="pb-strength" data-level="0" aria-live="polite"><i></i><i></i><i></i><i></i><span></span></span></label>
+  <div class="pb-field"><label class="pb-field__label" for="inputtypes-password">Password</label>
+    <span class="pb-input"><span class="pb-icon pb-icon--key"></span><input type="password" value="correct-horse" id="inputtypes-password"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span>
+    <span class="pb-strength" data-level="0" aria-live="polite"><i></i><i></i><i></i><i></i><span></span></span></div>
   <div class="pb-form__row">
-    <label class="pb-field"><span class="pb-field__label">Email</span><span class="pb-input"><input type="email" placeholder="ops@lab.home"></span></label>
-    <label class="pb-field"><span class="pb-field__label">Port</span>
-      <span class="pb-input"><input type="number" value="8096" min="1" max="65535" data-step><button type="button" class="pb-input__btn" data-dec aria-label="Decrease"><span class="pb-icon pb-icon--minus"></span></button><button type="button" class="pb-input__btn" data-inc aria-label="Increase"><span class="pb-icon pb-icon--plus"></span></button></span></label>
+    <div class="pb-field"><label class="pb-field__label" for="inputtypes-email">Email</label><span class="pb-input"><input type="email" placeholder="ops@lab.home" id="inputtypes-email"></span></div>
+    <div class="pb-field"><label class="pb-field__label" for="inputtypes-port">Port</label>
+      <span class="pb-input"><input type="number" value="8096" min="1" max="65535" data-step id="inputtypes-port"><button type="button" class="pb-input__btn" data-dec aria-label="Decrease"><span class="pb-icon pb-icon--minus"></span></button><button type="button" class="pb-input__btn" data-inc aria-label="Increase"><span class="pb-icon pb-icon--plus"></span></button></span></div>
   </div>
   <div class="pb-form__row">
-    <label class="pb-field"><span class="pb-field__label">Date</span><span class="pb-input"><input type="date" value="2026-11-22"></span></label>
-    <label class="pb-field"><span class="pb-field__label">Time</span><span class="pb-input"><input type="time" value="03:00"></span></label>
+    <div class="pb-field"><label class="pb-field__label" for="inputtypes-date">Date</label><span class="pb-input"><input type="date" value="2026-11-22" id="inputtypes-date"></span></div>
+    <div class="pb-field"><label class="pb-field__label" for="inputtypes-time">Time</label><span class="pb-input"><input type="time" value="03:00" id="inputtypes-time"></span></div>
   </div>
   <div class="pb-form__row">
-    <label class="pb-field"><span class="pb-field__label">Month</span><span class="pb-input"><input type="month" value="2026-11"></span></label>
-    <label class="pb-field"><span class="pb-field__label">Label color</span><span class="pb-input"><input type="color" value="#1f3fd6" data-color><input value="#1f3fd6" readonly aria-label="Hex value"></span></label>
+    <div class="pb-field"><label class="pb-field__label" for="inputtypes-month">Month</label><span class="pb-input"><input type="month" value="2026-11" id="inputtypes-month"></span></div>
+    <div class="pb-field"><label class="pb-field__label" for="inputtypes-label-color">Label color</label><span class="pb-input"><input type="color" value="#1f3fd6" data-color id="inputtypes-label-color"><input value="#1f3fd6" readonly aria-label="Hex value"></span></div>
   </div>
-  <label class="pb-field"><span class="pb-field__label">Starts at</span><span class="pb-input"><input type="datetime-local" value="2026-11-22T03:00"></span></label>
-  <label class="pb-field"><span class="pb-field__label">Key file</span><input type="file" class="pb-file"></label>
+  <div class="pb-field"><label class="pb-field__label" for="inputtypes-starts-at">Starts at</label><span class="pb-input"><input type="datetime-local" value="2026-11-22T03:00" id="inputtypes-starts-at"></span></div>
+  <div class="pb-field"><label class="pb-field__label" for="inputtypes-key-file">Key file</label><input type="file" class="pb-file" id="inputtypes-key-file"></div>
 </div>
