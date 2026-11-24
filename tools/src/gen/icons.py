@@ -1,5 +1,6 @@
+from pbroot import ROOT
 import os, json, urllib.parse
-OUT='/home/claude/icons'
+OUT=ROOT+'/icons'
 # each icon: list of elements; tuples (soft, hard) where they differ
 def frame(e): return '<circle cx="12" cy="12" r="9"/>' if e=='soft' else '<rect x="3" y="3" width="18" height="18"/>'
 def rr(x,y,w,h,r,e): return f'<rect x="{x}" y="{y}" width="{w}" height="{h}"' + (f' rx="{r}"' if e=='soft' else '') + '/>'
@@ -99,6 +100,6 @@ for e,sel in (('soft',':root, [data-edge="soft"]'),('hard','[data-edge="hard"]')
         lines.append(f'  --pb-ic-{n}: url("data:image/svg+xml,{s}");')
     css.append(sel+' {\n'+'\n'.join(lines)+'\n}')
 css.append('\n'.join(f'.pb-icon--{n} {{ --pb-ic: var(--pb-ic-{n}); }}' for n in I))
-open('/home/claude/gen/icons.css','w').write('\n'.join(css)+'\n')
-json.dump(list(I),open('/home/claude/gen/icons.json','w'))
-print(len(I), os.path.getsize('/home/claude/gen/icons.css'))
+open(ROOT+'/gen/icons.css','w').write('\n'.join(css)+'\n')
+json.dump(list(I),open(ROOT+'/gen/icons.json','w'))
+print(len(I), os.path.getsize(ROOT+'/gen/icons.css'))

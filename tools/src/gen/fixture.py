@@ -1,7 +1,8 @@
+from pbroot import ROOT
 # Writes tests/fixtures/csp.html and csp-esm.html: one instance of every pbInit component, from the pv/ example markup with
 # inline styles and handlers removed, under the strict CSP the kit promises. export.py calls write(out_dir).
 import json,os,re,sys
-sys.path.insert(0,'/home/claude/gen')
+sys.path.insert(0,ROOT+'/gen')
 import pbscripts as S
 CSP="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:"
 # Covers every hook in pv/_hooks.js (tests/csp.spec.mjs checks that each selector matches).

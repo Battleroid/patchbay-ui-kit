@@ -1,5 +1,6 @@
+from pbroot import ROOT
 import os,sys
-PV='/home/claude/gen/pv'; OUT='/home/claude/ds/project/components'
+PV=ROOT+'/gen/pv'; OUT=ROOT+'/ds/project/components'
 C={ # name: (group, height, subtitle, layout)
  'AppIcons':('Foundations',676,'Favicon, home screen and maskable icons, theme-color','rows'),
  'AlertEmail':('Pages',1772,'Alert email that survives mail clients, with dark mode','rows'),
@@ -128,6 +129,6 @@ for n,(g,h,sub,lay) in C.items():
           f'<template id="pb-t">\n{body}\n</template>\n<script>\n{PAIR}\n{js}\n</script>\n')
     os.makedirs(f'{OUT}/{n}',exist_ok=True); open(f'{OUT}/{n}/preview.html','w').write(html)
     # local harness
-    os.makedirs('/home/claude/gen/h',exist_ok=True)
-    open(f'/home/claude/gen/h/{n}.html','w').write('<!doctype html><html data-theme="light"><head><meta charset="utf-8"><link rel="stylesheet" href="/home/claude/gen/tokens.css"><link rel="stylesheet" href="/home/claude/ds/project/components/bundle.css"><style>html,body{margin:0;background:var(--bg)}</style></head><body>'+html+'</body></html>')
+    os.makedirs(ROOT+'/gen/h',exist_ok=True)
+    open(f'{ROOT}/gen/h/{n}.html','w').write('<!doctype html><html data-theme="light"><head><meta charset="utf-8"><link rel="stylesheet" href="'+ROOT+'/gen/tokens.css"><link rel="stylesheet" href="'+ROOT+'/ds/project/components/bundle.css"><style>html,body{margin:0;background:var(--bg)}</style></head><body>'+html+'</body></html>')
 print('ok')
