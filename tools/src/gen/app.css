@@ -138,3 +138,11 @@ button[aria-busy="true"] { cursor: progress; pointer-events: none; opacity: 0.75
 .pb-demo-head__brand { font: 600 var(--pb-text-17)/24px var(--font-serif); }
 .pb-ring__pct { font: 500 var(--pb-text-12)/16px var(--font-mono); font-variant-numeric: tabular-nums; }
 .pb-ring:has(.pb-ring__pct) { width: auto; grid-auto-flow: column; gap: 6px; padding-inline: 8px; }
+
+/* ---------- Active option / menu item: accent tint plus an inset bar (3:1 or better), an outline in forced colours ---------- */
+.pb-option[data-active], .pb-menu__item:focus-visible, .pb-mega__item:focus-visible, .pb-sheet__item:focus-visible, .pb-qf__opt[data-active], .pb-vlist__row[data-active], .pb-cmd__item[data-active],
+.pb-select:not(.pb-select--multi) option:focus-visible { background: var(--accent-tint); box-shadow: inset 3px 0 0 var(--accent); }
+:dir(rtl) :is(.pb-option[data-active], .pb-menu__item:focus-visible, .pb-mega__item:focus-visible, .pb-sheet__item:focus-visible, .pb-qf__opt[data-active], .pb-vlist__row[data-active], .pb-cmd__item[data-active]) { box-shadow: inset -3px 0 0 var(--accent); }
+@media (forced-colors: active) {
+  .pb-option[data-active], .pb-menu__item:focus-visible, .pb-mega__item:focus-visible, .pb-sheet__item:focus-visible, .pb-qf__opt[data-active], .pb-vlist__row[data-active], .pb-cmd__item[data-active] { outline: 2px solid Highlight; outline-offset: -2px; }
+}
