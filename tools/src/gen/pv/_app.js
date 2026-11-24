@@ -38,10 +38,13 @@ function pbAutoSubmit(form){var ms=+form.getAttribute('data-autosubmit')||250,tm
   form.addEventListener('submit',function(){clearTimeout(tm);});}
 
 /* ---------- Busy regions: [aria-busy="true"] dims its content, blocks the pointer and shows a spinner after 300 ms (app.css), so quick swaps never flash.
-   pbBusy(true, region) sets or clears aria-busy on a region (element or selector); pbBusy(true) with no region shows a top progress bar (counted: every on needs an off). ---------- */
+   pbBusy(true, region) sets or clears aria-busy on a region (element or selector; a button also swaps to data-busy-label and ignores clicks while busy); pbBusy(true) with no region shows a top progress bar (counted: every on needs an off). ---------- */
 var pbBusyN=0,pbBusyBar=null;
 function pbBusy(on,target){if(typeof target==='string')target=document.querySelector(target);
-  if(target){if(on)target.setAttribute('aria-busy','true');else target.removeAttribute('aria-busy');return;}
+  if(target){if(target.matches('button,[role=button]')){if(!target.__pbBusy){target.__pbBusy=true;target.addEventListener('click',function(e){if(target.getAttribute('aria-busy')==='true'){e.preventDefault();e.stopImmediatePropagation();}},true);}
+      if(on&&target.getAttribute('aria-busy')!=='true'){target.__pbLabel=target.textContent;if(target.dataset.busyLabel){var l=[].filter.call(target.childNodes,function(n){return n.nodeType===3&&n.textContent.trim();}).pop();if(l){target.__pbText=l;target.__pbOld=l.textContent;l.textContent=target.dataset.busyLabel;}else target.textContent=target.dataset.busyLabel;}target.setAttribute('aria-disabled','true');}
+      else if(!on&&target.getAttribute('aria-busy')==='true'){if(target.__pbText)target.__pbText.textContent=target.__pbOld;else if(target.dataset.busyLabel)target.textContent=target.__pbLabel;target.__pbText=null;target.removeAttribute('aria-disabled');}}
+    if(on)target.setAttribute('aria-busy','true');else target.removeAttribute('aria-busy');return;}
   pbBusyN=Math.max(0,pbBusyN+(on?1:-1));
   if(!pbBusyBar){pbBusyBar=document.createElement('div');pbBusyBar.className='pb-busybar';pbBusyBar.hidden=true;pbBusyBar.setAttribute('role','progressbar');pbBusyBar.setAttribute('aria-label',pbStrings.busy);pbBusyBar.appendChild(document.createElement('span'));document.body.appendChild(pbBusyBar);}
   pbBusyBar.hidden=!pbBusyN;}
@@ -83,7 +86,7 @@ function pbShareLinkEl(el){if(el.firstElementChild)return;el.innerHTML=pbShareLi
    data-warn (80) and data-down (95) set the level. The popover holds the breakdown (a Storage bar fits). el.pbSet(percent) redraws it. ---------- */
 function pbRing(el){var R=10,tpl=el.getAttribute('aria-label')||pbStrings.ringLabel;
   function set(v){v=Math.max(0,Math.min(100,+v||0));el.dataset.level=v>=(+el.dataset.down||95)?'down':v>=(+el.dataset.warn||80)?'warn':'ok';
-    var arc=el.querySelector('.pb-ring__arc');if(arc)arc.setAttribute('stroke-dasharray',v+' 100');el.setAttribute('aria-label',pbFmt(tpl,{n:Math.round(v)}));}
+    var arc=el.querySelector('.pb-ring__arc');if(arc)arc.setAttribute('stroke-dasharray',v+' 100');el.setAttribute('aria-label',pbFmt(tpl,{n:Math.round(v)}));if(el.hasAttribute('data-show-value')){var pc=el.querySelector('.pb-ring__pct');if(!pc){pc=document.createElement('span');pc.className='pb-ring__pct';el.appendChild(pc);}pc.textContent=Math.round(v)+'%';}}
   if(!el.querySelector('svg')){el.insertAdjacentHTML('afterbegin','<svg class="pb-ring__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="pb-ring__track" cx="12" cy="12" r="'+R+'" pathLength="100"/><circle class="pb-ring__arc" cx="12" cy="12" r="'+R+'" pathLength="100" stroke-dasharray="0 100"/></svg>');}
   el.pbSet=set;set(el.dataset.value!=null?el.dataset.value:(+el.dataset.total?(+el.dataset.used/+el.dataset.total*100):0));}
 

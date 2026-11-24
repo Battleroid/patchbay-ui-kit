@@ -225,3 +225,120 @@ test('share link, ring and teaser hooks render', async ({ page }) => {
   await page.mouse.move(0, 0);
   await expect(t.locator('video')).toHaveCount(0);
 });
+
+test('query filter: no preselect, Tab commits only typed text and moves on, Space never commits', async ({ page }) => {
+  await load(page);
+  const qf = sec(page, 'QueryFilter').locator('[data-qf]').first();
+  const inp = qf.locator('.pb-qf__box input');
+  const chips = qf.locator('.pb-qf__chip');
+  const before = await chips.count();
+  await inp.focus();
+  await expect(qf.locator('.pb-qf__menu')).toBeVisible();
+  await expect(qf.locator('.pb-qf__opt[aria-selected="true"]')).toHaveCount(0);
+  await page.keyboard.press('Tab');
+  expect(await inp.evaluate((e) => document.activeElement === e)).toBe(false);
+  expect(await chips.count()).toBe(before);
+  await inp.focus();
+  await page.keyboard.type('status:down');
+  await page.keyboard.press('Space');
+  expect(await chips.count()).toBe(before);
+  await page.keyboard.press('Tab');
+  expect(await chips.count()).toBe(before + 1);
+  expect(await inp.evaluate((e) => document.activeElement === e)).toBe(false);
+  await inp.focus();
+  await page.keyboard.press('ArrowDown');
+  await expect(qf.locator('.pb-qf__opt[aria-selected="true"]')).toHaveCount(1);
+});
+
+test('upload queue: the Add files picker is reachable by keyboard and shows a focus ring', async ({ page }) => {
+  await load(page);
+  const s = sec(page, 'UploadQueue');
+  await s.locator('[data-upq-demo]').focus();
+  await page.keyboard.press('Shift+Tab');
+  expect(await page.evaluate(() => document.activeElement.matches('[data-upq-pick]'))).toBe(true);
+  const ring = await s.locator('label.pb-btn:has([data-upq-pick])').evaluate((l) => getComputedStyle(l).outlineStyle);
+  expect(ring).not.toBe('none');
+  const out = await page.evaluate(() => {
+    const q = document.querySelector('[data-fixture="UploadQueue"] [data-upq]');
+    q.pbItems().slice().forEach((i) => i.remove());
+    const a = q.pbAdd({ name: 'a', size: 10 }), b = q.pbAdd({ name: 'b', size: 10 }), c = q.pbAdd({ name: 'c', size: 10 });
+    [a, b, c].forEach((i) => i.start()); a.process(); b.process(); c.done();
+    const t1 = q.querySelector('.pb-upq__title').firstChild.textContent; const icon = a.li.querySelector('.pb-icon').className;
+    a.done(); b.done();
+    return [t1, icon, q.querySelector('.pb-upq__title').firstChild.textContent];
+  });
+  expect(out[0]).toBe('Processing 2 · 1 done');
+  expect(out[1]).not.toContain('refresh');
+  expect(out[2]).toBe('3 uploaded');
+});
+
+test('markdown editor: its own shortcut does not also open the palette; the toolbar is one tab stop', async ({ page }) => {
+  await load(page);
+  const md = sec(page, 'MarkdownEditor').locator('[data-md]').first();
+  const ta = md.locator('textarea');
+  await ta.focus();
+  await page.keyboard.press('ControlOrMeta+k');
+  await expect(page.locator('dialog.pb-cmd[open]')).toHaveCount(0);
+  expect(await ta.inputValue()).toContain('](https://)');
+  await expect(md.locator('[data-md-cmd][tabindex="0"]')).toHaveCount(1);
+  await md.locator('[data-md-cmd]').first().focus();
+  await page.keyboard.press('ArrowRight');
+  expect(await page.evaluate(() => document.activeElement.dataset.mdCmd)).toBe('italic');
+  await expect(md.locator('[data-md-cmd][tabindex="0"]')).toHaveCount(1);
+  expect(await md.locator('[data-md-cmd="bold"]').getAttribute('title')).toMatch(/\((⌘|Ctrl\+)B\)/);
+});
+
+test('event calendar: the grid moves with the keys, plural labels, phone day targets', async ({ page }) => {
+  await load(page);
+  const cal = sec(page, 'EventCalendar').locator('[data-evcal]').first();
+  const stop = cal.locator('.pb-evcal__day[tabindex="0"]');
+  await expect(stop).toHaveCount(1);
+  expect(await stop.getAttribute('data-date')).toBe('2026-11-22');
+  await stop.focus();
+  const cur = () => page.evaluate(() => document.activeElement.dataset.date);
+  await page.keyboard.press('ArrowRight');
+  expect(await cur()).toBe('2026-11-23');
+  await page.keyboard.press('ArrowDown');
+  expect(await cur()).toBe('2026-11-30');
+  await page.keyboard.press('Home');
+  expect(await cur()).toBe('2026-11-29');
+  await page.keyboard.press('PageDown');
+  expect(await cur()).toBe('2026-12-29');
+  await page.keyboard.press('PageUp');
+  expect(await cur()).toBe('2026-11-29');
+  await expect(cal.locator('.pb-evcal__day[tabindex="0"]')).toHaveCount(1);
+  const labels = await cal.locator('.pb-evcal__day').evaluateAll((l) => l.map((x) => x.getAttribute('aria-label')));
+  expect(labels.some((t) => /\b1 events\b/.test(t))).toBe(false);
+  expect(labels.some((t) => /, 1 event\b/.test(t))).toBe(true);
+  expect(labels.some((t) => /failed/.test(t))).toBe(true);
+  const withEv = await cal.locator('.pb-evcal__day:has(.pb-evcal__ev)').first().getAttribute('data-date');
+  await cal.locator(`.pb-evcal__day[data-date="${withEv}"]`).focus();
+  await page.keyboard.press('Enter');
+  await expect(cal.locator('.pb-evcal__agenda')).toBeVisible();
+  expect(await page.evaluate(() => document.activeElement.closest('li').dataset.date)).toBe(withEv);
+  await cal.locator('[data-evcal-view] input[value="month"]').check({ force: true });
+  await page.setViewportSize({ width: 375, height: 800 });
+  await expect(cal.locator('.pb-evcal__grid .pb-evcal__ev').first()).toBeHidden();
+  const hs = await cal.locator('.pb-evcal__day').evaluateAll((l) => l.map((x) => x.getBoundingClientRect().height));
+  expect(Math.min(...hs)).toBeGreaterThanOrEqual(44);
+});
+
+test('virtual list: End announces the last row through aria-activedescendant', async ({ page }) => {
+  await load(page);
+  const vl = sec(page, 'VirtualList').locator('[data-vlist]').first();
+  await vl.focus();
+  await page.keyboard.press('End');
+  await page.waitForTimeout(100);
+  const r = await vl.evaluate((e) => { const id = e.getAttribute('aria-activedescendant'), row = id && document.getElementById(id); return { role: e.getAttribute('role'), id: !!id, pos: row && row.getAttribute('aria-posinset'), sel: row && row.getAttribute('aria-selected'), rowRole: row && row.getAttribute('role') }; });
+  expect(r).toEqual({ role: 'listbox', id: true, pos: '5000', sel: 'true', rowRole: 'option' });
+});
+
+test('storage ring: visible percent, named, 24 px target', async ({ page }) => {
+  await load(page);
+  const b = sec(page, 'StorageRing').getByRole('button', { name: 'Storage 62% used' });
+  await expect(b).toContainText('62%');
+  const box = await b.boundingBox();
+  expect(box.width).toBeGreaterThanOrEqual(24); expect(box.height).toBeGreaterThanOrEqual(24);
+  await b.click();
+  await expect(page.locator('#ring-pop:popover-open')).toHaveCount(1);
+});

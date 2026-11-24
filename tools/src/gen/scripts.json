@@ -32,7 +32,7 @@
     "DualRange": [["_forms.js"], []],
     "ErrorSummary": [["_ui.js"], ["i_val.js"]],
     "EventCalendar": [["_misc.js"], ["i_evcal.js"]],
-    "Fieldset": [["_forms.js"], ["i_fieldset.js"]],
+    "Fieldset": [["_forms.js", "_overlay.js", "_app.js"], ["i_fieldset.js"]],
     "FileBrowser": [["_hl.js"], []],
     "FilePreview": [["_ui.js", "_hl.js", "_player.js", "_dt.js"], ["i_fp.js"]],
     "Flow": [[], ["i_flow.js"]],
@@ -51,7 +51,7 @@
     "Media": [["_player.js"], ["i_media.js"]],
     "MediaList": [[], []],
     "MediaPlayer": [["_player.js"], ["i_mediaplayer.js"]],
-    "Menu": [["_ui.js"], []],
+    "Menu": [["_ui.js", "_overlay.js", "_app.js"], []],
     "MobileNav": [["_misc.js"], []],
     "Notifications": [["_overlay.js"], []],
     "NotifySettings": [["_overlay.js", "_misc.js"], ["i_notify.js"]],
@@ -97,7 +97,6 @@
     "BusyRegion": [["_app.js"], ["i_busy.js"]],
     "MediaState": [["_app.js"], []],
     "ShareLink": [["_app.js", "_qr.js", "_ui.js", "_forms.js"], []],
-    "StorageRing": [["_app.js", "_ui.js"], []],
-    "CompactVariants": [[], []]
+    "StorageRing": [["_app.js", "_ui.js"], []]
   }
 }

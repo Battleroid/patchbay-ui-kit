@@ -4,3 +4,4 @@ Menu is a popover list of actions, opened from a button with the native `popover
 - Position it under its trigger on the `toggle` event (or with CSS anchor positioning where supported); `[popover]` closes on Escape and outside click.
 - `role="menuitemcheckbox"` with `aria-checked="true"` shows a check. `pb-menu__item--danger` goes last, after a separator.
 - Keyboard (the `menu` hook on `[popover][role=menu]`): opening focuses the first item (or `[autofocus]`), ↑/↓ cycle, Home/End jump to the ends, typing letters jumps to the next item that starts with them; Escape and clicking outside close it natively. Disabled and hidden items are skipped.
+- A destructive item asks first with the confirm hook: add `data-confirm="Title"` (and `data-confirm-body`, `data-confirm-ok`); `.pb-menu__item--danger` makes the dialog a danger one. See Confirm action.
