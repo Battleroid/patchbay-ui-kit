@@ -9,6 +9,7 @@ shutil.copy(ROOT+'/ds/project/tokens.json',O); T=json.load(open(f'{O}/tokens.jso
 import sys; sys.path.insert(0,ROOT+'/gen'); from tokcss_lib import tokens_css
 L=['/* Patchbay — tokens and components. Generated from tokens.json. Light and dark themes: data-theme on <html> or any container. */',tokens_css(T,lambda f:'fonts/'+os.path.basename(f))]
 open(f'{O}/patchbay.css','w').write('\n'.join(L)+'\n\n'+open(ROOT+'/ds/project/components/bundle.css').read())
+shutil.copy(ROOT+'/gen/demo.css',f'{O}/demo.css')
 shutil.copy(ROOT+'/gen/patchbay.js',f'{O}/patchbay.js'); shutil.copy(ROOT+'/gen/patchbay.mjs',f'{O}/patchbay.mjs')
 shutil.copy(ROOT+'/gen/repo/pb-theme-boot.js',f'{O}/pb-theme-boot.js')
 C=ROOT+'/ds/project/components'
@@ -21,7 +22,7 @@ for n in sorted(os.listdir(C)):
     open(f'{O}/components/{n}/example.html','w').write(f'''<!DOCTYPE html>
 <html lang="en" data-edge="soft" data-theme="light" data-theme-default="light">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patchbay · {n}</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css">
+<title>Patchbay · {n}</title><script src="../../pb-theme-boot.js"></script><link rel="stylesheet" href="../../patchbay.css"><link rel="stylesheet" href="../../demo.css">
 <style>body{{margin:0;padding:32px}}</style></head>
 <body class="pb">
 <!-- Set data-edge="hard" on <html> for the hard variant. pb-theme-boot.js picks the theme: the saved choice, else data-theme-default, else the system. -->

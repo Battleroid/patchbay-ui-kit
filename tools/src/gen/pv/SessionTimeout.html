@@ -1,9 +1,9 @@
-<div style="display:grid;gap:16px;justify-items:start">
+<div class="pb-demo-buttongroup-1">
   <button type="button" class="pb-btn" data-session-demo><span class="pb-icon pb-icon--clock"></span>Simulate idle (20 s)</button>
-  <dialog class="pb-dialog pb-dialog--sm pb-session" open style="position:static;margin:0;animation:none" aria-labelledby="ses-t" aria-describedby="ses-d">
+  <dialog class="pb-dialog pb-dialog--sm pb-session pb-demo-dialog-2" open aria-labelledby="ses-t" aria-describedby="ses-d">
     <div class="pb-dialog__head"><span class="pb-dialog__icon" data-status="warn"><span class="pb-icon pb-icon--clock"></span></span><div><h3 class="pb-dialog__title" id="ses-t">Still there?</h3><p class="pb-dialog__sub" id="ses-d">You’ve been idle, so you’ll be signed out soon. Unsaved changes stay in this tab.</p></div></div>
-    <div class="pb-dialog__body" style="display:grid;gap:10px"><div class="pb-session__count" aria-hidden="true">1:58</div><div class="pb-session__bar"><span style="--p:98%"></span></div><span class="pb-sr" data-session-live aria-live="polite"></span></div>
+    <div class="pb-dialog__body pb-demo-display-grid-gap-10"><div class="pb-session__count" aria-hidden="true">1:58</div><div class="pb-session__bar"><span data-vars="--p:98%"></span></div><span class="pb-sr" data-session-live aria-live="polite"></span></div>
     <div class="pb-dialog__foot"><button type="button" class="pb-btn pb-btn--ghost" data-session-out>Sign out now</button><button type="button" class="pb-btn pb-btn--primary" data-session-stay>Stay signed in</button></div>
   </dialog>
-  <p class="pb-note" data-session-out-note style="margin:0"></p>
+  <p class="pb-note pb-demo-margin-0" data-session-out-note></p>
 </div>
