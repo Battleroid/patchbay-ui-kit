@@ -153,3 +153,17 @@ button[aria-busy="true"] { cursor: progress; pointer-events: none; opacity: 0.75
   .pb-log__live::before, .pb-refresh[data-on] .pb-refresh__dot, .pb-skel, .pb-term__cursor, .pb-dt__cell[data-saved] { animation: none; }
   .pb-progressbar:indeterminate { animation: none; }
 }
+
+/* ---------- Card aria-current: tint + check. The ring means focus only. ---------- */
+.pb-card--outline[aria-current="true"] { box-shadow: none; border-color: var(--accent); background: var(--accent-tint); }
+[data-edge="hard"] .pb-card--outline[aria-current="true"] { box-shadow: none; }
+.pb-card--outline:hover[aria-current="true"], .pb-card--outline:focus-within[aria-current="true"] { box-shadow: 0 0 0 1px var(--accent); }
+[data-edge="hard"] .pb-card--outline:hover[aria-current="true"], [data-edge="hard"] .pb-card--outline:focus-within[aria-current="true"] { box-shadow: 4px 4px 0 var(--accent); }
+.pb-card[aria-current="true"] { position: relative; }
+.pb-card[aria-current="true"]::after {
+  content: ""; position: absolute; inset-block-start: var(--space-3); inset-inline-end: var(--space-3); width: 18px; height: 18px; background: var(--accent);
+  -webkit-mask: var(--pb-ic-check) center / contain no-repeat; mask: var(--pb-ic-check) center / contain no-repeat;
+}
+
+/* ---------- Opt out of the uppercase label style for a value that carries units or case ("90d", "GiB") ---------- */
+.pb-nocase { text-transform: none; letter-spacing: 0; }

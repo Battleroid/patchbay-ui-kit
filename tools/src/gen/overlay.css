@@ -81,7 +81,7 @@
 .pb-bell { position: relative; }
 .pb-bell__count {
   position: absolute; top: -6px; inset-inline-end: -6px; display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px;
-  font: 600 var(--pb-text-11)/1 var(--font-mono); color: var(--on-accent); background: var(--down); border: 2px solid var(--bg); border-radius: var(--pb-r-pill);
+  font: 600 var(--pb-text-11)/1 var(--font-mono); color: var(--bg); background: var(--ink); border: 2px solid var(--bg); border-radius: var(--pb-r-pill);
 }
 .pb-bell__count:empty, .pb-bell__count[data-zero] { display: none; }
 .pb-inbox {

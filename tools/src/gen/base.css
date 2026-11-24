@@ -78,11 +78,14 @@
 [data-edge="hard"] .pb-btn--primary, [data-edge="hard"] .pb-btn--danger { border-color: var(--ink); }
 .pb-btn--ghost { background: transparent; border-color: transparent; box-shadow: none; color: var(--accent); }
 .pb-btn--ghost:hover { background: var(--accent-tint); }
+/* Ghost + danger: red text, no fill, a down tint on hover (it must not fall back to the accent ghost look). */
+.pb-btn--ghost.pb-btn--danger { background: transparent; border-color: transparent; color: var(--down); }
+.pb-btn--ghost.pb-btn--danger:hover { background: var(--down-tint); border-color: transparent; }
 .pb-btn--sm { height: var(--size-control-sm); padding: 0 var(--space-2); font-size: var(--pb-text-12); }
 .pb-btn--icon { width: var(--size-control); padding: 0; }
 .pb-btn--icon.pb-btn--sm { width: var(--size-control-sm); }
 .pb-btn:disabled, .pb-btn[aria-disabled="true"] {
-  background: var(--surface-sunk); color: var(--ink-muted); border-color: var(--line); box-shadow: none; cursor: not-allowed; transform: none;
+  background: var(--surface-sunk); color: var(--ink-muted); border-color: var(--line-strong); box-shadow: none; cursor: not-allowed; transform: none;
 }
 
 /* ---------- Link ---------- */
@@ -267,8 +270,9 @@ a.pb-card:focus-visible, button.pb-card:focus-visible { outline: var(--pb-focus-
 }
 button.pb-pill { cursor: pointer; }
 button.pb-pill:hover { background: var(--surface-sunk); }
-.pb-pill[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
-[data-edge="hard"] .pb-pill[aria-pressed="true"] { border-color: var(--ink); box-shadow: var(--shadow-hard-sm); }
+/* One rule for "on": a toggle or filter (pill, toggle button) is accent tint + accent border + accent text; an exclusive choice in a set (segmented, calendar day, time option) is a solid accent fill. */
+.pb-pill[aria-pressed="true"] { background: var(--accent-tint); color: var(--accent); border-color: var(--accent); }
+[data-edge="hard"] .pb-pill[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--accent); }
 .pb-pill .pb-icon { width: 14px; height: 14px; }
 .pb-pill__x { display: inline-flex; margin-inline-end: -6px; padding: 2px; border: 0; background: none; color: inherit; cursor: pointer; border-radius: var(--pb-r-pill); }
 .pb-pill__x:hover { background: var(--surface-sunk); }
@@ -278,7 +282,7 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 .pb-pill--yellow { background: var(--pop-yellow); }
 .pb-pill--mint { background: var(--pop-mint); }
 .pb-pill__count { font-weight: 400; color: var(--ink-muted); }
-.pb-pill[aria-pressed="true"] .pb-pill__count { color: var(--on-accent); }
+.pb-pill[aria-pressed="true"] .pb-pill__count { color: var(--accent); }
 
 /* ---------- Badge / status ---------- */
 .pb-badge {
@@ -303,7 +307,7 @@ button.pb-pill:hover { background: var(--surface-sunk); }
 .pb-badge--solid[data-status="ok"]   { color: var(--on-pop); background: var(--pop-mint); }
 .pb-badge--solid[data-status="warn"] { color: var(--on-pop); background: var(--pop-yellow); }
 .pb-badge--solid[data-status="down"] { color: var(--on-pop); background: var(--pop-red); }
-.pb-badge--solid[data-status="info"], .pb-badge--solid[data-status="maint"] { color: var(--on-accent); background: var(--accent); }
+.pb-badge--solid[data-status="info"], .pb-badge--solid[data-status="maint"] { color: var(--on-accent); background: var(--info); }
 [data-edge="hard"] .pb-badge--solid { box-shadow: inset 0 0 0 1px var(--ink); }
 .pb-status { display: inline-flex; align-items: center; gap: 6px; font: 500 var(--pb-text-13)/16px var(--font-mono); }
 .pb-status .pb-icon { width: 16px; height: 16px; }
