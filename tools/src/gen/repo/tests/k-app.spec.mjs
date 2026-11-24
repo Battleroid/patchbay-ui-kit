@@ -342,3 +342,16 @@ test('storage ring: visible percent, named, 24 px target', async ({ page }) => {
   await b.click();
   await expect(page.locator('#ring-pop:popover-open')).toHaveCount(1);
 });
+
+test('confirm hook: data-confirm-enable controls come disabled and are enabled once bound', async ({ page }) => {
+  await load(page);
+  const state = await page.evaluate(async () => {
+    const f = document.createElement('form');
+    f.innerHTML = '<button type="submit" class="pb-btn pb-btn--danger" data-confirm="Delete it?" data-confirm-enable disabled>Delete</button>';
+    document.body.append(f);
+    const before = f.querySelector('button').disabled;
+    window.pbInit(f);
+    return { before, after: f.querySelector('button').disabled };
+  });
+  expect(state).toEqual({ before: true, after: false });
+});

@@ -28,6 +28,8 @@ cd "$WORK/gen"
 "$PB_PY" tokcss.py
 bash rebuild_js.sh
 "$PB_PY" export.py
+# Generated folders are replaced, not merged, so a removed component doesn't linger; a separate output folder is wiped first.
+if [ "$OUT" != "$(cd "$HERE/.." && pwd)" ]; then find "$OUT" -mindepth 1 -maxdepth 1 ! -name '.test-results' -exec rm -rf {} +; else rm -rf "$OUT/components"; fi
 cp -r "$WORK/export/patchbay/." "$OUT/"
 # The zip goes beside the output, except when building over the repo itself or when zip is missing.
 if [ "$OUT" != "$(cd "$HERE/.." && pwd)" ]; then
