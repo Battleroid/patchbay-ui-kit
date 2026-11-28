@@ -38,6 +38,18 @@ if os.path.isdir(f'{ROOT}/media/readme'): shutil.copytree(f'{ROOT}/media/readme'
 comps=sorted(os.listdir(f'{O}/components'))
 import pbscripts as S
 EXPORTS=re.findall(r"'(pb\w+)'",re.search(r"EXPORTS=\[(.*?)\]",open(ROOT+'/gen/genjs.py').read(),re.S).group(1))
+# The README is an overview built here (component groups follow the demo's sections in kit.py); DESIGN.md is the design guide from ds/project/README.md minus its own intro and setup.
+import ast
+SECT=ast.literal_eval(re.search(r"SECTIONS=(\[.*?\n\])",open(ROOT+'/gen/kit.py').read(),re.S).group(1))
+groups=[[g,[n for n in l if n in comps]] for _,g,l in SECT]
+rest=[n for n in comps if not any(n in l for _,l in groups)]
+groups[0][1]+=rest # Icons has no demo section of its own; it sits with the foundations.
+catalog='\n'.join(f'- **{g}:** '+', '.join(f'[{n}](components/{n}/)' for n in l) for g,l in groups if l)
+HOOKS=[h[0] for h in S.hooks()]
+guide=open(ROOT+'/ds/project/README.md').read()
+if '\n## Content' not in guide: raise SystemExit('export: ds/project/README.md needs its "## Content" section')
+guide=guide[guide.index('\n## Content')+1:].replace('\n## ','\n### ')
+guide='### '+guide[3:] if guide.startswith('## ') else guide
 use=f'''# Patchbay
 
 <picture>
@@ -45,33 +57,97 @@ use=f'''# Patchbay
   <img src="media/readme/header-light.png" alt="Patchbay: a dashboard and an app shell built with the kit, beside a short description of the kit and its demo">
 </picture>
 
-**The demo** is `demo.html` in this repository: every component on one page, in every state, with switches for the light and dark themes and the soft and hard edges. Clone the repository and open `demo.html` in a browser; nothing needs building or installing. Each component also has a page of its own, `components/<Name>/example.html`, beside its README.
+Patchbay is a UI kit for small self-hosted apps: status pages, dashboards, file and media sharing, config editors. It looks like a well-kept personal site. Text is set in a serif on warm paper, anything a machine would print is in mono, and a few bright fills carry the color.
 
-## Setup
+It comes in two edges, **soft** (rounded, diffuse shadows) and **hard** (square, ink borders, offset shadows), and two themes, **light** and **dark**. All four share the same tokens, so switching is one attribute.
 
-- **CSS:** link `patchbay.css` (tokens, fonts, every component). Fonts load from `fonts/` beside it; keep the two together. There is no `tokens.css` or `components/bundle.css` any more; it is all in `patchbay.css`.
-- **Theme without a flash:** put `<script src="pb-theme-boot.js"></script>` in `<head>` before the stylesheet (a plain blocking script, not `defer` or a module). It applies the saved choice (`localStorage` `pb-theme`: `light`, `dark` or `system`), else `<html data-theme-default="light">`, else the system setting, as `data-theme` and `data-theme-choice` on `<html>`.
-- **Root:** `class="pb"` on the app root (the body margin is reset there), `data-edge="soft"` or `data-edge="hard"` on `<html>`.
-- **Behaviors, classic script:** `<script src="patchbay.js" data-pb-auto></script>` at the end of `<body>` runs `pbInit()` on DOMContentLoaded. Without `data-pb-auto` nothing runs until you call `pbInit()`.
-- **Behaviors, ES module:** `import pbInit, {{ pbToast, pbConfirm }} from './patchbay.mjs'; pbInit();`. Exports: `pbInit` (also the default), {", ".join("`"+e+"`" for e in EXPORTS if e!="pbInit")}.
-- **`pbInit(root = document, {{only, skip}} = {{}})`** binds every hook under `root` (and `root` itself) once per element, so it is safe to call again after an htmx swap or for markup you insert: `pbInit(el)`. `only` and `skip` take hook names; `data-pb-skip="name other"` on an ancestor skips those hooks below it. One element that throws logs `[patchbay] name` and the rest still bind. `pbInit.hooks` lists the names in order: {", ".join("`"+h[0]+"`" for h in S.hooks())}. Register your own with `pbHook(name, selector, fn)` before calling `pbInit()`.
-- **Strict CSP, no inline style needed:** the kit runs under `default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'` (add `media-src 'self' blob:` for the media player and its captions). It never uses `eval`, `new Function`, inline handlers or `style` attributes. Markup it builds as a string carries styles in `data-style`, which `pbStyled(container)` moves into the CSSOM right after insertion; call it after inserting your own strings too. In your markup, set custom properties with `data-vars="--w:42%;--c:var(--chart-2)"` (names `--a-z0-9`, values without `;`, `url(` or `expression`), and use the attribute forms for layout: `.pb-dash > [data-span="1..12"]`, `.pb-steps[data-n]`, `.pb-tabbar[data-n]`, `.pb-qr[data-size=sm|md|lg]`, `.pb-auth--inline`, `.pb-progress[data-value]`. `tests/fixtures/csp.html` is every component under that policy, and it is built from the very markup in each `components/<Name>/example.html`: the example markup is exactly what runs under that CSP, with no style attribute, inline script or handler. Example-only layout classes (`pb-demo-*`) live in `demo.css`, which the examples and the demo link and your app should not. Add `connect-src 'self'` (or your origin) if you use anything that fetches: the lazy notifications inbox (`data-src`) and the command palette's `data-cmd-src`. Icons are CSS masks on `data:` URIs, so keep `img-src data:`.
-- **Script helpers:** `pbToast({{title, body, bodyHTML, …}})` and `pbConfirm({{title, body, bodyHTML, typeToConfirm, …}})` treat `body` as text and escape it; `bodyHTML` is the explicit opt-in for markup you trust; a DOM Node as `body` is appended. `pbEsc(s)` escapes `& < > " '`.
-- Start every app from `components/AppShell` (header, nav, page header, footer, skip link).
-- Before building a part, read `components/<Name>/README.md` for its markup and rules, and copy the markup from `components/<Name>/example.html`.
-- Each component's README names its markup hooks (`data-cal`, `data-clock`, `data-combo`, `data-tags`, `data-codeinput`, `data-copy`, `data-kv`, …). `components/<Name>/example.html` files are self-contained: each carries its own copy of the script it needs, built from the same sources as `patchbay.js`, plus example-only glue (fake saves, sample data).
-- Form sections keep their Save/Discard buttons inside the panel (see `components/Fieldset`).
-- Tokens: `tokens.json` is the source; every value is also a CSS custom property (`var(--accent)`, `var(--space-4)`, `var(--radius-md)`). Use tokens, never raw hex or px.
-- Icons: `<span class="pb-icon pb-icon--NAME"></span>` (paints in `currentColor`). Raw SVGs are in `icons/soft` and `icons/hard`.
-- `demo.html` shows every component on one page (`index.html` redirects to it). The README's header image is drawn from a build by `npm run readme:header` (see `tools/README.md`).
-- Density: `data-density="compact"` on `<html>` or a container for dense views.
-- App icons and a web manifest are in `app-icons/`; the alert email template is `email/alert.html`.
-- `tools/build.sh` rebuilds everything from `tools/src` (see `tools/README.md`). `npm test` runs the accessibility, layout and screenshot checks against `demo.html`.
-- License: MIT for the code and docs (`LICENSE`); the fonts are under the SIL Open Font License 1.1 (`fonts/OFL.txt`).
-- Components: {", ".join(comps)}.
+**See it:** open `demo.html`. It shows every component in every state, with switches for theme and edge, and needs nothing installed or built. Each component also has its own page, `components/<Name>/example.html`, next to a README with its markup and rules.
 
+## Quick start
+
+```html
+<!DOCTYPE html>
+<html lang="en" data-edge="soft">
+<head>
+  <meta charset="utf-8">
+  <script src="pb-theme-boot.js"></script>
+  <link rel="stylesheet" href="patchbay.css">
+</head>
+<body class="pb">
+  <!-- markup copied from components/<Name>/example.html -->
+  <script src="patchbay.js" data-pb-auto></script>
+</body>
+</html>
+```
+
+- `patchbay.css` has the tokens, the fonts and every component. Keep `fonts/` next to it.
+- `pb-theme-boot.js` applies the saved theme before the page paints, so there's no flash. It must be a plain blocking script in `<head>`, not `defer` or a module.
+- `class="pb"` marks the app root (it also resets the body margin).
+- `patchbay.js` with `data-pb-auto` runs `pbInit()` once the page has loaded. Without `data-pb-auto`, nothing runs until you call it. For ES modules: `import pbInit, {{ pbToast, pbConfirm }} from './patchbay.mjs'; pbInit();`.
+
+Start an app from [AppShell](components/AppShell/) (skip link, header, nav, page header, footer), and a new screen from one of the page templates. Before building a part, read its README and copy the markup from its example. The examples are self-contained: each carries the script it needs, plus example-only glue such as fake saves and sample data.
+
+## What's in it
+
+{catalog}
+
+Also here: `tokens.json`, the source for every token (each is also a CSS custom property, like `var(--accent)` or `var(--space-4)`; use them instead of raw hex or px); the raw icon SVGs in `icons/soft` and `icons/hard`; app icons and a web manifest in `app-icons/`; and the alert email template, `email/alert.html`.
+
+## Theme, edge and density
+
+- **Edge:** `data-edge="soft"` or `"hard"` on `<html>`, one per app.
+- **Theme:** `data-theme="light"` or `"dark"` on `<html>`, or on any container to theme one panel. `pb-theme-boot.js` uses the saved choice (`localStorage` `pb-theme`: `light`, `dark` or `system`), then `<html data-theme-default="light">`, then the system setting, and writes it as `data-theme` and `data-theme-choice` on `<html>`. A ThemeSwitch in the header lets people pick.
+- **Density:** `data-density="compact"` on `<html>` or a container, for logs and admin lists.
+
+## Scripting
+
+`pbInit(root = document, {{only, skip}} = {{}})` binds every behavior under `root`, including `root` itself. Each element is bound once, so it's safe to call again after an htmx swap or after you insert markup: `pbInit(el)`. `only` and `skip` take hook names, and `data-pb-skip="name other"` on an ancestor skips those hooks inside it. If one element throws, the error is logged as `[patchbay] name` and the rest still bind. Add your own behavior with `pbHook(name, selector, fn)` before the first `pbInit()`.
+
+`pbToast({{title, body, …}})` and `pbConfirm({{title, body, typeToConfirm, …}})` escape `body` as text. Use `bodyHTML` only for markup you trust, or pass a DOM node as `body`. `pbEsc(s)` escapes `& < > " '`.
+
+<details>
+<summary>The {len(HOOKS)} hooks, in the order they bind (<code>pbInit.hooks</code>)</summary>
+
+{", ".join("`"+h+"`" for h in HOOKS)}
+
+</details>
+
+<details>
+<summary>Everything <code>patchbay.mjs</code> exports</summary>
+
+`pbInit` (also the default export), {", ".join("`"+e+"`" for e in EXPORTS if e!="pbInit")}
+
+</details>
+
+## Strict CSP
+
+The kit needs no inline script or style. It runs under:
+
+```
+default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'
+```
+
+- Add `media-src 'self' blob:` for the media player and its captions. Add `connect-src 'self'` (or your origin) for the parts that fetch: the lazy notifications inbox (`data-src`) and the command palette's `data-cmd-src`.
+- Keep `img-src data:` (icons are CSS masks on `data:` URIs) and `blob:` (photos in the avatar editor).
+- The kit never uses `eval`, `new Function`, inline handlers or `style` attributes. Markup it builds as a string carries its styles in `data-style`, and `pbStyled(container)` moves them into the CSSOM. Call it after inserting your own strings too.
+- In your own markup, set custom properties with `data-vars="--w:42%;--c:var(--chart-2)"` (names `--a-z0-9`; values without `;`, `url(` or `expression`). Layouts that need a number take it as an attribute: `.pb-dash > [data-span="1..12"]`, `.pb-steps[data-n]`, `.pb-tabbar[data-n]`, `.pb-qr[data-size=sm|md|lg]`, `.pb-auth--inline`, `.pb-progress[data-value]`.
+- `tests/fixtures/csp.html` runs every component under this policy, built from the same markup as the examples. The `pb-demo-*` classes in `demo.css` only lay out the examples, so don't link `demo.css` in your app.
+
+## Working on the kit
+
+Everything in the repo root is generated from `tools/src`. `tools/build.sh .` rebuilds it, and `npm test` runs the accessibility, CSP, layout and screenshot checks. `tools/README.md` covers where things live, how to add a component, and how the header image above is drawn (`npm run readme:header`).
+
+## License
+
+MIT for the code and docs (`LICENSE`). The fonts are under the SIL Open Font License 1.1 (`fonts/OFL.txt`).
+
+## Design guide
+
+How the kit should look, read and fit together (content, color, type, shape, controls, layout, motion and icons) is in [DESIGN.md](DESIGN.md). Follow it when you build on the kit, too.
 '''
-open(f'{O}/README.md','w').write(use+open(ROOT+'/ds/project/README.md').read())
+open(f'{O}/README.md','w').write(use)
+# The design guide stands alone beside the README. To fold it back in, write use+guide (with ### headings) to README.md instead.
+open(f'{O}/DESIGN.md','w').write('# Patchbay design guide\n\nHow the kit should look, read and fit together. Setup and the component list are in the [README](README.md).\n\n'+guide.replace('\n### ','\n## ').replace('### ','## ',1))
 open(f'{O}/index.html','w').write('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Patchbay</title><meta http-equiv="refresh" content="0; url=demo.html"><link rel="canonical" href="demo.html"></head><body><p><a href="demo.html">Patchbay demo</a></p></body></html>\n')
 
 # ---- app icons, email template, licenses, changelog, CI, build tools ----
