@@ -1,0 +1,39 @@
+<div class="pb-demo-avatareditor-1">
+  <div class="pb-person pb-demo-avatareditor-me"><span class="pb-avatar pb-avatar--sm" data-avatar data-name="Alex Rivera" data-avatar-me="alex"></span><span><span class="pb-person__name">Alex Rivera</span><span class="pb-person__meta">signed in · mirrors the photo below</span></span></div>
+  <div class="pb-avfield" data-avatar-edit data-avatar-sync="[data-avatar-me='alex']">
+    <span class="pb-avatar pb-avatar--xl" data-avatar data-name="Alex Rivera"></span>
+    <div class="pb-avfield__body">
+      <span class="pb-avfield__title">Profile photo</span>
+      <span class="pb-avfield__hint" id="avatareditor-hint-1" aria-live="polite">PNG, JPEG or WebP · at least 128 × 128 · up to 8 MB</span>
+      <div class="pb-avfield__acts">
+        <label class="pb-btn pb-btn--sm"><input type="file" class="pb-sr" accept="image/png,image/jpeg,image/webp" data-avatar-pick aria-describedby="avatareditor-hint-1"><span class="pb-icon pb-icon--upload"></span><span data-label>Upload photo</span></label>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-avatar-remove hidden>Remove</button>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-demo-sample>Try a sample photo</button>
+      </div>
+    </div>
+  </div>
+  <p class="pb-eyebrow pb-demo-margin-8-0-0">With a photo and a presence dot</p>
+  <div class="pb-avfield" data-avatar-edit data-demo-fail>
+    <span class="pb-avatar pb-avatar--xl" data-avatar data-name="Sam Okafor"><img src="{{THUMB4}}" alt=""><span class="pb-dot" data-status="ok"></span></span>
+    <div class="pb-avfield__body">
+      <span class="pb-avfield__title">Profile photo</span>
+      <span class="pb-avfield__hint" id="avatareditor-hint-2" aria-live="polite">The first save here fails, to show the error.</span>
+      <div class="pb-avfield__acts">
+        <label class="pb-btn pb-btn--sm"><input type="file" class="pb-sr" accept="image/png,image/jpeg,image/webp" data-avatar-pick aria-describedby="avatareditor-hint-2"><span class="pb-icon pb-icon--upload"></span><span data-label>Change photo</span></label>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-avatar-remove>Remove</button>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-demo-sample>Try a sample photo</button>
+      </div>
+    </div>
+  </div>
+  <p class="pb-eyebrow pb-demo-margin-8-0-0">A rejected file</p>
+  <div class="pb-avfield">
+    <span class="pb-avatar pb-avatar--xl" data-avatar data-name="Jo Kim"></span>
+    <div class="pb-avfield__body">
+      <span class="pb-avfield__title">Profile photo</span>
+      <span class="pb-avfield__hint" data-state="error" id="avatareditor-hint-3"><span class="pb-icon pb-icon--status-down"></span>This image is 96 × 96. Use one at least 128 × 128.</span>
+      <div class="pb-avfield__acts">
+        <label class="pb-btn pb-btn--sm"><input type="file" class="pb-sr" accept="image/png,image/jpeg,image/webp" aria-describedby="avatareditor-hint-3"><span class="pb-icon pb-icon--upload"></span><span>Upload photo</span></label>
+      </div>
+    </div>
+  </div>
+</div>

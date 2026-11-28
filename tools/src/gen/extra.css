@@ -274,6 +274,8 @@
 .pb-settings__nav a[href$="danger"] { color: var(--down); }
 .pb-settings__main { display: grid; gap: var(--space-6); min-width: 0; }
 .pb-settings__main > section { scroll-margin-top: var(--space-4); }
+/* Two panels in one section (a photo above a form, say) keep the space-6 gap between cards. */
+.pb-settings__main > section > :is(.pb-fieldset, form) ~ :is(.pb-fieldset, form) { margin-top: var(--space-6); }
 .pb-settings__main h2 { margin: 0 0 var(--space-3); font: 600 var(--pb-text-19)/24px var(--font-serif); color: var(--ink); }
 .pb-settings__main h2 + p { margin: -8px 0 var(--space-3); font: 400 var(--pb-text-15)/22px var(--font-serif); color: var(--ink-muted); }
 .pb-setting { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-1) var(--space-6); padding: var(--space-3) 0; border-top: 1px solid var(--line); }

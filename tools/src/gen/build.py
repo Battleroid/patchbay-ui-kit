@@ -16,6 +16,7 @@ C={ # name: (group, height, subtitle, layout)
  'TableTools':('Data',1178,'Columns, resize, density, expandable rows, inline edit, CSV, sticky column','rows'),
  'SiteHeader':('Pages',3988,'Title bars for a site: links, dropdown menus, sub-nav, sticky, phone menu','rows'),
  'TimeRange':('Data',888,'Time range and auto-refresh pickers driving a zoomable time-series chart','rows'),
+ 'ProfilePage':('Pages',2200,'Your own account: photo, profile, sign-in, sessions, preferences','rows'),
  'SettingsPage':('Pages',1810,'Section nav, setting rows, save per section, danger zone','rows'),
  'SignIn':('Pages',4020,'Sign in, two-factor setup with QR and recovery codes, code prompt','rows'),
  'ApiTokens':('Pages',890,'Token list, create with scopes, show once, revoke','rows'),
@@ -63,6 +64,7 @@ C={ # name: (group, height, subtitle, layout)
  'Loading':('Indicators',450,'Spinners, inline loading, skeletons','cols'),
  'Popover':('Indicators',440,'Click popover, hover card, info toggletip','cols'),
  'Avatar':('Indicators',230,'Initials, sizes, status, stacks','cols'),
+ 'AvatarEditor':('Forms',520,'Upload, crop, zoom and rotate a profile photo','cols'),
  'SiteBanner':('Indicators',510,'Full-width announcements above the header','rows'),
  'CommandPalette':('Actions',160,'⌘K search for pages and actions','cols'),
  'ContextMenu':('Actions',250,'Right-click and Shift+F10 menus','cols'),
@@ -129,7 +131,7 @@ for n,(g,h,sub,lay) in C.items():
     body=open(f'{PV}/{n}.html').read().strip().replace('{{SAMPLE}}','/_blob/557011fafc2e689aab4bcb66f9c7ebf9').replace('{{POSTER}}','/_blob/941b14fb8502a96c7f8d37427890c74d').replace('{{PHOTO1}}','/_blob/4cf72d5b6b2d5ce80ea8c557d6f3bbde').replace('{{THUMB1}}','/_blob/516a1e4b163519dbafb6aabbcfdf0d19').replace('{{PHOTO2}}','/_blob/b19641e7da3850cfcb333583b768a260').replace('{{THUMB2}}','/_blob/8faa535ec693ad7ff2c4788b8e17e5e1').replace('{{PHOTO3}}','/_blob/ac76c5c52653e57058ba4543350c60c1').replace('{{THUMB3}}','/_blob/5ef81fde23193ee89228e4731f7b2eb0').replace('{{PHOTO4}}','/_blob/0753c9520a064b4422eb07e3556a295e').replace('{{THUMB4}}','/_blob/cedaf603b97e9ab78758f001cf8e69a9').replace('{{PHOTO5}}','/_blob/2b18ee0e6f21309a43dc4c9ec3af0b3d').replace('{{THUMB5}}','/_blob/3c2338bd7680877b549f19d6820f2c30').replace('{{PHOTO6}}','/_blob/59388c4b5e17bf461a2357970a7122b6').replace('{{THUMB6}}','/_blob/665bd3891cb2f3c17652868f84b9b581')
     js=open(f'{PV}/{n}.js').read().strip() if os.path.exists(f'{PV}/{n}.js') else ''
     grid='display:grid;grid-template-columns:1fr 1fr;gap:40px' if lay=='cols' else 'display:grid;gap:48px'
-    page=' page' if n in ('StatusPage','AppShell','SettingsPage','SignIn','ApiTokens','Dashboard','PrintReport') else ''
+    page=' page' if n in ('StatusPage','AppShell','SettingsPage','ProfilePage','SignIn','ApiTokens','Dashboard','PrintReport') else ''
     html=(f'<!-- @dsCard group="{g}" height={h} subtitle="{sub}"{page} -->\n'
           f'<div id="pb-r" class="pb" style="{grid};padding:24px;min-height:100%"></div>\n'
           f'<template id="pb-t">\n{body}\n</template>\n<script>\n{PAIR}\n{js}\n</script>\n')
