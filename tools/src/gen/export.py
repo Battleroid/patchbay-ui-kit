@@ -85,7 +85,7 @@ It comes in two edges, **soft** (rounded, diffuse shadows) and **hard** (square,
 - `class="pb"` marks the app root (it also resets the body margin).
 - `patchbay.js` with `data-pb-auto` runs `pbInit()` once the page has loaded. Without `data-pb-auto`, nothing runs until you call it. For ES modules: `import pbInit, {{ pbToast, pbConfirm }} from './patchbay.mjs'; pbInit();`.
 
-Start an app from [AppShell](components/AppShell/) (skip link, header, nav, page header, footer), and a new screen from one of the page templates. Before building a part, read its README and copy the markup from its example. The examples are self-contained: each carries the script it needs, plus example-only glue such as fake saves and sample data.
+Start an app from [AppShell](components/AppShell/) (skip link, header, nav, page header, footer), and a new screen from one of the page templates. Not sure which component fits? [COMPONENT-GUIDE.md](COMPONENT-GUIDE.md) answers that by job (written for AI agents, useful for anyone). Before building a part, read its README and copy the markup from its example. The examples are self-contained: each carries the script it needs, plus example-only glue such as fake saves and sample data.
 
 ## What's in it
 
@@ -148,6 +148,12 @@ How the kit should look, read and fit together (content, color, type, shape, con
 open(f'{O}/README.md','w').write(use)
 # The design guide stands alone beside the README. To fold it back in, write use+guide (with ### headings) to README.md instead.
 open(f'{O}/DESIGN.md','w').write('# Patchbay design guide\n\nHow the kit should look, read and fit together. Setup and the component list are in the [README](README.md).\n\n'+guide.replace('\n### ','\n## ').replace('### ','## ',1))
+# The component guide for AI agents: every component must have a row in its index table, and every row must be a component.
+cg=open(ROOT+'/ds/project/COMPONENT-GUIDE.md').read()
+rows=set(re.findall(r'^\| ([A-Z]\w+) \|',cg.split('\n## Every component',1)[-1].split('| --- |',1)[-1],re.M)) # rows below the header
+miss=sorted(set(comps)-rows); extra=sorted(rows-set(comps))
+if miss or extra: raise SystemExit(f'export: COMPONENT-GUIDE.md index is out of date. Add a row for: {", ".join(miss) or "-"}. Remove the row for: {", ".join(extra) or "-"}.')
+open(f'{O}/COMPONENT-GUIDE.md','w').write(cg)
 open(f'{O}/index.html','w').write('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Patchbay</title><meta http-equiv="refresh" content="0; url=demo.html"><link rel="canonical" href="demo.html"></head><body><p><a href="demo.html">Patchbay demo</a></p></body></html>\n')
 
 # ---- app icons, email template, licenses, changelog, CI, build tools ----
@@ -166,7 +172,7 @@ These Font Software files are licensed under the SIL Open Font License, Version 
 This license is copied below, and is also available with a FAQ at: https://openfontlicense.org
 
 """+ofl)
-for f in ('LICENSE','CHANGELOG.md'): shutil.copy(f'{ROOT}/gen/repo/{f}',f'{O}/{f}')
+for f in ('LICENSE','CHANGELOG.md','CLAUDE.md'): shutil.copy(f'{ROOT}/gen/repo/{f}',f'{O}/{f}')
 shutil.copytree(ROOT+'/gen/repo/.github',f'{O}/.github')
 shutil.copytree(ROOT+'/gen/repo/tests',f'{O}/tests')
 import fixture; fixture.write(f'{O}/tests/fixtures')
@@ -179,7 +185,7 @@ for f in os.listdir(ROOT+'/gen'):
 for f in os.listdir(ROOT+'/gen/pv'): shutil.copy(f'{ROOT}/gen/pv/{f}',f'{T}/src/gen/pv/{f}')
 for f in os.listdir(ROOT+'/gen/init'): shutil.copy(f'{ROOT}/gen/init/{f}',f'{T}/src/gen/init/{f}')
 D=ROOT+'/ds/project'; os.makedirs(f'{T}/src/ds/project/components')
-for f in ('tokens.json','README.md','design-system.json'): shutil.copy(f'{D}/{f}',f'{T}/src/ds/project/{f}')
+for f in ('tokens.json','README.md','COMPONENT-GUIDE.md','design-system.json'): shutil.copy(f'{D}/{f}',f'{T}/src/ds/project/{f}')
 shutil.copytree(f'{D}/fonts',f'{T}/src/ds/project/fonts')
 for n in os.listdir(f'{D}/components'):
     if os.path.exists(f'{D}/components/{n}/README.md'):
