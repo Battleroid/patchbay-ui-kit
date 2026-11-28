@@ -56,6 +56,7 @@
  "contextmenu": "[data-contextmenu]",
  "imageviewer": "[data-imageviewer]",
  "avatar": "[data-avatar]",
+ "avataredit": "[data-avatar-edit]",
  "pager": "[data-pager]",
  "validate": "form[data-validate]",
  "reltime": "time.pb-reltime[datetime]",

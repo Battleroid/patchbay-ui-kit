@@ -56,6 +56,7 @@ pbHook('cmd','dialog.pb-cmd',pbCommand);
 pbHook('contextmenu','[data-contextmenu]',pbContext);
 pbHook('imageviewer','[data-imageviewer]',pbLightbox);
 pbHook('avatar','[data-avatar]',pbAvatar);
+pbHook('avataredit','[data-avatar-edit]',pbAvatarEdit);
 pbHook('pager','[data-pager]',pbPager);
 pbHook('validate','form[data-validate]',pbValidate);
 pbHook('reltime','time.pb-reltime[datetime]',pbRelTimeEl);

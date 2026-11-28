@@ -129,6 +129,47 @@
   <div class="pb-person"><span class="pb-avatar pb-avatar--lg" data-avatar data-name="Alex Rivera"></span><span><span class="pb-person__name">Alex Rivera</span><span class="pb-person__meta">alex@lab.home · viewer</span></span></div>
 </div>
 </section>
+<section class="fx" data-fixture="AvatarEditor" aria-label="AvatarEditor">
+<div class="pb-demo-avatareditor-1">
+  <div class="pb-person pb-demo-avatareditor-me"><span class="pb-avatar pb-avatar--sm" data-avatar data-name="Alex Rivera" data-avatar-me="alex"></span><span><span class="pb-person__name">Alex Rivera</span><span class="pb-person__meta">signed in · mirrors the photo below</span></span></div>
+  <div class="pb-avfield" data-avatar-edit data-avatar-sync="[data-avatar-me='alex']">
+    <span class="pb-avatar pb-avatar--xl" data-avatar data-name="Alex Rivera"></span>
+    <div class="pb-avfield__body">
+      <span class="pb-avfield__title">Profile photo</span>
+      <span class="pb-avfield__hint" id="avatareditor-hint-1" aria-live="polite">PNG, JPEG or WebP · at least 128 × 128 · up to 8 MB</span>
+      <div class="pb-avfield__acts">
+        <label class="pb-btn pb-btn--sm"><input type="file" class="pb-sr" accept="image/png,image/jpeg,image/webp" data-avatar-pick aria-describedby="avatareditor-hint-1"><span class="pb-icon pb-icon--upload"></span><span data-label>Upload photo</span></label>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-avatar-remove hidden>Remove</button>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-demo-sample>Try a sample photo</button>
+      </div>
+    </div>
+  </div>
+  <p class="pb-eyebrow pb-demo-margin-8-0-0">With a photo and a presence dot</p>
+  <div class="pb-avfield" data-avatar-edit data-demo-fail>
+    <span class="pb-avatar pb-avatar--xl" data-avatar data-name="Sam Okafor"><img src="../../media/thumb-4.jpg" alt=""><span class="pb-dot" data-status="ok"></span></span>
+    <div class="pb-avfield__body">
+      <span class="pb-avfield__title">Profile photo</span>
+      <span class="pb-avfield__hint" id="avatareditor-hint-2" aria-live="polite">The first save here fails, to show the error.</span>
+      <div class="pb-avfield__acts">
+        <label class="pb-btn pb-btn--sm"><input type="file" class="pb-sr" accept="image/png,image/jpeg,image/webp" data-avatar-pick aria-describedby="avatareditor-hint-2"><span class="pb-icon pb-icon--upload"></span><span data-label>Change photo</span></label>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-avatar-remove>Remove</button>
+        <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-demo-sample>Try a sample photo</button>
+      </div>
+    </div>
+  </div>
+  <p class="pb-eyebrow pb-demo-margin-8-0-0">A rejected file</p>
+  <div class="pb-avfield">
+    <span class="pb-avatar pb-avatar--xl" data-avatar data-name="Jo Kim"></span>
+    <div class="pb-avfield__body">
+      <span class="pb-avfield__title">Profile photo</span>
+      <span class="pb-avfield__hint" data-state="error" id="avatareditor-hint-3"><span class="pb-icon pb-icon--status-down"></span>This image is 96 × 96. Use one at least 128 × 128.</span>
+      <div class="pb-avfield__acts">
+        <label class="pb-btn pb-btn--sm"><input type="file" class="pb-sr" accept="image/png,image/jpeg,image/webp" aria-describedby="avatareditor-hint-3"><span class="pb-icon pb-icon--upload"></span><span>Upload photo</span></label>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
 <section class="fx" data-fixture="Badge" aria-label="Badge">
 <div class="pb-demo-display-grid-gap-14">
   <div class="pb-demo-badge-1">
@@ -1386,6 +1427,86 @@ zpool status tank
       <li class="pb-event" data-status="ok"><span class="pb-event__mark"><span class="pb-icon pb-icon--status-ok"></span></span><p class="pb-event__title">Resilver at 64%, ETA 2 h</p><time class="pb-event__time">09:52</time></li></ol></section>
     <section><h2>Follow-ups</h2><p>Order a second cold spare. Move scrubs to Sunday. See <a class="pb-link" href="https://openzfs.github.io/openzfs-docs/">the OpenZFS docs</a> for replacing a disk.</p></section>
   </article></div>
+</div>
+</section>
+<section class="fx" data-fixture="ProfilePage" aria-label="ProfilePage">
+<div data-tpl="profile" class="pb-demo-profilepage-1">
+<header class="pb-pagehead"><nav class="pb-crumbs" aria-label="Breadcrumb"><ol><li><a href="#"><span class="pb-icon pb-icon--home"></span>Overview</a></li><li><span aria-current="page">Your account</span></li></ol></nav><h1 class="pb-pagehead__title">Your account</h1><p class="pb-pagehead__desc">Only you see this page. Admins manage everyone from Settings.</p></header>
+<div class="pb-settings">
+  <ul class="pb-settings__nav" data-section-nav aria-label="Account sections">
+    <li class="pb-profile__who"><span class="pb-avatar pb-avatar--sm" data-avatar data-name="Alex Rivera" data-avatar-me="profile"></span><span><span class="pb-person__name">Alex Rivera</span><span class="pb-person__meta">@alex · admin</span></span></li>
+    <li><a href="#profile-profile"><span class="pb-icon pb-icon--user"></span>Profile</a></li>
+    <li><a href="#profile-signin"><span class="pb-icon pb-icon--lock"></span>Sign-in</a></li>
+    <li><a href="#profile-sessions"><span class="pb-icon pb-icon--monitor"></span>Sessions</a></li>
+    <li><a href="#profile-prefs"><span class="pb-icon pb-icon--settings"></span>Preferences</a></li>
+    <li><a href="#profile-danger"><span class="pb-icon pb-icon--status-warn"></span>Delete account</a></li>
+  </ul>
+  <div class="pb-settings__main">
+    <section id="profile-profile"><h2>Profile</h2><p>What other people on lab.home see next to your shares and comments.</p>
+      <fieldset class="pb-fieldset"><legend>Photo</legend>
+        <div class="pb-avfield" data-avatar-edit data-avatar-sync="[data-avatar-me='profile']">
+          <span class="pb-avatar pb-avatar--xl" data-avatar data-name="Alex Rivera"></span>
+          <div class="pb-avfield__body">
+            <span class="pb-avfield__title">Alex Rivera</span>
+            <span class="pb-avfield__hint" id="profile-photo-hint" aria-live="polite">PNG, JPEG or WebP · at least 128 × 128 · saved on its own, right away</span>
+            <div class="pb-avfield__acts">
+              <label class="pb-btn pb-btn--sm"><input type="file" class="pb-sr" accept="image/png,image/jpeg,image/webp" data-avatar-pick aria-describedby="profile-photo-hint"><span class="pb-icon pb-icon--upload"></span><span data-label>Upload photo</span></label>
+              <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-avatar-remove hidden>Remove</button>
+              <button type="button" class="pb-btn pb-btn--ghost pb-btn--sm" data-demo-sample>Try a sample photo</button>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <form class="pb-form" data-section><fieldset class="pb-fieldset"><legend>About you</legend>
+        <div class="pb-form__row">
+          <div class="pb-field"><label class="pb-field__label" for="profile-name">Display name</label><span class="pb-input"><input value="Alex Rivera" id="profile-name" autocomplete="name" required></span></div>
+          <div class="pb-field"><label class="pb-field__label" for="profile-user">Username</label><span class="pb-input"><span class="pb-input__affix">@</span><input value="alex" id="profile-user" autocomplete="username" spellcheck="false" pattern="[a-z0-9-]{2,32}" aria-describedby="profile-user-help"></span><span class="pb-field__help" id="profile-user-help">Your page: lab.home/@alex</span></div>
+        </div>
+        <div class="pb-form__row">
+          <div class="pb-field"><label class="pb-field__label" for="profile-email">Email</label><span class="pb-input"><input type="email" value="alex@lab.home" id="profile-email" autocomplete="email" aria-describedby="profile-email-help"><span class="pb-badge" data-status="ok"><span class="pb-icon"></span>verified</span></span><span class="pb-field__help" id="profile-email-help">Sign-in codes and alerts go here. A new address is checked first.</span></div>
+          <div class="pb-field"><label class="pb-field__label" for="profile-pronouns">Pronouns</label><span class="pb-input"><input id="profile-pronouns" placeholder="optional" aria-describedby="profile-pronouns-help"></span><span class="pb-field__help" id="profile-pronouns-help">Shown beside your name if you add them.</span></div>
+        </div>
+        <div class="pb-field"><label class="pb-field__label" for="profile-bio">About</label>
+          <span class="pb-input"><textarea maxlength="180" data-count="160" id="profile-bio" aria-describedby="profile-bio-help">Runs the rack in the closet. Ask me about the backups.</textarea></span>
+          <span class="pb-field__meta"><span class="pb-field__help" id="profile-bio-help">Shown on your page and in the people list.</span><span class="pb-field__count" aria-live="polite"></span></span></div>
+        <div class="pb-fieldset__foot"><span class="pb-foot__status"></span><button type="reset" class="pb-btn pb-btn--ghost" disabled>Discard</button><button class="pb-btn pb-btn--primary" disabled>Save</button></div>
+      </fieldset></form></section>
+    <section id="profile-signin"><h2>Sign-in</h2>
+      <fieldset class="pb-fieldset"><legend>Password and two-factor</legend>
+        <div class="pb-setting"><span class="pb-setting__label">Password</span><span class="pb-setting__desc">Changed 2026-08-14.</span><button type="button" class="pb-btn" data-pb-open="#profile-pw">Change password</button></div>
+        <div class="pb-setting"><span class="pb-setting__label">Two-factor <span class="pb-badge" data-status="ok"><span class="pb-icon"></span>on</span></span><span class="pb-setting__desc">Authenticator app · 8 of 10 recovery codes left.</span><button type="button" class="pb-btn">Manage</button></div>
+        <div class="pb-setting"><span class="pb-setting__label">Passkeys</span><span class="pb-setting__desc">2 saved: MacBook, YubiKey 5C.</span><button type="button" class="pb-btn">Manage</button></div>
+      </fieldset>
+      <dialog class="pb-dialog pb-dialog--sm" id="profile-pw"><form method="dialog" class="pb-form" data-profile-pw>
+        <div class="pb-dialog__head"><div><h3 class="pb-dialog__title">Change password</h3><p class="pb-dialog__sub">Other sessions stay signed in unless you sign them out below.</p></div><button class="pb-btn pb-btn--ghost pb-btn--icon pb-btn--sm" value="cancel" formnovalidate aria-label="Close"><span class="pb-icon pb-icon--close"></span></button></div>
+        <div class="pb-dialog__body">
+          <div class="pb-field"><label class="pb-field__label" for="profile-pw-now">Current password</label><span class="pb-input"><span class="pb-icon pb-icon--key"></span><input type="password" id="profile-pw-now" autocomplete="current-password" required></span></div>
+          <div class="pb-field"><label class="pb-field__label" for="profile-pw-new">New password</label><span class="pb-input"><span class="pb-icon pb-icon--key"></span><input type="password" id="profile-pw-new" autocomplete="new-password" minlength="12" required aria-describedby="profile-pw-help"><button type="button" class="pb-input__btn" data-reveal aria-label="Show password"><span class="pb-icon pb-icon--eye"></span></button></span>
+            <span class="pb-strength" data-level="0" aria-live="polite"><i></i><i></i><i></i><i></i><span></span></span><span class="pb-field__help" id="profile-pw-help">At least 12 characters.</span></div>
+        </div>
+        <div class="pb-dialog__foot"><button class="pb-btn pb-btn--ghost" value="cancel" formnovalidate>Cancel</button><button class="pb-btn pb-btn--primary" value="ok">Change password</button></div>
+      </form></dialog></section>
+    <section id="profile-sessions"><h2>Sessions</h2><p>Where you are signed in now. Sign out anything you don’t recognize.</p>
+      <fieldset class="pb-fieldset"><legend>Signed in on</legend>
+        <div class="pb-setting pb-session"><span class="pb-setting__label"><span class="pb-icon pb-icon--monitor"></span>Firefox on macOS</span><span class="pb-setting__desc">10.0.4.21 · active now</span><span class="pb-badge" data-status="info"><span class="pb-icon"></span>this device</span></div>
+        <div class="pb-setting pb-session"><span class="pb-setting__label"><span class="pb-icon pb-icon--cpu"></span>Jellyfin app on iPhone</span><span class="pb-setting__desc">10.0.4.57 · 3 hours ago</span><button type="button" class="pb-btn pb-btn--sm" data-session-out>Sign out</button></div>
+        <div class="pb-setting pb-session"><span class="pb-setting__label"><span class="pb-icon pb-icon--terminal"></span>snap-cli 2.4.0</span><span class="pb-setting__desc">203.0.113.9 · 2026-11-19</span><button type="button" class="pb-btn pb-btn--sm" data-session-out>Sign out</button></div>
+        <div class="pb-fieldset__foot"><span class="pb-foot__status">3 sessions</span><button type="button" class="pb-btn" data-session-all>Sign out everywhere else</button></div>
+      </fieldset></section>
+    <section id="profile-prefs"><h2>Preferences</h2><p>Only for you, on every device. These apply as soon as you pick them.</p>
+      <fieldset class="pb-fieldset"><legend>Display</legend>
+        <div class="pb-setting"><span class="pb-setting__label" id="profile-density-l">Density</span><span class="pb-setting__desc">Compact fits more rows in logs and tables.</span>
+          <div class="pb-seg pb-seg--sm" role="radiogroup" aria-labelledby="profile-density-l"><label><input type="radio" name="profile-density" value="comfortable" checked>comfortable</label><label><input type="radio" name="profile-density" value="compact">compact</label></div></div>
+        <div class="pb-setting"><span class="pb-setting__label">Dates</span><span class="pb-setting__desc">How dates read in lists and emails.</span><span class="pb-select pb-select--sm"><select aria-label="Dates"><option>2026-11-28</option><option>28 Nov 2026</option><option>Nov 28, 2026</option></select></span></div>
+        <div class="pb-setting"><span class="pb-setting__label">Time zone</span><span class="pb-setting__desc">Used for your schedules and timestamps.</span><span class="pb-select pb-select--sm"><select aria-label="Time zone"><option>America/New_York</option><option>UTC</option><option>Europe/Berlin</option></select></span></div>
+        <div class="pb-setting"><span class="pb-setting__label">Reduce motion</span><span class="pb-setting__desc">Also follows your system setting.</span><input type="checkbox" class="pb-switch" aria-label="Reduce motion"></div>
+      </fieldset></section>
+    <section id="profile-danger"><h2>Delete account</h2>
+      <fieldset class="pb-fieldset pb-danger"><legend>Irreversible</legend>
+        <div class="pb-setting"><span class="pb-setting__label">Delete your account</span><span class="pb-setting__desc">Removes your 14 shares and 2.3 GB of uploads. Download anything you want to keep first.</span><button type="button" class="pb-btn pb-btn--danger" data-profile-delete>Delete account</button></div>
+      </fieldset></section>
+  </div>
+</div>
 </div>
 </section>
 <section class="fx" data-fixture="Progress" aria-label="Progress">
