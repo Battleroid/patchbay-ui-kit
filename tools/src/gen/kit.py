@@ -29,11 +29,11 @@ SECTIONS=[
  ('forms','Forms',['TextInput','InputTypes','Select','Combobox','TagInput','DatePicker','TimePicker','ColorPicker','CodeInput','CopyField','Checkbox','Radio','Switch','ChoiceCard','Range','DualRange','KeyValue','Fieldset','ErrorSummary','QueryFilter','MarkdownEditor','NotifySettings','AvatarEditor','CodeArea','DropZone','AutoSubmit']),
  ('indicators','Indicators',['Badge','Pill','Notice','Toast','Notifications','Progress','Loading','Tooltip','Popover','Avatar','SiteBanner','UploadQueue','BusyRegion','StorageRing']),
  ('data','Data',['Chart','ChartGround','Sparkline','StatTile','DataTable','DetailList','TreeView','Timeline','TableTools','Diagram','Flow','TimeRange','Heatmap','Gauge','BarChart','Histogram','JsonViewer','EventCalendar','VirtualList','QRCode']),
- ('layout','Layout',['Card','ListItem','Tabs','Disclosure','Breadcrumbs','Steps','Pagination','EmptyState','Resizable','Sortable','CommentThread','MobileNav','SessionTimeout','Dialog','ImageViewer','MediaPlayer','Media','MediaList','Prose','SkipLink','MediaState']),
+ ('layout','Layout',['Card','CollectionCard','ListItem','Tabs','Disclosure','Breadcrumbs','Steps','Pagination','EmptyState','Resizable','Sortable','CommentThread','MobileNav','SessionTimeout','Dialog','ImageViewer','MediaPlayer','Media','MediaList','Prose','SkipLink','MediaState']),
  ('homelab','Homelab',['LogViewer','LogExplorer','ShareDialog','FilePreview','Terminal','DiffViewer','FileBrowser','CronBuilder','StorageBar','Rack']),
  ('pages','Pages',['SiteHeader','AppShell','Dashboard','SettingsPage','ProfilePage','SignIn','ApiTokens','PrintReport','AlertEmail','StatusPage']),
 ]
-NAMES={'ButtonGroup':'Button group','TextInput':'Text input','InputTypes':'Input types','CodeArea':'Code area','DropZone':'Drop zone','AvatarEditor':'Avatar editor','ProfilePage':'Profile page','DataTable':'Data table','StatusPage':'Status page','ChartGround':'Chart grounds','DatePicker':'Date picker','MediaPlayer':'Media player','StatTile':'Stat tile','ThemeSwitch':'Theme switch','TextUtils':'Text helpers','CommandPalette':'Command palette','ContextMenu':'Context menu','ErrorSummary':'Error summary','SiteBanner':'Site banner','DetailList':'Detail list','TreeView':'Tree view','QRCode':'QR code','ListItem':'List item','EmptyState':'Empty and result states','ImageViewer':'Image viewer','SkipLink':'Skip link','AppShell':'App shell','Resizable':'Resizable panels','BulkActions':'Bulk actions','QueryFilter':'Query filter','UploadQueue':'Upload queue','JsonViewer':'JSON viewer','VirtualList':'Virtual list','LogViewer':'Log viewer','LogExplorer':'Log explorer','TimeRange':'Time range and charts','MediaList':'Media list','SiteHeader':'Site header','ShareDialog':'Share dialog','FilePreview':'File preview','TableTools':'Table tools','EventCalendar':'Event calendar','MarkdownEditor':'Markdown editor','CommentThread':'Comment thread','NotifySettings':'Notification settings','MobileNav':'Phone navigation','SessionTimeout':'Session timeout','AppIcons':'App icons','AlertEmail':'Alert email','DiffViewer':'Diff viewer','FileBrowser':'File browser','CronBuilder':'Cron builder','StorageBar':'Storage bar','BarChart':'Bar chart','SettingsPage':'Settings page','SignIn':'Sign-in and two-factor','ApiTokens':'API tokens','PrintReport':'Print and reports','Gauge':'Gauges and donuts','Heatmap':'Calendar heatmap','ConfirmAction':'Confirm action','AutoSubmit':'Auto-submit','BusyRegion':'Busy region','MediaState':'Media state','ShareLink':'Share link','StorageRing':'Storage ring','TagInput':'Tag input','TimePicker':'Time picker','ColorPicker':'Color picker','CodeInput':'Code input','CopyField':'Copy field','ChoiceCard':'Choice card','DualRange':'Dual range','KeyValue':'Key-value list'}
+NAMES={'ButtonGroup':'Button group','CollectionCard':'Collection card','TextInput':'Text input','InputTypes':'Input types','CodeArea':'Code area','DropZone':'Drop zone','AvatarEditor':'Avatar editor','ProfilePage':'Profile page','DataTable':'Data table','StatusPage':'Status page','ChartGround':'Chart grounds','DatePicker':'Date picker','MediaPlayer':'Media player','StatTile':'Stat tile','ThemeSwitch':'Theme switch','TextUtils':'Text helpers','CommandPalette':'Command palette','ContextMenu':'Context menu','ErrorSummary':'Error summary','SiteBanner':'Site banner','DetailList':'Detail list','TreeView':'Tree view','QRCode':'QR code','ListItem':'List item','EmptyState':'Empty and result states','ImageViewer':'Image viewer','SkipLink':'Skip link','AppShell':'App shell','Resizable':'Resizable panels','BulkActions':'Bulk actions','QueryFilter':'Query filter','UploadQueue':'Upload queue','JsonViewer':'JSON viewer','VirtualList':'Virtual list','LogViewer':'Log viewer','LogExplorer':'Log explorer','TimeRange':'Time range and charts','MediaList':'Media list','SiteHeader':'Site header','ShareDialog':'Share dialog','FilePreview':'File preview','TableTools':'Table tools','EventCalendar':'Event calendar','MarkdownEditor':'Markdown editor','CommentThread':'Comment thread','NotifySettings':'Notification settings','MobileNav':'Phone navigation','SessionTimeout':'Session timeout','AppIcons':'App icons','AlertEmail':'Alert email','DiffViewer':'Diff viewer','FileBrowser':'File browser','CronBuilder':'Cron builder','StorageBar':'Storage bar','BarChart':'Bar chart','SettingsPage':'Settings page','SignIn':'Sign-in and two-factor','ApiTokens':'API tokens','PrintReport':'Print and reports','Gauge':'Gauges and donuts','Heatmap':'Calendar heatmap','ConfirmAction':'Confirm action','AutoSubmit':'Auto-submit','BusyRegion':'Busy region','MediaState':'Media state','ShareLink':'Share link','StorageRing':'Storage ring','TagInput':'Tag input','TimePicker':'Time picker','ColorPicker':'Color picker','CodeInput':'Code input','CopyField':'Copy field','ChoiceCard':'Choice card','DualRange':'Dual range','KeyValue':'Key-value list'}
 scripts=[]
 import pbscripts as S
 AGO="document.querySelectorAll('time[data-ago]').forEach(function(t){t.setAttribute('datetime',new Date(Date.now()-t.dataset.ago*1000).toISOString());});"
@@ -42,8 +42,8 @@ def spec(n):
     # The page carries the whole bundle once and calls pbInit() at the end; each component adds only its example glue.
     js=S.page_glue(n).replace(AGO,'').strip() if n in S.COMPONENTS else ''
     if js: scripts.append(f'(function(){{\n{js}\n}})();')
-    wide=' spec--wide' if n in ('DataTable','StatusPage','Media','Diagram','InputTypes','StatTile','Flow','ChartGround','AppShell','SiteBanner','Resizable','ImageViewer','EmptyState','LogViewer','LogExplorer','DiffViewer','FileBrowser','Terminal','Heatmap','BarChart','JsonViewer','BulkActions','QueryFilter','VirtualList','Dashboard','SettingsPage','ProfilePage','SignIn','ApiTokens','PrintReport','Rack','Gauge','MediaList','DropZone','TimeRange','SiteHeader','FilePreview','TableTools','EventCalendar','MarkdownEditor','NotifySettings','AlertEmail','AppIcons','Density') else ''
-    return f'<section class="spec{wide}" id="c-{n.lower()}"><header class="spec__meta"><h3 class="spec__name">{NAMES.get(n,n)}</h3><p class="spec__note">{first_sentence(n)}</p></header><div class="spec__demo">{b}</div></section>'
+    wide=' spec--wide' if n in ('DataTable','StatusPage','Media','Diagram','InputTypes','StatTile','Flow','ChartGround','AppShell','SiteBanner','Resizable','ImageViewer','EmptyState','LogViewer','LogExplorer','DiffViewer','FileBrowser','Terminal','Heatmap','BarChart','JsonViewer','BulkActions','QueryFilter','VirtualList','Dashboard','SettingsPage','ProfilePage','SignIn','ApiTokens','PrintReport','Rack','Gauge','MediaList','CollectionCard','DropZone','TimeRange','SiteHeader','FilePreview','TableTools','EventCalendar','MarkdownEditor','NotifySettings','AlertEmail','AppIcons','Density') else ''
+    return f'<section class="spec{wide}" id="c-{n.lower()}"><header class="spec__meta"><h3 class="spec__name"><a class="hlink" href="#c-{n.lower()}">{NAMES.get(n,n)}</a></h3><p class="spec__note">{first_sentence(n)}</p></header><div class="spec__demo">{b}</div></section>'
 # foundations
 groups=[('Surfaces and text',['bg','surface','surface-sunk','code-bg','line','line-strong','ink','ink-muted']),
  ('Accent and pop',['accent','accent-hover','accent-tint','on-accent','pop-yellow','pop-mint','pop-red','on-pop','mark']),
@@ -75,9 +75,22 @@ found=f'''<section class="spec spec--wide" id="c-color"><header class="spec__met
 <section class="spec" id="c-shape"><header class="spec__meta"><h3 class="spec__name">Shape and depth</h3><p class="spec__note">Radius and shadow follow the edge switch: diffuse and rounded, or square with offset shadows.</p></header><div class="spec__demo"><div class="shplist">{shapes}</div></div></section>
 <section class="spec spec--wide" id="c-icons"><header class="spec__meta"><h3 class="spec__name">Icons</h3><p class="spec__note">{len(ICONS)} stroke icons in two cuts that follow the edge switch. They paint in the current text color.</p></header><div class="spec__demo"><div class="icgrid">{icons}</div></div></section>'''
 nav=[('foundations','Foundations')]+[(a,b) for a,b,_ in SECTIONS]
-body=f'<section class="band" id="foundations"><h2 class="band__t">Foundations</h2>{found}</section>'
+found=re.sub(r'id="(c-[a-z]+)"><header class="spec__meta"><h3 class="spec__name">(.*?)</h3>',r'id="\1"><header class="spec__meta"><h3 class="spec__name"><a class="hlink" href="#\1">\2</a></h3>',found)
+FOUND=re.findall(r'id="(c-[a-z]+)"><header class="spec__meta"><h3 class="spec__name"><a class="hlink" href="#c-[a-z]+">(.*?)</a>',found)
+def band_h(sid,title): return f'<h2 class="band__t"><a class="hlink" href="#{sid}">{title}</a></h2>'
+body=f'<section class="band" id="foundations">{band_h("foundations","Foundations")}{found}</section>'
 for sid,title,comps in SECTIONS:
-    body+=f'<section class="band" id="{sid}"><h2 class="band__t">{title}</h2>'+''.join(spec(n) for n in comps)+'</section>'
+    body+=f'<section class="band" id="{sid}">{band_h(sid,title)}'+''.join(spec(n) for n in comps)+'</section>'
+# Table of contents: every band and every specimen, in page order.
+def toc_group(sid,title,items):
+    li=''.join(f'<li><a href="#{i}">{html.escape(t)}</a></li>' for i,t in items)
+    return f'<li class="toc__group"><a class="toc__band" href="#{sid}">{title}<span class="toc__n">{len(items)}</span></a><ol>{li}</ol></li>'
+toc_items=toc_group('foundations','Foundations',FOUND)+''.join(toc_group(sid,title,[(f'c-{n.lower()}',NAMES.get(n,n)) for n in comps]) for sid,title,comps in SECTIONS)
+toc=f'''<nav class="toc" id="toc" aria-label="On this page">
+  <div class="toc__head"><input type="search" class="pb-input toc__filter" placeholder="Filter components" aria-label="Filter components" autocomplete="off" spellcheck="false"></div>
+  <ol class="toc__list">{toc_items}</ol>
+  <p class="toc__none" hidden>Nothing matches.</p>
+</nav>'''
 total=sum(len(c) for _,_,c in SECTIONS)
 hero='''<div class="hero__sample">
   <div class="pb-card">
@@ -110,7 +123,7 @@ page=f'''<!DOCTYPE html>
 *{{box-sizing:border-box;min-width:0}}
 html{{scroll-padding-top:72px;background:var(--bg)}}
 body{{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip}}
-.wrap{{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px)}}
+.wrap{{max-width:1480px;margin:0 auto;padding:0 max(4vw,16px)}}
 .hero{{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;align-items:center;padding:56px 0 40px}}
 .hero__name{{margin:0;font:600 clamp(52px,8vw,96px)/0.95 var(--font-serif);letter-spacing:-0.02em;text-wrap:balance}}
 .hero__lede{{margin:16px 0 28px;max-width:34em;font:400 19px/29px var(--font-serif);color:var(--ink-muted)}}
@@ -159,6 +172,42 @@ body{{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip}}
 .ic figcaption{{font:400 11px/14px var(--font-mono);color:var(--ink-muted);text-align:center;overflow-wrap:anywhere}}
 .spec__demo .pb-chart:not([data-g]){{max-width:460px}}
 .dscroll{{overflow-x:auto}}.dscroll>.pb-diagram{{min-width:560px}}
+.hlink{{color:inherit;text-decoration:none}}
+.hlink::after{{content:"#";margin-inline-start:.35em;color:var(--ink-muted);font-weight:400;opacity:0;transition:opacity var(--pb-dur-1)}}
+.hlink:hover::after,.hlink:focus-visible::after{{opacity:1}}
+.hlink:hover{{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.15em}}
+.hlink:focus-visible{{outline:var(--pb-focus-width) solid var(--pb-focus-color);outline-offset:2px;border-radius:2px}}
+:target>.spec__meta .spec__name,.band:target>.band__t{{color:var(--accent)}}
+.nav__toc{{display:none;flex:none;position:sticky;left:0;z-index:1;margin-inline-end:4px;background:var(--bg)}}
+.toc{{display:none;font:400 13px/16px var(--font-mono)}}
+.toc__head{{padding:0 0 12px;background:var(--bg)}}
+.toc__filter{{width:100%}}
+.toc ol{{list-style:none;margin:0;padding:0}}
+.toc__group{{margin:0 0 12px}}
+.toc a{{display:flex;align-items:center;gap:8px;min-height:28px;padding:2px 8px;color:var(--ink-muted);text-decoration:none;border-inline-start:2px solid transparent;border-radius:0 var(--pb-r-sm) var(--pb-r-sm) 0}}
+.toc a:hover{{color:var(--ink);background:var(--surface-sunk)}}
+.toc a:focus-visible{{outline:var(--pb-focus-width) solid var(--pb-focus-color);outline-offset:-2px}}
+.toc__band{{font-weight:600;color:var(--ink)!important;text-transform:uppercase;letter-spacing:.06em;font-size:11px}}
+.toc__n{{margin-inline-start:auto;font-weight:400;color:var(--ink-muted)}}
+.toc ol ol a{{padding-inline-start:12px}}
+.toc a[aria-current]{{color:var(--ink);font-weight:600;border-inline-start-color:var(--accent);background:var(--accent-tint)}}
+.toc__group:has(a[aria-current])>.toc__band{{border-inline-start-color:var(--accent)}}
+.toc__none{{margin:8px;font:italic 400 14px/20px var(--font-serif);color:var(--ink-muted)}}
+@media (min-width:1100px){{
+  .docs{{display:grid;grid-template-columns:212px minmax(0,1fr);gap:0 36px;align-items:start}}
+  .toc{{display:block;position:sticky;top:49px;max-height:calc(100vh - 49px);overflow-y:auto;overscroll-behavior:contain;padding:24px 4px 40px 0;scrollbar-width:thin}}
+  .toc__head{{position:sticky;top:-24px;z-index:1;padding-top:0}}
+}}
+@media (min-width:1100px) and (max-width:1499px){{
+  .spec--wide{{grid-template-columns:minmax(0,1fr)}}
+  .spec--wide .spec__meta{{position:static;max-width:640px}}
+}}
+@media (max-width:1099px){{
+  .nav__toc{{display:inline-flex}}
+  .toc[data-open]{{display:block;position:fixed;z-index:40;top:var(--toc-top,56px);left:max(4vw,16px);right:max(4vw,16px);max-width:420px;max-height:min(70vh,calc(100vh - var(--toc-top,56px) - 16px));overflow-y:auto;overscroll-behavior:contain;padding:12px;background:var(--surface);border:var(--stroke-1) solid var(--pb-border-control);border-radius:var(--pb-r-lg);box-shadow:var(--pb-shadow-lg,var(--pb-shadow-md))}}
+  .toc[data-open] .toc__head{{position:sticky;top:-12px;background:var(--surface);padding-top:0}}
+}}
+@media (prefers-reduced-motion:reduce){{.hlink::after{{transition:none}}}}
 .foot{{padding:40px 0 64px;border-top:1px solid var(--line);font:400 13px/18px var(--font-mono);color:var(--ink-muted)}}
 @media (max-width:900px){{
   .hero{{grid-template-columns:minmax(0,1fr);gap:32px;padding-top:40px}}
@@ -196,13 +245,17 @@ body{{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip}}
   </header>
 </div>
 <nav class="nav" aria-label="Sections"><div class="wrap nav__in">
+  <button type="button" class="pb-btn pb-btn--sm nav__toc" aria-expanded="false" aria-controls="toc"><span class="pb-icon pb-icon--list"></span>Contents</button>
   {''.join(f'<a href="#{a}">{b}</a>' for a,b in nav)}
   <div class="pb-seg pb-seg--sm pb-seg--icon nav__theme pb-themeswitch" role="radiogroup" aria-label="Theme" data-theme-switch><label title="Light"><input type="radio" name="theme-nav" value="light" aria-label="Light"><span class="pb-icon pb-icon--sun"></span></label><label title="Dark"><input type="radio" name="theme-nav" value="dark" aria-label="Dark"><span class="pb-icon pb-icon--moon"></span></label><label title="System"><input type="radio" name="theme-nav" value="system" aria-label="System"><span class="pb-icon pb-icon--monitor"></span></label></div>
   <div class="pb-seg pb-seg--sm nav__edge" role="radiogroup" aria-label="Edges" data-edge-switch><label><input type="radio" name="edge-nav" value="soft" checked>soft</label><label><input type="radio" name="edge-nav" value="hard">hard</label></div>
 </div></nav>
-<main class="wrap">
+<div class="wrap docs">
+{toc}
+<main class="docs__main">
 {body}
 </main>
+</div>
 <footer class="wrap foot">Patchbay · sample content is made up · built from the Patchbay design system</footer>
 <script>
 {{
@@ -214,6 +267,26 @@ if(saved==='hard')setEdge('hard');
 const links=[...document.querySelectorAll('.nav a')];
 const io=new IntersectionObserver(es=>{{es.forEach(e=>{{if(e.isIntersecting)links.forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+e.target.id))}})}},{{rootMargin:'-40% 0px -55% 0px'}});
 document.querySelectorAll('main>.band').forEach(s=>io.observe(s));
+const toc=document.getElementById('toc'),tocBtn=document.querySelector('.nav__toc'),tocFilter=toc.querySelector('.toc__filter');
+const tocLinks=new Map([...toc.querySelectorAll('a[href^="#"]')].map(a=>[a.getAttribute('href').slice(1),a]));
+let tocCur=null;
+function tocMark(id){{const a=tocLinks.get(id);if(!a||a===tocCur)return;if(tocCur)tocCur.removeAttribute('aria-current');a.setAttribute('aria-current','location');tocCur=a;
+  if(toc.hasAttribute('data-open')||toc.scrollHeight<=toc.clientHeight)return;
+  const r=a.getBoundingClientRect(),t=toc.getBoundingClientRect();if(r.top<t.top+64||r.bottom>t.bottom-24)toc.scrollTop+=r.top-t.top-t.height/3;}}
+// The current section is the last one whose top has passed just under the sticky bar, so short sections are marked too.
+const tocSecs=[...document.querySelectorAll('main section.spec[id]')];let tocRaf=0;
+function tocTrack(){{tocRaf=0;const line=96;let cur=tocSecs[0];for(const s of tocSecs){{if(s.getBoundingClientRect().top<=line)cur=s;else break;}}
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-2)cur=tocSecs[tocSecs.length-1];tocMark(cur.id);}}
+addEventListener('scroll',()=>{{if(!tocRaf)tocRaf=requestAnimationFrame(tocTrack);}},{{passive:true}});addEventListener('resize',tocTrack);tocTrack();
+tocFilter.addEventListener('input',()=>{{const q=tocFilter.value.trim().toLowerCase();let any=0;
+  toc.querySelectorAll('.toc__group').forEach(g=>{{let n=0;g.querySelectorAll('ol li').forEach(li=>{{const m=!q||li.textContent.toLowerCase().includes(q);li.hidden=!m;n+=m}});g.hidden=!!q&&!n;any+=n}});
+  toc.querySelector('.toc__none').hidden=!!any;}});
+tocFilter.addEventListener('keydown',e=>{{if(e.key!=='Enter')return;const a=[...toc.querySelectorAll('ol ol a')].find(x=>!x.closest('[hidden]'));if(a){{e.preventDefault();a.click();}}}});
+function tocOpen(on){{if(on){{const nv=document.querySelector('.nav'),nt=nv.getBoundingClientRect().top;if(nt>1)window.scrollBy(0,nt);toc.style.setProperty('--toc-top',Math.max(8,nv.getBoundingClientRect().bottom+8)+'px');toc.setAttribute('data-open','');tocFilter.focus();}}else toc.removeAttribute('data-open');tocBtn.setAttribute('aria-expanded',on);}}
+tocBtn.addEventListener('click',()=>tocOpen(!toc.hasAttribute('data-open')));
+toc.addEventListener('click',e=>{{if(e.target.closest('a')&&toc.hasAttribute('data-open'))tocOpen(false);}});
+document.addEventListener('keydown',e=>{{if(e.key==='Escape'&&toc.hasAttribute('data-open')){{tocOpen(false);tocBtn.focus();}}}});
+document.addEventListener('pointerdown',e=>{{if(toc.hasAttribute('data-open')&&!toc.contains(e.target)&&!tocBtn.contains(e.target))tocOpen(false);}});
 document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>{{if(f.method==='dialog'||(e.submitter&&e.submitter.formMethod==='dialog'))return;e.preventDefault();}}));
 document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
 }}
