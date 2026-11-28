@@ -17,6 +17,7 @@
     "CodeArea": [["_forms.js"], []],
     "CodeInput": [["_forms.js"], []],
     "ColorPicker": [["_forms.js"], []],
+    "CollectionCard": [["_ui.js"], []],
     "Combobox": [["_forms.js"], []],
     "CommandPalette": [["_ui.js"], ["i_cmd.js"]],
     "CommentThread": [["_ui.js", "_misc.js"], ["i_thread.js"]],

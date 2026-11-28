@@ -119,7 +119,8 @@ Pick by the kind of choice, then by count:
 | A gallery that opens full screen | ImageViewer | Media cards |
 | Play video or audio | MediaPlayer, never native `controls` | `<video controls>` |
 | One shared item (media, title, meta, actions) | Media | a Card you assemble |
-| Many videos with thumbnails | MediaList | FileBrowser |
+| A shared collection's items as rows: videos, photos, files | MediaList (compact for long lists) | FileBrowser, Media tiles in a list |
+| Albums, projects or boards to pick from | CollectionCard in a `pb-collgrid` | Media cards, outline Cards you assemble |
 | Media still processing, or a hover teaser | MediaState | a bare skeleton |
 | A list and a preview pane, or editor and output | Resizable | a fixed two-column grid |
 
@@ -225,13 +226,15 @@ Pick by who caused it and when:
 - **DropZone or AvatarEditor:** files to upload, or one profile photo to crop.
 - **SettingsPage or ProfilePage:** the instance, or one person.
 - **Combobox or TagInput:** one value or many.
+- **CollectionCard, Media tile or MediaList:** CollectionCard is a folder-like thing you open (album, project, board), a Media tile is one file in a grid, and MediaList is the same items as rows, with room for more detail.
+- **MediaList or FileBrowser:** MediaList shows what's in a shared collection; FileBrowser is for a folder you rename, move and sort.
 
 ## Recipes
 
 - **A settings screen:** SettingsPage; one `section` per topic with a Fieldset; Switches for instant settings, a `form[data-section]` with Save and Discard for the rest; the danger zone last behind a type-to-confirm Dialog.
 - **A filterable list:** DataTable with a `pb-toolbar` holding a QueryFilter (or Segmented for a few states), BulkActions for selected rows, Pagination below, EmptyState for no matches.
 - **A dashboard:** Dashboard grid; up to four StatTiles, then the main Chart with a TimeRange in the page header, then Gauges and StorageBar, then a Timeline and the service list.
-- **Sharing files:** DropZone (with its upload settings) feeding an UploadQueue, ShareDialog for the link's terms, Media or MediaList for what's shared.
+- **Sharing files:** DropZone (with its upload settings) feeding an UploadQueue, ShareDialog for the link's terms, Media or MediaList for what's shared, CollectionCard for the list of shares.
 - **A file manager:** Resizable split with FileBrowser and FilePreview; Toast with Undo after a delete.
 - **An account page:** ProfilePage with AvatarEditor for the photo, a section form for the profile, session rows with sign-out.
 
@@ -254,6 +257,7 @@ Pick by who caused it and when:
 | Button | triggering an action | navigation (Link) |
 | ButtonGroup | related actions on one object; `pb-toolbar` rows | exclusive choices (Segmented) |
 | Card | the base surface; outline for pickable panels | nesting more than one level |
+| CollectionCard | albums, projects and boards in a grid, each with a cover and snippet | single files (Media, MediaList) |
 | Chart | lines over time | categories (BarChart) |
 | ChartGround | charts on a ground with ranges and limits | more than one ink chart per page |
 | Checkbox | independent options saved with a form | instant settings (Switch) |
@@ -282,7 +286,7 @@ Pick by who caused it and when:
 | EmptyState | empty lists, no matches, failed pages | loading (Loading) |
 | ErrorSummary | listing a form's errors at the top | forms of one or two fields |
 | EventCalendar | scheduled work by day | past events (Timeline) |
-| FileBrowser | browsing a folder's files | many videos (MediaList) |
+| FileBrowser | browsing and managing a folder's files | a shared collection (MediaList) |
 | FilePreview | previewing the selected file beside the browser | a modal preview |
 | Fieldset | a form section with its own Save and Discard | actions floating below the form |
 | Flow | directed diagrams: which way things move | undirected topology (Diagram) |
@@ -300,8 +304,8 @@ Pick by who caused it and when:
 | LogExplorer | logs from many labeled streams | one service's log (LogViewer) |
 | LogViewer | one service's live log | labeled streams (LogExplorer), one command (Terminal) |
 | MarkdownEditor | formatted notes, descriptions, comments | code (CodeArea) |
-| Media | one shared item with actions | many videos (MediaList) |
-| MediaList | browsing many videos | mixed files (FileBrowser) |
+| Media | one shared item with actions | many items (MediaList) |
+| MediaList | a collection's videos, photos and files as rows | a folder you manage (FileBrowser) |
 | MediaPlayer | all video and audio playback | native `controls` |
 | MediaState | media still processing; hover teasers | the only signal on touch devices |
 | Menu | a popover list of actions | exclusive choices (Segmented) |

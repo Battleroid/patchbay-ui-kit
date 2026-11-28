@@ -81,3 +81,51 @@ test('no script errors', async ({ page }) => {
   await page.waitForTimeout(1500);
   expect(errors).toEqual([]);
 });
+
+test('table of contents: a link for every section, heading links, follows the scroll', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/demo.html');
+  const r = await page.evaluate(() => {
+    const ids = [...document.querySelectorAll('main section.spec[id]')].map((s) => s.id);
+    const toc = new Set([...document.querySelectorAll('#toc a')].map((a) => a.getAttribute('href').slice(1)));
+    const heads = [...document.querySelectorAll('main section.spec[id], main > .band')].filter((s) => {
+      const a = s.querySelector(':scope > .spec__meta .hlink, :scope > .band__t .hlink');
+      return !a || a.getAttribute('href') !== '#' + s.id;
+    }).map((s) => s.id);
+    return { missing: ids.filter((i) => !toc.has(i)), heads };
+  });
+  expect(r.missing).toEqual([]);
+  expect(r.heads).toEqual([]);
+  await page.locator('#toc a[href="#c-medialist"]').click();
+  await expect(page.locator('#toc a[href="#c-medialist"]')).toHaveAttribute('aria-current', 'location');
+  await expect(page).toHaveURL(/#c-medialist$/);
+  // A short section is marked too, not its taller neighbour.
+  for (const id of ['c-skiplink', 'c-badge']) {
+    await page.locator(`#toc a[href="#${id}"]`).click();
+    await expect(page.locator(`#toc a[href="#${id}"]`)).toHaveAttribute('aria-current', 'location');
+  }
+  await page.locator('#toc .toc__filter').fill('collection');
+  await expect(page.locator('#toc ol ol li:not([hidden])')).toHaveCount(1);
+  await page.locator('#toc .toc__filter').press('Enter');
+  await expect(page).toHaveURL(/#c-collectioncard$/);
+});
+
+test('table of contents at phone width: Contents opens a panel, Esc closes it', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/demo.html');
+  await expect(page.locator('#toc')).toBeHidden();
+  await page.locator('.nav__toc').click();
+  await expect(page.locator('#toc')).toBeVisible();
+  await expect(page.locator('.nav__toc')).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#toc .toc__filter')).toBeFocused();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#toc')).toBeHidden();
+  await expect(page.locator('.nav__toc')).toBeFocused();
+  await page.locator('.nav__toc').click();
+  await page.locator('#toc a[href="#c-dialog"]').click();
+  await expect(page.locator('#toc')).toBeHidden();
+  await expect(page).toHaveURL(/#c-dialog$/);
+  await expect(page.locator('#toc a[href="#c-dialog"]')).toHaveAttribute('aria-current', 'location');
+  await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('c-dialog').getBoundingClientRect().top))).toBeLessThan(100);
+});

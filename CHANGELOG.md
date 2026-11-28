@@ -6,6 +6,13 @@
 - Settings layout: two panels in one section (a photo above a form) keep the `space-6` card gap instead of touching.
 - README: rewritten as an overview (what it is, quick start, components grouped as in the demo, theming, scripting, CSP), with the hook and export lists folded away. The design guide moved to `DESIGN.md`, in plainer words; no rule changed.
 - `COMPONENT-GUIDE.md` (new): which component to use for each job, with the one it's most often confused with, for AI agents designing with the kit. The build fails if a component is missing from its index. `CLAUDE.md` (new): how the repo is built and tested, and how to add or remove a component.
+- **CollectionCard** (new): a tile for an album, project or board in a `pb-collgrid`. It has a cover (one image, a mosaic of up to four with a "+20" cell, a sticky-note board stand-in, or empty), a title link that opens the card from anywhere, a two-line snippet, a meta line, an optional people stack and a menu. `aria-current` on the link outlines the current card; `pb-coll--new` is the "New collection" tile.
+- **MediaList** now takes mixed items as well as videos:
+  - Photos: the image with no play overlay.
+  - Files: `pb-mitem__thumb--file` with a type tile whose top edge is colored by `data-kind`.
+  - Nested collections: `pb-mitem__thumb--mosaic`.
+  - File names: `pb-mitem__name` with a stem and an extension. Compact rows cut the middle of a long name and keep the `.zip`.
+- Demo: a table of contents follows the scroll beside the specimens, marking the current section, with a filter (Enter jumps to the first match). On narrower screens it opens from a Contents button in the top bar. Every band and specimen heading is now a link to itself.
 - Time-series chart: `"xFormat": "date"` in the JSON formats axis ticks (a tick every whole number of days, each under its point) and the tooltip heading as a UTC date with no time of day, for daily series.
 
 ### Breaking (see the migration table below)
