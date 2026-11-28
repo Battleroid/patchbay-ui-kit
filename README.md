@@ -33,7 +33,7 @@ It comes in two edges, **soft** (rounded, diffuse shadows) and **hard** (square,
 - `class="pb"` marks the app root (it also resets the body margin).
 - `patchbay.js` with `data-pb-auto` runs `pbInit()` once the page has loaded. Without `data-pb-auto`, nothing runs until you call it. For ES modules: `import pbInit, { pbToast, pbConfirm } from './patchbay.mjs'; pbInit();`.
 
-Start an app from [AppShell](components/AppShell/) (skip link, header, nav, page header, footer), and a new screen from one of the page templates. Before building a part, read its README and copy the markup from its example. The examples are self-contained: each carries the script it needs, plus example-only glue such as fake saves and sample data.
+Start an app from [AppShell](components/AppShell/) (skip link, header, nav, page header, footer), and a new screen from one of the page templates. Not sure which component fits? [COMPONENT-GUIDE.md](COMPONENT-GUIDE.md) answers that by job (written for AI agents, useful for anyone). Before building a part, read its README and copy the markup from its example. The examples are self-contained: each carries the script it needs, plus example-only glue such as fake saves and sample data.
 
 ## What's in it
 

@@ -33,7 +33,7 @@ The specs live in `tests/`. `tests/serve.mjs` is a small Node static server (cor
 - `build.py` writes the design-system previews, `kit.py` the demo page, `export.py` this repo's layout. `pbroot.py` gives each of them the tree root.
 - `src/ds/project/components/<Name>/README.md` are the component docs.
 
-To add a component: write `pv/<Name>.html`, its behavior in a `pv/_*.js` lib and a `pbHook` line in `pv/_hooks.js` (and an init file for example-only glue), add it to `scripts.json`, `C` in `build.py`, `SECTIONS` in `kit.py` and, if it has a hook, `COMPONENTS` in `fixture.py`; then write its README. Keep script-built markup free of `style="…"`: use `data-style` and call `pbStyled()` after inserting it.
+To add a component: write `pv/<Name>.html`, its styles in a `src/gen/*.css` source, its behavior in a `pv/_*.js` lib with a `pbHook` line in `pv/_hooks.js` (and an init file for example-only glue), add it to `scripts.json`, `C` in `build.py` and `SECTIONS` (and `NAMES`) in `kit.py`; then write its README and add a row to `src/ds/project/COMPONENT-GUIDE.md`, which the build checks. The CSP fixture picks up every `pv/*.html` by itself and fails on an id used in two examples. Keep script-built markup free of `style="…"`: use `data-style` and call `pbStyled()` after inserting it. `CLAUDE.md` at the repo root has the full checklist, including removal.
 
 ## README header image
 
